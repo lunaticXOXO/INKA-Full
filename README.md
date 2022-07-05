@@ -1,4 +1,5 @@
 # INKA-Full
 
-# Calvin Jeremy
-# Aji Parama
+## Anggota
+### Calvin Jeremy
+### Aji Parama
