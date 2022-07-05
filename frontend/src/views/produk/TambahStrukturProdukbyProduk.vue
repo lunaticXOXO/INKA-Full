@@ -26,14 +26,6 @@
             :items="items"
             label="Induk Nodal"
             ></v-select>
-            
-            <v-select
-            item-text="nama"
-            item-value="id"
-            v-model="jnsProduk"
-            :items="items2"
-            label="Jenis Produk"
-            ></v-select>
 
             <v-text-field
             v-model="nama"
@@ -47,7 +39,7 @@
 
             <v-select
             v-model="unit"
-            :items="items3"
+            :items="items2"
             label="Unit"
             ></v-select>
 
@@ -56,7 +48,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="InsertStrukturProduk()"
+            @click="InsertStrukturProdukbyJProduk()"
             >
             Submit
             </v-btn>
@@ -70,7 +62,7 @@
             </v-btn>
         </v-form>
         <v-snackbar top color="green" v-model="snackBar">
-            Insert Struktur Produk Sukses!
+            Insert Struktur Produk by Jns.Produk Sukses!
         </v-snackbar>
     </v-card>
 </template>
@@ -87,20 +79,17 @@
         v => !!v || 'ID Nodal is required',
         v => (v && v.length <= 7 && v.length >= 7) || 'ID Nodal must be 7 characters',
       ],
-      jnsProduk: undefined,
       nodeParent: undefined,
       unit: undefined,
       items: [],
-      items2: [],
-      items3: [
+      items2: [
         'Unit',
         'Set'
       ],
     }),
 
     mounted(){
-        this.fetchData(),
-        this.fetchData2()
+        this.fetchData()
     },
 
     methods: {
@@ -112,7 +101,6 @@
         console.log(this.idNode)
         console.log(this.nama)
         console.log(this.jumlah)
-        console.log(this.jnsProduk)
         console.log(this.nodeParent)
         console.log(this.unit)
       },
@@ -132,27 +120,12 @@
         }
       },
 
-      async fetchData2(){
+      async InsertStrukturProdukbyJProduk(){
         try{
-            const res = await axios.get(`/jproduct/get_jproduct`);
-            if(res.data == null){
-                alert("Jenis Produk Kosong")
-            }else{
-                this.items2 = res.data
-            }
-        } 
-        catch(error){
-            alert("Error" + error)
-            console.log(error)
-        }
-      },
-
-      async InsertStrukturProduk(){
-        try{
-          const response = await axios.post('/sjproduct/insert_sjproduct/',
+          const response = await axios.post('/sjproduct/insert_sjproduct_by_jproduct/' + this.$route.params.id,
             { idNodal: this.idNode,
               indukNodal: this.nodeParent,
-              jnsProduk: this.jnsProduk,
+              jnsProduk: this.$route.params.id,
               nama: this.nama,
               jumlah: this.jumlah,
               satuan: this.unit
@@ -162,7 +135,7 @@
           this.snackBar = true
         }
         catch(error){
-          alert("Insert Struktur Produk Failed")
+          alert("Insert Struktur Produk by Jns.Produk Failed")
           console.log(error)
         }
       },

@@ -38,7 +38,7 @@
             </v-btn>
         </v-form>
         <v-snackbar top color="green" v-model="snackBar">
-            Insert Produk Sukses!
+            Insert Produk by R.Proyek Sukses!
         </v-snackbar>
     </v-card>
 </template>
@@ -66,7 +66,7 @@
 
       async InsertProduk(){
         try{
-          const response = await axios.post('/jproduct/post_jproductbyrproyek',
+          const response = await axios.post('/jproduct/post_jproductbyrproyek/'+ this.$route.params.id,
             { id: this.id
             }
           );
@@ -74,7 +74,7 @@
           this.snackBar = true
         }
         catch(error){
-          alert("Insert Produk Failed")
+          alert("Insert Produk by R.Proyek Failed")
           console.log(error)
         }
       },
