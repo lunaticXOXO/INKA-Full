@@ -1,0 +1,197 @@
+<template>
+    <v-card 
+        class="mt-10 text-center mx-10"
+        max-width = "1450">
+        <br>
+        <h1>List Customer</h1>
+        <br>
+        <v-data-table 
+            :headers = "column"
+            :items = "customers">
+            <template v-slot:[`item.id`]="{ item }">
+              <div v-if="item.id === editedItem.id">
+                  <v-text-field disabled v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                  <span v-else>{{item.id}}</span>
+              </div>
+              <div v-else>
+                  <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                  <span v-else>{{item.id}}</span>
+              </div>
+            </template>
+            <template v-slot:[`item.nama`]="{ item }">
+                <v-text-field v-model="editedItem.nama" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+                <span v-else>{{item.nama}}</span>
+            </template>
+            <template v-slot:[`item.email`]="{ item }">
+                <v-text-field v-model="editedItem.email" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+                <span v-else>{{item.email}}</span>
+            </template>
+            <template v-slot:[`item.adress1`]="{ item }">
+                <v-text-field v-model="editedItem.adress1" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+                <span v-else>{{item.adress1}}</span>
+            </template>
+            <template v-slot:[`item.city`]="{ item }">
+                <v-text-field v-model="editedItem.city" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+                <span v-else>{{item.city}}</span>
+            </template>
+            <template v-slot:[`item.phone`]="{ item }">
+                <v-text-field v-model="editedItem.phone" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+                <span v-else>{{item.phone}}</span>
+            </template>
+            <template v-slot:[`item.postalcode`]="{ item }">
+                <v-text-field v-model="editedItem.postalcode" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+                <span v-else>{{item.postalcode}}</span>
+            </template>
+            <template v-slot:[`item.aksi`]="{ item }">
+              <div v-if="item.id == editedItem.id">
+                  <v-icon color="red" class="mr-3" @click="close">
+                  mdi-window-close
+                  </v-icon>
+                  <v-icon color="green"  @click="updateData()">
+                  mdi-content-save
+                  </v-icon>
+              </div>
+              <div v-else>
+                <v-btn class="mx-1" x-small color="blue" @click="selectCustomer(item)">
+                    <v-icon small dark>mdi-check</v-icon>
+                </v-btn>
+                <v-btn class="mx-1" x-small color="green" @click="editCustomer(item)">
+                    <v-icon small dark>mdi-pencil</v-icon>
+                </v-btn>
+                <v-btn class="mx-1" x-small color="red" @click="deleteCustomer(item)">
+                    <v-icon small dark>mdi-trash-can-outline</v-icon>
+                </v-btn>
+              </div>
+            </template>
+        </v-data-table>
+    </v-card>
+</template>
+
+<script>
+  export default {
+    data(){
+      return {
+        valid : true,
+        column : [
+            {text : 'ID',           value : 'id'},
+            {text : 'Nama',         value : 'nama'},
+            {text : 'Email',        value : 'email'},
+            {text : 'Alamat 1',     value : 'adress1'},
+            //{text : 'Alamat 2',     value : 'adress2'},
+            {text : 'Kota',         value : 'city'},
+            //{text : 'Fax',          value : 'fax'},
+            {text : 'Phone',        value : 'phone'},
+            //{text : 'Pic',          value : 'pic'},
+            {text : 'Kode Pos',     value : 'postalcode'},
+            {text : 'Action',       value : 'aksi'}
+            //{text : 'Sites',        value : 'situs'},
+            //{text : 'Remark',     value : 'remark'}
+        ],
+        customers : [],
+        editedIndex: -1,
+        editedItem: {
+          id: '',
+          nama: '',
+          email: '',
+          adress1: '',
+          city: '',
+          phone: '',
+          postalcode: '',
+        },
+        defaultItem: {
+          id: '',
+          nama: '',
+          email: '',
+          adress1: '',
+          city: '',
+          phone: '',
+          postalcode: '',
+        },
+      }
+    },
+
+    mounted(){
+        this.fetchCustomer()
+    },
+
+    methods: {
+      close () {
+        setTimeout(() => {
+            this.editedItem = Object.assign({}, this.defaultItem);
+            this.editedIndex = -1;
+        }, 300)
+      },
+
+      editCustomer(customers){
+        console.log('ID : ' + customers.id)
+        this.editedIndex = this.customers.indexOf(customers);
+        this.editedItem = Object.assign({}, customers);
+      },
+
+      async fetchCustomer(){
+        try{
+          const axios = require('axios');
+          const res = await axios.get('/customers/get_customers');
+          if (res.data == null){
+            alert('Customer Kosong')
+          }else{
+            this.customers = res.data
+            console.log(res,this.customers)
+          }
+        }
+        catch(error){
+          alert("Error")
+          console.log(error)
+        }
+      },
+    
+      selectCustomer(customers){
+          console.log('ID : ' + customers.id)
+          open(`/proyekListbyCustomer/${customers.id}`)
+      },
+
+      deleteCustomer(customers){
+          console.log('ID : ' + customers.id)
+          try{
+              const axios = require('axios');
+              axios.delete(`/customer/deleteCustomer/${customers.id}`);
+              alert("Delete Customer Success!")
+              this.fetchCustomer()
+          }
+          catch(error){
+              console.log(error)
+          }
+      },
+
+      async updateData(){
+        if (this.editedIndex > -1) {
+            Object.assign(this.customers[this.editedIndex], this.editedItem)
+            console.log(this.editedItem)
+        }
+        this.close()
+        try{
+            const axios = require('axios')
+            const res = await axios.post('/customer/update_customer/'+ this.editedItem.id,
+            { id: this.editedItem.id,
+              nama: this.editedItem.nama,
+              email: this.editedItem.email,
+              adress1: this.editedItem.adress1,
+              city: this.editedItem.city,
+              phone: this.editedItem.phone,
+              postalcode: this.editedItem.postalcode,
+              
+              //Data yang tidak ditampilkan
+              adress2: this.adress2,
+              fax: this.fax,
+              pic: this.pic,
+              situs: this.situs,
+              remark: this.remark,
+            })
+            console.log(res)
+        }catch(error){
+            console.log(error)
+        }
+      } 
+    }
+  }
+</script>
