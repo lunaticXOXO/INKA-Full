@@ -19,14 +19,7 @@
             required
             ></v-text-field>
           
-            <v-select
-              item-text="nama"
-              item-value="id"
-              v-model="pelanggan"
-              :items="customer"
-              label="Pelanggan"
-              required>
-            </v-select>
+          
             
             <v-text-field
             v-model="nama"
@@ -45,7 +38,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="InsertProyek()"
+            @click="InsertProyekByCustomer()"
             >
             Submit
             </v-btn>
@@ -65,9 +58,9 @@
   export default {
     data: () => ({
       valid: true,
-      dueDate: null,
       id: '',
       nama : '',
+      dueDate: null,
       idRules: [
         v => !!v || 'ID is required',
         v => (v && v.length <= 20 && v.length >= 1) || 'ID must be 1-20 characters',
@@ -92,14 +85,13 @@
         console.log(this.pelanggan)
       },
 
-      async InsertProyek(){
+      async InsertProyekByCustomer(){
         try{
           const axios = require('axios');
-          const response = await axios.post('/proyek/add_newproyek',
+          const response = await axios.post('/proyek/add_newproyek_by_customer/' + this.$route.params.id,
             { id: this.id,
               nama: this.nama,
               dueDate: this.dueDate,
-              customerid: this.pelanggan
             }
            );
           console.log(response,this.data)

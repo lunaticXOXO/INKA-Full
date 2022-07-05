@@ -28,11 +28,7 @@
                 <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
             </template>
                 <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
-              
-            <v-text-field
-            v-model="jenisProduk"
-            label="Jenis Produk">
-            </v-text-field>
+            
 
             <v-text-field 
             v-model="proyek" 
@@ -44,7 +40,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="addRProyek()"
+            @click="addRProyekbyProyek()"
             >
             Submit
             </v-btn>
@@ -58,7 +54,7 @@
             </v-btn>
         </v-form>
         <v-snackbar top color="green" v-model="snackBar">
-            Insert Rincian Proyek Sukses!
+            Insert Rincian Proyek by Proyek Sukses!
         </v-snackbar>
     </v-card>
 </template>
@@ -71,7 +67,6 @@
       id: '',
       jumlah : '',
       dueDate : null,
-      jenisProduk : '',
       proyek : '',
 
       idRules: [
@@ -89,19 +84,17 @@
         console.log(this.id)
         console.log(this.jumlah)
         console.log(this.dueDate)
-        console.log(this.jenisProduk)
         console.log(this.proyek)
 
       },
 
-      async addRProyek(){
+      async addRProyekbyProyek(){
         try{
           const axios = require('axios')
           const res = await axios.post('/rproyek/add_rproyek',{
             id : this.id,
             jumlah : this.jumlah,
             dueDate : this.dueDate,
-            jenisProduk : this.jenisProduk,
             proyek : this.proyek
           })
           console.log(res)

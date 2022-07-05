@@ -52,9 +52,11 @@
                   </v-icon>
               </div>
               <div v-else>
+                <router-link :to="{name : 'Proyek by Customer',params:{id : `${item.id}`}}">
                 <v-btn class="mx-1" x-small color="blue" @click="selectCustomer(item)">
                     <v-icon small dark>mdi-check</v-icon>
                 </v-btn>
+                </router-link>
                 <v-btn class="mx-1" x-small color="green" @click="editCustomer(item)">
                     <v-icon small dark>mdi-pencil</v-icon>
                 </v-btn>
@@ -147,7 +149,7 @@
     
       selectCustomer(customers){
           console.log('ID : ' + customers.id)
-          open(`/proyekListbyCustomer/${customers.id}`)
+          //open(`/proyekListbyCustomer/${customers.id}`)
       },
 
       deleteCustomer(customers){

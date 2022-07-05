@@ -42,9 +42,12 @@
                     </v-icon>
                 </div>
                 <div v-else>
+                    <router-link :to="{name : 'List Rincian Proyek by Proyek',params:{id : `${item.id}`}}">
                     <v-btn class="mx-1" x-small color="blue" @click="selectProject(item)">
                         <v-icon small dark>mdi-check</v-icon>
                     </v-btn>
+                    </router-link>
+
                     <v-btn class="mx-1" x-small color="green" @click="editProject(item)">
                         <v-icon small dark>mdi-pencil</v-icon>
                     </v-btn>
@@ -129,7 +132,7 @@ export default{
         },
         selectProject(project){
             console.log('ID : ' + project.id)
-            open(`/listRProyekbyProyek/${project.id}`)
+            //open(`/listRProyekbyProyek/${project.id}`)
         },
 
         editProject(project){

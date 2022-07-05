@@ -58,6 +58,35 @@ def AddProyek():
   return hasil
 
 
+def AddProyekbyCustomer(id_customer):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id FROM gen_r_customer a JOIN prd_r_proyek b ON b.customerid = a.id WHERE a.id = '"+id_customer+"' LIMIT 1"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    temp = ""
+    for data in records:
+        temp = data[0]
+    
+   
+    query = "INSERT INTO prd_r_proyek(id,nama,tglDibuat,dueDate,customerid)VALUES(%s,%s,%s,%s,'"+temp+"')"
+    try:
+        data = request.json
+        id = data["id"]
+        nama = data["nama"]
+        now = datetime.now()
+        dueDate = data["dueDate"]
+        values = (id,nama,now,dueDate)
+        cursor.execute(query,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "berhasil"}
+    return hasil
+
+
+
 def UpdateProyek(id):
     conn = database.connector()
     query = "UPDATE prd_r_proyek SET id = %s,nama = %s,customerid = %s WHERE id = '"+id+"'"

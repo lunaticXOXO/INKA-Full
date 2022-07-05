@@ -39,9 +39,12 @@
                   </v-icon>
               </div>
               <div v-else>
+              <router-link :to="{name : 'List Rincian Proyek by Proyek',params:{id : `${item.id}`}}">
               <v-btn class="mx-1" x-small color="blue" @click="selectProyek(item)">
                     <v-icon small dark>mdi-check</v-icon>
                 </v-btn>
+              </router-link>
+              
                 <v-btn class="mx-1" x-small color="green" @click="updateProyek(item)">
                     <v-icon small dark>mdi-pencil</v-icon>
                 </v-btn>
@@ -147,7 +150,7 @@
       },
       selectProyek(proyek){ 
         console.log(proyek.id)
-        open(`/listRProyekbyProyek/${proyek.id}`)
+        //open(`/listRProyekbyProyek/${proyek.id}`)
       },
 
       close(){

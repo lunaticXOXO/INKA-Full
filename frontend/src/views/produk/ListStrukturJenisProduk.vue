@@ -51,9 +51,12 @@
                         </v-icon>
                     </div>
                     <div v-else>
+                        <router-link :to="{name : 'List Process by Struktur Jenis Produk',params:{ id : `${item.idNodal}`}}">
                         <v-btn class="mx-1" x-small color="blue" @click="selectSJProduct(item)">
                             <v-icon small dark>mdi-check</v-icon>
                         </v-btn>
+                        </router-link>
+                        
                         <v-btn class="mx-1" x-small color="green" @click="editSJProduct(item)">
                             <v-icon small dark>mdi-pencil</v-icon>
                         </v-btn>
@@ -176,7 +179,8 @@ export default {
         },
 
         selectSJProduct(sjproduk){
-            open(`/listProcessbySJProduk/${sjproduk.idNodal}`)
+            console.log(sjproduk.id)
+            //open(`/listProcessbySJProduk/${sjproduk.idNodal}`)
         }
     }
 }

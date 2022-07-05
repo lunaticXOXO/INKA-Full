@@ -56,12 +56,18 @@
                          </v-icon>
                     </div>
                     <div>
+                     <router-link :to="{name:'List Produk by Rincian Proyek',params:{'id': `${item.id}`}}">
                     <v-btn class="mx-1" x-small color="blue" @click="selectRProyektoProduct(item)">
                         <v-icon small dark>mdi-check</v-icon>
                     </v-btn>
+                    </router-link>
+
+                    <router-link :to="{name : 'List Jenis Produk by RProyek',params:{'id':`${item.id}`}}">
                       <v-btn class="mx-1" x-small color="brown" @click="selectRProyektoJProduct(item)">
                         <v-icon small dark>mdi-check</v-icon>
                     </v-btn>
+                    </router-link>
+                    
                     <v-btn class="mx-1" x-small color="green" @click="editRProyek(item)">
                         <v-icon small dark>mdi-pencil</v-icon>
                     </v-btn>
@@ -149,11 +155,11 @@ export default {
             },
         selectRProyektoProduct(rincianbyproyek){
             console.log(rincianbyproyek.id)
-            open(`/listProdukbyRProyek/${rincianbyproyek.id}`)
+            //open(`/listProdukbyRProyek/${rincianbyproyek.id}`)
         },
         selectRProyektoJProduct(rincianbyproyek){
              console.log(rincianbyproyek.id)
-             open(`/listJenisProdukbyRProyek/${rincianbyproyek.id}`)
+             //open(`/listJenisProdukbyRProyek/${rincianbyproyek.id}`)
 
         },
          editRProyek(rincianbyproyek){

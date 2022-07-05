@@ -32,7 +32,7 @@ def ShowJenisProses():
     json_data = []
     for data in records:
        json_data.append(dict(zip(row_headers,data)))
-    conn.commit()
+    #conn.commit()
 
     return make_response(jsonify(json_data),200)
 
