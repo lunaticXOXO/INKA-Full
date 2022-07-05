@@ -34,6 +34,8 @@ def ShowWorkStationbyProcess(id_process):
       return make_response(jsonify(json_data),200)
 
 
+
+
 def UpdateWorkstation(id):
       conn = database.connector()
       cursor = conn.cursor()
@@ -76,4 +78,51 @@ def AddWorkstation():
   except Exception as e:
         print("Error" + str(e))
         hasil = {"status" : "gagal"}
+  return hasil
+
+
+
+
+def AddWorkStationbyProcess(id_process):
+      conn = database.connector()
+      cursor = conn.cursor()
+      query = "SELECT a.id FROM prd_r_proses a WHERE a.id = '"+id_process+"' LIMIT 1"
+      cursor.execute(query)
+      records = cursor.fetchall()
+      temp = ""
+      for data in records:
+       temp = data[0]
+
+      query = "INSERT INTO gen_r_mampuproses(proses,stasiunKerja)VALUES(%s,%s)"
+      try:
+            data = request.json
+            stasiunKerja = data["stasiunKerja"]
+            values = (temp,stasiunKerja)
+            cursor.execute(query,values)
+            conn.commit()
+            hasil = {"Status" : "Berhasil"}
+
+      except Exception as e:
+            print("Error",str(e))
+            hasil = {"Status" : "Gagal"}
+      return hasil
+      
+
+def UpdateWorkstation(id):
+  conn = database.connector()
+  cursor = conn.cursor()
+  query = "UPDATE gen_r_stasiunkerja SET id = %s,nama = %s,berlaku = %s,liniproduksi = %s WHERE id = '"+id+"'"
+  try:
+      data = request.json
+      id = data["id"]
+      nama = data["nama"]
+      berlaku = data["berlaku"]
+      liniproduksi = data["liniproduksi"]
+      values = (id,nama,berlaku,liniproduksi)
+      cursor.execute(query,values)
+      conn.commit()
+      hasil = {"Status" : "Berhasil"}
+  except Exception as e:
+      print("Error",str(e))
+      hasil = {"Status" : "Gagal"}
   return hasil

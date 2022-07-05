@@ -31,9 +31,12 @@
                 </v-icon>
             </div>
             <div v-else>
+            <router-link :to="{name : 'List Struktur Jenis Produk by Jenis Produk',params:{id : `${item.id}`}}">
               <v-btn class="mx-1" x-small color="blue" @click="selectJProduktoSJProduk(item)">
                     <v-icon small dark>mdi-check</v-icon>
                 </v-btn>
+            </router-link>
+            
                 <v-btn class="mx-1" x-small color="green" @click="editJenisProduk(item)">
                     <v-icon small dark>mdi-pencil</v-icon>
                 </v-btn>
@@ -109,7 +112,7 @@ export default {
 
         selectJProduktoSJProduk(jenisproduk){
             console.log(jenisproduk.id)
-            open(`/listStrukturJenisProduk/${jenisproduk.id}`)
+            //open(`/listStrukturJenisProduk/${jenisproduk.id}`)
         },
 
         async updateJenisProduk(){

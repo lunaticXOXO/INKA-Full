@@ -55,9 +55,11 @@
                     </v-icon>
                     </div>
                     <div v-else>
+                        <router-link :to="{name : 'List Stasiun Kerja by Process',params : {id : `${item.id}`}}">
                         <v-btn class="mx-1" x-small color="blue" @click="selectProsestoWorkStation(item)">
                             <v-icon small dark>mdi-check</v-icon>
                         </v-btn>
+                        </router-link>
                         <v-btn class="mx-1" x-small color="green" @click="editProses(item)">
                             <v-icon small dark>mdi-pencil</v-icon>
                         </v-btn>
@@ -137,12 +139,13 @@ export default {
 
         async fetchProses(){
               try{
+                    const axios = require('axios')
                     const res = await axios.get('/proses/get_listprocess')
                     if (res.data == null){
                         alert("Proses Kosong")
                     }else{
                         this.proses = res.data
-                        this.prosesData = res.data
+                        //this.prosesData = res.data
                         console.log(res,this.proses)
                     }
                 }
@@ -207,7 +210,8 @@ export default {
         },
 
         selectProcesstoWorkStation(proses){
-            open(`/listStasiunKerjabyProcess/${proses.id}`)
+            console.log(proses.id)
+            //open(`/listStasiunKerjabyProcess/${proses.id}`)
         }
     }
 }

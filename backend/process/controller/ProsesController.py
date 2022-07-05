@@ -9,7 +9,7 @@ import db.db_handler as database
 def ShowProses():
     conn = database.connector()
     cursor = conn.cursor()
-    data = request.json
+    #data = request.json
     query = "SELECT a.id, a.nama, a.durasi, a.satuanDurasi,a.jenisProses,a.prosesSesudahnya, c.idNodal FROM prd_r_proses a JOIN prd_r_strukturjnsprd c ON c.idNodal = a.nodalOutput"
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
@@ -17,14 +17,14 @@ def ShowProses():
     json_data = []
     for data in records:
        json_data.append(dict(zip(row_headers,data)))
-    conn.commit()
+    #conn.commit()
 
     return make_response(jsonify(json_data),200)
 
 def ShowJenisProses():
     conn = database.connector()
     cursor = conn.cursor()
-    data = request.json
+    #data = request.json
     query = "SELECT * FROM prd_r_jenisproses"
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
@@ -32,7 +32,7 @@ def ShowJenisProses():
     json_data = []
     for data in records:
        json_data.append(dict(zip(row_headers,data)))
-    conn.commit()
+    #conn.commit()
 
     return make_response(jsonify(json_data),200)
 

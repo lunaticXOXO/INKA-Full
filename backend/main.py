@@ -89,6 +89,11 @@ def add_newproyek():
     hasil = AddProyek()
     return hasil
 
+@app.route('/proyek/add_newproyek_by_customer/<id_customer>',methods = ['POST'])
+def add_newproyek_by_customer(id_customer):
+    hasil = AddProyekbyCustomer(id_customer)
+    return hasil
+
 @app.route('/proyek/update_proyek/<id>',methods = ['POST'])
 def update_proyek(id):
     hasil = UpdateProyek(id)
@@ -265,6 +270,11 @@ def update_stasiun_kerja(id):
 @app.route('/stasiun_kerja/add_stasiun_kerja',methods = ['POST'])
 def add_stasiun_kerja():
     hasil = AddWorkstation()
+    return hasil
+
+@app.route('/stasiun_kerja/add_stasiun_by_process/<id_process>',methods = ['POST'])
+def add_stasiun_by_process(id_process):
+    hasil = AddWorkStationbyProcess(id_process)
     return hasil
 
 if __name__ =="__main__":

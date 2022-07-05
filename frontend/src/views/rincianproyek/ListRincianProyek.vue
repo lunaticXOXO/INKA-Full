@@ -58,12 +58,18 @@
                         </v-icon>
                     </div>
                     <div v-else>
+                        <router-link :to="{name:'List Produk by Rincian Proyek',params:{'id': `${item.id}`}}">
                         <v-btn class="mx-1" x-small color="blue" @click="selectRinciantoProduct(item)">
                             <v-icon small dark>mdi-check</v-icon>
                         </v-btn>
+                        </router-link>
+
+                        <router-link :to="{name : 'List Jenis Produk by RProyek',params:{'id':`${item.id}`}}">
                         <v-btn class="mx-1" x-small color="brown" @click="selectRinciantoJProduct(item)">
                             <v-icon small dark>mdi-check</v-icon>
                         </v-btn>
+                        </router-link>
+
                         <v-btn class="mx-1" x-small color="green" @click="editRincian(item)">
                             <v-icon small dark>mdi-pencil</v-icon>
                         </v-btn>
@@ -73,6 +79,13 @@
                     </div>
                 </template>
             </v-data-table>
+            <v-row justify="space-around">
+            <router-link to="/">
+            <v-btn color="primary">
+                Add Rincian Proyek
+            </v-btn>
+            </router-link>
+            </v-row>
         </v-card>
     </v-card>
 </template>
@@ -199,12 +212,12 @@
 
             selectRinciantoProduct(rincian){
                 console.log(rincian.id)
-                open(`/listProdukbyRProyek/${rincian.id}`)
+                //open(`/listProdukbyRProyek/${rincian.id}`)
             },
 
             selectRinciantoJProduct(rincian){
                 console.log(rincian.id)
-                open(`/listJenisProdukbyRProyek/${rincian.id}`)
+                //open(`/listJenisProdukbyRProyek/${rincian.id}`)
             },
 
             deleteRincian(rincian){
