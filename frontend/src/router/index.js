@@ -450,6 +450,7 @@ const routes = [
       title : "Tambah Rincian Proyek - PT.INKA"
     }
   },
+  
   {
     path : '/tambahRProyekbyProyek/:id',
     name : 'Tambah Rincian Proyek by Proyek',
@@ -467,6 +468,7 @@ const routes = [
       title : "Tambah Produk - PT.INKA"
     }
   },
+
   {
     path : '/tambahProdukbyRProyek/:id',
     name : 'Tambah Produk by RProyek',
@@ -475,6 +477,7 @@ const routes = [
       title : "Tambah Produk by Rincian Proyek - PT.INKA"
     }
   },
+
   {
     path : '/tambahSJProdukbyProduk/:id',
     name : 'Tambah Struktur Jenis Produk by Jenis Produk',
@@ -483,6 +486,7 @@ const routes = [
       title : "Tambah Sturktur Jenis Produk by Jenis Produk - PT.INKA"
     }
   },
+
   {
     path : '/pesanProyekbyCustomer/:id',
     name : 'Tambah Proyek by Customer',
@@ -491,6 +495,7 @@ const routes = [
         title : "Tambah Proyek by Customer - PT.INKA"
     }
   },
+
   {
     path : '/addStasiunKerjabyProcess/:id',
     name : 'Tambah Stasiun Kerja by Process',
