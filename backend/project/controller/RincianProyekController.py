@@ -52,6 +52,7 @@ def AddRincianProyek():
         proyek = data["proyek"]
         values = (id,jumlah,dueDate,jenisProduk,proyek)
         cursor.execute(query,values)
+        conn.commit()
         hasil = {"Status" : "Berhasil"}
 
     except Exception as e:

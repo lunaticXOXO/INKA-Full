@@ -3,8 +3,15 @@
         class="mx-auto text-center mt-6"
         max-width="1000">
         <br>
-        <h1>List Proses by Sturktur Jenis Produk</h1>
+        <h1>List Proses by Sturktur Jenis Produk</h1><h1>{{this.$route.params.id}}</h1>
         <br>
+        
+        <router-link :to="{name : 'Tambah Proses by Struktur Jenis Produk',params:{id : `${this.$route.params.id}`}}">
+            <v-btn color="primary" class="d-flex ml-4 mb-6">
+                    Add Process by Struktur Jenis Produk
+            </v-btn>
+        </router-link>
+
         <v-card
         class="mx-auto text-center"
         max-width="1000">

@@ -50,6 +50,7 @@ import TambahProdukbyRProyek from '../views/produk/TambahProdukbyRProyek.vue'
 import TambahStrukturProdukbyProduk from '../views/produk/TambahStrukturProdukbyProduk.vue'
 import PesanProyekbyCustomer from '../views/proyek/PesanProyekbyCustomer.vue'
 import TambahStasiunKerjabyProcess from '../views/stasiunKerja/TambahStasiunKerjabyProcess.vue'
+import TambahProsesBySJProduk from '../views/proses/TambahProsesBySJProduk.vue'
 
 Vue.use(VueRouter)
 
@@ -502,6 +503,14 @@ const routes = [
     component : TambahStasiunKerjabyProcess,
     meta : {
       title : "Memilih Stasiun Kerja by Process - PT.INKA"
+    }
+  },
+  {
+    path : '/tambahProsesbySJProduk/:id',
+    name : 'Tambah Proses by Struktur Jenis Produk',
+    component : TambahProsesBySJProduk,
+    meta : {
+      title : "Tambah Proses by Struktur Jenis Produk - PT.INKA"
     }
   }
 

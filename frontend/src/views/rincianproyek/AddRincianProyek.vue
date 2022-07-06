@@ -24,20 +24,28 @@
             label="Jumlah"
             ></v-text-field>
 
+            <v-menu>
             <template v-slot:activator="{ on, attrs }">
                 <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
             </template>
                 <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
-              
-            <v-text-field
-            v-model="jenisProduk"
-            label="Jenis Produk">
-            </v-text-field>
+            </v-menu>
 
-            <v-text-field 
-            v-model="proyek" 
+            <v-select
+            v-model="jenisProduk"
+            :items="items2"
+            item-text="id"
+            item-value="id"
+            label="Jenis Produk">
+            </v-select>
+
+            <v-select 
+            v-model="proyek"
+            item-text="id"
+            item-value="id"
+            :items ="items" 
             label="Proyek">
-            </v-text-field>
+            </v-select>
 
             <v-btn
             :disabled="!valid"
@@ -67,21 +75,25 @@
   export default {
     data: () => ({
       valid: true,
-      
+      items : undefined,
+      items2 : undefined,
       id: '',
       jumlah : '',
       dueDate : null,
       jenisProduk : '',
       proyek : '',
-
+      snackBar : false,
       idRules: [
         v => !!v || 'ID is required',
         v => (v && v.length <= 4 && v.length >= 1) || 'Kode must be 1-4 characters',
       ],
     }),
+    mounted(){
+      this.getProyek()
+      this.getJenisProduk()
+    },
 
     methods: {
-     
       reset () {
         this.$refs.form.reset()
       },
@@ -105,8 +117,43 @@
             proyek : this.proyek
           })
           console.log(res)
+          this.snackBar = true
         }catch(error){
            console.log(error)
+        }
+      },
+
+      async getProyek(){
+        try{
+          const axios = require('axios')
+          const res = await axios.get('/proyek/get_allproyek')
+          if(res.data == null){
+            console.log("data kosong")
+          }else{
+            this.items = res.data
+            console.log(res,this.items)
+          }
+
+        }
+        catch(error){
+          console.log(error)
+        }
+      },
+
+      async getJenisProduk(){
+        try{
+
+          const axios = require('axios')
+          const res = await axios.get('/jproduct/get_jproduct')
+          if(res.data == null){
+            console.log("data kosong")
+          }else{
+            this.items2 = res.data
+            console.log(res,this.items2)
+          }
+
+        }catch(error){
+          console.log(error)
         }
       }
     },

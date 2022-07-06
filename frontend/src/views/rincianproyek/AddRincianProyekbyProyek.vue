@@ -24,16 +24,21 @@
             label="Jumlah"
             ></v-text-field>
 
+            <v-menu>
             <template v-slot:activator="{ on, attrs }">
                 <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
             </template>
                 <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
+            </v-menu>
             
 
-            <v-text-field 
-            v-model="proyek" 
-            label="Proyek">
-            </v-text-field>
+           <v-select 
+            v-model="jenisProduk"
+            item-text="id"
+            item-value="id"
+            :items ="items" 
+            label="Jenis Produk">
+            </v-select>
 
             <v-btn
             :disabled="!valid"
@@ -53,6 +58,7 @@
             Reset
             </v-btn>
         </v-form>
+
         <v-snackbar top color="green" v-model="snackBar">
             Insert Rincian Proyek by Proyek Sukses!
         </v-snackbar>
@@ -63,18 +69,21 @@
   export default {
     data: () => ({
       valid: true,
-      
+      items : undefined,
       id: '',
       jumlah : '',
       dueDate : null,
-      proyek : '',
-
+      jenisProduk : '',
+      
       idRules: [
         v => !!v || 'ID is required',
-        v => (v && v.length <= 4 && v.length >= 1) || 'Kode must be 1-4 characters',
+        v => (v && v.length <= 5 && v.length >= 1) || 'Kode must be 1-4 characters',
       ],
     }),
 
+    mounted(){
+      this.fetchJenisProduk()
+    },
     methods: {
      
       reset () {
@@ -91,17 +100,35 @@
       async addRProyekbyProyek(){
         try{
           const axios = require('axios')
-          const res = await axios.post('/rproyek/add_rproyek',{
+          const res = await axios.post('/rproyek/add_rproyek_byproyek/' + this.$route.params.id,{
             id : this.id,
             jumlah : this.jumlah,
             dueDate : this.dueDate,
-            proyek : this.proyek
+            jenisProduk : this.jenisProduk
           })
+
           console.log(res)
         }catch(error){
            console.log(error)
         }
-      }
-    },
+      },
+       async fetchJenisProduk(){
+        try{
+          const axios = require('axios')
+          const res = await axios.get('/jproduct/get_jproduct')
+          if(res.data == null){
+            console.log("data kosong")
+          }else{
+            this.items = res.data
+            console.log(res,this.items)
+          }
+        }
+        catch(error){
+          console.log(error)
+        }
+      },
+    }
+
+   
   }
 </script>

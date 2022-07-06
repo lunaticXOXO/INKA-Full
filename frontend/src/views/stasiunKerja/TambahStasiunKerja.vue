@@ -22,15 +22,15 @@
             <v-select
             item-text="nama"
             item-value="id"
-            v-model="jnsStasiunKerja"
+            v-model="nama"
             :items="items"
             label="Jenis Stasiun Kerja"
             ></v-select>
 
             <v-select
-            item-text="nama"
-            item-value="id"
-            v-model="liniProduksi"
+            item-text="id"
+            item-value="nama"
+            v-model="liniproduksi"
             :items="items2"
             label="Lini Produksi"
             ></v-select>
@@ -40,7 +40,8 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="InsertStasiunKerja()">
+            @click="InsertStasiunKerja(),snackBar=false"
+            >
             Submit
             </v-btn>
 
@@ -51,9 +52,17 @@
             Reset
             </v-btn>
         </v-form>
+        
+       <div v-if="snackBar === true">
         <v-snackbar top color="green" v-model="snackBar">
             Insert Stasiun Kerja Sukses!
         </v-snackbar>
+     </div>
+     <div v-else-if="snackBar === false">
+     <v-snackbar top color="red" v-model="snackBar">
+            Insert Stasiun Kerja Gagal!
+        </v-snackbar>
+     </div>
     </v-card>
 </template>
 
@@ -62,13 +71,14 @@
     data: () => ({
       valid: true,
       snackBar: false,
-      id: '',
+    
       idRules: [
         v => !!v || 'ID is required',
         v => (v && v.length <= 4 && v.length >= 3) || 'ID must be 3-4 characters',
       ],
-      jnsStasiunKerja: undefined,
-      liniProduksi: undefined,
+      id: '',
+      nama: undefined,
+      liniproduksi: undefined,
       items: undefined,
       items2: undefined,
     }),
@@ -126,16 +136,24 @@
           const axios = require('axios');
           const response = await axios.post('/stasiun_kerja/add_stasiun_kerja',
             { id: this.id,
-              nama: this.jnsStasiunKerja,
-              liniproduksi: this.liniProduksi,
+              nama: this.nama,
+              liniproduksi: this.liniproduksi,
             }
+    
           );
           console.log(response,this.data)
-          this.snackBar = true
+         
+          if(response.data.status == 200){
+              this.snackBar = false
+          }else if(response.data == "berhasil"){
+            this.snackBar = true
+          }
+        
         }
         catch(error){
           alert("Insert Stasiun Kerja Failed")
           console.log(error)
+          this.snackBar = false
         }
       },
     }

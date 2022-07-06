@@ -148,8 +148,17 @@ def get_product():
 @app.route('/product/get_product_by_rproyek/<id_rproyek>',methods = ['GET'])
 def get_product_by_rproyek(id_rproyek):
     hasil = GetProdukbyRProyek(id_rproyek)
-    return hasil    
+    return hasil 
 
+@app.route('/product/add_product',methods = ['POST'])   
+def add_product():
+    hasil = AddProduk()
+    return hasil
+
+@app.route('/product/add_product_by_rproyek/<id_rincian>',methods = ['POST'])
+def add_product_by_rproyek(id_rincian):
+    hasil = AddProdukbyRincian(id_rincian)
+    return hasil
 
 #JENIS PRODUCT
 @app.route('/jproduct/post_jproduct',methods =['POST'])

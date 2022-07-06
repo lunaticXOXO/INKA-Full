@@ -53,6 +53,7 @@
         v => !!v || 'ID is required',
         v => (v && v.length <= 9 && v.length >= 5) || 'ID must be 5-9 characters',
       ],
+      snackBar : false
     }),
 
     methods: {
@@ -66,7 +67,7 @@
 
       async InsertProduk(){
         try{
-          const response = await axios.post('/jproduct/post_jproductbyrproyek/'+ this.$route.params.id,
+          const response = await axios.post('/product/add_product_by_rproyek/'+ this.$route.params.id,
             { id: this.id
             }
           );

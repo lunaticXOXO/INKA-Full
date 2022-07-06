@@ -103,7 +103,7 @@ export default {
                     { title: 'Lihat Produk', icon: 'mdi-eye',route : '/listProduk'},
                     { title: 'Lihat Jenis Produk',icon : 'mdi-eye',route : '/listJenisProduk'},
                     { title: 'Lihat Struktur Tipe Produk',icon : 'mdi-eye',route : '/listStrukturJenisProduk'},
-                    { title: 'Tambah Produk', icon: 'mdi-plus', route: '/addProduk'},
+                    { title: 'Tambah Produk', icon: 'mdi-plus', route: '/tambahProduk'},
                     { title: 'Tambah Jenis Produk', icon: 'mdi-plus', route: '/jenisProduk'},
                     { title: 'Tambah Struktur Tipe Produk', icon: 'mdi-plus', route: '/strukturProduk'},
                 ],
@@ -127,7 +127,7 @@ export default {
                 active: false,
                 items: [
                     { title: 'List Rincian Proyek', icon: 'mdi-filter-variant', route: '/listRincianProyek'},
-                    { title: 'Tambah Rincian Proyek', icon: 'mdi-plus', route: '/addRincianProyek'},
+                    { title: 'Tambah Rincian Proyek', icon: 'mdi-plus', route: '/tambahRincianProyek'},
                 ],
                 title: 'Rincian Proyek',
                 },

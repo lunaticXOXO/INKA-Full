@@ -5,6 +5,11 @@
         <br>
         <h1>List Struktur Jenis Produk</h1>
         <br>
+        <router-link to="/strukturProduk">
+            <v-btn color="primary" class="d-flex ml-4 mb-6">
+                Add Struktur Jenis Produk
+            </v-btn>
+        </router-link>
         <v-card
         class="mx-auto text-center"
         max-width="1000">

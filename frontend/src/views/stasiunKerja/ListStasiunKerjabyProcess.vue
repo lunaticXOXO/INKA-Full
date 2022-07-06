@@ -3,8 +3,13 @@
         class="mx-auto text-center mt-6"
         max-width="1000">
         <br>
-        <h1>List Stasiun Kerja by Process</h1>
+        <h1>List Stasiun Kerja by Process</h1><h1>{{this.$route.params.id}}</h1>
         <br>
+        <router-link :to="{name : 'Tambah Stasiun Kerja by Process',params : {id : `${this.$route.params.id}`}}">
+            <v-btn color="primary" class="d-flex ml-4 mb-6">
+                Pilih Stasiun Kerja
+            </v-btn>
+        </router-link>
         <v-card
         class="mx-auto text-center"
         max-width="1000">
