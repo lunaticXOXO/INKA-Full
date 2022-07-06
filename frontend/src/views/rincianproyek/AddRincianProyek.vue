@@ -24,10 +24,12 @@
             label="Jumlah"
             ></v-text-field>
 
-            <template v-slot:activator="{ on, attrs }">
-                <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
-            </template>
-                <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
+            <v-menu>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-text-field :value="tanggal" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
+                </template>
+                <v-date-picker width="1000" v-model="tanggal"></v-date-picker>
+            </v-menu>
               
             <v-text-field
             v-model="jenisProduk"

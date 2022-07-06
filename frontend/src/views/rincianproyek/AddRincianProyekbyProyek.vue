@@ -40,7 +40,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="addRProyekbyProyek()"
+            @click="validate()"
             >
             Submit
             </v-btn>
@@ -76,10 +76,16 @@
     }),
 
     methods: {
+      validate () {
+        if(this.$refs.form.validate()){
+          this.addRProyekbyProyek()
+        }
+      },
      
       reset () {
         this.$refs.form.reset()
       },
+
       submitHandler() {
         console.log(this.id)
         console.log(this.jumlah)

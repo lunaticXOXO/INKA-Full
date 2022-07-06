@@ -18,8 +18,6 @@
             label="ID"
             required
             ></v-text-field>
-          
-          
             
             <v-text-field
             v-model="nama"
@@ -38,7 +36,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="InsertProyekByCustomer()"
+            @click="validate()"
             >
             Submit
             </v-btn>
@@ -74,6 +72,12 @@
     },
 
     methods: {
+      validate () {
+        if(this.$refs.form.validate()){
+          this.InsertProyekByCustomer()
+        }
+      },
+
       reset () {
         this.$refs.form.reset()
       },

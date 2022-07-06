@@ -45,7 +45,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="InsertProyek()"
+            @click="validate()"
             >
             Submit
             </v-btn>
@@ -81,6 +81,12 @@
     },
 
     methods: {
+      validate () {
+        if(this.$refs.form.validate()){
+          this.InsertProyek()
+        }
+      },
+
       reset () {
         this.$refs.form.reset()
       },

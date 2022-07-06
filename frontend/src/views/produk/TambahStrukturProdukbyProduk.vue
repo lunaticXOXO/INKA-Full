@@ -48,7 +48,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="InsertStrukturProdukbyJProduk()"
+            @click="validate()"
             >
             Submit
             </v-btn>
@@ -93,6 +93,12 @@
     },
 
     methods: {
+      validate () {
+        if(this.$refs.form.validate()){
+          this.InsertStrukturProdukbyJProduk()
+        }
+      },
+
       reset () {
         this.$refs.form.reset()
       },

@@ -29,7 +29,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="InsertLiniProduksi()"
+            @click="validate()"
             >
             Submit
             </v-btn>
@@ -61,6 +61,12 @@
     }),
 
     methods: {
+      validate () {
+        if(this.$refs.form.validate()){
+          this.InsertLiniProduksi()
+        }
+      },
+
       reset () {
         this.$refs.form.reset()
       },

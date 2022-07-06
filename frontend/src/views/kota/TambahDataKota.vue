@@ -40,7 +40,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="InsertKota()"
+            @click="validate()"
             >
             Submit
             </v-btn>
@@ -81,7 +81,9 @@
 
     methods: {
       validate () {
-        this.$refs.form.validate()
+        if(this.$refs.form.validate()){
+          this.InsertKota()
+        }
       },
 
       reset () {

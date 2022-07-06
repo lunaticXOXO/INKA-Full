@@ -82,7 +82,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="validate"
+            @click="validate()"
             >
             Submit
             </v-btn>
@@ -130,8 +130,11 @@
 
     methods: {
       validate () {
-        this.$refs.form.validate()
+        if(this.$refs.form.validate()){
+          this.InsertPemasok()
+        }
       },
+
       reset () {
         this.$refs.form.reset()
       },

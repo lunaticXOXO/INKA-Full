@@ -82,7 +82,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="validate"
+            @click="validate();"
             >
             Submit
             </v-btn>
@@ -95,6 +95,9 @@
             Reset
             </v-btn>
         </v-form>
+        <v-snackbar top color="green" v-model="snackBar">
+            Insert Pelanggan Sukses!
+        </v-snackbar>
     </v-card>
 </template>
 
@@ -102,6 +105,7 @@
   export default {
     data: () => ({
       valid: true,
+      snackBar: false,
       fax: '',
       situs: '',
       pic: '',
@@ -129,7 +133,9 @@
 
     methods: {
       validate () {
-        this.$refs.form.validate()
+        if(this.$refs.form.validate()){
+          this.InsertPelanggan()
+        }
       },
 
       reset () {
@@ -165,6 +171,33 @@
         catch(error){
             alert("Error")
             console.log(error)
+        }
+      },
+
+      async InsertPelanggan(){
+        try{
+          const axios = require('axios');
+          const response = await axios.post('/customers/add_customer',
+            { id: this.id,
+              nama: this.nama,
+              adress1: this.alamat1,
+              adress2: this.alamat2,
+              postalCode: this.kodePos,
+              phone: this.noTelepon,
+              fax: this.fax,
+              email: this.email,
+              situs: this.situs,
+              pic: this.pic,
+              remark: this.catatan,
+              city: this.kota
+            }
+          );
+          console.log(response,this.data)
+          this.snackBar = true
+        }
+        catch(error){
+          alert("Insert Pelanggan Failed")
+          console.log(error)
         }
       },
 

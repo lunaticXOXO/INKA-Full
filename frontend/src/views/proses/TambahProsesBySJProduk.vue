@@ -56,7 +56,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="InsertProses()">
+            @click="validate()">
             Submit
             </v-btn>
 
@@ -102,6 +102,12 @@
         },
 
         methods: {
+            validate () {
+                if(this.$refs.form.validate()){
+                    this.InsertProses()
+                }
+            },
+
             reset () {
                 this.$refs.form.reset()
             },

@@ -32,7 +32,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="InsertProduk()"
+            @click="validate()"
             >
             Submit
             </v-btn>
@@ -56,6 +56,7 @@
   export default {
     data: () => ({
       valid: true,  
+      snackBar: false,
       id: '',
       idRules: [
         v => !!v || 'ID is required',
@@ -65,7 +66,17 @@
       items: [],
     }),
 
+    mounted(){
+        this.fetchRincianProyek()
+    },
+
     methods: {
+      validate () {
+        if(this.$refs.form.validate()){
+          this.InsertProduk()
+        }
+      },
+
       reset () {
         this.$refs.form.reset()
       },

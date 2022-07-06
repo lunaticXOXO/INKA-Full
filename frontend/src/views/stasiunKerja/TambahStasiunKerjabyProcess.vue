@@ -26,7 +26,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="InsertStasiunKerjabyProcess()">
+            @click="validate()">
             Submit
             </v-btn>
 
@@ -62,6 +62,12 @@
     },
 
     methods: {
+      validate () {
+        if(this.$refs.form.validate()){
+          this.InsertStasiunKerjabyProcess()
+        }
+      },
+
       reset () {
         this.$refs.form.reset()
       },

@@ -24,7 +24,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="InsertProduk()"
+            @click="validate()"
             >
             Submit
             </v-btn>
@@ -56,6 +56,12 @@
     }),
 
     methods: {
+      validate () {
+        if(this.$refs.form.validate()){
+          this.InsertProduk()
+        }
+      },
+
       reset () {
         this.$refs.form.reset()
       },

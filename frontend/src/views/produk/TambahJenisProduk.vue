@@ -29,7 +29,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="InsertJenisProduk()"
+            @click="validate()"
             >
             Submit
             </v-btn>
@@ -62,6 +62,12 @@
     }),
 
     methods: {
+      validate () {
+        if(this.$refs.form.validate()){
+          this.InsertJenisProduk()
+        }
+      },
+
       reset () {
         this.$refs.form.reset()
       },
