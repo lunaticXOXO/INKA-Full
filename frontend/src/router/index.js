@@ -43,6 +43,13 @@ import ListProses from '../views/proses/ListProses.vue'
 import ListProsesbySJProduk from '../views/proses/ListProsesbySJProduk.vue'
 import ListStasiunKerjabyProcess from '../views/stasiunKerja/ListStasiunKerjabyProcess.vue'
 import TambahProses from '../views/proses/TambahProses.vue'
+import AddRincianProyek from '../views/rincianproyek/AddRincianProyek.vue'
+import AddRincianProyekbyProyek from '../views/rincianproyek/AddRincianProyekbyProyek.vue'
+import TambahProduk from '../views/produk/TambahProduk.vue'
+import TambahProdukbyRProyek from '../views/produk/TambahProdukbyRProyek.vue'
+import TambahStrukturProdukbyProduk from '../views/produk/TambahStrukturProdukbyProduk.vue'
+import PesanProyekbyCustomer from '../views/proyek/PesanProyekbyCustomer.vue'
+import TambahStasiunKerjabyProcess from '../views/stasiunKerja/TambahStasiunKerjabyProcess.vue'
 
 Vue.use(VueRouter)
 
@@ -434,6 +441,65 @@ const routes = [
       title : "Tambah Proses - PT.INKA"
     }
   },
+
+  {
+    path : '/tambahRincianProyek',
+    name : 'Tambah Rincian Proyek',
+    component : AddRincianProyek,
+    meta : {
+      title : "Tambah Rincian Proyek - PT.INKA"
+    }
+  },
+  {
+    path : '/tambahRProyekbyProyek/:id',
+    name : 'Tambah Rincian Proyek by Proyek',
+    component : AddRincianProyekbyProyek,
+    meta : {
+      title : "Tambah Rincian Proyek by Proyek - PT INKA"
+    }
+  },
+
+  {
+    path : '/tambahProduk',
+    name : 'Tambah Produk',
+    component : TambahProduk,
+    meta : {
+      title : "Tambah Produk - PT.INKA"
+    }
+  },
+  {
+    path : '/tambahProdukbyRProyek/:id',
+    name : 'Tambah Produk by RProyek',
+    component : TambahProdukbyRProyek,
+    meta : {
+      title : "Tambah Produk by Rincian Proyek - PT.INKA"
+    }
+  },
+  {
+    path : '/tambahSJProdukbyProduk/:id',
+    name : 'Tambah Struktur Jenis Produk by Jenis Produk',
+    component : TambahStrukturProdukbyProduk,
+    meta : {
+      title : "Tambah Sturktur Jenis Produk by Jenis Produk - PT.INKA"
+    }
+  },
+  {
+    path : '/pesanProyekbyCustomer/:id',
+    name : 'Tambah Proyek by Customer',
+    component : PesanProyekbyCustomer,
+    meta : {
+        title : "Tambah Proyek by Customer - PT.INKA"
+    }
+  },
+  {
+    path : '/addStasiunKerjabyProcess/:id',
+    name : 'Tambah Stasiun Kerja by Process',
+    component : TambahStasiunKerjabyProcess,
+    meta : {
+      title : "Memilih Stasiun Kerja by Process - PT.INKA"
+    }
+  }
+
 ]
 
 const router = new VueRouter({
