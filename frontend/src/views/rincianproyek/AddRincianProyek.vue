@@ -31,15 +31,21 @@
                 <v-date-picker width="1000" v-model="tanggal"></v-date-picker>
             </v-menu>
               
-            <v-text-field
+            <v-select
             v-model="jenisProduk"
+            :items="items2"
+            item-text="id"
+            item-value="id"
             label="Jenis Produk">
-            </v-text-field>
+            </v-select>
 
-            <v-text-field 
-            v-model="proyek" 
+            <v-select 
+            v-model="proyek"
+            item-text="id"
+            item-value="id"
+            :items ="items" 
             label="Proyek">
-            </v-text-field>
+            </v-select>
 
             <v-btn
             :disabled="!valid"
@@ -70,6 +76,8 @@
     data: () => ({
       valid: true,
       snackBar: false,
+      items : undefined,
+      items2 : undefined,
       jumlah : '',
       dueDate : null,
       jenisProduk : '',
@@ -80,6 +88,11 @@
         v => (v && v.length <= 4 && v.length >= 1) || 'ID must be 1-4 characters',
       ],
     }),
+    
+    mounted(){
+      this.getProyek()
+      this.getJenisProduk()
+    },
 
     methods: {
       validate () {
@@ -115,6 +128,40 @@
         }
         catch(error){
           alert("Insert Rincian Proyek Failed")
+          console.log(error)
+        }
+      },
+
+      async getProyek(){
+        try{
+          const axios = require('axios')
+          const res = await axios.get('/proyek/get_allproyek')
+          if(res.data == null){
+            console.log("data kosong")
+          }else{
+            this.items = res.data
+            console.log(res,this.items)
+          }
+
+        }
+        catch(error){
+          console.log(error)
+        }
+      },
+
+      async getJenisProduk(){
+        try{
+
+          const axios = require('axios')
+          const res = await axios.get('/jproduct/get_jproduct')
+          if(res.data == null){
+            console.log("data kosong")
+          }else{
+            this.items2 = res.data
+            console.log(res,this.items2)
+          }
+
+        }catch(error){
           console.log(error)
         }
       }

@@ -63,11 +63,12 @@
         v => (v && v.length <= 9 && v.length >= 5) || 'ID must be 5-9 characters',
       ],
       rincianProyek: undefined,
+      snackBar : false,
       items: [],
     }),
 
     mounted(){
-        this.fetchRincianProyek()
+      this.fetchRincianProyek()
     },
 
     methods: {
@@ -77,18 +78,9 @@
         }
       },
 
-      reset () {
-        this.$refs.form.reset()
-      },
-
-      submitHandler() {
-        console.log(this.id)
-        console.log(this.rincianProyek)
-      },
-
       async InsertProduk(){
         try{
-          const response = await axios.post('/jproduct/post_jproduct',
+          const response = await axios.post('/product/add_product',
             { id: this.id,
               rincianProyek: this.rincianProyek
             }
@@ -110,7 +102,7 @@
                 alert("Proyek Kosong")
             }else{
                 this.items = res.data
-                console.log(res,this.rincian)
+                console.log(res,this.items)
             }
         }catch(error){
             alert(error)

@@ -5,6 +5,12 @@
         <br>
         <h1>List Customer</h1>
         <br>
+        <router-link to="/tambahPelanggan">
+            <v-btn color="primary" class="d-flex ml-4 mb-6">
+                Add Pelanggan
+            </v-btn>
+        </router-link>
+
         <v-data-table 
             :headers = "column"
             :items = "customers">

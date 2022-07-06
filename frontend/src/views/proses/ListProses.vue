@@ -5,6 +5,11 @@
         <br>
         <h1>List Proses</h1>
         <br>
+        <router-link to="/tambahProses">
+            <v-btn color="primary" class="d-flex ml-4 mb-6">
+                Add Process
+            </v-btn>
+        </router-link>
         <v-card
         class="mx-auto text-center"
         max-width="1000">

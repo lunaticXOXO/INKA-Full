@@ -1,9 +1,15 @@
 <template>
     <v-card class="mt-10 text-center mx-10" max-width="1450">
         <br>
-        <h1>Proyek List Customer</h1>
-        <h1>{{project.customerid}}</h1>
+        <h1>Proyek List Customer</h1> <h1>{{this.$route.params.id}}</h1>
+       
         <br>
+        <router-link :to="{name : 'Tambah Proyek by Customer',params : {id : `${this.$route.params.id}`}}">
+            <v-btn color="primary" class="d-flex ml-4 mb-6">
+                Add Proyek by Customer
+            </v-btn>
+        </router-link>
+        
         <v-data-table 
         :headers="column"
         :items="project"

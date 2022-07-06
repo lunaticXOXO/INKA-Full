@@ -1,3 +1,4 @@
+from datetime import datetime
 import db.db_handler as database
 from flask import request,make_response,jsonify
 
@@ -67,9 +68,9 @@ def AddWorkstation():
         data = request.json
         id = data["id"]
         nama = data["nama"]
-        dibuat = data["dibuat"]
-        liniProduksi = data["liniproduksi"]
-        values = (id, nama,dibuat,liniProduksi)
+        dibuat = datetime.now()
+        liniproduksi = data["liniproduksi"]
+        values = (id, nama,dibuat,liniproduksi)
 
         cursor.execute(query,values)
         conn.commit()

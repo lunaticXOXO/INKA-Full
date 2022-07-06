@@ -40,15 +40,46 @@ def AddProduk():
   conn = database.connector()
   cursor = conn.cursor()
 
-  id, rincianProyek = input("Input ID Produk : "), input("Input ID Rincian Proyek : ")
+  query = "INSERT INTO prd_d_produk(id,rincianProyek)VALUES(%s,%s)"
+  try:
+    data = request.json
+    id = data["id"]
+    rincianProyek = data["rincianProyek"]
+    values = (id,rincianProyek)
+    cursor.execute(query,values)
+    conn.commit()
+    hasil = {"Status" : "Berhasil"}
 
-  query = "INSERT INTO prd_r_produk (id, rincianProyek) VALUES (%s,%s)"
-  values = (id, rincianProyek)
-  cursor.execute(query,values)
- 
-  conn.commit()
-  print("Produk Baru Ditambahkan!")
+  except Exception as e:
+    print("Error",str(e))
+    hasil = {"Status" : "Gagal"}
+  return hasil
 
+
+def AddProdukbyRincian(id_rincian):
+  conn = database.connector()
+  cursor = conn.cursor()
+  query = "SELECT a.rincianProyek FROM prd_d_produk a JOIN prd_r_rincianproyek b ON a.rincianProyek = b.id WHERE a.rincianProyek = '"+id_rincian+"' LIMIT 1"
+  cursor.execute(query)
+  records = cursor.fetchall()
+  temp = ""
+  for data in records:
+    temp = data[0]
+  
+  query = "INSERT INTO prd_d_produk(id,rincianProyek)VALUES(%s,%s)"
+  try:
+    data = request.json
+    id = data["id"]
+    values = (id,temp)
+    cursor.execute(query,values)
+    conn.commit()
+    hasil = {"Status" : "Berhasil"}
+    
+  except Exception as e:
+    print("Error",str(e))
+    hasil = {"Status" : "Gagal"}
+  return hasil
+  
 
 def ShowDueDateProduct():
   conn = database.connector()
