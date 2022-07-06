@@ -43,7 +43,7 @@
             </v-btn>
         </v-app-bar>
     
-        <v-navigation-drawer app v-model="drawer" color="#555555" >
+        <v-navigation-drawer app v-model="drawer" color="#555555" width="22%">
             <v-list>
                 <v-list-group
                     v-for="item in items"
@@ -64,12 +64,12 @@
                     :key="child.title"
                     :to="child.route"
                     >
-                    <v-list-item-action>
-                        <v-icon class="white--text ml-6">{{child.icon}}</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title class="white--text" v-text="child.title"></v-list-item-title>
-                    </v-list-item-content>
+                        <v-list-item-action>
+                            <v-icon class="white--text ml-6">{{child.icon}}</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title class="white--text" v-text="child.title"></v-list-item-title>
+                        </v-list-item-content>
                     </v-list-item>
                 </v-list-group>
             </v-list>
@@ -100,11 +100,12 @@ export default {
                 action: 'mdi-chart-ppf',
                 active: false,
                 items: [
-                    {title : 'Lihat Produk', icon: 'mdi-eye',route : '/listProduk'},
-                    {title : 'Lihat Jns.Prd.',icon : 'mdi-eye',route : '/listJenisProduk'},
-                    {title : 'Lihat Strk.Jns.Prd.',icon : 'mdi-eye',route : '/listStrukturJenisProduk'},
-                    { title: 'Tambah Jns.Prd.', icon: 'mdi-database', route: '/jenisProduk'},
-                    { title: 'Tambah Strk.Tipe.Prd.', icon: 'mdi-animation-outline', route: '/strukturProduk'},
+                    { title: 'Lihat Produk', icon: 'mdi-eye',route : '/listProduk'},
+                    { title: 'Lihat Jenis Produk',icon : 'mdi-eye',route : '/listJenisProduk'},
+                    { title: 'Lihat Struktur Tipe Produk',icon : 'mdi-eye',route : '/listStrukturJenisProduk'},
+                    { title: 'Tambah Produk', icon: 'mdi-plus', route: '/addProduk'},
+                    { title: 'Tambah Jenis Produk', icon: 'mdi-plus', route: '/jenisProduk'},
+                    { title: 'Tambah Struktur Tipe Produk', icon: 'mdi-plus', route: '/strukturProduk'},
                 ],
                 title: 'Produk',
                 },
@@ -126,8 +127,9 @@ export default {
                 active: false,
                 items: [
                     { title: 'List Rincian Proyek', icon: 'mdi-filter-variant', route: '/listRincianProyek'},
+                    { title: 'Tambah Rincian Proyek', icon: 'mdi-plus', route: '/addRincianProyek'},
                 ],
-                title: 'Rincian Prk.',
+                title: 'Rincian Proyek',
                 },
                 
                 {
@@ -167,7 +169,7 @@ export default {
                 active: false,
                 items: [
                     { title: 'List Pelanggan', icon: 'mdi-playlist-check', route: '/listPelanggan'},
-                    { title: 'Tambah', icon: 'mdi-account-plus', route: '/tambahPelanggan'},
+                    { title: 'Tambah Pelanggan', icon: 'mdi-account-plus', route: '/tambahPelanggan'},
                 ],
                 title: 'Pelanggan',
                 },
@@ -176,7 +178,7 @@ export default {
                 action: 'mdi-database',
                 active: false,
                 items: [
-                    { title: 'Tambah', icon: 'mdi-account-plus', route: '/tambahPemasok'},
+                    { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'},
                 ],
                 title: 'Pemasok',
                 },
@@ -185,7 +187,7 @@ export default {
                 action: 'mdi-account-star',
                 active: false,
                 items: [
-                    { title: 'Tambah', icon: 'mdi-account-plus', route: '/tambahOperator'},
+                    { title: 'Tambah Operator', icon: 'mdi-account-plus', route: '/tambahOperator'},
                 ],
                 title: 'Operator',
                 },
@@ -194,8 +196,8 @@ export default {
                 action: 'mdi-city',
                 active: false,
                 items: [
-                    { title: 'Lihat', icon: 'mdi-eye', route: '/listKota'},
-                    { title: 'Tambah', icon: 'mdi-plus', route: '/tambahKota'},
+                    { title: 'Lihat Kota', icon: 'mdi-eye', route: '/listKota'},
+                    { title: 'Tambah Kota', icon: 'mdi-plus', route: '/tambahKota'},
                 ],
                 title: 'Kota',
                 },
@@ -204,8 +206,8 @@ export default {
                 action: 'mdi-flag',
                 active: false,
                 items: [
-                    { title: 'Lihat', icon: 'mdi-eye', route: '/listNegara'},
-                    { title: ' Tambah', icon: 'mdi-plus', route: '/tambahNegara'},
+                    { title: 'Lihat Negara', icon: 'mdi-eye', route: '/listNegara'},
+                    { title: 'Tambah Negara', icon: 'mdi-plus', route: '/tambahNegara'},
                 ],
                 title: 'Negara',
                 },
