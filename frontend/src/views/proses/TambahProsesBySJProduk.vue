@@ -115,24 +115,27 @@
             submitHandler() {
                 console.log(this.id)
                 console.log(this.prosesSesudahnya)
-                console.log(this.nodalOutput)
+                console.log(this.jenisProses)
+                console.log(this.nama)
+                console.log(this.durasi)
+                console.log(this.satuanDurasi)
             },
 
             async fetchProses(){
-                    try{
-                        const res = await axios.get('/proses/get_listprocess')
-                        if (res.data == null){
-                            alert("Proses Kosong")
-                        }else{
-                            this.items = res.data
-                            console.log(res,this.items)
-                        }
+                try{
+                    const res = await axios.get('/proses/get_listprocess')
+                    if (res.data == null){
+                        alert("Proses Kosong")
+                    }else{
+                        this.items = res.data
+                        console.log(res,this.items)
                     }
-                    catch(error){
-                        alert(error)
-                        console.log(error)
-                    }
-                },
+                }
+                catch(error){
+                    alert(error)
+                    console.log(error)
+                }
+            },
 
             async fetchJenisProses(){
                 try{

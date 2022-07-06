@@ -62,7 +62,7 @@
             </v-btn>
         </v-form>
         <v-snackbar top color="green" v-model="snackBar">
-            Insert Struktur Produk by Jns.Produk Sukses!
+            Insert Struktur Produk by Jenis Produk Sukses!
         </v-snackbar>
     </v-card>
 </template>
@@ -72,6 +72,7 @@
   export default {
     data: () => ({
       valid: true,
+      snackBar: false,
       nama: '',
       jumlah: '',
       idNode: '',
@@ -141,7 +142,7 @@
           this.snackBar = true
         }
         catch(error){
-          alert("Insert Struktur Produk by Jns.Produk Failed")
+          alert("Insert Struktur Produk by Jenis Produk Failed")
           console.log(error)
         }
       },

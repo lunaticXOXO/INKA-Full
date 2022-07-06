@@ -90,6 +90,7 @@
   export default {
     data: () => ({
       valid: true,
+      snackBar: false,
       nama: '',
       alamat: '',
       kodePos: '',

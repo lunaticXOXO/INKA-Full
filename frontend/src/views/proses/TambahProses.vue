@@ -127,6 +127,10 @@
                 console.log(this.id)
                 console.log(this.prosesSesudahnya)
                 console.log(this.nodalOutput)
+                console.log(this.jenisProses)
+                console.log(this.nama)
+                console.log(this.durasi)
+                console.log(this.satuanDurasi)
             },
 
             async fetchProses(){

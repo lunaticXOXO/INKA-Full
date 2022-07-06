@@ -53,6 +53,7 @@
   export default {
     data: () => ({
       valid: true,
+      snackBar: false,
       nama: '',    
       id: '',
       idRules: [

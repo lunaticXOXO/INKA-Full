@@ -63,12 +63,11 @@
   export default {
     data: () => ({
       valid: true,
-      
-      id: '',
+      snackBar: false,
       jumlah : '',
       dueDate : null,
       proyek : '',
-
+      id: '',
       idRules: [
         v => !!v || 'ID is required',
         v => (v && v.length <= 4 && v.length >= 1) || 'Kode must be 1-4 characters',
@@ -91,7 +90,6 @@
         console.log(this.jumlah)
         console.log(this.dueDate)
         console.log(this.proyek)
-
       },
 
       async addRProyekbyProyek(){
@@ -104,8 +102,11 @@
             proyek : this.proyek
           })
           console.log(res)
-        }catch(error){
-           console.log(error)
+          this.snackBar = true
+        }
+        catch(error){
+          alert("Insert Rincian Proyek Failed")
+          console.log(error)
         }
       }
     },

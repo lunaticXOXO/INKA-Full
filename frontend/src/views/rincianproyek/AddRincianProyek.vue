@@ -10,7 +10,7 @@
             @submit.prevent="submitHandler"
             v-model="valid"
             lazy-validation
-        >
+            >
             <v-text-field
             v-model="id"
             :counter="4"
@@ -46,7 +46,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="addRProyek()"
+            @click="validate()"
             >
             Submit
             </v-btn>
@@ -69,31 +69,35 @@
   export default {
     data: () => ({
       valid: true,
-      
-      id: '',
+      snackBar: false,
       jumlah : '',
       dueDate : null,
       jenisProduk : '',
       proyek : '',
-
+      id: '',
       idRules: [
         v => !!v || 'ID is required',
-        v => (v && v.length <= 4 && v.length >= 1) || 'Kode must be 1-4 characters',
+        v => (v && v.length <= 4 && v.length >= 1) || 'ID must be 1-4 characters',
       ],
     }),
 
     methods: {
-     
+      validate () {
+        if(this.$refs.form.validate()){
+          this.addRProyek()
+        }
+      },
+
       reset () {
         this.$refs.form.reset()
       },
+  
       submitHandler() {
         console.log(this.id)
         console.log(this.jumlah)
         console.log(this.dueDate)
         console.log(this.jenisProduk)
         console.log(this.proyek)
-
       },
 
       async addRProyek(){
@@ -107,8 +111,11 @@
             proyek : this.proyek
           })
           console.log(res)
-        }catch(error){
-           console.log(error)
+          this.snackBar = true
+        }
+        catch(error){
+          alert("Insert Rincian Proyek Failed")
+          console.log(error)
         }
       }
     },

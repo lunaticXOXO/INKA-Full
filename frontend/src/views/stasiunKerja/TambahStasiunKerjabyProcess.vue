@@ -4,14 +4,14 @@
         max-width="1000">
         <br>
         <h1>Tambah Stasiun Kerja Baru</h1>
+        <br>
         <v-form
-            class="pa-6"
-            ref="form"
-            @submit.prevent="submitHandler"
-            v-model="valid"
-            lazy-validation
-        >
-        
+          class="pa-6"
+          ref="form"
+          @submit.prevent="submitHandler"
+          v-model="valid"
+          lazy-validation
+          >
             <v-select
             item-text="nama"
             item-value="id"
@@ -19,7 +19,6 @@
             :items="items"
             label="Stasiun Kerja"
             ></v-select>
-
            
             <v-btn
             :disabled="!valid"
@@ -52,7 +51,7 @@
         v => !!v || 'ID is required',
         v => (v && v.length <= 4 && v.length >= 3) || 'ID must be 3-4 characters',
       ],
-      'stasiunKerja' : '',
+      stasiunKerja : undefined,
       items: [],
     
     }),
@@ -68,13 +67,12 @@
         }
       },
 
-      reset () {
+      reset() {
         this.$refs.form.reset()
       },
 
       submitHandler() {
         console.log(this.stasiunKerja)
-        
       },
 
       async fetchData(){
@@ -93,15 +91,13 @@
         }
       },
 
-     
-
       async InsertStasiunKerjabyProcess(){
         try{
           const axios = require('axios');
           const response = await axios.post('/stasiun_kerja/add_stasiun_by_process/' + this.$route.params.id,
-            { 
-                stasiunKerja : this.stasiunKerja
-            }
+          { 
+            stasiunKerja : this.stasiunKerja
+          }
           );
           console.log(response)
           this.snackBar = true

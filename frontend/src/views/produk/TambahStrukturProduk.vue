@@ -80,6 +80,7 @@
   export default {
     data: () => ({
       valid: true,
+      snackBar: false,
       nama: '',
       jumlah: '',
       idNode: '',

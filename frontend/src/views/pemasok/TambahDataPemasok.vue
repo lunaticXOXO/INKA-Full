@@ -95,6 +95,9 @@
             Reset
             </v-btn>
         </v-form>
+        <v-snackbar top color="green" v-model="snackBar">
+            Insert Pemasok Sukses!
+        </v-snackbar>
     </v-card>
 </template>
 
@@ -102,6 +105,7 @@
   export default {
     data: () => ({
       valid: true,
+      snackBar: false,
       fax: '',
       situs: '',
       pic: '',
@@ -138,6 +142,7 @@
       reset () {
         this.$refs.form.reset()
       },
+      
       submitHandler() {
         console.log(this.id)
         console.log(this.nama)

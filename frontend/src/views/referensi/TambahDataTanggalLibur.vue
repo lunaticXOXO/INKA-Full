@@ -37,6 +37,9 @@
             Reset
             </v-btn>
         </v-form>
+        <v-snackbar top color="green" v-model="snackBar">
+            Insert Tanggal Libur Sukses!
+        </v-snackbar>
     </v-card>
 </template>
 
@@ -44,6 +47,7 @@
   export default {
     data: () => ({
       valid: true,
+      snackBar: false,
       tanggal: null,
       tanggalRules: [
         v => !!v || 'Tanggal is required',

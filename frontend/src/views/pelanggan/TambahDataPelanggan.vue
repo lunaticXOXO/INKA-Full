@@ -182,7 +182,7 @@
               nama: this.nama,
               adress1: this.alamat1,
               adress2: this.alamat2,
-              postalCode: this.kodePos,
+              postalcode: this.kodePos,
               phone: this.noTelepon,
               fax: this.fax,
               email: this.email,

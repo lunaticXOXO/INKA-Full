@@ -38,7 +38,7 @@
             </v-btn>
         </v-form>
         <v-snackbar top color="green" v-model="snackBar">
-            Insert Produk by R.Proyek Sukses!
+            Insert Produk by Rincian Proyek Sukses!
         </v-snackbar>
     </v-card>
 </template>
@@ -48,6 +48,7 @@
   export default {
     data: () => ({
       valid: true,  
+      snackBar: false,
       id: '',
       idRules: [
         v => !!v || 'ID is required',
@@ -80,7 +81,7 @@
           this.snackBar = true
         }
         catch(error){
-          alert("Insert Produk by R.Proyek Failed")
+          alert("Insert Produk by Rincian Proyek Failed")
           console.log(error)
         }
       },

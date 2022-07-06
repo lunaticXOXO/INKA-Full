@@ -58,6 +58,9 @@
             Reset
             </v-btn>
         </v-form>
+        <v-snackbar top color="green" v-model="snackBar">
+            Pesan Proyek Sukses!
+        </v-snackbar>
     </v-card>
 </template>
 
@@ -65,6 +68,7 @@
   export default {
     data: () => ({
       valid: true,
+      snackBar: false,
       dueDate: null,
       id: '',
       nama : '',
@@ -109,7 +113,7 @@
             }
            );
           console.log(response,this.data)
-          alert("Insert Proyek Success")
+          this.snackBar = true
         }
         catch(error){
           alert("Insert Proyek Failed")
