@@ -42,8 +42,8 @@
             Reset
             </v-btn>
         </v-form>
-        <v-snackbar top color="green" v-model="snackBar">
-            Insert Negara Sukses!
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+            {{snackbar.message}}
         </v-snackbar>
     </v-card>
 </template>
@@ -52,13 +52,18 @@
   export default {
     data: () => ({
       valid: true,
-      snackBar: false,
       nama: '',
       kode: '',
       kodeRules: [
         v => !!v || 'Kode is required',
         v => (v && v.length <= 3 && v.length >= 3) || 'Kode must be 3 characters',
       ],
+      snackbar : {
+        show : false,
+        color : null,
+        message : null,
+
+      }
     }),
 
     methods: {
@@ -86,11 +91,30 @@
             }
           );
           console.log(response,this.data)
-          this.snackBar = true
+          if(response.data.status == "berhasil"){
+
+              this.snackbar = {
+                show : true,
+                message : "Insert negara berhasil",
+                color : "green"
+          }}
+          else if(response.data.status == "gagal"){
+              this.snackbar = {
+                show : true,
+                message : "Insert negara gagal,code sudah tersedia",
+                color : "red"
+              }
+          }
+
         }
         catch(error){
           alert("Insert Negara Failed")
           console.log(error)
+           this.snackbar = {
+                show : true,
+                message : "Insert negara gagal",
+                color : "red"
+              }
         }
       },
     },

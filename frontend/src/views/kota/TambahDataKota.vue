@@ -53,9 +53,9 @@
             Reset
             </v-btn>
         </v-form>
-        <v-snackbar top color="green" v-model="snackBar">
-            Insert Kota Sukses!
-        </v-snackbar>
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+        {{snackbar.message}}
+      </v-snackbar>
     </v-card>
     
 </template>
@@ -64,7 +64,7 @@
   export default {
     data: () => ({
       valid: true,
-      snackBar: false,
+     
       nama: '',
       kode: '',
       kodeRules: [
@@ -73,6 +73,11 @@
       ],
       negara: undefined,
       items: [],
+      snackbar: {
+        show: false,
+        message: null,
+        color: null
+      },
     }),
 
     mounted(){
@@ -124,11 +129,27 @@
             }
           );
           console.log(response,this.data)
-          this.snackBar = true
+          if(response.data.status == "berhasil"){
+             this.snackbar = {
+              message : "Insert Kota Success",
+              color : 'green',
+              show : true
+          }}
+          else if(response.data.status == "gagal"){
+              this.snackbar = {
+              message : "Insert Kota Gagal, Kode sudah tersedia",
+              color : 'red',
+              show : true
+          }}
+          
         }
         catch(error){
           alert("Insert Kota Failed")
           console.log(error)
+          this.snackbar = {
+              show : true,
+              color : "red",
+              message : "Insert kota error"}
         }
       },
     },

@@ -95,9 +95,11 @@
             Reset
             </v-btn>
         </v-form>
-        <v-snackbar top color="green" v-model="snackBar">
-            Insert Pelanggan Sukses!
-        </v-snackbar>
+
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+          {{snackbar.message}}
+      </v-snackbar>
+
     </v-card>
 </template>
 
@@ -105,7 +107,7 @@
   export default {
     data: () => ({
       valid: true,
-      snackBar: false,
+    
       fax: '',
       situs: '',
       pic: '',
@@ -125,6 +127,12 @@
       emailRules: [
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ],
+
+      snackbar: {
+        show: false,
+        message: null,
+        color: null
+      },
     }),
 
     mounted(){
@@ -193,11 +201,28 @@
             }
           );
           console.log(response,this.data)
-          this.snackBar = true
+         if(response.data.Status == "Berhasil"){
+             this.snackbar = {
+              message : "Insert Customer Success",
+              color : 'green',
+              show : true
+          }}
+          else if(response.data.Status == "Gagal"){
+              this.snackbar = {
+              message : "Insert Customer Gagal, Kode sudah tersedia",
+              color : 'red',
+              show : true
+          }}
+          
         }
         catch(error){
           alert("Insert Pelanggan Failed")
           console.log(error)
+          this.snackbar = {
+              message : "Insert Customer Error",
+              color : 'red',
+              show : true}
+          
         }
       },
 

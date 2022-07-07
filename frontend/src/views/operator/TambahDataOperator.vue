@@ -80,8 +80,8 @@
             Reset
             </v-btn>
         </v-form>
-        <v-snackbar top color="green" v-model="snackBar">
-            Insert Operator Sukses!
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+            {{snackbar.message}}
         </v-snackbar>
     </v-card>
 </template>
@@ -90,7 +90,6 @@
   export default {
     data: () => ({
       valid: true,
-      snackBar: false,
       nama: '',
       alamat: '',
       kodePos: '',
@@ -109,6 +108,13 @@
       ],
       kota: undefined,
       items: undefined,
+
+      snackbar:{
+        show : false,
+        message : null,
+        color : null
+      },
+
     }),
 
     mounted(){
@@ -173,14 +179,32 @@
             }
           );
           console.log(response,this.data)
-          this.snackBar = true
+
+          if(response.data.status == "berhasil"){
+              this.snackbar = {
+                message : 'Insert data Operator Berhasil',
+                color : 'green',
+                show : true
+            }
+          }
+          else if(response.data.status == "gagal"){
+              this.snackbar = {
+                message : 'Insert data operator gagal',
+                color : 'red',
+                show : true
+              }
+          }
         }
         catch(error){
           alert("Insert Kota Failed")
           console.log(error)
+          this.snackbar = {
+                message : 'Insert data operator error',
+                color : 'red',
+                show : true
+          }
         }
       },
-
     },
   }
 </script>
