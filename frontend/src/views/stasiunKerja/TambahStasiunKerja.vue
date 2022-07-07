@@ -52,24 +52,22 @@
             </v-btn>
         </v-form>
         
-       <div v-if="snackBar === true">
-        <v-snackbar top color="green" v-model="snackBar">
-            Insert Stasiun Kerja Sukses!
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+            {{snackbar.message}}
         </v-snackbar>
-     </div>
-     <div v-else-if="snackBar === false">
-     <v-snackbar top color="red" v-model="snackBar">
-            Insert Stasiun Kerja Gagal!
-        </v-snackbar>
-     </div>
+
     </v-card>
 </template>
 
 <script>
   export default {
     data: () => ({
-      valid: true,
-      snackBar: false,
+    valid: true,
+     snackbar: {
+            show: false,
+            message: null,
+            color: null
+    },
     
       idRules: [
         v => !!v || 'ID is required',
@@ -147,18 +145,27 @@
     
           );
           console.log(response,this.data)
-         
-          if(response.data.status == 200){
-              this.snackBar = false
-          }else if(response.data == "berhasil"){
-            this.snackBar = true
-          }
-        
+          if(response.data.status == "berhasil"){
+             this.snackbar = {
+              message : "Insert Workstation Success",
+              color : 'green',
+              show : true
+          }}
+          else if(response.data.status == "gagal"){
+              this.snackbar = {
+              message : "Insert Workstation Gagal,Code sudah tersedia",
+              color : 'red',
+              show : true
+          }}
         }
         catch(error){
           alert("Insert Stasiun Kerja Failed")
           console.log(error)
-          this.snackBar = false
+          this.snackbar = {
+            message : "Insert Workstation Error",
+            color : 'error',
+            show : true
+          }
         }
       },
     }
