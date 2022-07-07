@@ -89,7 +89,6 @@
           if(res.data == null){
               alert("Proses Kosong")
           }else{
-              alert("Showing All Proses")
               this.process = res.data;
               console.log(res,this.data)
           }

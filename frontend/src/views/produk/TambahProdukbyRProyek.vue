@@ -37,8 +37,20 @@
             Reset
             </v-btn>
         </v-form>
-        <v-snackbar top color="green" v-model="snackBar">
-            Insert Produk by Rincian Proyek Sukses!
+        <div v-if="snackBar == true">
+          <v-snackbar top color="green" v-model="snackBar">
+            Insert Produk by R.Proyek Sukses!
+          </v-snackbar>
+        </div>
+
+        <div v-else-if="snackBar == false">
+          <v-snackbar top color="red" v-model="snackBar">
+            Insert Produk by R.Proyek Gagal!
+          </v-snackbar>
+        </div>
+
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+          {{snackbar.message}}
         </v-snackbar>
     </v-card>
 </template>
@@ -48,7 +60,11 @@
   export default {
     data: () => ({
       valid: true,  
-      snackBar: false,
+      snackbar: {
+        show: false,
+        message: null,
+        color: null
+      },
       id: '',
       idRules: [
         v => !!v || 'ID is required',
@@ -79,10 +95,25 @@
             }
           );
           console.log(response,this.data)
-          this.snackBar = true
+          if(response.data.status == "berhasil"){
+             this.snackbar = {
+              message : "Insert Produk by R.Proyek Success",
+              color : 'green',
+              show : true
+          }}
+          else if(response.data.status == "gagal"){
+              this.snackbar = {
+              message : "Insert Produk by R.Proyek Gagal, ID Sudah Tersedia!",
+              color : 'red',
+              show : true
+          }}
         }
         catch(error){
-          alert("Insert Produk by Rincian Proyek Failed")
+          this.snackbar = {
+            message : "Insert Produk by R.Proyek Error",
+            color : 'error',
+            show : true
+          }
           console.log(error)
         }
       },

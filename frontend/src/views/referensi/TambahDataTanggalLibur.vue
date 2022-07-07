@@ -37,8 +37,20 @@
             Reset
             </v-btn>
         </v-form>
-        <v-snackbar top color="green" v-model="snackBar">
+        <div v-if="snackBar == true">
+          <v-snackbar top color="green" v-model="snackBar">
             Insert Tanggal Libur Sukses!
+          </v-snackbar>
+        </div>
+
+        <div v-else-if="snackBar == false">
+          <v-snackbar top color="red" v-model="snackBar">
+            Insert Tanggal Libur Gagal!
+          </v-snackbar>
+        </div>
+
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+          {{snackbar.message}}
         </v-snackbar>
     </v-card>
 </template>
@@ -47,7 +59,11 @@
   export default {
     data: () => ({
       valid: true,
-      snackBar: false,
+      snackbar: {
+        show: false,
+        message: null,
+        color: null
+      },
       tanggal: null,
       tanggalRules: [
         v => !!v || 'Tanggal is required',

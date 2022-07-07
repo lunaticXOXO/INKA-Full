@@ -36,8 +36,20 @@
           Reset
           </v-btn>
       </v-form>
-      <v-snackbar top color="green" v-model="snackBar">
+      <div v-if="snackBar == true">
+        <v-snackbar top color="green" v-model="snackBar">
           Insert Stasiun Kerja Sukses!
+        </v-snackbar>
+      </div>
+
+      <div v-else-if="snackBar == false">
+        <v-snackbar top color="red" v-model="snackBar">
+          Insert Stasiun Kerja Gagal!
+        </v-snackbar>
+      </div>
+
+      <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+        {{snackbar.message}}
       </v-snackbar>
     </v-card>
 </template>
@@ -46,14 +58,19 @@
   export default {
     data: () => ({
       valid: true,
-      snackBar: false,
+      snackbar: {
+        show: false,
+        message: null,
+        color: null
+      },
+      id: '',
       idRules: [
         v => !!v || 'ID is required',
         v => (v && v.length <= 4 && v.length >= 3) || 'ID must be 3-4 characters',
       ],
       stasiunKerja : undefined,
       items: [],
-    
+  
     }),
 
     mounted(){
@@ -100,11 +117,26 @@
           }
           );
           console.log(response)
-          this.snackBar = true
+          if(response.data.status == "berhasil"){
+             this.snackbar = {
+              message : "Insert Stasiun Kerja Success",
+              color : 'green',
+              show : true
+          }}
+          else if(response.data.status == "gagal"){
+              this.snackbar = {
+              message : "Insert Stasiun Kerja Gagal, Kode sudah tersedia",
+              color : 'red',
+              show : true
+          }}
         }
         catch(error){
-          alert("Insert Stasiun Kerja Failed")
           console.log(error)
+          this.snackbar = {
+            message : "Insert Stasiun Kerja Error",
+            color : 'error',
+            show : true
+          }
         }
       },
     }

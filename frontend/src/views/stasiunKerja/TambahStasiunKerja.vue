@@ -74,11 +74,11 @@
 <script>
   export default {
     data: () => ({
-    valid: true,
-     snackbar: {
-            show: false,
-            message: null,
-            color: null
+      valid: true,
+      snackbar: {
+        show: false,
+        message: null,
+        color: null
       },
       id: '',
       idRules: [
@@ -157,22 +157,21 @@
           console.log(response,this.data)
           if(response.data.status == "berhasil"){
              this.snackbar = {
-              message : "Insert Workstation Success",
+              message : "Insert Stasiun Kerja Success",
               color : 'green',
               show : true
           }}
           else if(response.data.status == "gagal"){
               this.snackbar = {
-              message : "Insert Workstation Gagal, Code sudah tersedia",
+              message : "Insert Stasiun Kerja Gagal, Kode sudah tersedia",
               color : 'red',
               show : true
           }}
         }
         catch(error){
-          alert("Insert Stasiun Kerja Failed")
           console.log(error)
           this.snackbar = {
-            message : "Insert Workstation Error",
+            message : "Insert Stasiun Kerja Error",
             color : 'error',
             show : true
           }

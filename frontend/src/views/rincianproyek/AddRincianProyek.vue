@@ -65,9 +65,21 @@
             Reset
             </v-btn>
         </v-form>
-        <v-snackbar top color="green" v-model="snackBar">
+        <div v-if="snackBar == true">
+          <v-snackbar top color="green" v-model="snackBar">
             Insert Rincian Proyek Sukses!
-        </v-snackbar>
+          </v-snackbar>
+        </div>
+
+        <div v-else-if="snackBar == false">
+          <v-snackbar top color="red" v-model="snackBar">
+            Insert Rincian Proyek Gagal!
+          </v-snackbar>
+        </div>
+
+      <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+        {{snackbar.message}}
+      </v-snackbar>
     </v-card>
 </template>
 
@@ -75,7 +87,11 @@
   export default {
     data: () => ({
       valid: true,
-      snackBar: false,
+      snackbar: {
+        show: false,
+        message: null,
+        color: null
+      },
       items : undefined,
       items2 : undefined,
       jumlah : '',
@@ -124,11 +140,26 @@
             proyek : this.proyek
           })
           console.log(res)
-          this.snackBar = true
+          if(response.data.status == "berhasil"){
+             this.snackbar = {
+              message : "Insert Rincian Proyek Success",
+              color : 'green',
+              show : true
+          }}
+          else if(response.data.status == "gagal"){
+              this.snackbar = {
+              message : "Insert Rincian Proyek Gagal, ID sudah tersedia",
+              color : 'red',
+              show : true
+          }}
         }
         catch(error){
-          alert("Insert Rincian Proyek Failed")
           console.log(error)
+          this.snackbar = {
+            message : "Insert Rincian Proyek Error",
+            color : 'error',
+            show : true
+          }
         }
       },
 

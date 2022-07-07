@@ -67,8 +67,20 @@
             Reset
             </v-btn>
         </v-form>
-        <v-snackbar top color="green" v-model="snackBar">
-            Insert Proses Sukses!
+        <div v-if="snackBar == true">
+            <v-snackbar top color="green" v-model="snackBar">
+                Insert Proses by SJProduk Sukses!
+            </v-snackbar>
+        </div>
+
+        <div v-else-if="snackBar == false">
+            <v-snackbar top color="red" v-model="snackBar">
+                Insert Proses by SJProduk Gagal!
+            </v-snackbar>
+        </div>
+
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+            {{snackbar.message}}
         </v-snackbar>
     </v-card>
 </template>
@@ -78,7 +90,11 @@
     export default {
         data: () => ({
             valid: true,
-            snackBar: false,
+            snackbar: {
+                show: false,
+                message: null,
+                color: null
+            },
             id: '',
             idRules: [
                 v => !!v || 'ID is required',
@@ -166,10 +182,25 @@
                         }
                     );
                     console.log(response,this.data)
-                    this.snackBar = true
+                    if(response.data.status == "berhasil"){
+                        this.snackbar = {
+                        message : "Insert Proses by SJProduk Success",
+                        color : 'green',
+                        show : true
+                    }}
+                    else if(response.data.status == "gagal"){
+                        this.snackbar = {
+                        message : "Insert Proses by SJProduk Gagal, ID Sudah Tersedia!",
+                        color : 'red',
+                        show : true
+                    }}
                 }
                 catch(error){
-                    alert("Insert Proses Failed")
+                    this.snackbar = {
+                        message : "Insert Proses by SJProduk Error",
+                        color : 'error',
+                        show : true
+                    }
                     console.log(error)
                 }
             },
