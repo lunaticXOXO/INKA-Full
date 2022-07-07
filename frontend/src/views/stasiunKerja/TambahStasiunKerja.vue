@@ -21,7 +21,7 @@
 
             <v-select
             item-text="nama"
-            item-value="id"
+            item-value="nama"
             v-model="nama"
             :items="items"
             label="Jenis Stasiun Kerja"
@@ -29,7 +29,7 @@
 
             <v-select
             item-text="id"
-            item-value="nama"
+            item-value="id"
             v-model="liniproduksi"
             :items="items2"
             label="Lini Produksi"
