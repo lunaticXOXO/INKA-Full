@@ -31,7 +31,6 @@
                 <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
             </v-menu>
             
-
            <v-select 
             v-model="jenisProduk"
             item-text="id"

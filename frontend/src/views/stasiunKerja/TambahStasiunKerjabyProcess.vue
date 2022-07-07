@@ -1,44 +1,44 @@
 <template>
     <v-card
-        class="mx-auto text-center mt-6"
-        max-width="1000">
-        <br>
-        <h1>Tambah Stasiun Kerja Baru</h1>
-        <br>
-        <v-form
-          class="pa-6"
-          ref="form"
-          @submit.prevent="submitHandler"
-          v-model="valid"
-          lazy-validation
-          >
-            <v-select
-            item-text="nama"
-            item-value="id"
-            v-model="stasiunKerja"
-            :items="items"
-            label="Stasiun Kerja"
-            ></v-select>
-           
-            <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            type="submit"
-            @click="validate()">
-            Submit
-            </v-btn>
+      class="mx-auto text-center mt-6"
+      max-width="1000">
+      <br>
+      <h1>Tambah Stasiun Kerja Baru by Proses</h1>
+      <br>
+      <v-form
+        class="pa-6"
+        ref="form"
+        @submit.prevent="submitHandler"
+        v-model="valid"
+        lazy-validation
+        >
+          <v-select
+          item-text="nama"
+          item-value="id"
+          v-model="stasiunKerja"
+          :items="items"
+          label="Stasiun Kerja"
+          ></v-select>
+          
+          <v-btn
+          :disabled="!valid"
+          color="success"
+          class="mr-4"
+          type="submit"
+          @click="validate()">
+          Submit
+          </v-btn>
 
-            <v-btn
-            color="error"
-            class="mr-4"
-            @click="reset">
-            Reset
-            </v-btn>
-        </v-form>
-        <v-snackbar top color="green" v-model="snackBar">
-            Insert Stasiun Kerja Sukses!
-        </v-snackbar>
+          <v-btn
+          color="error"
+          class="mr-4"
+          @click="reset">
+          Reset
+          </v-btn>
+      </v-form>
+      <v-snackbar top color="green" v-model="snackBar">
+          Insert Stasiun Kerja Sukses!
+      </v-snackbar>
     </v-card>
 </template>
 
