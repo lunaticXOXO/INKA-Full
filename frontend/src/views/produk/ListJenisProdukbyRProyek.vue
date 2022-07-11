@@ -81,11 +81,9 @@ export default {
                 
             },
             defaultItem : {
-                id : 'New ID',
-                nama : 'New Nama'
+                id : '',
+                nama : ''
             },
-            'id' : '',
-            'nama' : ''
         }
     },  
 
@@ -124,23 +122,24 @@ export default {
             }catch(error){
                 console.log(error)
             }
-
         },
+
         selectJProducttoSJProduct(jenisproduk){
             console.log(jenisproduk.id)
            //open(`/listStrukturJenisProduk/${jenisproduk.id}`)
         },
+
         editJenisProduct(jenisproduk){
            this.editedIndex = this.jenisproduk.indexOf(jenisproduk)
            this.editedItem = Object.assign({},jenisproduk)
         },
+
         close(){
-                setTimeout(() => {
-                    this.editedItem = Object.assign({}, this.defaultItem);
-                    this.editedIndex = -1;
-                }, 300)
-            },
+            setTimeout(() => {
+                this.editedItem = Object.assign({}, this.defaultItem);
+                this.editedIndex = -1;
+            }, 300)
+        },
     }
 }
-
 </script>
