@@ -9,6 +9,8 @@ from product.controller.JenisProdukController import *
 from country.controller.CountryController import * 
 from city.controller.CityController import *
 from customer.controller.CustomerController import *
+from material.Classification.controller.MaterialClassificationController import *
+from material.GroupMaterial.controller.GroupMaterialController import *
 from material.purchasematerial.controller.PurchaseMaterialController import *
 from flask import Flask
 from flask_cors import CORS
@@ -286,7 +288,39 @@ def add_stasiun_by_process(id_process):
     hasil = AddWorkStationbyProcess(id_process)
     return hasil
 
-#MATERIAL
+#MATERIAL Classification
+@app.route('/material/show_classification',methods = ['GET'])
+def show_classification():
+    hasil = GetClassification()
+    return hasil
+
+@app.route('/material/add_classification',methods = ['POST'])
+def add_classification():
+    hasil = AddClassification()
+    return hasil
+
+@app.route('/material/update_classification/<code>',methods = ['POST'])
+def update_classification(code):
+    hasil = UpdateClassification(code)
+    return hasil
+
+#MATERIAL GROUP
+@app.route('/material/show_groups',methods = ['GET'])
+def show_groups():
+    hasil = GetGroups()
+    return hasil
+
+@app.route('/material/add_group',methods = ['POST'])
+def add_group():
+    hasil = AddGroups()
+    return hasil
+
+@app.route('/material/update_group/<code>',methods = ['POST'])
+def update_group(code):
+    hasil = UpdateGroups(code)
+    return hasil
+    
+# Purchase Material
 @app.route('/material/purchase_material',methods = ['POST'])
 def purchase_material():
     hasil = PurchaseMaterial()

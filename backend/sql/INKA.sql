@@ -206,10 +206,12 @@ CREATE TABLE mat_d_purchaseitem(
     schedulledArrival date NOT NULL,
     purchaseId varchar(11) NOT NULL,
     FOREIGN KEY(purchaseId) REFERENCES mat_d_purchasematerial(id),
-    FOREIGN KEY(supplierCode) REFERENCES gen_r_supplier(code),
-    FOREIGN KEY(materialTypeCode) REFERENCES mat_r_materialtype(code),
+    FOREIGN KEY(supplierCode) REFERENCES mat_r_materialtypesupplier(supplierCode),
+    FOREIGN KEY(materialTypeCode) REFERENCES mat_r_materialtypesupplier(materialTypeCode),
     FOREIGN KEY(unit) REFERENCES gen_r_materialunit(id)
 );
+
+
 
 CREATE TABLE mat_d_materialstock(
     id varchar(11) PRIMARY KEY NOT NULL,
