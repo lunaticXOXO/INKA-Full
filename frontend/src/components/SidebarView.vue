@@ -155,9 +155,9 @@ export default {
                 action: 'mdi-blur',
                 active: false,
                 items: [
-                    { title: 'Pemesanan', icon: 'mdi-reorder-vertical', route: '/pesanMaterial'},
-                    { title: 'Pengelolaan', icon: 'mdi-key-outline', route: '/kelolaMaterial'},
-                    { title: 'Jenis', icon: 'mdi-sort-variant', route: '/jenisMaterial'},
+                    { title: 'Pemesanan Material', icon: 'mdi-reorder-vertical', route: '/pesanMaterial'},
+                    { title: 'Pengelolaan Material', icon: 'mdi-key-outline', route: '/kelolaMaterial'},
+                    { title: 'Jenis Material', icon: 'mdi-sort-variant', route: '/jenisMaterial'},
                 ],
                 title: 'Material',
                 },

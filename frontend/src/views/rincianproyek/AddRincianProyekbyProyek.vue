@@ -121,13 +121,13 @@
       async addRProyekbyProyek(){
         try{
           const axios = require('axios')
-          const res = await axios.post('/rproyek/add_rproyek_byproyek/' + this.$route.params.id,{
+          const response = await axios.post('/rproyek/add_rproyek_byproyek/' + this.$route.params.id,{
             id : this.id,
             jumlah : this.jumlah,
             dueDate : this.dueDate,
             jenisProduk : this.jenisProduk
           })
-          console.log(res)
+          console.log(response)
           if(response.data.status == "berhasil"){
              this.snackbar = {
               message : "Insert Rincian Proyek by Proyek Success",

@@ -146,7 +146,6 @@ CREATE TABLE mat_r_classification(
     descriptions varchar(30)
 );
 
-
 CREATE TABLE mat_r_group(
     code varchar(5) PRIMARY KEY NOT NULL,
     descriptions varchar(20) NOT NULL,
@@ -154,7 +153,6 @@ CREATE TABLE mat_r_group(
 );
 
 CREATE TABLE mat_r_materialtype(
-
     code varchar(5) PRIMARY KEY NOT NULL,
     nama varchar(30) NOT NULL,
     isAvailable bit,
@@ -163,6 +161,14 @@ CREATE TABLE mat_r_materialtype(
     groupCode varchar(5) NOT NULL,
     FOREIGN KEY(classificationCode) REFERENCES mat_r_classification(code),
     FOREIGN KEY(groupCode) REFERENCES mat_r_group(code)
+);
+
+CREATE TABLE gen_r_materialunit(
+    id varchar(5) PRIMARY KEY NOT NULL,
+    base varchar(5) NOT NULL,
+    nama varchar(20) NOT NULL,
+    multiplier int,
+    FOREIGN KEY(base) REFERENCES gen_r_materialunit(id)
 );
 
 CREATE TABLE mat_r_consumable(
@@ -184,22 +190,12 @@ CREATE TABLE mat_r_materialtypesupplier(
     FOREIGN KEY(supplierCode) REFERENCES gen_r_supplier(code)
 );
 
-CREATE TABLE gen_r_materialunit(
-    id varchar(5) PRIMARY KEY NOT NULL,
-    base varchar(5) NOT NULL,
-    nama varchar(20) NOT NULL,
-    multiplier int,
-    FOREIGN KEY(base) REFERENCES gen_r_materialunit(id)
-);
-
-
 CREATE TABLE mat_d_purchasematerial(
     id varchar(11) PRIMARY KEY NOT NULL,
     nama varchar(20) NOT NULL,
-    purchaseName varchar(20) NOT NULL,
+    purchaserName varchar(20) NOT NULL,
     purchaseDate date NOT NULL
 );
-
 
 CREATE TABLE mat_d_purchaseitem(
     id varchar(3) PRIMARY KEY NOT NULL,
@@ -208,6 +204,8 @@ CREATE TABLE mat_d_purchaseitem(
     quantity int,
     unit varchar(5) NOT NULL,
     schedulledArrival date NOT NULL,
+    purchaseId varchar(11) NOT NULL,
+    FOREIGN KEY(purchaseId) REFERENCES mat_d_purchasematerial(id),
     FOREIGN KEY(supplierCode) REFERENCES gen_r_supplier(code),
     FOREIGN KEY(materialTypeCode) REFERENCES mat_r_materialtype(code),
     FOREIGN KEY(unit) REFERENCES gen_r_materialunit(id)
@@ -215,15 +213,15 @@ CREATE TABLE mat_d_purchaseitem(
 
 CREATE TABLE mat_d_materialstock(
     id varchar(11) PRIMARY KEY NOT NULL,
-    purchaseid varchar(11) NOT NULL,##fk
-    order varchar(3) NOT NULL,#fk
+    purchaseId varchar(11) NOT NULL,
+    order varchar(3) NOT NULL,
     merk varchar(10) NOT NULL,
     quantity int,
     unit varchar(5) NOT NULL,
     schedulledArrival date NOT NULL,
     FOREIGN KEY(unit) REFERENCES gen_r_materialunit(id),
     FOREIGN KEY(order) REFERENCES mat_d_purchaseitem(id),
-    FOREIGN KEY(purchaseid)
+    FOREIGN KEY(purchaseId) REFERENCES mat_d_purchaseitem(purchaseId)
 );
 
 CREATE TABLE mat_d_materialonws(
@@ -238,11 +236,10 @@ CREATE TABLE mat_d_materialonws(
 
 CREATE TABLE mat_d_statusbarcode(
     id varchar(11) PRIMARY KEY NOT NULL,
-    workstation (4) NOT NULL,
-    FOREIGN KEY(id) REFERENCES mat_d_materialstock(id)
+    workstation varchar(4) NOT NULL,
+    FOREIGN KEY(id) REFERENCES mat_d_materialstock(id),
     FOREIGN KEY(workstation) REFERENCES gen_r_stasiunKerja(id)
-)
-
+);
 
 CREATE TABLE mat_r_ToolList(
     id varchar(5) PRIMARY KEY NOT NULL,
@@ -251,15 +248,11 @@ CREATE TABLE mat_r_ToolList(
     expired date NOT NULL
 );
 
-
-
-
 CREATE TABLE mat_r_ToolType(
     codes varchar(9) PRIMARY KEY NOT NULL,
     nama varchar(10) NOT NULL,
     expired DATE NOT NULL
 );
-
 
 CREATE TABLE mat_r_ToolNeed(
     toolTypeCode varchar(12) NOT NULL,
@@ -270,6 +263,3 @@ CREATE TABLE mat_r_ToolNeed(
     FOREIGN KEY (processCode) REFERENCES prd_r_proses(id),
     FOREIGN KEY (idNodeOutput) REFERENCES prd_r_proses(nodalOutput)
 );
-
-
-

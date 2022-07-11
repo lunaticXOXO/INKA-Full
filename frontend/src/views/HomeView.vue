@@ -31,7 +31,7 @@
       <v-icon>mdi-heart</v-icon>
     </v-btn>
     -->
-    <h1 class="font-weight-thin font-size-12">SmartWorks 4.0</h1>
+    <p id="judul" class="d-flex font-weight-thin">SmartWorks 4.0</p>
   </div>
 </template>
 
@@ -44,3 +44,11 @@
     }
   }
 </script>
+
+<style>
+  #judul{
+    font-size: 6rem;
+    margin-left: 27%;
+    margin-top: 10%;
+  }
+</style>

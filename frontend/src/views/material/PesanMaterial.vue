@@ -29,11 +29,6 @@
             label="Purchaser Name"
             ></v-text-field>
 
-            <v-text-field
-            v-model="purchase_date"
-            label="Purchase Date"
-            ></v-text-field>
-
             <v-btn
             :disabled="!valid"
             color="success"
@@ -90,16 +85,18 @@
       },
 
       submitHandler() {
-        console.log(this.kode)
+        console.log(this.id)
         console.log(this.nama)
+        console.log(this.purchaser)
       },
 
       async InsertMaterial(){
         try{
           const axios = require('axios');
           const response = await axios.post('/material/add_material',
-            { code: this.kode,
-              nama: this.nama
+            { id: this.id,
+              nama: this.nama,
+              purchaserName: this.purchaser
             }
           );
           console.log(response,this.data)

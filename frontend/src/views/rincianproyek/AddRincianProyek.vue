@@ -132,14 +132,14 @@
       async addRProyek(){
         try{
           const axios = require('axios')
-          const res = await axios.post('/rproyek/add_rproyek',{
+          const response = await axios.post('/rproyek/add_rproyek',{
             id : this.id,
             jumlah : this.jumlah,
             dueDate : this.dueDate,
             jenisProduk : this.jenisProduk,
             proyek : this.proyek
           })
-          console.log(res)
+          console.log(response)
           if(response.data.status == "berhasil"){
              this.snackbar = {
               message : "Insert Rincian Proyek Success",
