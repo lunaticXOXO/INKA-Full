@@ -152,6 +152,17 @@ export default {
                 },
 
                 {
+                action: 'mdi-blur',
+                active: false,
+                items: [
+                    { title: 'Pemesanan', icon: 'mdi-reorder-vertical', route: '/pesanMaterial'},
+                    { title: 'Pengelolaan', icon: 'mdi-key-outline', route: '/kelolaMaterial'},
+                    { title: 'Jenis', icon: 'mdi-sort-variant', route: '/jenisMaterial'},
+                ],
+                title: 'Material',
+                },
+
+                {
                 action: 'mdi-garage-variant',
                 active: false,
                 items: [
