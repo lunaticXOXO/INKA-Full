@@ -9,7 +9,7 @@ from product.controller.JenisProdukController import *
 from country.controller.CountryController import * 
 from city.controller.CityController import *
 from customer.controller.CustomerController import *
-
+from material.purchasematerial.controller.PurchaseMaterialController import *
 from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api
@@ -284,6 +284,12 @@ def add_stasiun_kerja():
 @app.route('/stasiun_kerja/add_stasiun_by_process/<id_process>',methods = ['POST'])
 def add_stasiun_by_process(id_process):
     hasil = AddWorkStationbyProcess(id_process)
+    return hasil
+
+#MATERIAL
+@app.route('/material/purchase_material',methods = ['POST'])
+def purchase_material():
+    hasil = PurchaseMaterial()
     return hasil
 
 if __name__ =="__main__":

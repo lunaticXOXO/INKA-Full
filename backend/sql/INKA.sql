@@ -204,26 +204,28 @@ CREATE TABLE mat_d_purchasematerial(
 CREATE TABLE mat_d_purchaseitem(
     id varchar(3) PRIMARY KEY NOT NULL,
     supplierCode varchar(5) NOT NULL,
+    purchaseid varchar(11) NOT NULL,
     materialTypeCode varchar(5) NOT NULL,
     quantity int,
     unit varchar(5) NOT NULL,
     schedulledArrival date NOT NULL,
     FOREIGN KEY(supplierCode) REFERENCES gen_r_supplier(code),
     FOREIGN KEY(materialTypeCode) REFERENCES mat_r_materialtype(code),
-    FOREIGN KEY(unit) REFERENCES gen_r_materialunit(id)
+    FOREIGN KEY(unit) REFERENCES gen_r_materialunit(id),
+    FOREIGN KEY(purchaseid) REFERENCES mat_d_purchasematerial(id)
 );
 
 CREATE TABLE mat_d_materialstock(
     id varchar(11) PRIMARY KEY NOT NULL,
-    purchaseid varchar(11) NOT NULL,##fk
-    order varchar(3) NOT NULL,#fk
+    purchaseid varchar(11) NOT NULL,
+    orders varchar(3) NOT NULL,
     merk varchar(10) NOT NULL,
     quantity int,
     unit varchar(5) NOT NULL,
     schedulledArrival date NOT NULL,
     FOREIGN KEY(unit) REFERENCES gen_r_materialunit(id),
-    FOREIGN KEY(order) REFERENCES mat_d_purchaseitem(id),
-    FOREIGN KEY(purchaseid)
+    FOREIGN KEY(orders) REFERENCES mat_d_purchaseitem(id),
+    FOREIGN KEY(purchaseid) REFERENCES mat_d_purchaseitem(purchaseid)
 );
 
 CREATE TABLE mat_d_materialonws(
