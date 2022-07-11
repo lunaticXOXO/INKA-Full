@@ -12,11 +12,10 @@
                     <v-form @submit.prevent="submitHandler" ref="form">
                         <v-card-text>
                             <v-text-field
-                                v-model="email"
-                                :rules="emailRules"
-                                type="email"
-                                label="Email"
-                                placeholder="Email"
+                                v-model="text"
+                                type="text"
+                                label="Username"
+                                placeholder="Username"
                                 prepend-inner-icon="mdi-account"/>
                             <v-text-field
                                 v-model="password"
@@ -39,7 +38,7 @@
                 </v-card>
             </v-col>
         </v-main>
-        <v-snackbar top color="green" v-model="snackBar">
+        <v-snackbar top color="green" v-model="snackBar" open="/">
             Login Success!
         </v-snackbar>
     </div>
@@ -48,7 +47,7 @@
 export default {
     name: 'LoginPage',
     data: () => ({
-        route: "",
+        route: "/",
         passwordShow: false,
         loading: false,
         snackBar: false,
@@ -56,11 +55,7 @@ export default {
         passwordRules: [
             v => !!v || 'Password is required',
         ],
-        email: '',
-        emailRules: [
-            v => !!v || 'Email is required',
-            v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-        ],
+        text: '',
     }),
     methods: {
         submitHandler() {
@@ -73,7 +68,7 @@ export default {
                     this.route = "/"
                 }, 3000)
             }
-            console.log(this.email)
+            console.log(this.text)
             console.log(this.password)
         }
     }

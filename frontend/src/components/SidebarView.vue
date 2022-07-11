@@ -116,7 +116,6 @@ export default {
                 items: [
                     { title: 'List Proyek', icon: 'mdi-filter-variant', route: '/lihatProyek'},
                     { title: 'Tambah Proyek', icon: 'mdi-plus', route: '/pesanProyek'},
-                    { title: 'Pantau Operasi', icon: 'mdi-eye', route: '/pantauOperasi'},
                     { title: 'Proses Terakhir', icon: 'mdi-state-machine', route: '/prosesTerakhir'},
                 ],
                 title: 'Proyek',
@@ -147,6 +146,7 @@ export default {
                 active: false,
                 items: [
                     { title: 'List', icon: 'mdi-filter-variant', route: '/listOperasi'},
+                    { title: 'Pantau Operasi', icon: 'mdi-eye', route: '/pantauOperasi'},
                 ],
                 title: 'Operasi',
                 },
