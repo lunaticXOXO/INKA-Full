@@ -214,13 +214,13 @@ CREATE TABLE mat_d_purchaseitem(
 CREATE TABLE mat_d_materialstock(
     id varchar(11) PRIMARY KEY NOT NULL,
     purchaseId varchar(11) NOT NULL,
-    order varchar(3) NOT NULL,
+    orders varchar(3) NOT NULL,
     merk varchar(10) NOT NULL,
     quantity int,
     unit varchar(5) NOT NULL,
     schedulledArrival date NOT NULL,
     FOREIGN KEY(unit) REFERENCES gen_r_materialunit(id),
-    FOREIGN KEY(order) REFERENCES mat_d_purchaseitem(id),
+    FOREIGN KEY(orders) REFERENCES mat_d_purchaseitem(id),
     FOREIGN KEY(purchaseId) REFERENCES mat_d_purchaseitem(purchaseId)
 );
 
