@@ -40,7 +40,7 @@ def ShowJenisProses():
 def ShowProsesbySJProduk(idNodal):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.id, a.nama, a.durasi, a.satuanDurasi,a.jenisProses,b.prosesSesudahnya, c.idNodal FROM prd_r_proses a JOIN prd_r_proses b ON b.prosesSesudahnya = a.id JOIN prd_r_strukturjnsprd c ON c.idNodal = a.nodalOutput WHERE a.nodalOutput = '"+idNodal+"'"
+    query = "SELECT a.id, a.nama, a.durasi, a.satuanDurasi,a.jenisProses,a.prosesSesudahnya, c.idNodal FROM prd_r_proses a JOIN prd_r_strukturjnsprd c ON c.idNodal = a.nodalOutput WHERE a.nodalOutput = '"+idNodal+"'"
     cursor.execute(query)
 
     row_headers = [x[0] for x in cursor.description]

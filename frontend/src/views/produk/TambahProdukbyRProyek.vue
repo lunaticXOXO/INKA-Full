@@ -3,7 +3,7 @@
         class="mx-auto text-center mt-6"
         max-width="1000">
         <br>
-        <h1>Tambah Produk Baru Sesuai R.Proyek</h1>
+        <h1>Tambah Produk Baru Sesuai R.Proyek</h1><h1>{{this.$route.params.id}}</h1>
         <v-form
             class="pa-6"
             ref="form"
@@ -37,18 +37,7 @@
             Reset
             </v-btn>
         </v-form>
-        <div v-if="snackBar == true">
-          <v-snackbar top color="green" v-model="snackBar">
-            Insert Produk by R.Proyek Sukses!
-          </v-snackbar>
-        </div>
-
-        <div v-else-if="snackBar == false">
-          <v-snackbar top color="red" v-model="snackBar">
-            Insert Produk by R.Proyek Gagal!
-          </v-snackbar>
-        </div>
-
+      
         <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
           {{snackbar.message}}
         </v-snackbar>
@@ -70,7 +59,7 @@
         v => !!v || 'ID is required',
         v => (v && v.length <= 9 && v.length >= 5) || 'ID must be 5-9 characters',
       ],
-      snackBar : false
+     
     }),
 
     methods: {
@@ -95,13 +84,13 @@
             }
           );
           console.log(response,this.data)
-          if(response.data.status == "berhasil"){
+          if(response.data.Status == "Berhasil"){
              this.snackbar = {
               message : "Insert Produk by R.Proyek Success",
               color : 'green',
               show : true
           }}
-          else if(response.data.status == "gagal"){
+          else if(response.data.Status == "Gagal"){
               this.snackbar = {
               message : "Insert Produk by R.Proyek Gagal, ID Sudah Tersedia!",
               color : 'red',

@@ -5,7 +5,7 @@
         <br>
         <h1>List Jenis Produk by Rincian Proyek</h1><h1>{{this.$route.params.id}}</h1>
         <br>
-        <router-link :to="{name : '',params : {}}">
+          <router-link to="/jenisProduk">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
                 Add Jenis Produk
             </v-btn>
