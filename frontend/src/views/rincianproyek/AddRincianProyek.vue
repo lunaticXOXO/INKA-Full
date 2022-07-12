@@ -13,7 +13,7 @@
             >
             <v-text-field
             v-model="id"
-            :counter="4"
+            :counter="5"
             :rules="idRules"
             label="ID"
             required
@@ -27,9 +27,9 @@
 
             <v-menu>
                 <template v-slot:activator="{ on, attrs }">
-                    <v-text-field :value="tanggal" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
+                    <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
                 </template>
-                <v-date-picker width="1000" v-model="tanggal"></v-date-picker>
+                <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
             </v-menu>
               
             <v-select
@@ -96,13 +96,13 @@
       items : undefined,
       items2 : undefined,
       jumlah : '',
-      dueDate : null,
+      dueDate : undefined,
       jenisProduk : '',
       proyek : '',
       id: '',
       idRules: [
         v => !!v || 'ID is required',
-        v => (v && v.length <= 4 && v.length >= 1) || 'ID must be 1-4 characters',
+        v => (v && v.length <= 5 && v.length >= 5) || 'ID must be 5 characters',
       ],
     }),
     

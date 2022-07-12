@@ -23,11 +23,11 @@ export default {
                 { title: 'WS3', name: 'Elektrikal' },
                 { title: 'WS4', name: 'Laser Machine' },
                 { title: 'WS5', name: 'Workbench' },
-                { title: 'WS6' },
-                { title: 'WS7' },
-                { title: 'WS8' },
-                { title: 'WS9' },
-                { title: 'WS10' },
+                { title: 'WS6', name: 'Fabrikasi'},
+                { title: 'WS7', name: 'Welding'},
+                { title: 'WS8', name: 'Laser Machine'},
+                { title: 'WS9', name: 'Workbench'},
+                { title: 'WS10', name: 'Elektrikal'},
             ]
         }
     }

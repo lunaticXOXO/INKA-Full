@@ -119,8 +119,7 @@
     methods: {
       validate () {
         if(this.$refs.form.validate()){
-          this.InsertMaterial(),
-          this.InsertMaterial2()
+          this.InsertMaterial()
         }
       },
 
@@ -141,7 +140,7 @@
       async fetchSupplier(){
         try{
             const axios = require('axios');
-            const res = await axios.get(`/supplier/show_supplier`);
+            const res = await axios.get(`/supplier_material/show_material_supplier`);
             if(res.data == null){
                 alert("Supplier Kosong")
             }else{
@@ -157,7 +156,7 @@
       async fetchMaterialType(){
         try{
             const axios = require('axios');
-            const res = await axios.get(`/material/show_material_type`);
+            const res = await axios.get(`/material/get_type`);
             if(res.data == null){
                 alert("Material Type Kosong")
             }else{
@@ -173,43 +172,11 @@
       async InsertMaterial(){
         try{
           const axios = require('axios');
-          const response = await axios.post('/material/add_purchaseMaterial',
+          const response = await axios.post('/material/purchase_material',
             { id: this.id,
               nama: this.nama,
-              purchaserName: this.purchaser
-            }
-          );
-          console.log(response,this.data)
-          if(response.data.status == "berhasil"){
-              this.snackbar = {
-                show : true,
-                message : "Pesan Material Berhasil",
-                color : "green"
-          }}
-          else if(response.data.status == "gagal"){
-              this.snackbar = {
-                show : true,
-                message : "Pesan Material Gagal",
-                color : "red"
-              }
-          }
-        }
-        catch(error){
-          alert("Pesan Material Failed")
-          console.log(error)
-          this.snackbar = {
-            show : true,
-            message : "Pesan Material Gagal",
-            color : "red"
-          }
-        }
-      },
-
-      async InsertMaterial2(){
-        try{
-          const axios = require('axios');
-          const response = await axios.post('/material/add_purchaseItem',
-            { supplierCode: this.supply,
+              purchaserName: this.purchaser,
+              supplierCode: this.supply,
               materialTypeCode: this.type,
               quantity: this.quantity,
               unit: this.unit,
