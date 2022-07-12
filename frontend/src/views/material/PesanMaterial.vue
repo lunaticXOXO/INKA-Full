@@ -119,7 +119,7 @@
     methods: {
       validate () {
         if(this.$refs.form.validate()){
-          this.InsertMaterial()
+          this.InsertMaterial(),
           this.InsertMaterial2()
         }
       },

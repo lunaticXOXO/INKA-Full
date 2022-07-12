@@ -13,7 +13,7 @@
 
             <v-text-field
             v-model="kode"
-            :counter="11"
+            :counter="12"
             :rules="kodeRules"
             label="Kode"
             required
@@ -21,14 +21,14 @@
 
             <v-select
             v-model="klasifikasi"
-            :items="items"
+            :items="list_klasifikasi"
             label="Klasifikasi"
             required
             ></v-select>
 
             <v-select
             v-model="grup"
-            :items="items2"
+            :items="list_grup"
             label="Grup"
             required
             ></v-select>
@@ -39,8 +39,14 @@
             ></v-text-field>
 
             <v-checkbox
-            v-model="checkbox"
-            label="Part Kritis?"
+            v-model="available"
+            label="Is Available?"
+            required
+            ></v-checkbox>
+
+            <v-checkbox
+            v-model="assy"
+            label="Is Assy?"
             required
             ></v-checkbox>
 
@@ -68,25 +74,18 @@
   export default {
     data: () => ({
       valid: true,
-      checkbox: false,
+      available: false,
+      assy: false,
       nama: '',
       kode: '',
       kodeRules: [
         v => !!v || 'Kode is required',
-        v => (v && v.length <= 9 && v.length >= 11) || 'Kode must be 9-11 characters',
+        v => (v && v.length <= 12 && v.length >= 9) || 'Kode must be 9-12 characters',
       ],
       klasifikasi: null,
       grup: null,
-      items: [
-        'Components',
-        'Fastener',
-        'Component and Fastener',
-      ],
-      items2: [
-        'Frame',
-        'Strap',
-        'Lain-Lain',
-      ],
+      list_klasifikasi: undefined,
+      list_grup: undefined,
     }),
 
     methods: {
