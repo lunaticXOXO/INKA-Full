@@ -6,14 +6,26 @@ def PurchaseMaterial():
     cursor = conn.cursor()
 
     query = "INSERT INTO mat_d_purchasematerial(id,nama,purchaseName,purchaseDate)VALUES(%s,%s,%s,%s)"
+    query2 = "INSERT INTO mat_d_purchaseitem(id,supplierCode,materialTypeCode,unit,schedulledArrival,purchaseId)VALUES(%s,%s,%s,%s,%s,%s)"
     try:
         data = request.json
+        data2 = request.json
         id = data["id"]
         nama = data["nama"]
         purchaseName = data["purchaseName"]
         purchaseDate = data["purchaseDate"]
+        id_item = data2["id"]
+        supplierCode = data2["supplierCode"]
+        materialTypeCode = data2["materialTypeCode"]
+        unit = data2["unit"]
+        schedulledArrival = data2["schedulledArrival"]
+        purchaseId = data2["purchaseId"]
+
         values = (id,nama,purchaseName,purchaseDate)
+        values2 = (id_item,supplierCode,materialTypeCode,unit,schedulledArrival,purchaseId)
+        
         cursor.execute(query,values)
+        cursor.execute(query2,values2)
         conn.commit()
         hasil = {"status" : "berhasil"}
 
