@@ -55,3 +55,4 @@ def UpdateGroups(code):
     except Exception as e:
         print("Error",str(e))
         hasil = {"status" : "gagal"}
+    return hasil

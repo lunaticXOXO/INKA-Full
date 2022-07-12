@@ -11,6 +11,7 @@ from city.controller.CityController import *
 from customer.controller.CustomerController import *
 from material.Classification.controller.MaterialClassificationController import *
 from material.GroupMaterial.controller.GroupMaterialController import *
+from material.MaterialType.controller.MaterialTypeController import *
 from material.purchasematerial.controller.PurchaseMaterialController import *
 from flask import Flask
 from flask_cors import CORS
@@ -319,7 +320,30 @@ def add_group():
 def update_group(code):
     hasil = UpdateGroups(code)
     return hasil
-    
+
+# MATERIAL TYPE
+@app.route('/material/get_type',methods = ['GET'])
+def get_type():
+    hasil = GetMaterialType()
+    return hasil
+
+@app.route('/material/add_type',methods = ['POST'])
+def add_type():
+    hasil = AddMaterialType()
+    return hasil
+
+
+@app.route('/material/update_type/<code>',methods = ['POST'])
+def update_type(code):
+    hasil = UpdateMaterialType(code)
+    return hasil
+
+
+@app.route('/material/search_type/<nama>',methods = ['GET'])
+def search_type(nama):
+    hasil = SearchMaterialType(nama)
+    return hasil
+
 # Purchase Material
 @app.route('/material/purchase_material',methods = ['POST'])
 def purchase_material():
