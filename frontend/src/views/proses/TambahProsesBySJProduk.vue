@@ -43,6 +43,7 @@
             <v-text-field
             v-model="durasi"
             label="Durasi"
+            type="number"
             ></v-text-field>
 
             <v-select

@@ -86,17 +86,6 @@ export default {
             drawer: false,
             items: [
                 {
-                action: 'mdi-checkbox-multiple-blank-outline',
-                active: false,
-                items: [
-                    { title: 'Pemesanan', icon: 'mdi-pencil', route: '/pesanMaterial'},
-                    { title: 'Pengelolaan', icon: 'mdi-laptop', route: '/kelolaMaterial'},
-                    { title: 'Jenis Material', icon: 'mdi-cards-variant', route: '/jenisMaterial'},
-                ],
-                title: 'Material',
-                },
-
-                {
                 action: 'mdi-chart-ppf',
                 active: false,
                 items: [
@@ -145,7 +134,7 @@ export default {
                 action: 'mdi-view-list',
                 active: false,
                 items: [
-                    { title: 'List', icon: 'mdi-filter-variant', route: '/listOperasi'},
+                    { title: 'List Operasi', icon: 'mdi-filter-variant', route: '/listOperasi'},
                     { title: 'Pantau Operasi', icon: 'mdi-eye', route: '/pantauOperasi'},
                 ],
                 title: 'Operasi',
@@ -166,7 +155,7 @@ export default {
                 action: 'mdi-garage-variant',
                 active: false,
                 items: [
-                    { title: 'Tambah', icon: 'mdi-plus', route: '/tambahStasiunKerja'},
+                    { title: 'Tambah Stasiun Kerja', icon: 'mdi-plus', route: '/tambahStasiunKerja'},
                     { title: 'Tambah Lini Produksi', icon: 'mdi-plus', route: '/tambahLiniProduksi'},
                     { title: 'Lihat Stasiun Kerja', icon: 'mdi-eye', route: '/lihatStasiunKerja'},
                     { title: 'List Stasiun Kerja', icon: 'mdi-filter-variant', route: '/listStasiun'},

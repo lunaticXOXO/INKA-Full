@@ -1,7 +1,6 @@
 import db.db_handler as db
 from flask import request,make_response,jsonify
 
-
 def GetGroups():
     conn = db.connector()
     cursor = conn.cursor()
@@ -17,6 +16,7 @@ def GetGroups():
         json_data.append(dict(zip(row_headers,data)))
     
     return make_response(jsonify(json_data),200)
+
 
 def AddGroups():
     conn = db.connector()

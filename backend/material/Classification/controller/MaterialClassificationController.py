@@ -1,7 +1,5 @@
-
 import db.db_handler as db
 from flask import request,make_response,jsonify
-
 
 def GetClassification():
     conn = db.connector()
@@ -17,6 +15,7 @@ def GetClassification():
         json_data.append(dict(zip(row_headers,data)))
 
     return make_response(jsonify(json_data),200)
+
 
 def AddClassification():
     conn = db.connector()

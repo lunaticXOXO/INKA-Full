@@ -29,6 +29,33 @@
             label="Purchaser Name"
             ></v-text-field>
 
+            <v-select
+            item-text="nama"
+            item-value="code"
+            v-model="supply"
+            :items="supplier"
+            label="Supplier"
+            ></v-select>
+
+            <v-select
+            item-text="nama"
+            item-value="code"
+            v-model="type"
+            :items="materialType"
+            label="Material Type"
+            ></v-select>
+
+            <v-text-field
+            v-model="quantity"
+            label="Quantity"
+            type="number"
+            ></v-text-field>
+
+            <v-text-field
+            v-model="unit"
+            label="Unit"
+            ></v-text-field>
+
             <v-btn
             :disabled="!valid"
             color="success"
@@ -60,11 +87,17 @@
       nama: '',
       purchaser: '',
       purchase_date: '',
-      kode: '',
-      kodeRules: [
+      supply: '',
+      type: '',
+      quantity: '',
+      unit: '',
+      id: '',
+      idRules: [
         v => !!v || 'Kode is required',
         v => (v && v.length <= 3 && v.length >= 3) || 'Kode must be 3 characters',
       ],
+      supplier: undefined,
+      materialType: undefined,
       snackbar : {
         show : false,
         color : null,

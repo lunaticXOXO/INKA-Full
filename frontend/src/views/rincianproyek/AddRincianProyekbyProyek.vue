@@ -22,6 +22,7 @@
             <v-text-field
             v-model="jumlah"
             label="Jumlah"
+            type="number"
             ></v-text-field>
 
             <v-menu>
