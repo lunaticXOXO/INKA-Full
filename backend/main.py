@@ -9,9 +9,11 @@ from product.controller.JenisProdukController import *
 from country.controller.CountryController import * 
 from city.controller.CityController import *
 from customer.controller.CustomerController import *
+from supplier.controller.SupplierController import *
 from material.Classification.controller.MaterialClassificationController import *
 from material.GroupMaterial.controller.GroupMaterialController import *
 from material.MaterialType.controller.MaterialTypeController import *
+from material.SupplierMaterial.controller.SupplierMaterialController import *
 from material.purchasematerial.controller.PurchaseMaterialController import *
 from flask import Flask
 from flask_cors import CORS
@@ -74,6 +76,17 @@ def update_customer(id):
     hasil = UpdateCustomer(id)
     return hasil
 
+
+#SUPPLIER
+@app.route('/supplier/get_supplier',methods = ['GET'])
+def get_supplier():
+    hasil = GetSupplier()
+    return hasil
+
+@app.route('/supplier/add_supplier',methods = ['POST'])
+def add_supplier():
+    hasil = AddSupplier()
+    return hasil
 
 #PROYEK
 @app.route('/proyek/get_allproyek',methods = ['GET'])
@@ -343,6 +356,19 @@ def update_type(code):
 def search_type(nama):
     hasil = SearchMaterialType(nama)
     return hasil
+
+# Material Supplier
+@app.route('/supplier_material/show_material_supplier',methods = ['GET'])
+def show_material_supplier():
+    hasil = ShowSupplierWithMaterialType()
+    return hasil
+
+
+@app.route('/supplier_material/add_material_supplier',methods = ['POST'])
+def add_material_supplier():
+    hasil = AddSupplierMaterialType()
+    return hasil
+
 
 # Purchase Material
 @app.route('/material/purchase_material',methods = ['POST'])
