@@ -51,6 +51,7 @@ import TambahStrukturProdukbyProduk from '../views/produk/TambahStrukturProdukby
 import PesanProyekbyCustomer from '../views/proyek/PesanProyekbyCustomer.vue'
 import TambahStasiunKerjabyProcess from '../views/stasiunKerja/TambahStasiunKerjabyProcess.vue'
 import TambahProsesBySJProduk from '../views/proses/TambahProsesBySJProduk.vue'
+import ListMaterialType from '../views/material/ListMaterialType.vue'
 
 Vue.use(VueRouter)
 
@@ -511,6 +512,14 @@ const routes = [
     component : TambahProsesBySJProduk,
     meta : {
       title : "Tambah Proses by Struktur Jenis Produk - PT.INKA"
+    }
+  },
+  {
+    path : '/listMaterialType',
+    name : 'List Tipe Material',
+    component : ListMaterialType,
+    meta : {
+      title : "List Tipe Material - PT.INKA"
     }
   }
 

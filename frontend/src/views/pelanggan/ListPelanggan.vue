@@ -36,14 +36,17 @@
                 <v-text-field v-model="editedItem.adress1" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
                 <span v-else>{{item.adress1}}</span>
             </template>
-            <template v-slot:[`item.city`]="{ item }">
-                <v-text-field v-model="editedItem.city" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
-                <span v-else>{{item.city}}</span>
-            </template>
+
+          <template v-slot:[`item.city`]="{ item }">
+              <v-select v-model="editedItem.city" item-text="nama" item-value="code" :items="cities" v-if="item.id == editedItem.id"></v-select>
+              <span v-else>{{item.city}}</span>
+          </template>
+
             <template v-slot:[`item.phone`]="{ item }">
                 <v-text-field v-model="editedItem.phone" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
                 <span v-else>{{item.phone}}</span>
             </template>
+
             <template v-slot:[`item.postalcode`]="{ item }">
                 <v-text-field v-model="editedItem.postalcode" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
                 <span v-else>{{item.postalcode}}</span>
@@ -96,6 +99,7 @@
             //{text : 'Remark',     value : 'remark'}
         ],
         customers : [],
+        cities : [],
         editedIndex: -1,
         editedItem: {
           id: '',
@@ -119,7 +123,8 @@
     },
 
     mounted(){
-        this.fetchCustomer()
+        this.fetchCustomer(),
+        this.fetchCity()
     },
 
     methods: {
@@ -151,6 +156,21 @@
           alert("Error")
           console.log(error)
         }
+      },
+
+       async fetchCity(){
+          try{
+              const axios = require('axios')
+              const res = await axios.get('/city/get_allcities')
+              if(res.data == null){
+                 console.log("Data kota kosong")
+              }else{
+                  this.cities = res.data
+                  console.log(res,this.cities)
+              }
+          }catch(error){
+              console.log(error)
+          }
       },
     
       selectCustomer(customers){
@@ -189,11 +209,11 @@
               postalcode: this.editedItem.postalcode,
               
               //Data yang tidak ditampilkan
-              adress2: this.adress2,
-              fax: this.fax,
-              pic: this.pic,
-              situs: this.situs,
-              remark: this.remark,
+              adress2: this.editedItem.adress2,
+              fax: this.editedItem.fax,
+              pic: this.editedItem.pic,
+              situs: this.editedItem.situs,
+              remark: this.editedItem.remark,
             })
             console.log(res)
         }catch(error){

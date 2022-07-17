@@ -88,6 +88,11 @@ def add_supplier():
     hasil = AddSupplier()
     return hasil
 
+@app.route('/supplier/update_supplier/<code>',methods = ['POST'])
+def update_supplier(code):
+    hasil = UpdateSupplier(code)
+    return hasil
+
 #PROYEK
 @app.route('/proyek/get_allproyek',methods = ['GET'])
 def get_allproyek():
