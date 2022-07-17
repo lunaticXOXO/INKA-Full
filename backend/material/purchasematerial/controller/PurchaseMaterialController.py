@@ -3,12 +3,20 @@ from turtle import pu
 import db.db_handler as database
 from flask import request,make_response,jsonify
 
+
+def OffForeign():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SET GLOBAL FOREIGN_KEY_CHECKS = 0;"
+    cursor.execute(query)
+
 def PurchaseMaterial():
+    #OffForeign()
     conn = database.connector()
     cursor = conn.cursor()
     cursor2 = conn.cursor()
     query = "INSERT INTO mat_d_purchasematerial(id,nama,purchaserName,purchaseDate)VALUES(%s,%s,%s,%s)"
-    query2 = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,unit,schedulledArrival,purchaseId)VALUES(%s,%s,%s,%s,%s,%s)"
+    query2 = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)VALUES(%s,%s,%s,%s,%s,%s,%s)"
     try:
         ##
         data = request.json
@@ -36,12 +44,15 @@ def PurchaseMaterial():
         id_item = data2["id_item"]
         supplierCode = data2["supplierCode"]
         materialTypeCode = data2["materialTypeCode"]
+        quantity = data2["quantity"]
         unit = data2["unit"]
         schedulledArrival = now + datetime.timedelta(days=7)
-        
-        values2 = (id_item,supplierCode,materialTypeCode,unit,purchaseId,schedulledArrival)    
 
+        values2 = (id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)    
         cursor2.execute(query2,values2)
+        #cursor4 = conn.cursor()
+        #query4 = "SET GLOBAL FOREIGN_KEY_CHECKS = 1;"
+        #cursor4.execute(query4)
         conn.commit()
         hasil = {"status" : "berhasil"}
 
