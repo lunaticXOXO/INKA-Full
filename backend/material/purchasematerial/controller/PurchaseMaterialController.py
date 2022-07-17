@@ -1,3 +1,4 @@
+import datetime
 import db.db_handler as database
 from flask import request,make_response,jsonify
 
@@ -12,16 +13,16 @@ def PurchaseMaterial():
         data2 = request.json
         id = data["id"]
         nama = data["nama"]
-        purchaseName = data["purchaseName"]
-        purchaseDate = data["purchaseDate"]
+        purchaserName = data["purchaserName"]
+        purchaseDate = datetime.now()
         id_item = data2["id"]
         supplierCode = data2["supplierCode"]
         materialTypeCode = data2["materialTypeCode"]
         unit = data2["unit"]
-        schedulledArrival = data2["schedulledArrival"]
+        schedulledArrival = datetime.now() + datetime.timedelta(days=7)
         purchaseId = data2["purchaseId"]
 
-        values = (id,nama,purchaseName,purchaseDate)
+        values = (id,nama,purchaserName,purchaseDate)
         values2 = (id_item,supplierCode,materialTypeCode,unit,schedulledArrival,purchaseId)
         
         cursor.execute(query,values)

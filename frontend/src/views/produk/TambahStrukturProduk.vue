@@ -103,7 +103,7 @@
       idNode: '',
       idNodeRules: [
         v => !!v || 'ID Nodal is required',
-        v => (v && v.length <= 7 && v.length >= 7) || 'ID Nodal must be 7 characters',
+        v => (v && v.length <= 7 && v.length >= 5) || 'ID Nodal must be 5-7 characters',
       ],
       jnsProduk: undefined,
       nodeParent: undefined,
