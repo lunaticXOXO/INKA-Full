@@ -173,7 +173,7 @@
 
       async InsertStrukturProduk(){
         try{
-          const response = await axios.post('/sjproduct/insert_sjproduct/',
+          const response = await axios.post('/sjproduct/insert_sjproduct',
             { idNodal: this.idNode,
               indukNodal: this.nodeParent,
               jnsProduk: this.jnsProduk,

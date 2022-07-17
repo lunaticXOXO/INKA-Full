@@ -218,9 +218,19 @@ def get_sjproduct_by_jproduct(id):
     hasil = ShowSJProdukbyIDJenisProduk(id)
     return hasil
 
+@app.route('/sjproduct/insert_sjproduct',methods = ['POST'])
+def insert_sjproduct():
+    hasil = AddStrukturJenisProduk()
+    return hasil
+
 @app.route('/sjproduct/insert_sjproduct_by_jproduct/<id_jproduk>',methods = ['POST'])
 def insert_sjproduct_by_jproduct(id_jproduk):
     hasil = AddSJProdukByJenisProduk(id_jproduk)
+    return hasil
+
+@app.route('/sjproduct/update_sjproduct/<idNodal>',methods = ['POST'])
+def update_sjproduct(idNodal):
+    hasil = UpdateStrukturJenisProduk(idNodal)
     return hasil
 
 #PROSES
