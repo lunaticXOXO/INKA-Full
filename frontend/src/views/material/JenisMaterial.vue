@@ -87,7 +87,7 @@
       kode: '',
       kodeRules: [
         v => !!v || 'Kode is required',
-        v => (v && v.length <= 12 && v.length >= 9) || 'Kode must be 9-12 characters',
+        v => (v && v.length <= 12 && v.length >= 3) || 'Kode must be 3-12 characters',
       ],
       classificationCode: '',
       groupCode: '',
