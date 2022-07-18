@@ -12,10 +12,10 @@
             lazy-validation>
 
             <v-text-field
-            v-model="kode"
+            v-model="code"
             :counter="12"
             :rules="kodeRules"
-            label="Kode"
+            label="Code"
             required
             ></v-text-field>
 
@@ -39,13 +39,13 @@
             ></v-text-field>
 
             <v-checkbox
-            v-model="available"
+            v-model="isAvailable"
             label="Is Available?"
             required
             ></v-checkbox>
 
             <v-checkbox
-            v-model="assy"
+            v-model="isAssy"
             label="Is Assy?"
             required
             ></v-checkbox>
@@ -102,6 +102,44 @@
         console.log(this.nama)
         console.log(this.checkbox)
       },
+
+      async getClassification(){
+          const axios = require('axios')
+          const res = await axios.get('/material/show_classification')
+          if(res.data == null){
+            console.log('Classification Kosong')
+          }else{
+            this.list_klasifikasi = res.data
+          }
+        console.log(res,this.klasifikasi)
+      },
+      async getGroups(){
+
+          const axios = require('axios')
+          const res = await axios.get('/material/show_groups')
+          if(res.data == null){
+            console.log('Group kosong')
+          }else{
+              this.list_grup = res.data
+          }
+          console.log(res,this.list_grup)
+      },
+
+      async addJenisMaterial(){
+
+          const axios = require('axios')
+          const res = await axios.post('/material/add_type',{
+              code : this.code,
+              nama : this.nama,
+              isAvailable : this.isAvailable,
+              isAssy : this.isAssy
+              
+          })
+
+          console.log(res)
+
+      }
+
     },
   }
 </script>
