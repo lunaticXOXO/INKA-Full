@@ -20,15 +20,19 @@
             ></v-text-field>
 
             <v-select
-            v-model="klasifikasi"
+            v-model="classificationCode"
             :items="list_klasifikasi"
+            item-text="descriptions"
+            item-value="code"
             label="Klasifikasi"
             required
             ></v-select>
 
             <v-select
-            v-model="grup"
+            v-model="groupCode"
             :items="list_grup"
+            item-text="descriptions"
+            item-value="code"
             label="Grup"
             required
             ></v-select>
@@ -55,7 +59,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="validate">
+            @click="addJenisMaterial()">
             Submit
             </v-btn>
 
@@ -67,6 +71,9 @@
             </v-btn>
 
         </v-form>
+          <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+            {{snackbar.message}}
+        </v-snackbar>
     </v-card>
 </template>
 
@@ -82,12 +89,21 @@
         v => !!v || 'Kode is required',
         v => (v && v.length <= 12 && v.length >= 9) || 'Kode must be 9-12 characters',
       ],
-      klasifikasi: null,
-      grup: null,
+      classificationCode: '',
+      groupCode: '',
       list_klasifikasi: undefined,
       list_grup: undefined,
-    }),
 
+       snackbar : {
+        show : false,
+        color : null,
+        message : null,
+      }
+    }),
+    mounted(){
+      this.getClassification(),
+      this.getGroups()
+    },
     methods: {
       validate () {
         this.$refs.form.validate()
@@ -126,18 +142,34 @@
       },
 
       async addJenisMaterial(){
-
+        try{
           const axios = require('axios')
           const res = await axios.post('/material/add_type',{
               code : this.code,
               nama : this.nama,
               isAvailable : this.isAvailable,
-              isAssy : this.isAssy
-              
+              isAssy : this.isAssy,
+              classificationCode : this.classificationCode,
+              groupCode : this.groupCode
           })
-
-          console.log(res)
-
+        
+           if(res.data.status == "berhasil"){
+            this.snackbar = {
+              show : true,
+              message : "Pesan Material Berhasil",
+              color : "green"
+            }
+          }
+          else if(res.data.status == "gagal"){
+            this.snackbar = {
+              show : true,
+              message : "Pesan Material Gagal",
+              color : "red"
+            }
+          }
+        }catch(error){
+          console.log(error)
+        }
       }
 
     },
