@@ -67,7 +67,7 @@ def AddSJProdukByJenisProduk(id_jproduk):
    
     for index in records:
         temp = index[0]
-
+    
     print(temp)
     print(type(temp))
     query = "INSERT INTO prd_r_strukturjnsprd(idNodal,indukNodal,jnsProduk,nama,jumlah,satuan)VALUES(%s,%s,'"+temp+"',%s,%s,%s)"
@@ -91,14 +91,49 @@ def AddStrukturJenisProduk():
     conn = database.connector()
     cursor = conn.cursor()
 
-    idNodal, indukNodal, jnsProduk, nama, jumlah, satuan = input("Input ID Nodal : "), input("Input Induk Nodal : "), input("Input Jenis Produk : "), input("Input Nama : "), input("Input Jumlah : "), input("Input Satuan : ")
-
     query = "INSERT INTO prd_r_strukturjnsprd (idNodal, indukNodal, jnsProduk, nama, jumlah, satuan) VALUES (%s,%s,%s,%s,%s,%s)"
-    values = (idNodal, indukNodal, jnsProduk, nama, jumlah, satuan)
-    cursor.execute(query,values)
-    
-    conn.commit()
-    print("Struktur Jenis Produk Baru Ditambahkan!")
+    try:
+        data = request.json
+        idNodal = data["idNodal"]
+        indukNodal = data["indukNodal"]
+        jnsProduk = data["jnsProduk"]
+        nama = data["nama"]
+        jumlah = data["jumlah"]
+        satuan = data["satuan"]
+        values = (idNodal, indukNodal, jnsProduk, nama, jumlah, satuan)
+        cursor.execute(query,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+        print("Struktur Jenis Produk Baru Ditambahkan!")
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
+
+def UpdateStrukturJenisProduk(idNodal):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "UPDATE prd_r_strukturjnsprd SET idNodal = %s,indukNodal = %s,jnsProduk = %s,nama = %s,jumlah = %s,satuan = %s WHERE idNodal = '"+idNodal+"'"
+    try:
+        data = request.json
+        idNodal = data["idNodal"]
+        indukNodal = data["indukNodal"]
+        jnsProduk = data["jnsProduk"]
+        nama = data["nama"]
+        jumlah = data["jumlah"]
+        satuan = data["satuan"]
+        values = (idNodal,indukNodal,jnsProduk,nama,jumlah,satuan)
+        cursor.execute(query,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
+
 
 
 def ShowSJProdJoinProses():

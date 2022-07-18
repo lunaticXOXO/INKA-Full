@@ -147,6 +147,7 @@ export default {
                     { title: 'Pemesanan Material', icon: 'mdi-reorder-vertical', route: '/pesanMaterial'},
                     { title: 'Pengelolaan Material', icon: 'mdi-key-outline', route: '/kelolaMaterial'},
                     { title: 'Jenis Material', icon: 'mdi-sort-variant', route: '/jenisMaterial'},
+                    {title : 'List Tipe Material',icon : 'mdi-filter-variant',route : '/listMaterialType'}
                 ],
                 title: 'Material',
                 },
@@ -178,6 +179,7 @@ export default {
                 action: 'mdi-database',
                 active: false,
                 items: [
+                    {title : 'List Pemasok',icon : 'mdi-playlist-check',route : '/listPemasok'},
                     { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'},
                 ],
                 title: 'Pemasok',

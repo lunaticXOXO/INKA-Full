@@ -25,10 +25,13 @@
             ></v-text-field>
 
             <v-text-field
-            v-model="purchaser"
+            v-model="purchaseName"
             label="Purchaser Name"
             ></v-text-field>
 
+             
+
+            <!--
             <v-select
             item-text="nama"
             item-value="code"
@@ -45,6 +48,7 @@
             label="Material Type"
             ></v-select>
 
+
             <v-text-field
             v-model="quantity"
             label="Quantity"
@@ -56,16 +60,18 @@
             :items="units"
             label="Unit"
             ></v-select>
+            -->
 
-            <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            type="submit"
-            @click="validate()"
-            >
-            Submit
-            </v-btn>
+            <router-link>
+              <v-btn
+                :disabled="!valid"
+                color="success"
+                class="mr-4"
+                type="submit"
+                @click="validate()">
+                Submit
+              </v-btn>
+            </router-link>
 
             <v-btn
             color="error"
@@ -74,6 +80,8 @@
             >
             Reset
             </v-btn>
+
+
         </v-form>
         <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
             {{snackbar.message}}
@@ -87,21 +95,10 @@
       valid: true,
       nama: '',
       purchaser: '',
-      supply: '',
-      type: '',
-      quantity: '',
-      unit: '',
-      id: '',
+     
       idRules: [
         v => !!v || 'ID is required',
         v => (v && v.length <= 11 && v.length >= 1) || 'ID must be 1-11 characters',
-      ],
-      supplier: undefined,
-      materialType: undefined,
-      units: [
-        "Set",
-        "Lembar",
-        "Pack"
       ],
       snackbar : {
         show : false,
@@ -111,11 +108,7 @@
       }
     }),
 
-    mounted(){
-        this.fetchSupplier(),
-        this.fetchMaterialType()
-    },
-
+  
     methods: {
       validate () {
         if(this.$refs.form.validate()){
@@ -131,43 +124,8 @@
         console.log(this.id)
         console.log(this.nama)
         console.log(this.purchaser)
-        console.log(this.supply)
-        console.log(this.type)
-        console.log(this.quantity)
-        console.log(this.unit)
-      },
-
-      async fetchSupplier(){
-        try{
-            const axios = require('axios');
-            const res = await axios.get(`/supplier_material/show_material_supplier`);
-            if(res.data == null){
-                alert("Supplier Kosong")
-            }else{
-                this.supplier = res.data
-            }
-        } 
-        catch(error){
-            alert("Error" + error)
-            console.log(error)
-        }
-      },
-
-      async fetchMaterialType(){
-        try{
-            const axios = require('axios');
-            const res = await axios.get(`/material/get_type`);
-            if(res.data == null){
-                alert("Material Type Kosong")
-            }else{
-                this.materialType = res.data
-            }
-        } 
-        catch(error){
-            alert("Error" + error)
-            console.log(error)
-        }
-      },
+       
+      },  
 
       async InsertMaterial(){
         try{
@@ -176,11 +134,6 @@
             { id: this.id,
               nama: this.nama,
               purchaserName: this.purchaser,
-              supplierCode: this.supply,
-              materialTypeCode: this.type,
-              quantity: this.quantity,
-              unit: this.unit,
-              purchaseId: this.id
             }
           );
           console.log(response,this.data)

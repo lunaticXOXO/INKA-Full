@@ -88,6 +88,11 @@ def add_supplier():
     hasil = AddSupplier()
     return hasil
 
+@app.route('/supplier/update_supplier/<code>',methods = ['POST'])
+def update_supplier(code):
+    hasil = UpdateSupplier(code)
+    return hasil
+
 #PROYEK
 @app.route('/proyek/get_allproyek',methods = ['GET'])
 def get_allproyek():
@@ -218,7 +223,6 @@ def get_sjproduct_by_jproduct(id):
     hasil = ShowSJProdukbyIDJenisProduk(id)
     return hasil
 
-
 @app.route('/sjproduct/insert_sjproduct',methods = ['POST'])
 def insert_sjproduct():
     hasil = AddStrukturJenisProduk()
@@ -227,6 +231,11 @@ def insert_sjproduct():
 @app.route('/sjproduct/insert_sjproduct_by_jproduct/<id_jproduk>',methods = ['POST'])
 def insert_sjproduct_by_jproduct(id_jproduk):
     hasil = AddSJProdukByJenisProduk(id_jproduk)
+    return hasil
+
+@app.route('/sjproduct/update_sjproduct/<idNodal>',methods = ['POST'])
+def update_sjproduct(idNodal):
+    hasil = UpdateStrukturJenisProduk(idNodal)
     return hasil
 
 #PROSES
