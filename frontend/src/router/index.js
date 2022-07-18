@@ -15,7 +15,6 @@ import TambahJnsProd from '../views/produk/TambahJenisProduk.vue'
 import TambahStrProd from '../views/produk/TambahStrukturProduk.vue'
 import TambahJnsMaterial from '../views/material/JenisMaterial.vue'
 import PesanMaterial from '../views/material/PesanMaterial.vue'
-import KelolaMaterial from '../views/material/KelolaMaterial.vue'
 import TambahProyek from '../views/proyek/PesanProyek.vue'
 import ProsesTerakhir from '../views/proyek/ProsesTerakhir.vue'
 import TambahStasiunKerja from '../views/stasiunKerja/TambahStasiunKerja.vue'
@@ -188,15 +187,6 @@ const routes = [
     component: TambahJnsMaterial,
     meta: {
       title: "Jenis Material - PT.INKA"
-    }
-  },
-
-  {
-    path: '/kelolaMaterial',
-    name: 'Kelola Material',
-    component: KelolaMaterial,
-    meta: {
-      title: "Kelola Material - PT.INKA"
     }
   },
 

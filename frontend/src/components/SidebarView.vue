@@ -145,7 +145,6 @@ export default {
                 active: false,
                 items: [
                     { title: 'Pemesanan Material', icon: 'mdi-reorder-vertical', route: '/pesanMaterial'},
-                    { title: 'Pengelolaan Material', icon: 'mdi-key-outline', route: '/kelolaMaterial'},
                     { title: 'Jenis Material', icon: 'mdi-sort-variant', route: '/jenisMaterial'},
                     {title : 'List Tipe Material',icon : 'mdi-filter-variant',route : '/listMaterialType'}
                 ],

@@ -59,7 +59,7 @@
             color="success"
             class="mr-4"
             type="submit"
-            @click="addJenisMaterial()">
+            @click="validate">
             Submit
             </v-btn>
 
@@ -93,52 +93,58 @@
       groupCode: '',
       list_klasifikasi: undefined,
       list_grup: undefined,
-
-       snackbar : {
+      snackbar : {
         show : false,
         color : null,
         message : null,
       }
     }),
+
     mounted(){
       this.getClassification(),
       this.getGroups()
     },
+
     methods: {
       validate () {
-        this.$refs.form.validate()
+        if(this.$refs.form.validate()){
+          this.addJenisMaterial()
+        }
       },
+
       reset () {
         this.$refs.form.reset()
       },
+
       submitHandler() {
         console.log(this.kode)
-        console.log(this.klasifikasi)
-        console.log(this.grup)
+        console.log(this.assy)
+        console.log(this.available)
         console.log(this.nama)
-        console.log(this.checkbox)
+        console.log(this.classificationCode)
+        console.log(this.groupCode)
       },
 
       async getClassification(){
-          const axios = require('axios')
-          const res = await axios.get('/material/show_classification')
-          if(res.data == null){
-            console.log('Classification Kosong')
-          }else{
-            this.list_klasifikasi = res.data
-          }
+        const axios = require('axios')
+        const res = await axios.get('/material/show_classification')
+        if(res.data == null){
+          console.log('Classification Kosong')
+        } else {
+          this.list_klasifikasi = res.data
+        }
         console.log(res,this.klasifikasi)
       },
-      async getGroups(){
 
-          const axios = require('axios')
-          const res = await axios.get('/material/show_groups')
-          if(res.data == null){
-            console.log('Group kosong')
-          }else{
-              this.list_grup = res.data
-          }
-          console.log(res,this.list_grup)
+      async getGroups(){
+        const axios = require('axios')
+        const res = await axios.get('/material/show_groups')
+        if(res.data == null){
+          console.log('Group kosong')
+        } else {
+          this.list_grup = res.data
+        }
+        console.log(res,this.list_grup)
       },
 
       async addJenisMaterial(){
@@ -156,14 +162,14 @@
            if(res.data.status == "berhasil"){
             this.snackbar = {
               show : true,
-              message : "Pesan Material Berhasil",
+              message : "Tambah Jenis Material Berhasil",
               color : "green"
             }
           }
           else if(res.data.status == "gagal"){
             this.snackbar = {
               show : true,
-              message : "Pesan Material Gagal",
+              message : "Tambah Jenis Material Gagal",
               color : "red"
             }
           }
@@ -171,7 +177,6 @@
           console.log(error)
         }
       }
-
     },
   }
 </script>
