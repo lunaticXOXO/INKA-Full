@@ -129,15 +129,15 @@
             }
            );
           console.log(response,this.data)
-          if(response.data.status == "berhasil"){
+          if(response.data.Status == "Berhasil"){
              this.snackbar = {
               message : "Pesan Proyek Success",
               color : 'green',
               show : true
           }}
-          else if(response.data.status == "gagal"){
+          else if(response.data.Status == "Gagal"){
               this.snackbar = {
-              message : "Pesan Proyek Gagal",
+              message : "Pesan Proyek Gagal, ID sudah tersedia!",
               color : 'red',
               show : true
           }}

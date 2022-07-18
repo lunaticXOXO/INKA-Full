@@ -102,13 +102,13 @@
             }
           );
           console.log(response,this.data)
-          if(response.data.status == "berhasil"){
+          if(response.data.Status == "Berhasil"){
              this.snackbar = {
               message : "Insert Produk Success",
               color : 'green',
               show : true
           }}
-          else if(response.data.status == "gagal"){
+          else if(response.data.Status == "Gagal"){
               this.snackbar = {
               message : "Insert Produk Gagal, ID Sudah Tersedia!",
               color : 'red',

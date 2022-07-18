@@ -59,8 +59,7 @@ def ShowSJProdukbyIDJenisProduk(id):
 def AddSJProdukByJenisProduk(id_jproduk):
     conn = database.connector()
     cursor = conn.cursor()
-    conn = database.connector()
-    cursor = conn.cursor()
+    
     query = "SELECT a.id FROM prd_r_jenisproduk a JOIN prd_r_strukturjnsprd b ON b.jnsProduk = a.id WHERE a.id = '"+id_jproduk+"' LIMIT 1"
 
     cursor.execute(query)
@@ -68,7 +67,6 @@ def AddSJProdukByJenisProduk(id_jproduk):
    
     for index in records:
         temp = index[0]
-    
 
     print(temp)
     print(type(temp))

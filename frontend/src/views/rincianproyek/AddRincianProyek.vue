@@ -141,13 +141,13 @@
             proyek : this.proyek
           })
           console.log(response)
-          if(response.data.status == "berhasil"){
+          if(response.data.Status == "Berhasil"){
              this.snackbar = {
               message : "Insert Rincian Proyek Success",
               color : 'green',
               show : true
           }}
-          else if(response.data.status == "gagal"){
+          else if(response.data.Status == "Gagal"){
               this.snackbar = {
               message : "Insert Rincian Proyek Gagal, ID sudah tersedia",
               color : 'red',
