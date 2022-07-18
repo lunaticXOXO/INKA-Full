@@ -15,6 +15,7 @@ from material.GroupMaterial.controller.GroupMaterialController import *
 from material.MaterialType.controller.MaterialTypeController import *
 from material.SupplierMaterial.controller.SupplierMaterialController import *
 from material.purchasematerial.controller.PurchaseMaterialController import *
+from unit.controller.UnitController import *
 from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api
@@ -384,6 +385,11 @@ def add_material_supplier():
     hasil = AddSupplierMaterialType()
     return hasil
 
+# Material Unit
+@app.route('/unit/get_unit',methods = ['GET'])
+def get_unit():
+    hasil = GetUnit()
+    return hasil
 
 # Purchase Material
 @app.route('/material/purchase_material',methods = ['POST'])

@@ -11,14 +11,12 @@ def OffForeign():
     cursor.execute(query)
 
 def PurchaseMaterial():
-    #OffForeign()
     conn = database.connector()
     cursor = conn.cursor()
     cursor2 = conn.cursor()
     query = "INSERT INTO mat_d_purchasematerial(id,nama,purchaserName,purchaseDate)VALUES(%s,%s,%s,%s)"
     query2 = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)VALUES(%s,%s,%s,%s,%s,%s,%s)"
     try:
-        ##
         data = request.json
         
         id = data["id"]
@@ -26,34 +24,22 @@ def PurchaseMaterial():
         purchaserName = data["purchaserName"]
         now = datetime.datetime.now()
        
-      
         values = (id,nama,purchaserName,now)
         cursor.execute(query,values)
         conn.commit()
 
-        query3 = "SELECT id FROM mat_d_purchasematerial WHERE id = '"+id+"'"
-        cursor.execute(query3)
-        purchaseId = ""
-        record = cursor.fetchall()
-        for index in record:
-            purchaseId = index[0]
-
-        print("purchase Id : ",purchaseId)
-
-        data2 = request.json
-        id_item = data2["id_item"]
-        supplierCode = data2["supplierCode"]
-        materialTypeCode = data2["materialTypeCode"]
-        quantity = data2["quantity"]
-        unit = data2["unit"]
+        id_item = data["id_item"]
+        supplierCode = data["supplierCode"]
+        materialTypeCode = data["materialTypeCode"]
+        quantity = data["quantity"]
+        unit = data["unit"]
+        purchaseId = data["purchaseId"]
         schedulledArrival = now + datetime.timedelta(days=7)
 
         values2 = (id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)    
         cursor2.execute(query2,values2)
-        #cursor4 = conn.cursor()
-        #query4 = "SET GLOBAL FOREIGN_KEY_CHECKS = 1;"
-        #cursor4.execute(query4)
         conn.commit()
+        
         hasil = {"status" : "berhasil"}
 
     except Exception as e:
