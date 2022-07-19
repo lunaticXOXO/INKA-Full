@@ -4,7 +4,6 @@
         max-width="1000">
         <br>
         <h1>Tambah Material Kosong</h1>
-        <h1>{{this.$route.params.id}}</h1>
         <v-form
             class="pa-6"
             ref="form"
@@ -14,7 +13,7 @@
         >
             <v-banner></v-banner>
             <v-banner>
-                Minimum Quantity untuk material {{this.$route.params.id}}: {{quantity}}
+                Minimum Quantity Untuk Material ID ({{this.$route.params.id}}) : {{quantity}}
             </v-banner>
 
             <v-text-field
@@ -24,6 +23,23 @@
             type="number"
             required
             ></v-text-field>
+
+            <v-text-field
+            v-model="nama"
+            label="Nama"
+            ></v-text-field>
+
+            <v-text-field
+            v-model="purchaser"
+            label="Purchaser Name"
+            ></v-text-field>
+
+            <v-menu>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-text-field :value="tanggal" v-bind="attrs" v-on="on" label="Schedulled Arrival Date" prepend-icon="mdi-calendar"></v-text-field>
+                </template>
+                <v-date-picker width="1000" v-model="tanggal"></v-date-picker>
+            </v-menu>
 
             <v-btn
               :disabled="!valid"
@@ -53,6 +69,9 @@
   export default {
     data: () => ({
       valid: true,
+      nama: '',
+      purchaser: '',
+      tanggal: null,
       quantity: null,
       quantity2: null,
       quanRules: [
@@ -107,15 +126,10 @@
         try{
           const axios = require('axios');
           const response = await axios.post('/material/order_material/' + this.$route.params.id,
-            { id: this.id,
-              nama: this.nama,
+            { nama: this.nama,
               purchaserName: this.purchaser,
-              id_item: this.id_item,
-              supplierCode: this.supplierCode,
-              materialTypeCode: this.materialTypeCode,
-              quantity: this.quantity,
-              unit: this.unit,
-              purchaseId: this.id
+              quantity: this.quantity2,
+              schedulledArrival: this.schedulledArrival
             }
           );
           console.log(response,this.data)
