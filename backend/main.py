@@ -15,6 +15,7 @@ from material.GroupMaterial.controller.GroupMaterialController import *
 from material.MaterialType.controller.MaterialTypeController import *
 from material.SupplierMaterial.controller.SupplierMaterialController import *
 from material.purchasematerial.controller.PurchaseMaterialController import *
+from material.purchasematerial.controller.PurchaseMaterialItem import *
 from unit.controller.UnitController import *
 from flask import Flask
 from flask_cors import CORS
@@ -397,6 +398,16 @@ def purchase_material():
     hasil = PurchaseMaterial()
     return hasil
 
+@app.route('/material/order_material/<id>',methods = ['POST'])
+def order_material(id):
+    hasil = PurchaseMaterialFromStock(id)
+    return hasil
+
+@app.route('/material/min_quantity',methods = ['GET'])
+def min_quantity():
+    hasil = MinimalQuantity()
+    return hasil
+    
 if __name__ =="__main__":
     app.run(debug = True,port = 8181)
     print("Connected to port 8181")
