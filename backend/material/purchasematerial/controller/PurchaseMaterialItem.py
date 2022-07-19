@@ -114,6 +114,20 @@ def AddMaterialtoStock():
     return hasil
 
 
+
+def MinimalQuantity(id):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query_cek = "SELECT a.jumlah FROM prd_r_strukturjnsprd a JOIN mat_r_materialtype b ON b.code = a.materialTypeCode JOIN mat_r_materialtypesupplier c ON c.materialTypeCode = a.materialTypeCode JOIN mat_d_purchaseitem d ON d.materialTypeCode = a.materialTypeCode JOIN mat_d_materialstock e ON e.materialTypeCode = a.materialTypeCode WHERE e.id = '"+id+"'"
+
+    cursor.execute(query_cek)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
 def PurchaseMaterialFromStock(id):
     conn = database.connector()
     cursor = conn.cursor()
@@ -134,7 +148,7 @@ def PurchaseMaterialFromStock(id):
     print("Material Type Code : ",materialTypeCode)
     print("supplierCode : ",supplierCode)
     print("unit : ",unit)
-    
+
     query2 = "INSERT INTO mat_d_purchaseMaterial(id,nama,purchaserName,purchaseDate)VALUES(%s,%s,%s,%s)"
     query3 = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseid)VALUES(%s,%s,%s,%s,%s,%s,%s)"
     try:
@@ -163,7 +177,7 @@ def PurchaseMaterialFromStock(id):
         for data2 in records2:
             qty = data2[0]
         
-        query5 = "UPDATE mat_d_materialstock SET purchaseId = %s,orders = %s,quantity = quantity -= %s WHERE id = '"+id+"'"
+        query5 = "UPDATE mat_d_materialstock SET purchaseId = %s,orders = %s,quantity = quantity += %s WHERE id = '"+id+"'"
         values3 = (id_purchase,id_item,qty)
         cursor.execute(query5,values3)
         conn.commit()
