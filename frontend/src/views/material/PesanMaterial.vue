@@ -100,12 +100,12 @@
       id_item: '',
       id_itemRules: [
         v => !!v || 'ID Item is required',
-        v => (v && v.length <= 11 && v.length >= 1) || 'ID must be 1-11 characters',
+        v => (v && v.length <= 1 && v.length >= 1) || 'ID must be 1-11 characters',
       ],
       id: '',
       idRules: [
         v => !!v || 'ID is required',
-        v => (v && v.length <= 11 && v.length >= 1) || 'ID must be 1-11 characters',
+        v => (v && v.length <= 1 && v.length >= 1) || 'ID must be 1-11 characters',
       ],
       supply: '',
       supplier: undefined,

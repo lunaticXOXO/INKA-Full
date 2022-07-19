@@ -14,7 +14,7 @@
         >
             <v-banner></v-banner>
             <v-banner>
-                Minimum Quantity: {{quantity}}
+                Minimum Quantity untuk material {{this.$route.params.id}}: {{quantity}}
             </v-banner>
 
             <v-text-field
@@ -57,7 +57,7 @@
       quantity2: null,
       quanRules: [
         v => !!v || 'Quantity is required',
-        v => v >= 10 || 'Quantity must be 1 or more'
+        v => v >= 1 || 'Quantity must be 1 or more'
       ],
       snackbar : {
         show : false,
@@ -106,13 +106,13 @@
       async UpdateStock(){
         try{
           const axios = require('axios');
-          const response = await axios.post('/material/purchase_material',
+          const response = await axios.post('/material/order_material/' + this.$route.params.id,
             { id: this.id,
               nama: this.nama,
               purchaserName: this.purchaser,
               id_item: this.id_item,
-              supplierCode: this.supply,
-              materialTypeCode: this.type,
+              supplierCode: this.supplierCode,
+              materialTypeCode: this.materialTypeCode,
               quantity: this.quantity,
               unit: this.unit,
               purchaseId: this.id
