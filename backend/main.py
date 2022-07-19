@@ -403,9 +403,14 @@ def order_material(id):
     hasil = PurchaseMaterialFromStock(id)
     return hasil
 
-@app.route('/material/min_quantity',methods = ['GET'])
-def min_quantity():
-    hasil = MinimalQuantity()
+@app.route('/material/min_quantity/<id>',methods = ['GET'])
+def min_quantity(id):
+    hasil = MinimalQuantity(id)
+    return hasil
+
+@app.route('/stock/get_stock',methods = ['GET'])
+def get_stock():
+    hasil = GetMaterialFromStock()
     return hasil
     
 if __name__ =="__main__":

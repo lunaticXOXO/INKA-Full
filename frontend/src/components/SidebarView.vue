@@ -146,7 +146,9 @@ export default {
                 items: [
                     { title: 'Pemesanan Material', icon: 'mdi-reorder-vertical', route: '/pesanMaterial'},
                     { title: 'Jenis Material', icon: 'mdi-sort-variant', route: '/jenisMaterial'},
-                    {title : 'List Tipe Material',icon : 'mdi-filter-variant',route : '/listMaterialType'}
+                    { title: 'List Tipe Material', icon : 'mdi-filter-variant', route : '/listMaterialType'},
+                    { title: 'List Stock Material', icon : 'mdi-filter-variant', route : '/listStockMaterial'},
+                    { title : 'Tambah Material Kosong', icon : 'mdi-plus', route : '/tambahMaterialKosong'},
                 ],
                 title: 'Material',
                 },

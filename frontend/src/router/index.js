@@ -51,6 +51,8 @@ import PesanProyekbyCustomer from '../views/proyek/PesanProyekbyCustomer.vue'
 import TambahStasiunKerjabyProcess from '../views/stasiunKerja/TambahStasiunKerjabyProcess.vue'
 import TambahProsesBySJProduk from '../views/proses/TambahProsesBySJProduk.vue'
 import ListMaterialType from '../views/material/ListMaterialType.vue'
+import ListStockMaterial from '../views/material/ListStockMaterial.vue'
+import TambahMaterialKosong from '../views/material/TambahMaterialKosong.vue'
 
 Vue.use(VueRouter)
 
@@ -510,6 +512,22 @@ const routes = [
     component : ListMaterialType,
     meta : {
       title : "List Tipe Material - PT.INKA"
+    }
+  },
+  {
+    path : '/listStockMaterial',
+    name : 'List Stock Material',
+    component : ListStockMaterial,
+    meta : {
+      title : "List Stock Material - PT.INKA"
+    }
+  },
+  {
+    path : '/tambahMaterialKosong/:id',
+    name : 'Tambah Material Kosong',
+    component : TambahMaterialKosong,
+    meta : {
+      title : "Tambah Material Kosong - PT.INKA"
     }
   }
 

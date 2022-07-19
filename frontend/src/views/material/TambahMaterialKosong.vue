@@ -4,6 +4,7 @@
         max-width="1000">
         <br>
         <h1>Tambah Material Kosong</h1>
+        <h1>{{this.$route.params.id}}</h1>
         <v-form
             class="pa-6"
             ref="form"
@@ -11,11 +12,17 @@
             v-model="valid"
             lazy-validation
         >
+            <v-banner></v-banner>
+            <v-banner>
+                Minimum Quantity: {{quantity}}
+            </v-banner>
 
             <v-text-field
-            v-model="quantity"
-            label="Quantity"
+            v-model="quantity2"
+            :rules="quanRules"
+            label="New Quantity"
             type="number"
+            required
             ></v-text-field>
 
             <v-btn
@@ -46,7 +53,12 @@
   export default {
     data: () => ({
       valid: true,
-      quantity: '',
+      quantity: null,
+      quantity2: null,
+      quanRules: [
+        v => !!v || 'Quantity is required',
+        v => v >= 10 || 'Quantity must be 1 or more'
+      ],
       snackbar : {
         show : false,
         color : null,
@@ -59,9 +71,10 @@
     },
   
     methods: {
-      validate () {
+      validate(){
         if(this.$refs.form.validate()){
-          this.UpdateStock()
+            console.log(this.quantity2)
+            this.UpdateStock()
         }
       },
 
@@ -76,12 +89,13 @@
       async fetchQuantity(){
         try{
             const axios = require('axios')
-            const res = await axios.get('/supplier/get_supplier')
+            const res = await axios.get('/material/min_quantity/' + this.$route.params.id)
             if (res.data == null){
                 alert("Quantity Kosong")
             }else{
-                this.quantity = res.data
-                console.log(res,this.supplier)
+                this.quantity = res.data[0].jumlah
+                console.log(res)
+                console.log(this.quantity)
             }
         }catch(error){
             alert(error)

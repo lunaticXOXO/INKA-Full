@@ -31,12 +31,26 @@
 
             <template v-slot:[`item.isAvailable`]="{ item }">
                 <v-text-field v-model="editedItem.isAvailable" :hide-details="true" dense single-line v-if="item.code == editedItem.code" ></v-text-field>
-                <span v-else>{{item.isAvailable}}</span>
+                <span v-else>
+                  <div v-if="item.isAvailable == 0">
+                    No
+                  </div>
+                  <div v-if="item.isAvailable == 1">
+                    Yes
+                  </div>
+                </span>
             </template>
 
             <template v-slot:[`item.isAssy`]="{ item }">
                 <v-text-field v-model="editedItem.isAssy" :hide-details="true" dense single-line v-if="item.code == editedItem.code" ></v-text-field>
-                <span v-else>{{item.isAssy}}</span>
+                <span v-else>
+                  <div v-if="item.isAssy == 0">
+                    No
+                  </div>
+                  <div v-if="item.isAssy == 1">
+                    Yes
+                  </div>
+                </span>
             </template>
 
            <template v-slot:[`item.classificationCode`]="{ item }">
