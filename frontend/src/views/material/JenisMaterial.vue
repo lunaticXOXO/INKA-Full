@@ -81,8 +81,8 @@
   export default {
     data: () => ({
       valid: true,
-      available: false,
-      assy: false,
+      isAvailable: false,
+      isAssy: false,
       nama: '',
       kode: '',
       kodeRules: [
