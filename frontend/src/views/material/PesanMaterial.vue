@@ -229,7 +229,6 @@
           }
         }
         catch(error){
-          alert("Pesan Material Failed")
           console.log(error)
           this.snackbar = {
             show : true,

@@ -114,7 +114,6 @@ def AddMaterialtoStock():
     return hasil
 
 
-
 def MinimalQuantity(id):
     conn = database.connector()
     cursor = conn.cursor()
@@ -127,6 +126,7 @@ def MinimalQuantity(id):
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
     return make_response(jsonify(json_data),200)
+    
 
 def PurchaseMaterialFromStock(id):
     conn = database.connector()
