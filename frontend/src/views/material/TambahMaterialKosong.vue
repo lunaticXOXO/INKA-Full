@@ -130,7 +130,7 @@
             { nama: this.nama,
               purchaserName: this.purchaser,
               quantity: this.quantity2,
-              schedulledArrival: this.schedulledArrival
+              schedulledArrival: this.tanggal
             }
           );
           console.log(response,this.data)
