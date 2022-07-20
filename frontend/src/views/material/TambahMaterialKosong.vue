@@ -74,6 +74,7 @@
       tanggal: null,
       quantity: null,
       quantity2: null,
+      schedulledArrival : '',
       quanRules: [
         v => !!v || 'Quantity is required',
         v => v >= 1 || 'Quantity must be 1 or more'
@@ -114,7 +115,7 @@
             }else{
                 this.quantity = res.data[0].jumlah
                 console.log(res)
-                console.log(this.quantity)
+                console.log(res,this.quantity)
             }
         }catch(error){
             alert(error)
