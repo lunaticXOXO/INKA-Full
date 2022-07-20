@@ -156,7 +156,13 @@ def PurchaseMaterialFromStock(id):
         data2 = request.json
         
         N = 5
+        N2 = 3
         id_purchase = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N)) #Men Generate otomatis untuk id purchase material
+        print("ID Purchase : ",id_purchase)
+
+        id_item = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N2)) #Men Generate Otomatis untuk id purchase item 
+        id_item_fix = id_item
+
         nama = data["nama"]
         purchaserName = data["purchaserName"]
         purchaserDate = datetime.datetime.now()
@@ -170,7 +176,7 @@ def PurchaseMaterialFromStock(id):
         schedulledArrival = data2["schedulledArrival"]
         values2 = (id_item_fix,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,id_purchase)
         cursor.execute(query3,values2)
-
+        
         ###Setelah Data di insert kan semua maka, bisa update data purchaseid dan orders di material stock
         query4 = "SELECT quantity FROM mat_d_purchaseitem WHERE id_item = '"+id_item_fix+"'"
         cursor.execute(query4)
@@ -188,3 +194,56 @@ def PurchaseMaterialFromStock(id):
         print("Error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
+
+
+def PurchaseNewMaterial():
+    conn = database.connector()
+    cursor = conn.cursor()
+    N = 5
+    N2 = 3
+    query = "INSERT INTO mat_d_purchasematerial(id,nama,purchaserName,purchaseDate)VALUES(%s,%s,%s,%s)"
+    query2 = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseid)VALUES(%s,%s,%s,%s,%s,%s,%s)"
+    query3 = "INSERT INTO mat_d_materialstock(id,purchaseId,orders,materialTypeCode,supplierCode,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    data = request.json
+    data2 = request.json
+    data3 = request.json
+    try:
+        id_purchase = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
+        id_fix_purchase = id_purchase
+        nama = data["nama"]
+        purchaserName = data["purchaserName"]
+        purchaseDate = datetime.datetime.now()
+
+        id_item = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N2))
+        id_fix_item = id_item
+        supplierCode = data2["supplierCode"]
+        materialTypeCode = data2["materialTypeCode"]
+        quantity = data2["quantity"]
+        unit = data2["unit"]
+        schedulledArrival = data2["schedulledArrival"]
+        
+        id_stock = data3["id"]
+        purchaseId = id_fix_purchase
+        orders = id_fix_item
+        supplierCodeMat = supplierCode
+        materialTypeCodeMat = materialTypeCode
+        merk = data3["merk"]
+        matquantity = quantity
+        matunit = unit
+        arrivalDate = data3["arrivalDate"]
+
+        values = (id_fix_purchase,nama,purchaserName,purchaseDate)
+        values2 = (id_fix_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,id_fix_purchase)
+        values3 = (id_stock,purchaseId,orders,materialTypeCodeMat,supplierCodeMat,merk,matquantity,matunit,arrivalDate)
+
+        cursor.execute(query,values)
+        cursor.execute(query2,values2)
+        cursor.execute(query3,values3)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
