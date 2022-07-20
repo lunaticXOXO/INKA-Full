@@ -144,7 +144,6 @@ def PurchaseMaterialFromStock(id):
         supplierCode = data[4] #untuk insert otomatis suppliercode di purchase item
         unit = data[7] # untuk insert otomatis unit di purchaseitem
 
-  
     print("Material Type Code : ",materialTypeCode)
     print("supplierCode : ",supplierCode)
     print("unit : ",unit)
@@ -162,23 +161,25 @@ def PurchaseMaterialFromStock(id):
         purchaserDate = datetime.datetime.now()
         values = (id_purchase,nama,purchaserName,purchaserDate)
         cursor.execute(query2,values)
-        conn.commit()
         
-        id_item = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N)) #Men Generate Otomatis untuk id purchase item
+        N2 = 3
+        id_item = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N2)) #Men Generate Otomatis untuk id purchase item
+        id_item_fix = id_item
         quantity = data2["quantity"]
         schedulledArrival = data2["schedulledArrival"]
-        values2 = (id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,id_purchase)
+        values2 = (id_item_fix,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,id_purchase)
         cursor.execute(query3,values2)
-        conn.commit()
+
         ###Setelah Data di insert kan semua maka, bisa update data purchaseid dan orders di material stock
-        query4 = "SELECT quantity FROM mat_d_purchaseitem WHERE id_item = '"+id_item+"'"
+        query4 = "SELECT quantity FROM mat_d_purchaseitem WHERE id_item = '"+id_item_fix+"'"
         cursor.execute(query4)
         records2 = cursor.fetchall()
+        qty = ""
         for data2 in records2:
             qty = data2[0]
-        
-        query5 = "UPDATE mat_d_materialstock SET purchaseId = %s,orders = %s,quantity = quantity += %s WHERE id = '"+id+"'"
-        values3 = (id_purchase,id_item,qty)
+
+        query5 = "UPDATE mat_d_materialstock SET purchaseId = %s,orders = %s,quantity = quantity +%s WHERE id = '"+id+"'"
+        values3 = (id_purchase,id_item_fix,qty)
         cursor.execute(query5,values3)
         conn.commit()
         hasil = {"status" : "berhasil"}
