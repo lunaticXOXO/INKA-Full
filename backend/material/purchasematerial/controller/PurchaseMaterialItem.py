@@ -150,6 +150,7 @@ def PurchaseMaterialFromStock(id):
 
     query2 = "INSERT INTO mat_d_purchaseMaterial(id,nama,purchaserName,purchaseDate)VALUES(%s,%s,%s,%s)"
     query3 = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseid)VALUES(%s,%s,%s,%s,%s,%s,%s)"
+    
     try:
         data = request.json
         data2 = request.json
@@ -178,7 +179,7 @@ def PurchaseMaterialFromStock(id):
         for data2 in records2:
             qty = data2[0]
 
-        query5 = "UPDATE mat_d_materialstock SET purchaseId = %s,orders = %s,quantity = quantity +%s WHERE id = '"+id+"'"
+        query5 = "UPDATE mat_d_materialstock SET purchaseId = %s, orders = %s, quantity = quantity +%s WHERE id = '"+id+"'"
         values3 = (id_purchase,id_item_fix,qty)
         cursor.execute(query5,values3)
         conn.commit()

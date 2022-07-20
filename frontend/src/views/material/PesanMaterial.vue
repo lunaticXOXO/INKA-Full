@@ -3,7 +3,7 @@
         class="mx-auto text-center mt-6"
         max-width="1000">
         <br>
-        <h1>Pesan Material</h1>
+        <h1>Pesan Material Baru</h1>
         <v-form
             class="pa-6"
             ref="form"
@@ -11,14 +11,7 @@
             v-model="valid"
             lazy-validation
         >
-            <v-text-field
-            v-model="id"
-            :counter="11"
-            :rules="idRules"
-            label="ID"
-            required
-            ></v-text-field>
-
+        
             <v-text-field
             v-model="nama"
             label="Nama"
@@ -30,10 +23,10 @@
             ></v-text-field>
 
             <v-text-field
-            v-model="id_item"
+            v-model="id_stock"
             :counter="11"
-            :rules="id_itemRules"
-            label="ID Item"
+            :rules="id_stockRules"
+            label="ID Stock"
             required
             ></v-text-field>
 
@@ -97,15 +90,10 @@
       valid: true,
       nama: '',
       purchaser: '',
-      id_item: '',
-      id_itemRules: [
-        v => !!v || 'ID Item is required',
-        v => (v && v.length <= 1 && v.length >= 1) || 'ID must be 1-11 characters',
-      ],
-      id: '',
-      idRules: [
-        v => !!v || 'ID is required',
-        v => (v && v.length <= 1 && v.length >= 1) || 'ID must be 1-11 characters',
+      id_stock: '',
+      id_stockRules: [
+        v => !!v || 'ID Stock is required',
+        v => (v && v.length <= 11 && v.length >= 1) || 'ID must be 1-11 characters',
       ],
       supply: '',
       supplier: undefined,

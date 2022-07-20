@@ -5,11 +5,11 @@
         <br>
         <h1>Tambah Material Kosong</h1>
         <v-form
-            class="pa-6"
-            ref="form"
-            @submit.prevent="submitHandler"
-            v-model="valid"
-            lazy-validation
+          class="pa-6"
+          ref="form"
+          @submit.prevent="submitHandler"
+          v-model="valid"
+          lazy-validation
         >
             <v-banner></v-banner>
             <v-banner>

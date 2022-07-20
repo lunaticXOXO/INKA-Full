@@ -32,8 +32,8 @@
               <span>{{item.unit}}</span>
             </template>
 
-            <template v-slot:[`item.schedulledArrival`]="{ item }">
-              <span>{{item.schedulledArrival}}</span>
+            <template v-slot:[`item.arrivalDate`]="{ item }">
+              <span>{{item.arrivalDate}}</span>
             </template>
            
             <template v-slot:[`item.aksi`]="{ item }">
@@ -59,7 +59,7 @@
             {text : 'Merk',                 value : 'merk'},        
             {text : 'Quantity',             value : 'quantity'},
             {text : 'Unit',                 value : 'unit'},
-            {text : 'Schedulled Arrival',   value : 'schedulledArrival'},
+            {text : 'Arrival Date',         value : 'arrivalDate'},
             {text : 'Action',               value : 'aksi'}
         ],
         types : [],
