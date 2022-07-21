@@ -16,7 +16,9 @@ from material.MaterialType.controller.MaterialTypeController import *
 from material.SupplierMaterial.controller.SupplierMaterialController import *
 from material.purchasematerial.controller.PurchaseMaterialController import *
 from material.purchasematerial.controller.PurchaseMaterialItem import *
+from material.MaterialOnWorkstation.controller.MaterialOnWorkstationController import *
 from unit.controller.UnitController import *
+from users.controller.UserController import *
 from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api
@@ -416,6 +418,29 @@ def get_stock():
 @app.route('/material/order_new_material',methods = ['POST'])
 def order_new_material():
     hasil = PurchaseNewMaterial()
+    return hasil
+
+#MATERIAL ON WS
+@app.route('/material_ws/get_material_onws',methods = ['GET'])
+def get_material_onws():
+    hasil = GetMaterialOnWS()
+    return hasil
+
+
+@app.route('/material_ws/add_material_onws',methods = ['POST'])
+def add_material_onws():
+    hasil = AddMaterialOnWS()
+    return hasil
+
+@app.route('/material_ws/update_material_onws/<id>',methods = ['POST'])
+def update_material_onws(id):
+    hasil = UpdateMaterialOnWS(id)
+    return hasil
+
+#USERS 
+@app.route('/register',methods = ['POST'])
+def register():
+    hasil = Register()
     return hasil
 
 if __name__ =="__main__":
