@@ -185,7 +185,7 @@ def PurchaseMaterialFromStock(id):
         for data2 in records2:
             qty = data2[0]
 
-        query5 = "UPDATE mat_d_materialstock SET purchaseId = %s, orders = %s, quantity = quantity +%s WHERE id = '"+id+"'"
+        query5 = "UPDATE mat_d_materialstock SET purchaseId = %s, orders = %s, quantity = quantity + %s WHERE id = '"+id+"'"
         values3 = (id_purchase,id_item_fix,qty)
         cursor.execute(query5,values3)
         conn.commit()
@@ -232,7 +232,7 @@ def PurchaseNewMaterial():
         matunit = unit
         arrivalDate = datetime.datetime.now() + datetime.timedelta(days=7)
 
-        values = (id_fix_purchase,nama,purchaserName,purchaseDate)
+        values  = (id_fix_purchase,nama,purchaserName,purchaseDate)
         values2 = (id_fix_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,id_fix_purchase)
         values3 = (id_stock,purchaseId,orders,materialTypeCodeMat,supplierCodeMat,merk,matquantity,matunit,arrivalDate)
 
