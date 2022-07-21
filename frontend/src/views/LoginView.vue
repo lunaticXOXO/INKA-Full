@@ -7,12 +7,12 @@
                         <v-avatar size="100" color="grey lighten-2">
                             <v-icon size="40" color="#555555">mdi-lock</v-icon>
                         </v-avatar>
-                        <h2 class="#555555--text">Login Page</h2>
+                        <h2 class="#555555--text mt-4">Login Page</h2>
                     </div>
                     <v-form @submit.prevent="submitHandler" ref="form">
                         <v-card-text>
                             <v-text-field
-                                v-model="text"
+                                v-model="username"
                                 type="text"
                                 label="Username"
                                 placeholder="Username"
@@ -27,10 +27,9 @@
                                 :append-icon="passwordShow ? 'mdi-eye':'mdi-eye-off'"
                                 @click:append="passwordShow = !passwordShow">
                             </v-text-field>
-                            <v-switch label="Remember Me" color="gray"></v-switch>
                         </v-card-text>
                         <v-card-actions class="justify-center">
-                            <v-btn :loading="loading" :to="route" type="submit" color="#555555">
+                            <v-btn :loading="loading" type="submit" color="#555555">
                                 <span class="white--text px-8">Login</span>
                             </v-btn>
                         </v-card-actions>
@@ -43,33 +42,61 @@
         </v-snackbar>
     </div>
 </template>
+
 <script>
+import axios from "axios";
+import Login from "../services/Login.js"
+
 export default {
     name: 'LoginPage',
     data: () => ({
-        route: "/",
         passwordShow: false,
         loading: false,
         snackBar: false,
+        username: '',
         password: '',
         passwordRules: [
             v => !!v || 'Password is required',
         ],
-        text: '',
+        loginService: new Login(),
     }),
+
     methods: {
         submitHandler() {
+            // if(this.$refs.form.validate()){
+            //     this.loading = true
+            //     this.route = "/"
+            //     setTimeout(() => {
+            //         this.loading = false
+            //         this.snackBar = true
+            //         this.route = "/"
+            //     }, 3000)
+            // }
+            console.log(this.username)
+            console.log(this.password)
+
             if(this.$refs.form.validate()){
                 this.loading = true
-                this.route = "/"
+                let tipeUser
                 setTimeout(() => {
-                    this.loading = false
-                    this.snackBar = true
-                    this.route = "/"
+                    axios.post("/login", 
+                    { username: this.username,
+                      password: this.password
+                    })
+                    .then((response) => {
+                        tipeUser = response.data.userType
+                        this.loginService.addToUserType(tipeUser)
+                        this.loading = false
+                        this.snackBar = true
+                        setTimeout(() => {
+                            location.replace("/")
+                        }, 1000)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
                 }, 3000)
             }
-            console.log(this.text)
-            console.log(this.password)
         }
     }
 }
