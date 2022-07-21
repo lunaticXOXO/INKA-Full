@@ -23,6 +23,16 @@ def Login():
         hasil = {"status" : "gagal"}
     return hasil
 
+
+def Logout():
+    try:
+        session.pop('loggedin',None)
+        session.pop('username',None)
+        hasil = {"status" : "berhasil"}
+    except:
+        hasil = {"status" : "gagal"}
+    return hasil
+
 def Register():
     conn = database.connector()
     cursor = conn.cursor() 
@@ -41,3 +51,5 @@ def Register():
         print("Error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
+
+
