@@ -1,3 +1,4 @@
+from distutils.log import Log
 from process.controller.ProsesController import *
 from process.controller.LiniProduksiController import *
 from product.controller.JenisProdukController import *
@@ -19,11 +20,12 @@ from material.purchasematerial.controller.PurchaseMaterialItem import *
 from material.MaterialOnWorkstation.controller.MaterialOnWorkstationController import *
 from unit.controller.UnitController import *
 from users.controller.UserController import *
-from flask import Flask
+from flask import Flask,session
 from flask_cors import CORS
 from flask_restful import Api
 
 app = Flask(__name__)
+app.secret_key = "super secret key"
 api = Api(app)
 CORS(app)
 
@@ -443,6 +445,11 @@ def register():
     hasil = Register()
     return hasil
 
+@app.route('/login',methods = ['POST'])
+def login():
+    hasil = Login()
+    return hasil
+
 if __name__ =="__main__":
-    app.run(debug = True,port = 8181)
+    app.run(debug = True,port = 8181) 
     print("Connected to port 8181")

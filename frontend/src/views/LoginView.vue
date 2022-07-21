@@ -54,7 +54,7 @@ export default {
         loading: false,
         snackBar: false,
         username: '',
-        password: '',
+        passwords: '',
         passwordRules: [
             v => !!v || 'Password is required',
         ],
@@ -73,7 +73,7 @@ export default {
             //     }, 3000)
             // }
             console.log(this.username)
-            console.log(this.password)
+            console.log(this.passwords)
 
             if(this.$refs.form.validate()){
                 this.loading = true
@@ -81,7 +81,7 @@ export default {
                 setTimeout(() => {
                     axios.post("/login", 
                     { username: this.username,
-                      password: this.password
+                      passwords: this.passwords
                     })
                     .then((response) => {
                         tipeUser = response.data.userType
