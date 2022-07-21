@@ -412,7 +412,12 @@ def min_quantity(id):
 def get_stock():
     hasil = GetMaterialFromStock()
     return hasil
-    
+
+@app.route('/material/order_new_material',methods = ['POST'])
+def order_new_material():
+    hasil = PurchaseNewMaterial()
+    return hasil
+
 if __name__ =="__main__":
     app.run(debug = True,port = 8181)
     print("Connected to port 8181")
