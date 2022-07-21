@@ -5,77 +5,88 @@
         <br>
         <h1>Pesan Material Baru</h1>
         <v-form
-            class="pa-6"
-            ref="form"
-            @submit.prevent="submitHandler"
-            v-model="valid"
-            lazy-validation
-        >
+          class="pa-6"
+          ref="form"
+          @submit.prevent="submitHandler"
+          v-model="valid"
+          lazy-validation>
         
-            <v-text-field
-            v-model="nama"
-            label="Nama"
-            ></v-text-field>
+          <v-text-field
+          v-model="nama"
+          label="Nama"
+          ></v-text-field>
 
-            <v-text-field
-            v-model="purchaser"
-            label="Purchaser Name"
-            ></v-text-field>
+          <v-text-field
+          v-model="purchaser"
+          label="Purchaser Name"
+          ></v-text-field>
 
-            <v-text-field
-            v-model="id_stock"
-            :counter="11"
-            :rules="id_stockRules"
-            label="ID Stock"
-            required
-            ></v-text-field>
+          <v-select
+          item-text="nama"
+          item-value="code"
+          v-model="supply"
+          :items="supplier"
+          label="Supplier"
+          ></v-select>
 
-            <v-select
-            item-text="nama"
-            item-value="code"
-            v-model="supply"
-            :items="supplier"
-            label="Supplier"
-            ></v-select>
+          <v-select
+          item-text="nama"
+          item-value="code"
+          v-model="type"
+          :items="materialType"
+          label="Material Type"
+          ></v-select>
 
-            <v-select
-            item-text="nama"
-            item-value="code"
-            v-model="type"
-            :items="materialType"
-            label="Material Type"
-            ></v-select>
+          <v-text-field
+          v-model="quantity"
+          label="Quantity"
+          type="number"
+          ></v-text-field>
 
-            <v-text-field
-            v-model="quantity"
-            label="Quantity"
-            type="number"
-            ></v-text-field>
+          <v-select
+          item-text="nama"
+          item-value="id"
+          v-model="unit"
+          :items="units"
+          label="Unit"
+          ></v-select>
 
-            <v-select
-            item-text="nama"
-            item-value="id"
-            v-model="unit"
-            :items="units"
-            label="Unit"
-            ></v-select>
+          <v-menu>
+            <template v-slot:activator="{ on, attrs }">
+                <v-text-field :value="tanggal" v-bind="attrs" v-on="on" label="Schedulled Arrival Date" prepend-icon="mdi-calendar"></v-text-field>
+            </template>
+            <v-date-picker width="1000" v-model="tanggal"></v-date-picker>
+          </v-menu>
 
-            <v-btn
-              :disabled="!valid"
-              color="success"
-              class="mr-4"
-              type="submit"
-              @click="validate()">
-              Submit
-            </v-btn>
+          <v-text-field
+          v-model="id_stock"
+          :counter="11"
+          :rules="id_stockRules"
+          label="ID Stock"
+          required
+          ></v-text-field>
 
-            <v-btn
-            color="error"
+          <v-text-field
+          v-model="merk"
+          label="Merk"
+          ></v-text-field>
+
+          <v-btn
+            :disabled="!valid"
+            color="success"
             class="mr-4"
-            @click="reset"
-            >
-            Reset
-            </v-btn>
+            type="submit"
+            @click="validate()">
+            Submit
+          </v-btn>
+
+          <v-btn
+          color="error"
+          class="mr-4"
+          @click="reset"
+          >
+          Reset
+          </v-btn>
         </v-form>
 
         <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
@@ -99,9 +110,11 @@
       supplier: undefined,
       type: '',
       materialType: undefined,
-      quantity: '',
       unit: '',
       units: undefined,
+      quantity: '',
+      tanggal: null,
+      merk: '',
       snackbar : {
         show : false,
         color : null,
@@ -127,14 +140,15 @@
       },
 
       submitHandler() {
-        console.log(this.id)
         console.log(this.nama)
         console.log(this.purchaser)
-        console.log(this.id_item)
         console.log(this.supply)
         console.log(this.type)
         console.log(this.quantity)
         console.log(this.unit)
+        console.log(this.tanggal)
+        console.log(this.id_stock)
+        console.log(this.merk)
       },  
 
       async fetchSupplier(){
@@ -188,16 +202,16 @@
       async InsertMaterial(){
         try{
           const axios = require('axios');
-          const response = await axios.post('/material/purchase_material',
-            { id: this.id,
-              nama: this.nama,
+          const response = await axios.post('/material/order_new_material',
+            { nama: this.nama,
               purchaserName: this.purchaser,
-              id_item: this.id_item,
               supplierCode: this.supply,
               materialTypeCode: this.type,
               quantity: this.quantity,
               unit: this.unit,
-              purchaseId: this.id
+              id: this.id_stock,
+              merk: this.merk,
+              schedulledArrival: this.tanggal
             }
           );
           console.log(response,this.data)

@@ -5,6 +5,11 @@
         <br>
         <h1>List Stok Material</h1>
         <br>
+        <router-link to="/tambahMaterialType">
+            <v-btn color="primary" class="d-flex ml-4 mb-6">
+                Add Material Type
+            </v-btn>
+        </router-link>
         <v-data-table 
             :headers = "column"
             :items = "types">

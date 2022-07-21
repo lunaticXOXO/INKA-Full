@@ -150,7 +150,7 @@ def PurchaseMaterialFromStock(id):
 
     query2 = "INSERT INTO mat_d_purchaseMaterial(id,nama,purchaserName,purchaseDate)VALUES(%s,%s,%s,%s)"
     query3 = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseid)VALUES(%s,%s,%s,%s,%s,%s,%s)"
-    
+
     try:
         data = request.json
         data2 = request.json
@@ -202,7 +202,7 @@ def PurchaseNewMaterial():
     N = 5
     N2 = 3
     query = "INSERT INTO mat_d_purchasematerial(id,nama,purchaserName,purchaseDate)VALUES(%s,%s,%s,%s)"
-    query2 = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseid)VALUES(%s,%s,%s,%s,%s,%s,%s)"
+    query2 = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)VALUES(%s,%s,%s,%s,%s,%s,%s)"
     query3 = "INSERT INTO mat_d_materialstock(id,purchaseId,orders,materialTypeCode,supplierCode,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     data = request.json
     data2 = request.json
@@ -230,7 +230,7 @@ def PurchaseNewMaterial():
         merk = data3["merk"]
         matquantity = quantity
         matunit = unit
-        arrivalDate = data3["arrivalDate"]
+        arrivalDate = datetime.datetime.now() + datetime.timedelta(days=7)
 
         values = (id_fix_purchase,nama,purchaserName,purchaseDate)
         values2 = (id_fix_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,id_fix_purchase)
@@ -246,4 +246,3 @@ def PurchaseNewMaterial():
         print("Error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
-
