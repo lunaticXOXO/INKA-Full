@@ -21,10 +21,8 @@ def Login():
     if user:
         session['loggedin'] = True
         session['username'] = username
-        #session['userType'] = userType
         hasil = {"status" : "berhasil",
-                 "userType" : userType
-                }
+                 "userType" : userType}
     else:
         hasil = {"status" : "gagal"}
     return hasil
@@ -43,13 +41,14 @@ def Register():
     conn = database.connector()
     cursor = conn.cursor() 
 
-    query = "INSERT INTO users(username,passwords)VALUES(%s,%s)"
+    query = "INSERT INTO users(username,passwords,usertype)VALUES(%s,%s,%s)"
     try:
         data = request.json
         username = data["username"]
         passwords = data["passwords"]
+        usertype = data["usertype"]
         passwords = hashlib.md5(passwords.encode('utf8')).hexdigest()
-        values = (username,passwords)
+        values = (username,passwords,usertype)
         cursor.execute(query,values)
         conn.commit()
         hasil = {"status" : "berhasil"}
