@@ -7,18 +7,24 @@ def Login():
     cursor = conn.cursor()
 
     query = "SELECT * FROM users WHERE username = %s AND passwords = %s"
-  
+    
     data = request.json
     username = data["username"]
     passwords = data["passwords"]
     passwords = hashlib.md5(passwords.encode('utf8')).hexdigest()
     values = (username,passwords)
     cursor.execute(query,values)
-    user = cursor.fetchone()
+    user = cursor.fetchall()
+    userType = 0
+    for data in user:
+        userType = int(data[2])
     if user:
         session['loggedin'] = True
         session['username'] = username
-        hasil = {"status" : "berhasil"}
+        #session['userType'] = userType
+        hasil = {"status" : "berhasil",
+                 "userType" : userType
+                }
     else:
         hasil = {"status" : "gagal"}
     return hasil

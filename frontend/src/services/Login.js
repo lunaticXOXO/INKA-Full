@@ -1,6 +1,6 @@
 export default class Login {
   constructor() {
-    this.KEY = "Login";
+    this.KEY = "super secret key";
   }
 
   getCurrentUserType() {

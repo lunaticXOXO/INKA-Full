@@ -48,10 +48,7 @@ export default {
   methods: {
     async fetchData() {
         this.idRole = this.loginService.getCurrentUserType();
-    },
-
-    async getUserType() {
-        return this.idRole;
+        console.log(this.idRole)
     },
   },
 };

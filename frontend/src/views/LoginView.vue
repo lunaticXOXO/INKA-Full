@@ -18,7 +18,7 @@
                                 placeholder="Username"
                                 prepend-inner-icon="mdi-account"/>
                             <v-text-field
-                                v-model="password"
+                                v-model="passwords"
                                 :rules="passwordRules"
                                 :type="passwordShow?'text':'password'"
                                 label="Password"
@@ -73,7 +73,6 @@ export default {
             //     }, 3000)
             // }
             console.log(this.username)
-            console.log(this.passwords)
 
             if(this.$refs.form.validate()){
                 this.loading = true
@@ -84,13 +83,13 @@ export default {
                       passwords: this.passwords
                     })
                     .then((response) => {
+                        console.log(response.data.userType)
                         tipeUser = response.data.userType
                         this.loginService.addToUserType(tipeUser)
                         this.loading = false
                         this.snackBar = true
-                        setTimeout(() => {
-                            location.replace("/")
-                        }, 1000)
+                        location.replace("/")
+                        open("/")
                     })
                     .catch((error) => {
                         console.log(error)
