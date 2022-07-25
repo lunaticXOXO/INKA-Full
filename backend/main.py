@@ -18,6 +18,7 @@ from material.SupplierMaterial.controller.SupplierMaterialController import *
 from material.purchasematerial.controller.PurchaseMaterialController import *
 from material.purchasematerial.controller.PurchaseMaterialItem import *
 from material.MaterialOnWorkstation.controller.MaterialOnWorkstationController import *
+from material.MaterialConsumable.controller.MaterialConsumableController import *
 from unit.controller.UnitController import *
 from users.controller.UserController import *
 from flask import Flask,session
@@ -437,6 +438,18 @@ def add_material_onws():
 @app.route('/material_ws/update_material_onws/<id>',methods = ['POST'])
 def update_material_onws(id):
     hasil = UpdateMaterialOnWS(id)
+    return hasil
+
+#MATERIAL CONSUMABLE
+@app.route('/material_consumable/get_material_byproses/<idProcess>',methods = ['GET'])
+def get_material_byproses(idProcess):
+    hasil = GetMaterialConsumablebyProcess(idProcess)
+    return hasil
+
+
+@app.route('/material_consumable/add_material_consumable',methods = ['POST'])
+def add_material_consumable():
+    hasil = addMaterialConsumable()
     return hasil
 
 #USERS 
