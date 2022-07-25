@@ -66,7 +66,6 @@ export default {
             console.log(this.username)
             if(this.$refs.form.validate()){
                 this.loading = true
-                let tipeUser
                 setTimeout(() => {
                     axios.post("/login", 
                     { username: this.username,
@@ -74,12 +73,12 @@ export default {
                     })
                     .then((response) => {
                         console.log(response.data.userType)
+                        let tipeUser
                         tipeUser = response.data.userType
                         this.loginService.addToUserType(tipeUser)
                         this.loading = false
                         this.snackBar = true
                         location.replace("/")
-                        open("/")
                     })
                     .catch((error) => {
                         console.log(error)

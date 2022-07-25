@@ -53,6 +53,7 @@ import TambahProsesBySJProduk from '../views/proses/TambahProsesBySJProduk.vue'
 import ListMaterialType from '../views/material/ListMaterialType.vue'
 import ListStockMaterial from '../views/material/ListStockMaterial.vue'
 import TambahMaterialKosong from '../views/material/TambahMaterialKosong.vue'
+import TambahMaterialConsumable from '../views/material/TambahMaterialConsumable.vue'
 
 Vue.use(VueRouter)
 
@@ -529,8 +530,15 @@ const routes = [
     meta : {
       title : "Tambah Material Kosong - PT.INKA"
     }
-  }
-
+  },
+  {
+    path : '/tambahMaterialConsumable',
+    name : 'Tambah Material Consumable',
+    component : TambahMaterialConsumable,
+    meta : {
+      title : "Tambah Material Consumable - PT.INKA"
+    }
+  },
 ]
 
 const router = new VueRouter({

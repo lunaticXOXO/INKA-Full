@@ -106,7 +106,6 @@ def get_allproyek():
     hasil = GetAllProyek()
     return hasil
 
-
 @app.route('/proyek/get_proyek_by_customer/<id>',methods = ['GET'])
 def get_proyek_by_customer(id):
     hasil = GetProyekByCustomer(id)
