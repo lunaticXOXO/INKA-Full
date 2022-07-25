@@ -48,7 +48,7 @@
 <style>
   #judul{
     font-size: 6rem;
-    margin-left: 27%;
+    margin-left: 25%;
     margin-top: 10%;
   }
 </style>

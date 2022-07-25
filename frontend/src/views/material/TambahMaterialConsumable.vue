@@ -11,13 +11,13 @@
           v-model="valid"
           lazy-validation>
         
-          <v-text-field
-          v-model="id_proses"
-          :counter="9"
-          :rules="id_prosesRules"
+          <v-select
+          item-text="id"
+          item-value="id"
+          v-model="proses"
+          :items="prosesList"
           label="ID Proses"
-          required
-          ></v-text-field>
+          ></v-select>
 
           <v-select
           item-text="id"
@@ -61,13 +61,10 @@
   export default {
     data: () => ({
       valid: true,
-      id_proses: '',
-      id_prosesRules: [
-        v => !!v || 'ID Proses is required',
-        v => (v && v.length <= 11 && v.length >= 1) || 'ID Proses must be 1-11 characters',
-      ],
       stock: '',
       materialStock: undefined,
+      proses: '',
+      prosesList: undefined,
       quantity: '',
       snackbar : {
         show : false,
@@ -77,13 +74,14 @@
     }),
 
     mounted(){
-      this.fetchSupplier()
+      this.fetchStock(),
+      this.fetchProses()
     },
   
     methods: {
       validate () {
         if(this.$refs.form.validate()){
-          this.InsertMaterial()
+          this.InsertMaterialConsumable()
         }
       },
 
@@ -92,7 +90,7 @@
       },
 
       submitHandler() {
-        console.log(this.id)
+        console.log(this.proses)
         console.log(this.stock)
         console.log(this.quantity)
       },  
@@ -100,12 +98,12 @@
       async fetchStock(){
         try{
             const axios = require('axios')
-            const res = await axios.get('/supplier/get_supplier')
+            const res = await axios.get('/stock/get_stock')
             if (res.data == null){
                 alert("Stok Material Kosong")
             }else{
-                this.supplier = res.data
-                console.log(res,this.supplier)
+                this.materialStock = res.data
+                console.log(res,this.materialStock)
             }
         }catch(error){
             alert(error)
@@ -113,15 +111,15 @@
         }
       },
 
-      async fetchMaterialType(){
+      async fetchProses(){
         try{
             const axios = require('axios')
-            const res = await axios.get('/material/get_type')
+            const res = await axios.get('/proses/get_listprocess')
             if (res.data == null){
-                alert("Material Type Kosong")
+                alert("Proses Kosong")
             }else{
-                this.materialType = res.data
-                console.log(res,this.materialTypeCode)
+                this.prosesList = res.data
+                console.log(res,this.prosesList)
             }
         }catch(error){
             alert(error)
@@ -129,49 +127,27 @@
         }
       },
 
-      async fetchUnit(){
-        try{
-            const axios = require('axios')
-            const res = await axios.get('/unit/get_unit')
-            if (res.data == null){
-                alert("Material Unit Kosong")
-            }else{
-                this.units = res.data
-                console.log(res,this.units)
-            }
-        }catch(error){
-            alert(error)
-            console.log(error)
-        }
-      },
-
-      async InsertMaterial(){
+      async InsertMaterialConsumable(){
         try{
           const axios = require('axios');
-          const response = await axios.post('/material/order_new_material',
-            { nama: this.nama,
-              purchaserName: this.purchaser,
-              supplierCode: this.supply,
-              materialTypeCode: this.type,
-              quantity: this.quantity,
-              unit: this.unit,
-              id: this.id_stock,
-              merk: this.merk,
-              schedulledArrival: this.tanggal
+          const response = await axios.post('/material_consumable/add_material_consumable',
+            { processCode: this.proses,
+              materialStock: this.stock,
+              quantity: this.quantity
             }
           );
           console.log(response,this.data)
           if(response.data.status == "berhasil"){
             this.snackbar = {
               show : true,
-              message : "Pesan Material Berhasil",
+              message : "Tambah Material Consumable Berhasil",
               color : "green"
             }
           }
           else if(response.data.status == "gagal"){
             this.snackbar = {
               show : true,
-              message : "Pesan Material Gagal",
+              message : "Tambah Material Consumable Gagal",
               color : "red"
             }
           }
@@ -180,7 +156,7 @@
           console.log(error)
           this.snackbar = {
             show : true,
-            message : "Pesan Material Gagal",
+            message : "Tambah Material Consumable Gagal",
             color : "red"
           }
         }
