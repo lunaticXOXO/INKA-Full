@@ -3,7 +3,7 @@
     <div v-if="idRole == 'Guest'">
       <SidebarGuest />
     </div>
-    <div v-if="idRole == 0">
+    <div v-if="idRole == 1">
       <SidebarAdmin />
     </div>
     <!--

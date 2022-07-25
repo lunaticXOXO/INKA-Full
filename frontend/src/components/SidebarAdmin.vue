@@ -37,7 +37,7 @@
             </v-img>
             <span class="font-weight-light white--text ">Welcome,</span>
             <span class="white--text mr-6">Username</span>
-            <v-btn :to="route" color="grey">
+            <v-btn @click="logout()" color="grey">
                 <span>Sign Out</span>
                 <v-icon right>mdi-arrow-right</v-icon>
             </v-btn>
@@ -78,9 +78,11 @@
 </template>
 
 <script>
+import Login from "../services/Login.js"
 export default {
     data(){
         return {
+            loginService: new Login(),
             route: "/login",
             routeHome: "/",
             drawer: false,
@@ -237,7 +239,11 @@ export default {
         }
     },
     methods: {
-
+        logout() {
+            this.route = "/login"
+            location.replace("/login")
+            this.loginService.removeUserType()
+        }
     },
 }
 </script>

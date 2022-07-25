@@ -63,17 +63,7 @@ export default {
 
     methods: {
         submitHandler() {
-            // if(this.$refs.form.validate()){
-            //     this.loading = true
-            //     this.route = "/"
-            //     setTimeout(() => {
-            //         this.loading = false
-            //         this.snackBar = true
-            //         this.route = "/"
-            //     }, 3000)
-            // }
             console.log(this.username)
-
             if(this.$refs.form.validate()){
                 this.loading = true
                 let tipeUser
