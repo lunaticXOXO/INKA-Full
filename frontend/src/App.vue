@@ -6,10 +6,10 @@
     <div v-if="idRole == 1">
       <SidebarAdmin />
     </div>
-    <!--
-    <div v-else-if="idRole == 1">
-      <OwnerNavbar />
+    <div v-else-if="idRole == 4">
+      <SidebarManager />
     </div>
+    <!--
     <div v-else-if="idRole == 2">
       <InventoryNavbar />
     </div>
@@ -23,13 +23,15 @@
 <script>
 import SidebarGuest from './components/SidebarGuest.vue'
 import SidebarAdmin from './components/SidebarAdmin.vue'
+import SidebarManager from './components/SidebarManager.vue'
 import Login from "./services/Login.js"
 
 export default {
   name: 'App',
   components: { 
     SidebarGuest, 
-    SidebarAdmin 
+    SidebarAdmin,
+    SidebarManager 
   },
 
   mounted() {

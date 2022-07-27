@@ -54,6 +54,8 @@ import ListMaterialType from '../views/material/ListMaterialType.vue'
 import ListStockMaterial from '../views/material/ListStockMaterial.vue'
 import TambahMaterialKosong from '../views/material/TambahMaterialKosong.vue'
 import TambahMaterialConsumable from '../views/material/TambahMaterialConsumable.vue'
+import LihatStatusPengerjaanWS from '../views/stasiunKerja/LihatStatusPengerjaanWS.vue'
+import LihatStatusPengerjaanProyek from '../views/proyek/StatusPengerjaanProyek.vue'
 
 Vue.use(VueRouter)
 
@@ -499,6 +501,7 @@ const routes = [
       title : "Memilih Stasiun Kerja by Process - PT.INKA"
     }
   },
+
   {
     path : '/tambahProsesbySJProduk/:id',
     name : 'Tambah Proses by Struktur Jenis Produk',
@@ -507,6 +510,7 @@ const routes = [
       title : "Tambah Proses by Struktur Jenis Produk - PT.INKA"
     }
   },
+
   {
     path : '/listMaterialType',
     name : 'List Tipe Material',
@@ -515,6 +519,7 @@ const routes = [
       title : "List Tipe Material - PT.INKA"
     }
   },
+
   {
     path : '/listStockMaterial',
     name : 'List Stock Material',
@@ -523,6 +528,7 @@ const routes = [
       title : "List Stock Material - PT.INKA"
     }
   },
+
   {
     path : '/tambahMaterialKosong/:id',
     name : 'Tambah Material Kosong',
@@ -531,12 +537,31 @@ const routes = [
       title : "Tambah Material Kosong - PT.INKA"
     }
   },
+
   {
     path : '/tambahMaterialConsumable',
     name : 'Tambah Material Consumable',
     component : TambahMaterialConsumable,
     meta : {
       title : "Tambah Material Consumable - PT.INKA"
+    }
+  },
+
+  {
+    path : '/statusPengerjaanWS',
+    name : 'Status Pengerjaan WS',
+    component : LihatStatusPengerjaanWS,
+    meta : {
+      title : "Status Pengerjaan WS - PT.INKA"
+    }
+  },
+
+  {
+    path : '/statusPengerjaanProyek',
+    name : 'Status Pengerjaan Proyek',
+    component : LihatStatusPengerjaanProyek,
+    meta : {
+      title : "Status Pengerjaan Proyek - PT.INKA"
     }
   },
 ]
