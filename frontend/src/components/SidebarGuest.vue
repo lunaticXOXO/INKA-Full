@@ -2,8 +2,8 @@
     <nav>
         <v-app-bar app color="#6f6f6f">
             <v-app-bar-title class="text-uppercase">
-                <span :to="routeHome" class="font-weight-light white--text">Smart</span>
-                <span :to="routeHome" class="white--text">Works 4.0 | Guest</span>
+                <span class="font-weight-light white--text">Smart</span>
+                <span class="white--text">Works 4.0</span>
             </v-app-bar-title>
             <v-img 
                 max-height="50"
