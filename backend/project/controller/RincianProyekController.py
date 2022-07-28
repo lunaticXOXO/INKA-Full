@@ -120,16 +120,18 @@ def UpdateRProyek(id_rproyek):
 
 
 
-def HitungDueDateRProyek(id_proyek):
-    hasil1 = HitungDurasiProses(id_proyek)
+def HitungDueDateRProyek(id_produk):
+    hasil1 = HitungDurasiProses(id_produk)
 
     conn = db.connector()
     cursor = conn.cursor()
 
     query = "SELECT a.jumlah, b.tglDibuat, b.dueDate FROM prd_r_rincianproyek a "
     query = query + "JOIN prd_r_proyek b ON "
-    query = query + "b.id = a.proyek "
-    query = query + "WHERE b.id = '"+id_proyek+"'"
+    query = query + "b.id = a.proyek"
+    query = query + "JOIN prd_d_produk c ON"
+    query = query + "c.rincianProyek = a.id"
+    query = query + "WHERE c.id = '"+id_produk+"'"
     
     cursor.execute(query)
 

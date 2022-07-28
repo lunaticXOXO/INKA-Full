@@ -152,6 +152,39 @@ def AddProcessBySJProduk(id_sjproduk):
     return hasil
 
 
+def HitungDurasiProsesbyProduk(id_produk):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT "
+    query = query + "a.id, a.nama,"
+    query = query + "b.idNodal, b.nama, b.jumlah,"
+    query = query + "c.id, c.nama, c.durasi, c.satuandurasi,"
+    query = query + "d.id, d.jumlah,"
+    query = query + "e.id, e.nama, e.tglDibuat,"
+    query = query + "f.id AS 'ID Produk'"
+    query = query + "FROM prd_r_jenisproduk a"
+    query = query + "JOIN prd_r_strukturjnsprd b ON b.jnsProduk = a.id "
+    query = query + "JOIN prd_r_proses c ON c.nodalOutput = b.idNodal "
+    query = query + "JOIN prd_r_rincianproyek d ON d.jenisProduk = a.id "
+    query = query + "JOIN prd_r_proyek e ON e.id = d.proyek"
+    query = query + "JOIN prd_d_produk f ON f.rincianProyek = d.id"
+    query = query + "WHERE f.id =  '"+id_produk+"'"
+
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    hitungDurasi = 0
+    
+    for data in records:
+        hitungDurasi = hitungDurasi + data[7]
+    
+    hitungJam = hitungDurasi/60
+    print("Durasi :", ceil(hitungJam), "Jam Per Produk")
+
+    return hitungJam
+
+
 def HitungDurasiProses(id_proyek):
     conn = database.connector()
     cursor = conn.cursor()
