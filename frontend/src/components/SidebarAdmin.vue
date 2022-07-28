@@ -7,7 +7,7 @@
             </v-btn>
             <v-app-bar-title class="text-uppercase">
                 <span class="font-weight-light white--text">Smart</span>
-                <span class="white--text">Works 4.0</span>
+                <span class="white--text">Works 4.0 | Admin</span>
             </v-app-bar-title>
             <v-img 
                 max-height="50"
@@ -36,7 +36,7 @@
                 class="mr-3 ml-6">
             </v-img>
             <span class="font-weight-light white--text ">Welcome,</span>
-            <span class="white--text mr-6">Username</span>
+            <span class="white--text mr-6">admin</span>
             <v-btn @click="logout()" color="grey">
                 <span>Sign Out</span>
                 <v-icon right>mdi-arrow-right</v-icon>

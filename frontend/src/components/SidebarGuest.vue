@@ -3,7 +3,7 @@
         <v-app-bar app color="#6f6f6f">
             <v-app-bar-title class="text-uppercase">
                 <span :to="routeHome" class="font-weight-light white--text">Smart</span>
-                <span :to="routeHome" class="white--text">Works 4.0</span>
+                <span :to="routeHome" class="white--text">Works 4.0 | Guest</span>
             </v-app-bar-title>
             <v-img 
                 max-height="50"
