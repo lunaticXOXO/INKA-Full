@@ -265,3 +265,5 @@ CREATE TABLE mat_r_ToolNeed(
     FOREIGN KEY (processCode) REFERENCES prd_r_proses(id),
     FOREIGN KEY (idNodeOutput) REFERENCES prd_r_proses(nodalOutput)
 );
+
+

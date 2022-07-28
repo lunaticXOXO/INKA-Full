@@ -1,5 +1,10 @@
 import db.db_handler as database
 from flask import request,make_response,jsonify
+import numpy as np
+from datetime import timedelta
+from math import ceil
+from process.controller.ProsesController import HitungDurasiProses
+
 
 def GetAllProduk():
   conn = database.connector()
@@ -81,10 +86,51 @@ def AddProdukbyRincian(id_rincian):
   return hasil
   
 
-def ShowDueDateProduct():
-  conn = database.connector()
-  cursor = conn.cursor()
+def HitungDueDateProduk(id_produk):
+    hasil1 = HitungDurasiProses(id_produk)
+
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT a.jumlah, b.tglDibuat, b.dueDate FROM prd_r_rincianproyek a "
+    query = query + "JOIN prd_r_proyek b ON "
+    query = query + "b.id = a.proyek"
+    query = query + "JOIN prd_d_produk c ON"
+    query = query + "c.rincianProyek = a.id"
+    query = query + "WHERE c.id = '"+id_produk+"'"
+    
+    cursor.execute(query)
+
+    records = cursor.fetchall()
+    hasilPerkalian = 1        
+    
+    for data in records:
+        print("Jumlah Pesanan :",data[0], "Produk")
+        data[1]
+        data[2]
+       
+        hasilPerkalian = data[0]
+        tanggalDibuat  =  data[1]
+        tanggalDueDate = data[2]
+   
+    hasilPerkalian = hasilPerkalian * hasil1
+    durasiHari = hasilPerkalian / 8
+    sabtuMingguDalamSebulan = (16 * 4)
+    durasiBaru = hasilPerkalian + sabtuMingguDalamSebulan
+    durasiBaru2 = durasiBaru / 8
+
+    hitungHariBisnis = np.busday_count(tanggalDibuat,tanggalDueDate)
+
+    print("Tanggal Proyek Dipesan :", tanggalDibuat.strftime("%A"), tanggalDibuat)
+    print("Due Date Proyek :", tanggalDueDate.strftime("%A"), tanggalDueDate)
+    print("Banyak Hari Kerja Antara Dipesan dan Due Date :", hitungHariBisnis)
+    print("Durasi Rincian Proyek :", ceil(hasilPerkalian), "Jam Atau", ceil(durasiHari), "Hari (Sabtu dan Minggu Kerja)")
+    newdays = ceil(durasiBaru2)
+    print("Durasi Rincian Proyek :",ceil(durasiBaru), "Jam Atau",newdays, "Hari (Sabtu dan Minggu Libur)")
+    duedateproduk = tanggalDibuat + timedelta(days = newdays)
+    print(type(duedateproduk))
+    print("Due Date Rincian Proyek :",duedateproduk)
+    return duedateproduk
+
   
-
-
   
