@@ -23,11 +23,11 @@ from unit.controller.UnitController import *
 from users.controller.UserController import *
 from flask import Flask,session
 from flask_cors import CORS
-from flask_restful import Api
+#from flask_restful import Api
 
 app = Flask(__name__)
 app.secret_key = "super secret key"
-api = Api(app)
+#api = Api(app)
 CORS(app)
 
 #COUNTRY

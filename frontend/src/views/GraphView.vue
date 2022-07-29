@@ -1,10 +1,45 @@
 <template>
-  <v-card
-    class="mx-auto text-center mt-6"
-    color="gray"
-    dark
-    max-width="1000"
-  >
+  <v-app>
+    <div class="d-flex">
+      <v-card
+        class="mx-auto text-center mt-6"
+        color="gray"
+        dark
+        max-width="1000"
+      >
+      <v-card-text>
+        <v-sheet color="rgba(0, 0, 0, .12)">
+          <v-sparkline
+            :value="value"
+            color="rgba(255, 255, 255, .7)"
+            height="100"
+            padding="24"
+            stroke-linecap="round"
+            smooth
+            type="bar"
+          >
+            <template v-slot:label="item">
+              Rp.{{ item.value }} Juta
+            </template>
+          </v-sparkline>
+        </v-sheet>
+      </v-card-text>
+
+      <v-card-text>
+        <div class="text-h4 font-weight-thin">
+          Jumlah Pendapatan 1 Minggu Terakhir
+        </div>
+      </v-card-text>
+
+    <v-divider></v-divider>
+    </v-card>
+
+    <v-card
+      class="mx-auto text-center mt-6"
+      color="gray"
+      dark
+      max-width="1000"
+    >
     <v-card-text>
       <v-sheet color="rgba(0, 0, 0, .12)">
         <v-sparkline
@@ -14,6 +49,7 @@
           padding="24"
           stroke-linecap="round"
           smooth
+          type="trend"
         >
           <template v-slot:label="item">
             Rp.{{ item.value }} Juta
@@ -29,7 +65,16 @@
     </v-card-text>
 
     <v-divider></v-divider>
-  </v-card>
+    </v-card>
+  </div>
+
+  <div class="mx-auto mt-8">
+    <v-data-table
+      :headers = "column"
+      :items = "jenisproduk">
+    </v-data-table>
+  </div>
+  </v-app>
 </template>
 
 <script>
