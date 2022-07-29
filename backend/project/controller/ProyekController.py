@@ -24,7 +24,7 @@ def GetProyekByCustomer(id):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id,a.nama,a.tglDibuat,a.dueDate,a.customerid FROM prd_r_proyek a JOIN gen_r_customer b ON b.id = a.customerid WHERE a.customerid = '"+id+"'"
+    query = "SELECT a.id,a.nama,a.tglDibuat,a.customerid FROM prd_r_proyek a JOIN gen_r_customer b ON b.id = a.customerid WHERE a.customerid = '"+id+"'"
     cursor.execute(query)
 
     row_headers = [x[0] for x in cursor.description]

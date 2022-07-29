@@ -23,66 +23,107 @@ def ShowOperasiFromProduct(id):
 
 
 
+def GetProcessofProduct(idProduk):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query2 = "SELECT a.id FROM prd_r_proses a JOIN prd_r_strukturjnsprd b ON b.idNodal = a.nodalOutput JOIN prd_r_jenisproduk c ON c.id = b.jnsProduk JOIN prd_r_rincianproyek d ON d.jenisProduk = c.id JOIN prd_r_proyek e ON e.id = d.proyek JOIN prd_d_produk f ON f.rincianProyek = d.id WHERE f.id = '"+idProduk+"'"
+    cursor.execute(query2)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))    
+    
+    return make_response(jsonify(json_data),200)
+
+
 def GenerateOperation(idProduk):
     conn = database.connector()
     cursor = conn.cursor()
 
     #query INSERT ke Operasi
-    query = "INSERT INTO prd_d_operasi(id,rencanaMulai,rencanaSelesai,mulai,selesai,proses,stasiunKerja,produk,status)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    query = "INSERT INTO prd_d_operasi(id,proses,stasiunKerja,produk)VALUES(%s,%s,%s,%s)"     
     try:
-        data = request.json
-        #meng get data proses & ws untuk suatu produk
-        query2 = "SELECT a.id FROM prd_r_proses a JOIN prd_r_strukturjnsprd b ON b.idNodal = a.nodalOutput JOIN prd_r_jenisproduk c ON c.id = b.jnsProduk JOIN prd_r_rincianproyek d ON d.jenisProduk = c.id JOIN prd_r_proyek e ON e.id = d.proyek JOIN prd_d_produk f ON f.rincianProyek = d.id WHERE f.id = '"+idProduk+"'"
-        query3 = "SELECT a.stasiunKerja FROM gen_r_mampuproses a JOIN prd_r_proses c ON c.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = c.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id WHERE h.id = '"+idProduk+"'"
-        cursor.execute(query2)
+      
+        query3 = "SELECT c.id AS 'IdProses',a.stasiunKerja,c.durasi FROM gen_r_mampuproses a JOIN prd_r_proses c ON c.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = c.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id WHERE h.id = '"+idProduk+"'"
         cursor.execute(query3)
-        #fetch all 2 query
-        recordsProses = cursor.fetchall()
-        recordsWS = cursor.fetchall()
-        #append record proses & recordws
+        recordsFetch = cursor.fetchall()
 
-        #gabungkan antar 2 tuples
-        recordsFetch = ()
-        recordsFetch = recordsProses + recordsWS
         N = 9
         proses = ""   
-        ws = ""
-        for data in recordsFetch:
-            id_operation = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
-            proses = data[0]
-            ws = data[1]
-            values = (id_operation,proses,ws,idProduk)
-            cursor.execute(query,values)
-            conn.commit()
-        
-        #mendapat start date work dari produk
-        dueDateproduk = HitungDueDateProduk(idProduk)
-        schedulledstartWorkDate = ""
-        scehdulledFinishWorkDate = ""
-        query4 = "SELECT a.tglDibuat FROM prd_r_proyek a JOIN prd_r_rincianproyek b ON b.proyek = a.id JOIN prd_d_produk c ON c.rincianProyek = b.id WHERE c.id = '"+idProduk+"'"
-        cursor.execute(query4)
+        stasiunKerja = ""
+
+        print("test")
+        query5 = "SELECT a.tglDibuat FROM prd_r_proyek a JOIN prd_r_rincianproyek b ON b.proyek = a.id JOIN prd_d_produk c ON c.rincianProyek = b.id WHERE c.id = '"+idProduk+"'"
+        cursor.execute(query5)
        
         recorddate = cursor.fetchall()
+        schedulledstartWorkDate = ""
+        scehdulledFinishWorkDate = ""
+     
         for data in recorddate:
            schedulledstartWorkDate = data[0]
            scehdulledFinishWorkDate = data[0]
 
-        ##Mendapatkan data durasi proses yang dikerjakan dari suatu product
-        query5 = "SELECT a.durasi FROM prd_r_proses a JOIN prd_r_strukturjnsprd b ON a.nodalOutput = b.idNodal JOIN prd_r_jenisproduk c ON c.id = b.jnsProduk JOIN prd_r_rincianproyek d ON d.jenisProduk = c.id JOIN prd_r_proyek e ON e.id = d.proyek JOIN prd_d_produk f ON f.rincianProyek = d.id WHERE f.id = '"+idProduk+"'"
-        cursor.execute(query5)
-        duration = ""
-        recordDuration =  cursor.fetchall()
-        for data in recordDuration:
-            #mengenerate mulai,selesai,rencana mulai,mulai,selesai,status
-            duration = data[0]
-            scehdulledFinishWorkDate = scehdulledFinishWorkDate + datetime.timedelta(minutes = duration)
-            query6 = "UPDATE prd_d_operasi SET rencanaMulai = '"+schedulledstartWorkDate+"', rencanaSelesai = '"+scehdulledFinishWorkDate+"'"
+       
+        for index in recordsFetch:
+            id_operation = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
+            proses = index[0]
+            stasiunKerja = index[1]
+            values1 = (id_operation,proses,stasiunKerja,idProduk)
+            cursor.execute(query,values1)
+           
+            print("idproses : ",index[0])
+            print("stasiunkerja : ",index[1])
+            print("start1 : ",schedulledstartWorkDate)
+            durasi = index[2]
+            
+            query7 = "UPDATE prd_d_operasi SET rencanaMulai = %s, rencanaSelesai =  %s WHERE produk = '"+idProduk+"'"
+            scehdulledFinishWorkDate = scehdulledFinishWorkDate + datetime.timedelta(minutes = durasi)
+            print("end1 : ",scehdulledFinishWorkDate)
+            values3 = (schedulledstartWorkDate,scehdulledFinishWorkDate)
+            cursor.execute(query7,values3)
+           
             schedulledstartWorkDate = scehdulledFinishWorkDate
-            cursor.execute(query6)
-            conn.commit()
-      
+
+            scehdulledFinishWorkDate = scehdulledFinishWorkDate + datetime.timedelta(minutes = durasi)
+            print("start2 : ",schedulledstartWorkDate)
+            print("end2 : ",scehdulledFinishWorkDate)
+            values4 = (schedulledstartWorkDate,scehdulledFinishWorkDate)
+            cursor.execute(query7,values4)
+          
+            schedulledstartWorkDate = scehdulledFinishWorkDate
+            print("")
+                    
+        dueDateproduk = HitungDueDateProduk(idProduk)
+        query4 = "UPDATE prd_d_produk SET dueDate = %s WHERE id = %s"
+        print("test")
+        values2 = (dueDateproduk,idProduk)
+        cursor.execute(query4,values2) 
+        conn.commit()
         hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error",str(e))
         hasil = {"status" : "gagal"}
+    return hasil
+
+
+def StartOperation(idOperasi):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "UPDATE prd_d_operasi SET mulai = '"+datetime.datetime.now()+"' WHERE id = '"+idOperasi+"'"
+    cursor.execute(query)
+    conn.commit()
+    hasil = {"status" : "berhasil"}
+    return hasil
+
+
+def EndOperation(idOperasi):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "UPDATE prd_d_operasi SET selesai = '"+datetime.datetime.now()+"' WHERE id = '"+idOperasi+"'"
+    cursor.execute(query)
+    conn.commit()
+    hasil = {"status" : "berhasil"}
     return hasil

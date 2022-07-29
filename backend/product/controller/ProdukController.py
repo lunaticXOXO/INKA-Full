@@ -1,9 +1,9 @@
 import db.db_handler as database
 from flask import request,make_response,jsonify
 import numpy as np
-from datetime import timedelta
+from datetime import datetime, timedelta
 from math import ceil
-from process.controller.ProsesController import HitungDurasiProses
+from process.controller.ProsesController import *
 
 
 def GetAllProduk():
@@ -87,48 +87,45 @@ def AddProdukbyRincian(id_rincian):
   
 
 def HitungDueDateProduk(id_produk):
-    hasil1 = HitungDurasiProses(id_produk)
-
+    hasil1 = HitungDurasiProsesbyProduk(id_produk)
+    print(hasil1)
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.jumlah, b.tglDibuat, b.dueDate FROM prd_r_rincianproyek a "
-    query = query + "JOIN prd_r_proyek b ON "
-    query = query + "b.id = a.proyek"
-    query = query + "JOIN prd_d_produk c ON"
-    query = query + "c.rincianProyek = a.id"
-    query = query + "WHERE c.id = '"+id_produk+"'"
+    query = "SELECT a.jumlah, b.tglDibuat,a.dueDate FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON b.id = a.proyek JOIN prd_d_produk c ON c.rincianProyek = a.id WHERE c.id = '"+id_produk+"'"
     
     cursor.execute(query)
-
     records = cursor.fetchall()
     hasilPerkalian = 1        
+
     
+    print("test")
     for data in records:
         print("Jumlah Pesanan :",data[0], "Produk")
-        data[1]
-        data[2]
-       
-        hasilPerkalian = data[0]
+        print(data[1])
+        print(data[2])
+        hasilPerkalian =  data[0]
         tanggalDibuat  =  data[1]
         tanggalDueDate = data[2]
    
     hasilPerkalian = hasilPerkalian * hasil1
+    #print(hasilPerkalian)
     durasiHari = hasilPerkalian / 8
     sabtuMingguDalamSebulan = (16 * 4)
     durasiBaru = hasilPerkalian + sabtuMingguDalamSebulan
     durasiBaru2 = durasiBaru / 8
-
-    hitungHariBisnis = np.busday_count(tanggalDibuat,tanggalDueDate)
-
-    print("Tanggal Proyek Dipesan :", tanggalDibuat.strftime("%A"), tanggalDibuat)
-    print("Due Date Proyek :", tanggalDueDate.strftime("%A"), tanggalDueDate)
+    tanggalDibuatNew = tanggalDibuat.date()
+    tanggalDueDateNew = tanggalDueDate.date()
+    
+    hitungHariBisnis = np.busday_count(tanggalDibuatNew,tanggalDueDateNew)
+    
+    print("Tanggal Proyek Dipesan :", tanggalDibuatNew.strftime("%A"), tanggalDibuatNew)
+    print("Due Date Proyek :", tanggalDueDateNew.strftime("%A"), tanggalDueDateNew)
     print("Banyak Hari Kerja Antara Dipesan dan Due Date :", hitungHariBisnis)
     print("Durasi Rincian Proyek :", ceil(hasilPerkalian), "Jam Atau", ceil(durasiHari), "Hari (Sabtu dan Minggu Kerja)")
     newdays = ceil(durasiBaru2)
     print("Durasi Rincian Proyek :",ceil(durasiBaru), "Jam Atau",newdays, "Hari (Sabtu dan Minggu Libur)")
-    duedateproduk = tanggalDibuat + timedelta(days = newdays)
-    print(type(duedateproduk))
+    duedateproduk = tanggalDibuatNew + timedelta(days = newdays)
     print("Due Date Rincian Proyek :",duedateproduk)
     return duedateproduk
 
