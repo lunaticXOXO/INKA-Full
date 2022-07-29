@@ -21,6 +21,7 @@ from material.MaterialOnWorkstation.controller.MaterialOnWorkstationController i
 from material.MaterialConsumable.controller.MaterialConsumableController import *
 from unit.controller.UnitController import *
 from users.controller.UserController import *
+from operasi.controller.OperasiController import *
 from flask import Flask,session
 from flask_cors import CORS
 #from flask_restful import Api
@@ -451,6 +452,28 @@ def add_material_consumable():
     hasil = addMaterialConsumable()
     return hasil
 
+
+#OPERASI
+@app.route('/operasi/generate_operasi/<idProduk>',methods = ['POST'])
+def generate_operasi(idProduk):
+    hasil = GenerateOperation(idProduk)
+    return hasil
+
+
+@app.route('/operasi/start_operasi/<idOperasi>',methods = ['POST'])
+def start_operasi(idOperasi):
+    hasil = StartOperation(idOperasi)
+    return hasil
+
+@app.route('/operasi/end_operasi/<idOperasi>',methods = ['POST'])
+def end_operasi(idOperasi):
+    hasil = EndOperation(idOperasi)
+    return hasil
+
+@app.route('/operasi/get_proc_product/<idProduk>',methods = ['GET'])
+def testgetprocess(idProduk):
+    hasil = GetProcessofProduct(idProduk)
+    return hasil
 #USERS 
 @app.route('/register',methods = ['POST'])
 def register():
