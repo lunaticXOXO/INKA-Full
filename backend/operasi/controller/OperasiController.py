@@ -6,11 +6,11 @@ import string
 from product.controller.ProdukController import *
 import datetime
 
-def ShowOperasiFromProduct(id):
+def ShowOperasiFromProduct(idProduct):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT * FROM prd_d_operasi"
+    query = "SELECT * FROM prd_d_operasi WHERE produk = '"+idProduct+"' ORDER BY proses,rencanaMulai ASC"
     cursor.execute(query)
 
     records = cursor.fetchall()
@@ -22,6 +22,19 @@ def ShowOperasiFromProduct(id):
     return make_response(jsonify(json_data),200)
 
 
+def PantauOperasi(idProduct):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT a.id AS 'IdOperasi',a.rencanaMulai,a.rencanaSelesai,b.id AS 'ID Proses',b.nama AS 'nama proses',a.produk FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = b.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id WHERE h.id = '"+idProduct+"' ORDER BY a.proses,a.rencanaMulai ASC"
+    cursor.execute(query)
+
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
 
 def GetProcessofProduct(idProduk):
     conn = database.connector()
@@ -43,7 +56,7 @@ def GenerateOperation(idProduk):
     cursor = conn.cursor()
 
     #query INSERT ke Operasi
-    query = "INSERT INTO prd_d_operasi(id,proses,stasiunKerja,produk)VALUES(%s,%s,%s,%s)"     
+    query = "INSERT INTO prd_d_operasi(id,rencanaMulai,rencanaSelesai,proses,stasiunKerja,produk)VALUES(%s,%s,%s,%s,%s,%s)"     
     try:
       
         query3 = "SELECT c.id AS 'IdProses',a.stasiunKerja,c.durasi FROM gen_r_mampuproses a JOIN prd_r_proses c ON c.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = c.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id WHERE h.id = '"+idProduk+"'"
@@ -71,30 +84,23 @@ def GenerateOperation(idProduk):
             id_operation = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
             proses = index[0]
             stasiunKerja = index[1]
-            values1 = (id_operation,proses,stasiunKerja,idProduk)
-            cursor.execute(query,values1)
-           
-            print("idproses : ",index[0])
-            print("stasiunkerja : ",index[1])
-            print("start1 : ",schedulledstartWorkDate)
             durasi = index[2]
-            
-            query7 = "UPDATE prd_d_operasi SET rencanaMulai = %s, rencanaSelesai =  %s WHERE produk = '"+idProduk+"'"
-            scehdulledFinishWorkDate = scehdulledFinishWorkDate + datetime.timedelta(minutes = durasi)
-            print("end1 : ",scehdulledFinishWorkDate)
-            values3 = (schedulledstartWorkDate,scehdulledFinishWorkDate)
-            cursor.execute(query7,values3)
-           
-            schedulledstartWorkDate = scehdulledFinishWorkDate
-
-            scehdulledFinishWorkDate = scehdulledFinishWorkDate + datetime.timedelta(minutes = durasi)
-            print("start2 : ",schedulledstartWorkDate)
-            print("end2 : ",scehdulledFinishWorkDate)
-            values4 = (schedulledstartWorkDate,scehdulledFinishWorkDate)
-            cursor.execute(query7,values4)
-          
-            schedulledstartWorkDate = scehdulledFinishWorkDate
+            counter = 1
+            cek = False
+            while cek == False:
+                if counter %2 != 0 and cek == False:
+                    scehdulledFinishWorkDate = scehdulledFinishWorkDate + datetime.timedelta(minutes = durasi)
+                    values1 = (id_operation,schedulledstartWorkDate,scehdulledFinishWorkDate,proses,stasiunKerja,idProduk)
+                    cursor.execute(query,values1)
+                    schedulledstartWorkDate = scehdulledFinishWorkDate
+                    cek = True
+                if counter %2 == 0 and cek == False:
+                    scehdulledFinishWorkDate = scehdulledFinishWorkDate + datetime.timedelta(minutes = durasi)
+                    cursor.execute(query,values1)
+                    schedulledstartWorkDate = scehdulledFinishWorkDate
+                    cek = True
             print("")
+        counter = counter + 1
                     
         dueDateproduk = HitungDueDateProduk(idProduk)
         query4 = "UPDATE prd_d_produk SET dueDate = %s WHERE id = %s"
