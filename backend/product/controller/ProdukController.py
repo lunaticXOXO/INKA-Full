@@ -128,6 +128,3 @@ def HitungDueDateProduk(id_produk):
     duedateproduk = tanggalDibuatNew + timedelta(days = newdays)
     print("Due Date Rincian Proyek :",duedateproduk)
     return duedateproduk
-
-  
-  
