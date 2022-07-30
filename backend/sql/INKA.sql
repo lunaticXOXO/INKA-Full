@@ -141,6 +141,26 @@ CREATE TABLE gen_r_supplier(
     FOREIGN KEY(city) REFERENCES gen_r_city(code)
 );
 
+CREATE TABLE opd_r_operator(
+    code varchar(5) PRIMARY KEY NOT NULL,
+    nama varchar(30) NOT NULL,
+    adress1 varchar(50) NOT NULL,
+    postalcode varchar(5) NOT NULL,
+    phone varchar(20) NOT NULL,
+    email varchar(20) NOT NULL,
+    city varchar(3),
+    FOREIGN KEY(city) REFERENCES gen_r_city(code)
+);
+
+CREATE TABLE opr_d_operatorneed(
+
+    operationid varchar(9) PRIMARY KEY NOT NULL,
+    operatorid varchar(5) NOT NULL,
+    FOREIGN KEY (operationid) REFERENCES prd_d_operasi(id)
+    FOREIGN KEY (operatorid) REFERENCES opd_r_operator(code)
+
+);
+
 CREATE TABLE mat_r_classification(
     code varchar(5) PRIMARY KEY NOT NULL,
     descriptions varchar(30)

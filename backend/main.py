@@ -460,6 +460,18 @@ def generate_operasi(idProduk):
     return hasil
 
 
+@app.route('/operasi/get_operasi_byproduk/<idProduk>',methods = ['GET'])
+def get_operasi_byproduk(idProduk):
+    hasil = ShowOperasiFromProduct(idProduk)
+    return hasil
+
+
+@app.route('/operasi/pantau_operasi/<idProduct>',methods = ['GET'])
+def pantau_operasi(idProduct):
+    hasil = PantauOperasi(idProduct)
+    return hasil
+
+
 @app.route('/operasi/start_operasi/<idOperasi>',methods = ['POST'])
 def start_operasi(idOperasi):
     hasil = StartOperation(idOperasi)
@@ -470,10 +482,8 @@ def end_operasi(idOperasi):
     hasil = EndOperation(idOperasi)
     return hasil
 
-@app.route('/operasi/get_proc_product/<idProduk>',methods = ['GET'])
-def testgetprocess(idProduk):
-    hasil = GetProcessofProduct(idProduk)
-    return hasil
+
+
 #USERS 
 @app.route('/register',methods = ['POST'])
 def register():
