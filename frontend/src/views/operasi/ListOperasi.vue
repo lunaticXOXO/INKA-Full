@@ -1,14 +1,18 @@
 <template>
-    <v-flex d-flex>
-        <h1>List Operasi</h1>
-        <v-layout wrap>
-            <v-flex md4 v-for="item in this.$store.getters.getItems" :key="item.id">
-                <v-card class="card-container">
-                    {{ item.title }}
-                </v-card>
-            </v-flex>
-        </v-layout>
-    </v-flex>
+    <v-app>
+        <h1 class="ma-4">List Operasi</h1>
+        <v-flex d-flex>    
+            <br><br>
+            <v-layout wrap>
+                <v-flex md4 v-for="item in items" :key="item.id">
+                    <v-card class="card-container mx-8 my-8 pa-4">
+                        <h3>ID Proses</h3>
+                        {{ item.proses }}
+                    </v-card>
+                </v-flex>
+            </v-layout>
+        </v-flex>
+    </v-app>
 </template>
 
 <script>
@@ -19,19 +23,19 @@
     }),
 
     mounted(){
-        //this.fetchData()
+        this.fetchData()
     },
 
     methods: {
         async fetchData(){
             try{
                 const axios = require('axios');
-                const res = await axios.get(`/operasi/get_alloperasi`);
+                const res = await axios.get(`/operasi/get_operasi_byproduk/PR_02`);
                 if(res.data == null){
                     alert("Operasi Kosong")
                 }else{
-                    this.operasi = res.data;
-                    console.log(res,this.data)
+                    this.items = res.data;
+                    console.log(res,this.items)
                 }
             } 
             catch(error){

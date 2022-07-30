@@ -26,7 +26,7 @@ def PantauOperasi(idProduct):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id AS 'IdOperasi',a.rencanaMulai,a.rencanaSelesai,b.id AS 'ID Proses',b.nama AS 'nama proses',a.produk FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = b.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id WHERE h.id = '"+idProduct+"' ORDER BY a.proses,a.rencanaMulai ASC"
+    query = "SELECT a.id AS 'idOperasi',a.rencanaMulai,a.rencanaSelesai,b.id AS 'idProses',b.nama AS 'namaProses',a.produk FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = b.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id WHERE h.id = '"+idProduct+"' ORDER BY a.proses,a.rencanaMulai ASC"
     cursor.execute(query)
 
     records = cursor.fetchall()
@@ -64,6 +64,7 @@ def GenerateOperation(idProduk):
         recordsFetch = cursor.fetchall()
 
         N = 9
+        counter=1
         proses = ""   
         stasiunKerja = ""
 

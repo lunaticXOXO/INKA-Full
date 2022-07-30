@@ -1,7 +1,7 @@
 import db.db_handler as database
 from flask import request,make_response,jsonify
 import numpy as np
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from math import ceil
 from process.controller.ProsesController import *
 
@@ -114,8 +114,8 @@ def HitungDueDateProduk(id_produk):
     sabtuMingguDalamSebulan = (16 * 4)
     durasiBaru = hasilPerkalian + sabtuMingguDalamSebulan
     durasiBaru2 = durasiBaru / 8
-    tanggalDibuatNew = tanggalDibuat.date()
-    tanggalDueDateNew = tanggalDueDate.date()
+    tanggalDibuatNew = tanggalDibuat
+    tanggalDueDateNew = tanggalDueDate
     
     hitungHariBisnis = np.busday_count(tanggalDibuatNew,tanggalDueDateNew)
     
