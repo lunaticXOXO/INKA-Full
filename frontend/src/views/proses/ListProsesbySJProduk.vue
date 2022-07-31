@@ -1,4 +1,16 @@
 <template>
+<v-app>
+
+    <div class="d-flex">
+        <v-card>
+            <v-data-table
+                :headers="column2"
+                :items = "sjproduk"
+            >
+            </v-data-table>
+        </v-card>
+    </div>
+    <div class="proses">
     <v-card
         class="mx-auto text-center mt-6"
         max-width="1000">
@@ -78,6 +90,8 @@
             </v-data-table>
         </v-card>
     </v-card>
+    </div>
+</v-app>
 </template>
 
 <script>
@@ -95,6 +109,21 @@ import axios from 'axios'
                     {text : 'ID Nodal', value : 'idNodal'},
                     {text : 'Action', value : 'aksi'}
                 ],
+                column2 : [
+                    {text : 'ID Nodal', value : 'idNodal'},
+                    {text : 'Nama', value : 'nama'},
+                    {text : 'Induk Nodal',value : 'indukNodal'},
+                    {text : 'ID Jenis Produk',value : 'IdJenisProduk'},
+                    {text : 'Nama Jenis Produk',value : 'NamaJenisProduk'},
+                    {text : 'ID Rincian Proyek',value : 'IdRincian'},
+                    {text : 'Jumlah',value : 'jumlah'},
+                    {text : 'Due Date Rincian',value : 'dueDateRincian'},
+                    {text : 'ID Produk',value : 'IdProduk'},
+                    {text : 'Nama Proyek',value : 'namaProyek'},
+                    {text : 'ID Customer',value : 'IdCustomer'},
+                    {text : 'Nama Customer',value : 'namaCustomer'}
+                ],
+                sjproduk : [],
                 proses : [],
                 prosesData : [],
                 nodal: [],
@@ -127,7 +156,8 @@ import axios from 'axios'
         mounted(){
             this.fetchProsesbySJProduk(),
             this.fetchJenisProses(),
-            this.fetchNodal()
+            this.fetchNodal(),
+            this.fetchSJProdukInProses()
         },
 
         methods : {
@@ -187,6 +217,22 @@ import axios from 'axios'
                         console.log(res,this.proses)
                     }
                     
+                } catch(error){
+                    alert("Error")
+                    console.log(error)
+                }
+            },
+
+            async fetchSJProdukInProses(){
+                 try{
+                    const res = await axios.get('/proses/get_sjproduct_inprocess/' + this.$route.params.id)
+                    if(res.data == null){
+                        alert("Data Kosong")
+                    }else{
+                        this.sjproduk = res.data
+
+                        console.log(res,this.sjproduk)
+                    }
                 } catch(error){
                     alert("Error")
                     console.log(error)

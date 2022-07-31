@@ -39,7 +39,20 @@ def GetProdukbyRProyek(id_rproyek):
 
   return make_response(jsonify(json_data),200)
   
+def GetRProyekInProduk(id_rproyek):
+  conn = database.connector()
+  cursor = conn.cursor()
 
+  query = "SELECT a.id AS 'IdRincian', a.jumlah AS 'jumlah', a.dueDate, b.id AS 'IdProyek', b.nama AS 'NamaProyek', c.id AS 'IdCustomer',c.nama AS 'NamaCustomer' FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON b.id = a.proyek JOIN gen_r_customer c ON c.id = b.customerid JOIN prd_d_produk d ON d.rincianProyek = a.id WHERE a.id =  '"+id_rproyek+"'"
+  cursor.execute(query)
+  records = cursor.fetchall()
+
+  row_headers = [x[0] for x in cursor.description]
+  json_data = []
+
+  for data in records:
+    json_data.append(dict(zip(row_headers,data)))
+  return make_response(jsonify(json_data),200)
 
 def AddProduk():
   conn = database.connector()

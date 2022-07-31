@@ -5,12 +5,7 @@
         <br>
         <h1>List Proyek</h1>
         <br>
-         <router-link to="/pesanProyek">
-           <v-btn color="primary" class="d-flex ml-4 mb-6">
-              Add Proyek
-           </v-btn>
-        </router-link>
-        
+     
         <v-card
         class="mx-auto text-center"
         max-width="1000">
@@ -74,7 +69,6 @@
         {text : 'ID',               value : 'id'},
         {text : 'Nama',             value : 'nama'},
         {text : 'Tanggal Dibuat',   value : 'tglDibuat'},
-        {text : 'Due Date',         value : 'dueDate'},
         {text : 'Customer ID',      value : 'customerid'},
         {text : 'Action',           value : 'aksi'}        
       ],

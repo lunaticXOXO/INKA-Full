@@ -122,6 +122,11 @@ def add_newproyek_by_customer(id_customer):
     hasil = AddProyekbyCustomer(id_customer)
     return hasil
 
+@app.route('/proyek/get_customer_inproyek/<idCustomer>',methods = ['GET'])
+def get_customer_inproyek(idCustomer):
+    hasil = GetCustomerInProyek(idCustomer)
+    return hasil
+
 @app.route('/proyek/update_proyek/<id>',methods = ['POST'])
 def update_proyek(id):
     hasil = UpdateProyek(id)
@@ -138,6 +143,11 @@ def show_rproyek():
 @app.route('/rproyek/show_rproyek_by_proyek/<id_proyek>',methods = ['GET'])
 def show_rproyek_by_proyek(id_proyek):
     hasil = ShowRincianProyekByProyek(id_proyek)
+    return hasil
+
+@app.route('/rproyek/show_proyek_inrproyek/<id_proyek>',methods = ['GET'])
+def show_proyek_inrproyek(id_proyek):
+    hasil = ShowProyekInRProyek(id_proyek)
     return hasil
 
 @app.route('/rproyek/update_rproyek/<id_rproyek>',methods = ['POST'])
@@ -188,6 +198,11 @@ def add_product_by_rproyek(id_rincian):
     hasil = AddProdukbyRincian(id_rincian)
     return hasil
 
+@app.route('/product/get_rpoyek_inproduct/<id_rproyek>',methods = ['GET'])
+def get_rproyek_inproduct(id_rproyek):
+    hasil = GetRProyekInProduk(id_rproyek)
+    return hasil
+
 #JENIS PRODUCT
 @app.route('/jproduct/post_jproduct',methods =['POST'])
 def post_jproduct():
@@ -207,6 +222,11 @@ def get_jproduct_by_rproyek(id_rproyek):
 @app.route('/jproduct/get_jproduct/<id>',methods = ['GET'])
 def get_jproduct_byId(id):
     hasil = GetJenisProductById(id)
+    return hasil
+
+@app.route('/jproduct/get_rincian_injproduct/<id_rincian>',methods = ['GET'])
+def get_rincian_injproduct(id_rincian):
+    hasil = GetRincianInJenisProduk(id_rincian)
     return hasil
 
 @app.route('/jproduct/update_jproduct/<id>',methods = ['POST'])
@@ -233,6 +253,11 @@ def get_sjproduct_by_jproduct(id):
 @app.route('/sjproduct/insert_sjproduct',methods = ['POST'])
 def insert_sjproduct():
     hasil = AddStrukturJenisProduk()
+    return hasil
+
+@app.route('/sjproduct/get_jproduct_insjproduct/<id_jproduk>',methods = ['GET'])
+def get_jproduct_insjproduct(id_jproduk):
+    hasil = ShowJProdukInSJProduk(id_jproduk)
     return hasil
 
 @app.route('/sjproduct/insert_sjproduct_by_jproduct/<id_jproduk>',methods = ['POST'])
@@ -264,6 +289,11 @@ def get_lastprocess_product(id):
 @app.route('/proses/add_process',methods = ['POST'])
 def add_process():
     hasil = AddProses()
+    return hasil
+
+@app.route('/proses/get_sjproduct_inprocess/<id_sjproduk>')
+def get_sjproduct_inprocess(id_sjproduk):
+    hasil = ShowSJProdukInProcess(id_sjproduk)
     return hasil
 
 @app.route('/proses/add_process_by_sjproduct/<id_sjproduk>',methods = ['POST'])

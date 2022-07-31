@@ -94,9 +94,6 @@ export default {
                     { title: 'Lihat Produk', icon: 'mdi-eye',route : '/listProduk'},
                     { title: 'Lihat Jenis Produk',icon : 'mdi-eye',route : '/listJenisProduk'},
                     { title: 'Lihat Struktur Tipe Produk',icon : 'mdi-eye',route : '/listStrukturJenisProduk'},
-                    { title: 'Tambah Produk', icon: 'mdi-plus', route: '/tambahProduk'},
-                    { title: 'Tambah Jenis Produk', icon: 'mdi-plus', route: '/jenisProduk'},
-                    { title: 'Tambah Struktur Tipe Produk', icon: 'mdi-plus', route: '/strukturProduk'},
                 ],
                 title: 'Produk',
                 },
@@ -106,7 +103,6 @@ export default {
                 active: false,
                 items: [
                     { title: 'List Proyek', icon: 'mdi-filter-variant', route: '/lihatProyek'},
-                    { title: 'Tambah Proyek', icon: 'mdi-plus', route: '/pesanProyek'},
                     { title: 'Proses Terakhir', icon: 'mdi-state-machine', route: '/prosesTerakhir'},
                 ],
                 title: 'Proyek',
@@ -117,7 +113,6 @@ export default {
                 active: false,
                 items: [
                     { title: 'List Rincian Proyek', icon: 'mdi-filter-variant', route: '/listRincianProyek'},
-                    { title: 'Tambah Rincian Proyek', icon: 'mdi-plus', route: '/tambahRincianProyek'},
                 ],
                 title: 'Rincian Proyek',
                 },
@@ -127,7 +122,6 @@ export default {
                 active: false,
                 items: [
                     { title: 'Lihat List Proses', icon: 'mdi-eye', route: '/listProcess'},
-                    { title: 'Tambah Proses', icon: 'mdi-plus', route: '/tambahProses'},
                 ],
                 title: 'Proses',
                 },

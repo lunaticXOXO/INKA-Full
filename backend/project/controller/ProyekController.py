@@ -36,6 +36,7 @@ def GetProyekByCustomer(id):
     conn.commit()
     return make_response(jsonify(json_data),200)
 
+### Ga kepake
 def AddProyek():
   conn = database.connector()
   cursor = conn.cursor()
@@ -56,7 +57,21 @@ def AddProyek():
       hasil = {"Status" : "Gagal"}
 
   return hasil
+###################
 
+def GetCustomerInProyek(idCustomer):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id AS 'IdCustomer',a.nama AS 'NamaCustomer' FROM gen_r_customer a JOIN prd_r_proyek b ON b.customerid = a.id WHERE a.id = '"+idCustomer+"'"
+    cursor.execute(query)
+
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
 
 def AddProyekbyCustomer(id_customer):
     conn = database.connector()

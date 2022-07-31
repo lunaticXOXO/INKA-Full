@@ -1,4 +1,18 @@
 <template>
+<v-app>
+    
+    <div class="d-flex">
+        <v-card class="ml-14">
+            <h3>Proyek</h3><h3>{{this.$route.params.id}}</h3>
+            <v-data-table
+                :headers = "headers2"
+                :items = "proyekinrincian"
+            >
+            </v-data-table>
+        </v-card>
+    </div>
+    <br>
+    <div>
     <v-card
         class="mx-auto text-center mt-6"
         max-width="1000">
@@ -86,6 +100,8 @@
             </v-data-table>
         </v-card>
     </v-card>
+    </div>
+</v-app>
 </template>
 
 <script>
@@ -100,7 +116,14 @@ export default {
                 {text : 'Jenis Produk',value : 'jenisProduk'},
                 {text : 'Action', value : 'aksi'}
             ],
+            headers2 : [
+                {text : 'ID Customer', value : 'IdCustomer'},
+                {text : 'Nama Customer',value : 'NamaCustomer'},
+                {text : 'ID Proyek', value : 'IdProyek'},
+                {text : 'Nama Proyek', value : 'NamaProyek'}
+            ],
             rincianbyproyek : [],
+            proyekinrincian : [],
             editedIndex : -1,
             editedItem : {
                 id : '',
@@ -120,7 +143,9 @@ export default {
     },
 
     mounted(){
-        this.fetchRProyekbyProyek()
+        this.fetchRProyekbyProyek(),
+        this.fetchProyekInRProyek()
+
     },
     
     methods : {
@@ -137,6 +162,23 @@ export default {
                 }
             }
             catch(error){
+                alert("Error")
+                console.log(error)
+            }
+        },
+        async fetchProyekInRProyek(){
+            try{
+                
+                const axios = require('axios')
+                const res = await axios.get('/rproyek/show_proyek_inrproyek/' + this.$route.params.id)
+                if(res == null){
+                    console.log("Data kosong")
+                }else{
+                    this.proyekinrincian = res.data
+                    console.log(res,this.proyekinrincian)
+                }
+
+            }catch(error){
                 alert("Error")
                 console.log(error)
             }

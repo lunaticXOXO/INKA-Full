@@ -1,8 +1,23 @@
+
 <template>
+<v-app>
+    
+  
+    <br>
+    <div class="d-flex">
+        <v-card class="mt-10 text-center mx-10">
+        <h3>Customer</h3> <h3>{{this.$route.params.id}}</h3>   
+        <v-data-table 
+        :headers="column2"
+        :items="customerinproject"
+    
+        >
+        </v-data-table>
+        </v-card>
+    </div>
+    <div class="tabelproyek">
     <v-card class="mt-10 text-center mx-10" max-width="1450">
-        <br>
-        <h1>Proyek List Customer</h1> <h1>{{this.$route.params.id}}</h1>
-        <br>
+          <h1>Proyek List Customer</h1> <h1>{{this.$route.params.id}}</h1>
         <router-link :to="{name : 'Tambah Proyek by Customer', params : {id : `${this.$route.params.id}`}}">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
                 Add Proyek by Customer
@@ -60,9 +75,13 @@
                         <v-icon small dark>mdi-trash-can-outline</v-icon>
                     </v-btn>
                 </div>
+
             </template>
         </v-data-table>
-    </v-card>    
+       
+    </v-card>   
+    </div> 
+  </v-app>
 </template>
 
 <script>
@@ -74,11 +93,15 @@ export default{
                 {text : 'ID Proyek',value : 'id'},
                 {text : 'Nama Proyek',value : 'nama'},
                 {text : 'Tanggal Dibuat',value : 'tglDibuat'},
-                {text : 'Due Date',value : 'dueDate'},
                 {text : 'Customer ID',value : 'customerid'},
                 {text : 'Action',value : 'aksi'}
             ],
+            column2 : [
+                {text : 'ID Customer',value : 'IdCustomer'},
+                {text : 'Nama Customer',value : 'NamaCustomer'}
+            ],
             project : [],
+            customerinproject : [],
             editedIndex : -1,
             editedItem : {
                 id : '',
@@ -97,7 +120,8 @@ export default{
     },
 
     mounted() {
-      this.fetchProyekByCustomer()
+      this.fetchProyekByCustomer(),
+      this.fetchCustomerInProyek()
     },
     
     methods :{
@@ -133,6 +157,17 @@ export default{
 
             }catch(error){
                 console.log(error)
+            }
+        },
+
+        async fetchCustomerInProyek(){
+            const axios = require('axios')
+            const res = await axios.get('/proyek/get_customer_inproyek/' + this.$route.params.id)
+            if(res.data == null){
+                console.log("Data kosong")
+            }else{
+                this.customerinproject = res.data
+                console.log(res,this.customerinproject)
             }
         },
         selectProject(project){

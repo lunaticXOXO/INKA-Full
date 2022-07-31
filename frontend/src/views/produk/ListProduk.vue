@@ -5,11 +5,6 @@
         <br>
         <h1>List Produk</h1>
         <br>
-        <router-link to="/tambahProduk">
-            <v-btn color="primary" class="d-flex ml-4 mb-6">
-                Add Produk
-            </v-btn>
-        </router-link>
 
         <v-data-table
             :headers = "headers"

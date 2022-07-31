@@ -1,4 +1,16 @@
 <template>
+<v-app>
+    <div class="d-flex">
+    <v-card class="ml-14">
+        <h3>Jenis Produk</h3><h3>{{this.$route.params.id}}</h3>
+        <v-data-table
+        :headers = "column2"
+        :items = "jproduk"
+        >
+        </v-data-table>
+    </v-card>
+    </div>
+    <div class="sjenisproduk">
     <v-card
         class="mx-auto text-center mt-6"
         max-width="1000">
@@ -73,6 +85,8 @@
             </v-data-table>
         </v-card>
     </v-card>
+    </div>
+</v-app>
 </template>
 
 <script>
@@ -89,6 +103,21 @@ export default {
                 {text : 'ID Jenis Produk', value : 'id'},
                 {text : 'Action', value : 'aksi'}
             ],
+            column2 : [
+                {text : 'ID Jenis Produk',value : 'IdJenisProduk'},
+                {text : 'Nama Jenis Produk',value : 'NamaJenisProduk'},
+                {text : 'ID Rincian Proyek',value : 'IdRincian'},
+                {text : 'Jumlah',value : 'jumlah'},
+                {text : 'Due Date Rincian',value : 'dueDateRincian'},
+                {text : 'ID Produk',value : 'IdProduk'},
+                {text : 'Due Date Produk',value : 'dueDateProduk'},
+                {text : 'ID Proyek', value : 'IdProyek'},
+                {text : 'Nama Proyek',value : 'namaProyek'},
+                {text : 'ID Customer',value : 'IdCustomer'},
+                {text : 'Nama Customer',value : 'namaCustomer'}
+
+            ],
+            jproduk : [],
             sjproduk : [],
             indukNodal: [],
             editedIndex: -1,
@@ -113,6 +142,7 @@ export default {
 
     mounted(){
         this.fetchSJProductbyJProduk()
+        this.fetchJProductInSJProduk()
     },
 
     methods: {
@@ -126,7 +156,16 @@ export default {
                 console.log(res,this.sjproduk)
             }
         },
-
+        
+           async fetchJProductInSJProduk(){
+            const res = await axios.get('/sjproduct/get_jproduct_insjproduct/' + this.$route.params.id)
+            if(res.data == null){
+                console.log("Data Kosong")
+            }else{
+               this.jproduk = res.data
+               console.log(res,this.jproduk)
+            }
+        },
         async updateData(){
             if (this.editedIndex > -1) {
                 Object.assign(this.sjproduk[this.editedIndex], this.editedItem)

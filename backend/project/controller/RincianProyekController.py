@@ -38,6 +38,20 @@ def ShowRincianProyekByProyek(id_proyek):
     return make_response(jsonify(json_data),200)
 
 
+def ShowProyekInRProyek(id_proyek):
+    conn = db.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT a.id AS 'IdRincian', b.id AS 'IdProyek', b.nama AS 'NamaProyek', c.id AS 'IdCustomer',c.nama AS 'NamaCustomer' FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON b.id = a.proyek JOIN gen_r_customer c ON c.id = b.customerid WHERE b.id =  '"+id_proyek+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
 def AddRincianProyek():
     conn = db.connector()
     cursor = conn.cursor()

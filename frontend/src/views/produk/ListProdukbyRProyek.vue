@@ -1,5 +1,17 @@
 <template>
+<v-app>
 
+    <div class="d-flex">
+    <v-card class="ml-14">
+         <h4>Rincian Proyek</h4><h4>{{this.$route.params.id}}</h4>
+        <v-data-table
+            :headers= "column2"
+            :items= "rproyek"
+        >
+        </v-data-table>
+    </v-card>
+    </div>
+    <div class="product">
     <v-card class="mt-10 text-center mx-10" max-width="1450">
         <br>
         <h1>Product List By Rincian Proyek</h1><h1>{{this.$route.params.id}}</h1>
@@ -9,10 +21,7 @@
             <v-btn color="primary" class="d-flex ml-4 mb-6">
                 Add Produk
             </v-btn>
-        </router-link>
-      
-   
-
+        </router-link>   
         <v-data-table 
         :headers="column"
         :items="produk"
@@ -51,6 +60,8 @@
         </template>
         </v-data-table>
     </v-card>
+    </div>
+</v-app>
 </template>
 
 <script>
@@ -63,6 +74,16 @@ export default {
                 {text : 'Rincian Proyek',value : 'rincianProyek'},
                 {text : 'Action',value : 'aksi'}
             ],
+            column2 : [
+                {text : 'ID Rincian Proyek', value : 'IdRincian'},
+                {text : 'Jumlah', value : 'jumlah'},
+                {text : 'Due Date',value : 'dueDate'},
+                {text : 'ID Proyek',value : 'IdProyek'},
+                {text : 'Nama Proyek',value : 'NamaProyek'},
+                {text : 'ID Customer', value : 'IdCustomer'},
+                {text : 'Nama Customer',value : 'NamaCustomer'}
+            ],
+            rproyek : [],
             produk : [],
             rincian : [],
             editedIndex : -1,
@@ -79,7 +100,8 @@ export default {
 
     mounted(){
         this.fetchProductbyRProyek(),
-        this.fetchRincianProyek()
+        this.fetchRincianProyek(),
+        this.fetchRincianInProduk()
     },
 
     methods : {
@@ -113,7 +135,22 @@ export default {
                 console.log(error)
             }
         },
+        async fetchRincianInProduk(){
+            try{
+                
+                const axios = require('axios')
+                const res = await axios.get('/product/get_rpoyek_inproduct/' + this.$route.params.id)
+                if(res.data == null){
+                    console.log("Data kosong")
+                }else{
+                    this.rproyek = res.data
+                    console.log(res,this.rincianinproduk)
+                }
 
+            }catch(error){
+                alert("Error")
+            }
+        },
         async updateProduk(){
             if (this.editedIndex > -1) {
                 Object.assign(this.produk[this.editedIndex], this.editedItem)

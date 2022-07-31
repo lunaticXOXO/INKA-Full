@@ -1,4 +1,17 @@
 <template>
+<v-app>
+    <div class="d-flex">
+        <v-card class="ml-14 mr-11 mb-10 mt-20">
+             <h3>Rincian Proyek</h3><h3>{{this.$route.params.id}}</h3>
+           <v-data-table
+              :headers = "column2"
+              :items = "rincianproyek"
+              height = "100"
+           >
+           </v-data-table> 
+        </v-card>
+    </div>
+    <div class="jenisproduk">
     <v-card
         class="mx-auto text-center mt-6"
         max-width="1000">
@@ -15,7 +28,10 @@
         max-width="1000">
             <v-data-table
                 :headers = "column"
-                :items = "jenisproduk">
+                :items = "jenisproduk"
+                height = "200"
+                width = "300"
+                >
             
             <template v-slot:[`item.id`]="{ item }">
                     <div v-if="item.id === editedItem.id">
@@ -60,6 +76,8 @@
             </v-data-table>
         </v-card>
     </v-card>
+    </div>
+</v-app>
 </template>
 
 <script>
@@ -73,7 +91,22 @@ export default {
                 {text : 'Tanggal Dibuat', value : 'tglDibuat'},
                 {text : 'Action',value : 'aksi'}
             ],
+
+            column2 : [
+                {text : 'ID Rincian Proyek',value : 'IdRincian'},
+                {text : 'Jumlah',value : 'jumlah'},
+                {text : 'Due Date',value : 'dueDate'},
+                {text : 'ID Produk',value : 'IdProduk'},
+                {text : 'Due Date Produk',value : 'dueDateProduk'},
+                {text : 'ID Proyek',value : 'IdProyek'},
+                {text : 'Nama Proyek',value : 'NamaProyek'},
+                {text : 'ID Customer',value : 'IdCustomer'},
+                {text : 'Nama Customer',value : 'NamaCustomer'}
+            
+
+            ],
             jenisproduk : [],
+            rincianproyek : [],
             editedIndex : -1,
             editedItem : {
                 id : '',
@@ -89,6 +122,7 @@ export default {
 
     mounted(){
         this.fetchJenisProdukbyRProyek()
+        this.fetchRProyekInJenisProduk()
     },
 
     methods : {
@@ -102,6 +136,23 @@ export default {
                     this.jenisproduk = res.data
                     console.log(res,this.jenisproduk)
                 }
+            }catch(error){
+                console.log(error)
+            }
+        },
+
+        async fetchRProyekInJenisProduk(){
+            try{
+                
+                const axios = require('axios')
+                const res = await axios.get('/jproduct/get_rincian_injproduct/'+ this.$route.params.id)
+                if(res.data == null){
+                    console.log("Data kosong")
+                }else{
+                    this.rincianproyek = res.data
+                    console.log(res,this.rincianproyek)
+                }
+
             }catch(error){
                 console.log(error)
             }

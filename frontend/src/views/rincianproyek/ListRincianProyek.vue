@@ -5,11 +5,6 @@
         <br>
         <h1>List Rincian Proyek</h1>
         <br>
-        <router-link to="/tambahRincianProyek">
-            <v-btn color="primary" class="d-flex ml-4 mb-6">
-                Add Rincian Proyek
-            </v-btn>
-        </router-link>
         <v-card
         class="mx-auto text-center"
         max-width="1000">

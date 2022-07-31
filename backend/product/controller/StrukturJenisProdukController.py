@@ -55,6 +55,20 @@ def ShowSJProdukbyIDJenisProduk(id):
 
     return make_response(jsonify(json_data),200)
 
+def ShowJProdukInSJProduk(id_jproduk):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT a.id AS 'IdJenisProduk', a.nama AS 'NamaJenisProduk', b.id AS 'IdRincian',b.jumlah,b.dueDate AS 'dueDateRincian', c.id AS 'IdProduk',c.dueDate AS 'dueDateProduk', d.id AS 'IdProyek',d.nama AS 'namaProyek', e.id AS 'IdCustomer',e.nama AS 'namaCustomer' FROM prd_r_jenisproduk a JOIN prd_r_rincianproyek b ON b.jenisProduk = a.id JOIN prd_d_produk c ON c.rincianProyek = b.id JOIN prd_r_proyek d ON d.id = b.proyek JOIN gen_r_customer e ON e.id = d.customerid WHERE a.id = '"+id_jproduk+"'"
+    cursor.execute(query)
+
+    row_headers = [x[0] for x in cursor.description]
+    records = cursor.fetchall()
+
+    json_data = []
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
 
 def AddSJProdukByJenisProduk(id_jproduk):
     conn = database.connector()
