@@ -1,83 +1,75 @@
 <template>
-<v-app>
-    <div class="d-flex">
-        <v-card class="ml-14 mr-11 mb-10 mt-20">
-             <h3>Rincian Proyek</h3><h3>{{this.$route.params.id}}</h3>
-           <v-data-table
-              :headers = "column2"
-              :items = "rincianproyek"
-              height = "100"
-           >
-           </v-data-table> 
+    <v-app>
+        <div class="d-flex">
+            <v-card class="mx-auto text-center mt-6" width="1000">
+                <h3>Rincian Proyek {{this.$route.params.id}}</h3>
+                <v-data-table
+                    :headers = "column2"
+                    :items = "rincianproyek">
+                </v-data-table> 
+            </v-card>
+        </div>
+        <v-card class="mx-auto text-center mt-6" width="1000">
+            <br>
+            <h1>List Jenis Produk by Rincian Proyek</h1><h1>{{this.$route.params.id}}</h1>
+            <br>
+            <router-link to="/jenisProduk">
+                <v-btn color="primary" class="d-flex ml-4 mb-6">
+                    Add Jenis Produk
+                </v-btn>
+            </router-link>
+            <v-card
+            class="mx-auto text-center"
+            max-width="1000">
+                <v-data-table
+                    :headers = "column"
+                    :items = "jenisproduk"
+                    height = "200"
+                    width = "300">
+                    <template v-slot:[`item.id`]="{ item }">
+                        <div v-if="item.id === editedItem.id">
+                            <v-text-field disabled v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                            <span v-else>{{item.id}}</span>
+                        </div>
+                        <div v-else>
+                            <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                            <span v-else>{{item.id}}</span>
+                        </div>
+                    </template>
+
+                    <template v-slot:[`item.nama`]="{item}">
+                        <v-text-field v-model="editedItem.nama" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                        <span v-else>{{item.nama}}</span>
+                    </template>
+
+                    <template v-slot:[`item.aksi`]="{ item }">
+                        <div v-if="item.id==editedItem.id">
+                            <v-icon color="red" class="mr-3" @click="close()">
+                                mdi-window-close
+                            </v-icon>
+                            <v-icon color="green" class="mr-3" @click="updateData()">
+                                mdi-content-save
+                            </v-icon>
+                        </div>
+                        <div v-else>
+                            <router-link :to="{name : 'List Struktur Jenis Produk by Jenis Produk',params:{id : `${item.id}`}}">
+                            <v-btn class="mx-1" x-small color="blue" @click="selectJProducttoSJProduct(item)">
+                                <v-icon small dark>mdi-check</v-icon>
+                            </v-btn>
+                            </router-link>
+
+                            <v-btn class="mx-1" x-small color="green" @click="editJenisProduct(item)">
+                                <v-icon small dark>mdi-pencil</v-icon>
+                            </v-btn>
+                            <v-btn class="mx-1" x-small color="red" @click="deleteJenisProduct(item)">
+                                <v-icon small dark>mdi-trash-can-outline</v-icon>
+                            </v-btn>
+                        </div>
+                    </template>
+                </v-data-table>
+            </v-card>
         </v-card>
-    </div>
-    <div class="jenisproduk">
-    <v-card
-        class="mx-auto text-center mt-6"
-        max-width="1000">
-        <br>
-        <h1>List Jenis Produk by Rincian Proyek</h1><h1>{{this.$route.params.id}}</h1>
-        <br>
-          <router-link to="/jenisProduk">
-            <v-btn color="primary" class="d-flex ml-4 mb-6">
-                Add Jenis Produk
-            </v-btn>
-        </router-link>
-        <v-card
-        class="mx-auto text-center"
-        max-width="1000">
-            <v-data-table
-                :headers = "column"
-                :items = "jenisproduk"
-                height = "200"
-                width = "300"
-                >
-            
-            <template v-slot:[`item.id`]="{ item }">
-                    <div v-if="item.id === editedItem.id">
-                        <v-text-field disabled v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
-                        <span v-else>{{item.id}}</span>
-                    </div>
-                    <div v-else>
-                        <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
-                        <span v-else>{{item.id}}</span>
-                    </div>
-            </template>
-
-            <template v-slot:[`item.nama`]="{item}">
-                    <v-text-field v-model="editedItem.nama" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
-                    <span v-else>{{item.nama}}</span>
-            </template>
-
-            <template v-slot:[`item.aksi`]="{ item }">
-            <div v-if="item.id==editedItem.id">
-                <v-icon color="red" class="mr-3" @click="close()">
-                    mdi-window-close
-                </v-icon>
-                <v-icon color="green" class="mr-3" @click="updateData()">
-                    mdi-content-save
-                </v-icon>
-            </div>
-            <div v-else>
-                <router-link :to="{name : 'List Struktur Jenis Produk by Jenis Produk',params:{id : `${item.id}`}}">
-                <v-btn class="mx-1" x-small color="blue" @click="selectJProducttoSJProduct(item)">
-                    <v-icon small dark>mdi-check</v-icon>
-                </v-btn>
-                </router-link>
-
-                <v-btn class="mx-1" x-small color="green" @click="editJenisProduct(item)">
-                    <v-icon small dark>mdi-pencil</v-icon>
-                </v-btn>
-                <v-btn class="mx-1" x-small color="red" @click="deleteJenisProduct(item)">
-                    <v-icon small dark>mdi-trash-can-outline</v-icon>
-                </v-btn>
-            </div>
-                </template>
-            </v-data-table>
-        </v-card>
-    </v-card>
-    </div>
-</v-app>
+    </v-app>
 </template>
 
 <script>
@@ -177,7 +169,6 @@ export default {
 
         selectJProducttoSJProduct(jenisproduk){
             console.log(jenisproduk.id)
-           //open(`/listStrukturJenisProduk/${jenisproduk.id}`)
         },
 
         editJenisProduct(jenisproduk){
