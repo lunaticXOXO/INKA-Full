@@ -10,7 +10,7 @@ def ShowOperasiFromProduct(idProduct):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT * FROM prd_d_operasi WHERE produk = '"+idProduct+"' ORDER BY proses,rencanaMulai ASC"
+    query = "SELECT a.id,a.proses,b.nama,a.stasiunKerja,a.rencanaMulai,a.rencanaSelesai FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses WHERE produk = '"+idProduct+"' ORDER BY proses,rencanaMulai ASC"
     cursor.execute(query)
 
     records = cursor.fetchall()
@@ -21,6 +21,29 @@ def ShowOperasiFromProduct(idProduct):
         json_data.append(dict(zip(row_headers,data)))
     return make_response(jsonify(json_data),200)
 
+
+def ShowProductInOperasi(id_product):
+    conn = database.connector()
+    cursor = conn.cursor()
+    rencana_mulai_min = ""
+
+    query_min = "SELECT MIN(a.rencanaMulai) FROM prd_d_operasi a"
+    cursor.execute(query_min)
+    records = cursor.fetchall()
+    for data in records:
+        rencana_mulai_min = data[0]
+        rencana_mulai_min = str(rencana_mulai_min)
+    print(rencana_mulai_min)
+
+    query = "SELECT a.id,a.rencanaMulai, b.id AS 'IdProduk',b.dueDate AS 'dueDateProduk', c.id AS 'IdRincian',c.jumlah,c.dueDate AS 'dueDateRincian', d.id AS 'IdProyek', d.nama AS 'namaProyek', e.id AS 'Id Customer', e.nama AS 'namaCustomer' FROM prd_d_operasi a JOIN prd_d_produk b ON b.id = a.produk JOIN prd_r_rincianproyek c ON c.id = b.rincianProyek JOIN prd_r_proyek d ON d.id = c.proyek JOIN gen_r_customer e ON e.id = d.customerid WHERE a.produk = '"+id_product+"' AND a.rencanaMulai = '"+rencana_mulai_min+"'"
+    cursor.execute(query)
+    records_query = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records_query:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
 
 def PantauOperasi(idProduct):
     conn = database.connector()
