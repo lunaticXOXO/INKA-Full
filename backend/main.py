@@ -489,7 +489,7 @@ def generate_operasi(idProduk):
     hasil = GenerateOperation(idProduk)
     return hasil
 
-
+#buat di tabel bawah 
 @app.route('/operasi/get_operasi_byproduk/<idProduk>',methods = ['GET'])
 def get_operasi_byproduk(idProduk):
     hasil = ShowOperasiFromProduct(idProduk)
@@ -512,7 +512,11 @@ def end_operasi(idOperasi):
     hasil = EndOperation(idOperasi)
     return hasil
 
-
+#tabel buat yang di atas
+@app.route('/operasi/show_product_inoperasi/<id_product>',methods = ['GET'])
+def show_product_inoperasi(id_product):
+    hasil = ShowProductInOperasi(id_product)
+    return hasil
 
 #USERS 
 @app.route('/register',methods = ['POST'])
