@@ -1,11 +1,41 @@
 <template>
     <v-app>
         <div class="d-flex">
-            <v-card class="mx-auto text-center mt-6" width="1000">
+            <v-card class="mx-auto text-center mt-10" width="300">
                 <h3>Jenis Produk {{this.$route.params.id}}</h3>
                 <v-data-table
                     :headers = "column2"
                     :items = "jproduk">
+                </v-data-table>
+            </v-card>
+            <v-card class="mx-auto text-center mt-10">
+                <v-data-table
+                    :headers = "column3"
+                    :items = "produk"
+                >
+                </v-data-table>
+            </v-card>
+            <v-card class="mx-auto text-center mt-10">
+                 <v-data-table
+                    :headers = "column4"
+                    :items = "rproyek"
+                >
+                </v-data-table>
+            </v-card>
+
+            <v-card class="mx-auto text-center mt-10">
+                <v-data-table
+                    :headers = "column5"
+                    :items = "proyek"
+                >
+                </v-data-table>
+            </v-card>
+
+              <v-card class="mx-auto text-center mt-10">
+                <v-data-table
+                    :headers = "column6"
+                    :items = "customer"
+                >
                 </v-data-table>
             </v-card>
         </div>
@@ -101,18 +131,31 @@ export default {
             column2 : [
                 {text : 'ID Jenis Produk',value : 'IdJenisProduk'},
                 {text : 'Nama Jenis Produk',value : 'NamaJenisProduk'},
+            ],
+
+            column3 : [
+                {text : 'ID Produk',value : 'IdProduk'},
+                {text : 'Due Date Produk',value : 'dueDateProduk'},
+            ],
+            column4 : [
                 {text : 'ID Rincian Proyek',value : 'IdRincian'},
                 {text : 'Jumlah',value : 'jumlah'},
                 {text : 'Due Date Rincian',value : 'dueDateRincian'},
-                {text : 'ID Produk',value : 'IdProduk'},
-                {text : 'Due Date Produk',value : 'dueDateProduk'},
+            ],
+            column5 : [
                 {text : 'ID Proyek', value : 'IdProyek'},
                 {text : 'Nama Proyek',value : 'namaProyek'},
+            ],
+            column6 : [
                 {text : 'ID Customer',value : 'IdCustomer'},
                 {text : 'Nama Customer',value : 'namaCustomer'}
-
             ],
+
             jproduk : [],
+            produk : [],
+            rproyek : [],
+            proyek : [],
+            customer : [],
             sjproduk : [],
             indukNodal: [],
             editedIndex: -1,
@@ -158,6 +201,10 @@ export default {
                 console.log("Data Kosong")
             }else{
                this.jproduk = res.data
+               this.produk = res.data
+               this.rproyek = res.data
+               this.proyek = res.data
+               this.customer = res.data
                console.log(res,this.jproduk)
             }
         },

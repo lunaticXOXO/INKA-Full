@@ -1,11 +1,20 @@
 <template>
     <v-app>
-        <div class="d-flex">
-            <v-card class="mx-auto text-center mt-6" width="1000">
+        <div class="d-flex ml-14">
+            <v-card class="ml-14 text-center mt-6" width="500">
                 <h3>Proyek {{this.$route.params.id}}</h3>
                 <v-data-table
                     :headers = "headers2"
                     :items = "proyekinrincian">
+                </v-data-table>
+            </v-card>
+      
+            <v-card class="ml-15 text-center mt-6" width = "400">
+                  <h3>Customer Proyek {{this.$route.params.id}}</h3>
+                <v-data-table
+                    :headers = "headers3"
+                    :items = "customer"
+                >
                 </v-data-table>
             </v-card>
         </div>
@@ -106,11 +115,15 @@ export default {
                 {text : 'Action', value : 'aksi'}
             ],
             headers2 : [
-                {text : 'ID Customer', value : 'IdCustomer'},
-                {text : 'Nama Customer',value : 'NamaCustomer'},
+               
                 {text : 'ID Proyek', value : 'IdProyek'},
                 {text : 'Nama Proyek', value : 'NamaProyek'}
             ],
+            headers3 : [
+                {text : 'ID Customer', value : 'IdCustomer'},
+                {text : 'Nama Customer',value : 'NamaCustomer'},
+            ],
+            customer : [],
             rincianbyproyek : [],
             proyekinrincian : [],
             editedIndex : -1,
@@ -164,6 +177,7 @@ export default {
                     console.log("Data kosong")
                 }else{
                     this.proyekinrincian = res.data
+                    this.customer = res.data
                     console.log(res,this.proyekinrincian)
                 }
 

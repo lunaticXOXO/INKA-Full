@@ -1,15 +1,36 @@
 <template>
     <v-app>
         <div class="d-flex">
-            <v-card class="mx-auto text-center mt-6" width="1000">
+            <v-card class="mx-auto text-center mt-10" width="600">
                 <h3>Rincian Proyek {{this.$route.params.id}}</h3>
                 <v-data-table
                     :headers = "column2"
                     :items = "rincianproyek">
                 </v-data-table> 
             </v-card>
+             <v-card class="mx-auto text-center mt-10" width="400">
+                <v-data-table
+                    :headers = "column3"
+                    :items = "produk"
+                >
+                </v-data-table>
+            </v-card>
+            <v-card class="mx-auto text-center mt-10" width="250">
+                <v-data-table
+                    :headers = "column4"
+                    :items = "proyek"
+                >
+                </v-data-table>
+            </v-card>
+            <v-card class="mx-auto text-center mt-10" width="250">
+                    <v-data-table
+                    :headers = "column5"
+                    :items = "customer"
+                >
+                </v-data-table>
+            </v-card>
         </div>
-        <v-card class="mx-auto text-center mt-6" width="1000">
+        <v-card class="mx-auto text-center mt-10" width="1000">
             <br>
             <h1>List Jenis Produk by Rincian Proyek</h1><h1>{{this.$route.params.id}}</h1>
             <br>
@@ -88,17 +109,25 @@ export default {
                 {text : 'ID Rincian Proyek',value : 'IdRincian'},
                 {text : 'Jumlah',value : 'jumlah'},
                 {text : 'Due Date',value : 'dueDate'},
-                {text : 'ID Produk',value : 'IdProduk'},
+               
+            ],
+            column3 : [
+                 {text : 'ID Produk',value : 'IdProduk'},
                 {text : 'Due Date Produk',value : 'dueDateProduk'},
+            ],
+            column4 : [
                 {text : 'ID Proyek',value : 'IdProyek'},
                 {text : 'Nama Proyek',value : 'NamaProyek'},
+            ],
+            column5 : [
                 {text : 'ID Customer',value : 'IdCustomer'},
                 {text : 'Nama Customer',value : 'NamaCustomer'}
-            
-
             ],
+            produk : [],
             jenisproduk : [],
             rincianproyek : [],
+            customer : [],
+            proyek : [],
             editedIndex : -1,
             editedItem : {
                 id : '',
@@ -142,6 +171,9 @@ export default {
                     console.log("Data kosong")
                 }else{
                     this.rincianproyek = res.data
+                    this.proyek = res.data
+                    this.customer = res.data
+                    this.produk = res.data
                     console.log(res,this.rincianproyek)
                 }
 
