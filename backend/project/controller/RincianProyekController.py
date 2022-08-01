@@ -42,7 +42,7 @@ def ShowProyekInRProyek(id_proyek):
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id AS 'IdRincian', b.id AS 'IdProyek', b.nama AS 'NamaProyek', c.id AS 'IdCustomer',c.nama AS 'NamaCustomer' FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON b.id = a.proyek JOIN gen_r_customer c ON c.id = b.customerid WHERE b.id =  '"+id_proyek+"'"
+    query = "SELECT a.id AS 'IdProyek', a.nama AS 'NamaProyek', b.id AS 'IdCustomer', b.nama AS 'NamaCustomer' FROM prd_r_proyek a JOIN gen_r_customer b ON b.id = a.customerid WHERE a.id =  '"+id_proyek+"'"
     cursor.execute(query)
     records = cursor.fetchall()
     row_headers = [x[0] for x in cursor.description]
