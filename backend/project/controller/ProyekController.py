@@ -41,14 +41,14 @@ def AddProyek():
   conn = database.connector()
   cursor = conn.cursor()
   
-  query = "INSERT INTO prd_r_proyek (id, nama, tglDibuat, dueDate,customerid) VALUES (%s,%s,%s,%s,%s)"
+  query = "INSERT INTO prd_r_proyek (id, nama,tglDibuat,customerid) VALUES (%s,%s,%s,%s)"
   try:
       data = request.json
       id_proyek = data["id"]
       nama_proyek = data["nama"]
-      dueDate = data["dueDate"]
+     
       customerid = data['customerid']
-      values = (id_proyek, nama_proyek, datetime.now(), dueDate, customerid)
+      values = (id_proyek,nama_proyek,datetime.now(),customerid)
       cursor.execute(query,values)
       conn.commit()
       hasil = {"Status " : "Berhasil"}
@@ -62,7 +62,7 @@ def AddProyek():
 def GetCustomerInProyek(idCustomer):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.id AS 'IdCustomer',a.nama AS 'NamaCustomer' FROM gen_r_customer a JOIN prd_r_proyek b ON b.customerid = a.id WHERE a.id = '"+idCustomer+"'"
+    query = "SELECT a.id AS 'IdCustomer',a.nama AS 'NamaCustomer' FROM gen_r_customer a JOIN prd_r_proyek b ON b.customerid = a.id WHERE a.id = '"+idCustomer+"' GROUP BY a.id"
     cursor.execute(query)
 
     records = cursor.fetchall()
@@ -82,16 +82,14 @@ def AddProyekbyCustomer(id_customer):
     temp = ""
     for data in records:
         temp = data[0]
-    
    
-    query = "INSERT INTO prd_r_proyek(id,nama,tglDibuat,dueDate,customerid)VALUES(%s,%s,%s,%s,'"+temp+"')"
+    query = "INSERT INTO prd_r_proyek(id,nama,tglDibuat,customerid)VALUES(%s,%s,%s,'"+temp+"')"
     try:
         data = request.json
         id = data["id"]
         nama = data["nama"]
         now = datetime.now()
-        dueDate = data["dueDate"]
-        values = (id,nama,now,dueDate)
+        values = (id,nama,now)
         cursor.execute(query,values)
         conn.commit()
         hasil = {"status" : "berhasil"}
