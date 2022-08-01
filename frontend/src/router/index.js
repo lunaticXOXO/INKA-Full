@@ -56,6 +56,7 @@ import TambahMaterialKosong from '../views/material/TambahMaterialKosong.vue'
 import TambahMaterialConsumable from '../views/material/TambahMaterialConsumable.vue'
 import LihatStatusPengerjaanWS from '../views/stasiunKerja/LihatStatusPengerjaanWS.vue'
 import LihatStatusPengerjaanProyek from '../views/proyek/StatusPengerjaanProyek.vue'
+import OperasibyProduct from '../views/operasi/ListOperasibyProduct.vue'
 
 Vue.use(VueRouter)
 
@@ -562,6 +563,15 @@ const routes = [
     component : LihatStatusPengerjaanProyek,
     meta : {
       title : "Status Pengerjaan Proyek - PT.INKA"
+    }
+  },
+
+  {
+    path : '/operasibyProduct/:id',
+    name : 'Operasi by Produk',
+    component : OperasibyProduct,
+    meta : {
+      title : "Operasi by Produk - PT.INKA"
     }
   },
 ]

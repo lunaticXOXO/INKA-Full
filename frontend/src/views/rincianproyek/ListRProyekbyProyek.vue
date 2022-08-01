@@ -134,7 +134,6 @@ export default {
     mounted(){
         this.fetchRProyekbyProyek(),
         this.fetchProyekInRProyek()
-
     },
     
     methods : {

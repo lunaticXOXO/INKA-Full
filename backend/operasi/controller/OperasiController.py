@@ -35,7 +35,7 @@ def ShowProductInOperasi(id_product):
         rencana_mulai_min = str(rencana_mulai_min)
     print(rencana_mulai_min)
 
-    query = "SELECT a.id,a.rencanaMulai, b.id AS 'IdProduk',b.dueDate AS 'dueDateProduk', c.id AS 'IdRincian',c.jumlah,c.dueDate AS 'dueDateRincian', d.id AS 'IdProyek', d.nama AS 'namaProyek', e.id AS 'Id Customer', e.nama AS 'namaCustomer' FROM prd_d_operasi a JOIN prd_d_produk b ON b.id = a.produk JOIN prd_r_rincianproyek c ON c.id = b.rincianProyek JOIN prd_r_proyek d ON d.id = c.proyek JOIN gen_r_customer e ON e.id = d.customerid WHERE a.produk = '"+id_product+"' AND a.rencanaMulai = '"+rencana_mulai_min+"'"
+    query = "SELECT a.id,a.rencanaMulai, b.id AS 'idProduk',b.dueDate AS 'dueDateProduk', c.id AS 'idRincian',c.jumlah,c.dueDate AS 'dueDateRincian', d.id AS 'idProyek', d.nama AS 'namaProyek', e.id AS 'idCustomer', e.nama AS 'namaCustomer' FROM prd_d_operasi a JOIN prd_d_produk b ON b.id = a.produk JOIN prd_r_rincianproyek c ON c.id = b.rincianProyek JOIN prd_r_proyek d ON d.id = c.proyek JOIN gen_r_customer e ON e.id = d.customerid WHERE a.produk = '"+id_product+"' AND a.rencanaMulai = '"+rencana_mulai_min+"'"
     cursor.execute(query)
     records_query = cursor.fetchall()
     json_data = []
