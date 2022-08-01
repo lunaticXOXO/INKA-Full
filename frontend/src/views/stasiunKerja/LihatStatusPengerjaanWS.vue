@@ -166,7 +166,7 @@ export default {
     return {
       chartStart: "2020-03-02 00:00",
       chartEnd: "2020-03-04 00:00",
-      pushOnOverlap: true,
+      pushOnOverlap: false,
       grid: true,
       rowHeight: 40,
       rowLabelWidth: 15,
@@ -178,7 +178,7 @@ export default {
       contextmenuTimeout: null,
       contextmenuX: 0,
       contextmenuY: 0,
-      selectedTheme: "default",
+      selectedTheme: "vue",
       themes: [
         "default",
         "vue",
@@ -224,7 +224,7 @@ export default {
             {
               myStart: "2020-03-03 04:00",
               myEnd: "2020-03-03 15:00",
-              label: "We belong together ^",
+              label: "Testing",
               ganttBarConfig: {color:"white", backgroundColor: "#2e74a3", bundle:"blueBundle"}
             },
             {
@@ -242,13 +242,13 @@ export default {
             {
               myStart: "2020-03-02 09:00",
               myEnd: "2020-03-02 18:00",
-              label: "I am with stupid ^",
+              label: "Testing",
               ganttBarConfig: {color:"white", backgroundColor: "#de3b26", bundle: "redBundle"}
             },
             {
               myStart: "2020-03-02 22:30",
               myEnd: "2020-03-03 05:00",
-              label: "With handles!",
+              label: "Testing",
               ganttBarConfig: {color:"white", backgroundColor: "#a23def", handles: true}
             },
             {
@@ -260,7 +260,7 @@ export default {
             {
               myStart: "2020-03-03 14:00",
               myEnd: "2020-03-03 20:00",
-              label: "Woooow!",
+              label: "Testing",
               ganttBarConfig: {color:"white", background: "repeating-linear-gradient(45deg,#de7359,#de7359 10px,#ffc803 10px,#ffc803 20px)"}
             }, 
           ]
