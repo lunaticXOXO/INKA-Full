@@ -94,6 +94,7 @@ export default {
                     { title: 'Lihat Produk', icon: 'mdi-eye',route : '/listProduk'},
                     { title: 'Lihat Jenis Produk',icon : 'mdi-eye',route : '/listJenisProduk'},
                     { title: 'Lihat Struktur Tipe Produk',icon : 'mdi-eye',route : '/listStrukturJenisProduk'},
+                    { title: 'Tambah Jenis Produk',icon : 'mdi-plus',route : '/tambahJenisProduk'},
                 ],
                 title: 'Produk',
                 },

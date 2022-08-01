@@ -161,11 +161,11 @@ const routes = [
   },
 
   {
-    path: '/jenisProduk',
+    path: '/tambahJenisProduk',
     name: 'Tambah Jenis Produk',
     component: TambahJnsProd,
     meta: {
-      title: "Jenis Produk - PT.INKA"
+      title: "Tambah Jenis Produk - PT.INKA"
     }
   },
 

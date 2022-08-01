@@ -1,6 +1,6 @@
 <template>
-  <div class="home pa-8">
-    <p id="judul" class="d-flex font-weight-thin">SmartWorks 4.0</p>
+  <div class="pa-10">
+    <p id="judul" class="font-weight-thin">SmartWorks 4.0</p>
   </div>
 </template>
 
