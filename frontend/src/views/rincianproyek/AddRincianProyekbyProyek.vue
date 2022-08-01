@@ -5,6 +5,7 @@
       width="1000">
       <br>
       <h1>Tambah Rincian Proyek Baru</h1>
+
       <v-form
         class="pa-6"
         ref="form"
@@ -32,7 +33,19 @@
         </template>
             <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
         </v-menu>
-        
+
+        <v-menu>
+        <template v-slot:activator="{ on, attrs }">
+            <v-text-field :value="datetime" v-bind="attrs" v-on="on" label="Due Time" prepend-icon="mdi-clock"></v-text-field>
+        </template>
+            <v-time-picker width="300" v-model="datetime"></v-time-picker>
+        </v-menu>
+
+        <!--
+        <v-datetime-picker label="Select Datetime" v-model="datetime"> 
+        </v-datetime-picker>
+        -->
+
         <v-autocomplete 
         v-model="jenisProduk"
         item-text="nama"
@@ -115,6 +128,7 @@
         color: null
       },
       jumlah : '',
+      datetime: null,
       dueDate : null,
       jenisProduk : '',
       items : undefined,
