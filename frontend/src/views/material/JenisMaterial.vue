@@ -19,23 +19,23 @@
             required
             ></v-text-field>
 
-            <v-select
+            <v-autocomplete
             v-model="classificationCode"
             :items="list_klasifikasi"
             item-text="descriptions"
             item-value="code"
             label="Klasifikasi"
             required
-            ></v-select>
+            ></v-autocomplete>
 
-            <v-select
+            <v-autocomplete
             v-model="groupCode"
             :items="list_grup"
             item-text="descriptions"
             item-value="code"
             label="Grup"
             required
-            ></v-select>
+            ></v-autocomplete>
 
             <v-text-field
             v-model="nama"

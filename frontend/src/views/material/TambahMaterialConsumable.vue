@@ -11,21 +11,21 @@
           v-model="valid"
           lazy-validation>
         
-          <v-select
+          <v-autocomplete
           item-text="id"
           item-value="id"
           v-model="proses"
           :items="prosesList"
           label="ID Proses"
-          ></v-select>
+          ></v-autocomplete>
 
-          <v-select
+          <v-autocomplete
           item-text="id"
           item-value="id"
           v-model="stock"
           :items="materialStock"
           label="Material Stock"
-          ></v-select>
+          ></v-autocomplete>
 
           <v-text-field
           v-model="quantity"

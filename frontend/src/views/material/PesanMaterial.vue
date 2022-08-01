@@ -21,21 +21,21 @@
           label="Purchaser Name"
           ></v-text-field>
 
-          <v-select
+          <v-autocomplete
           item-text="nama"
           item-value="code"
           v-model="supply"
           :items="supplier"
           label="Supplier"
-          ></v-select>
+          ></v-autocomplete>
 
-          <v-select
+          <v-autocomplete
           item-text="nama"
           item-value="code"
           v-model="type"
           :items="materialType"
           label="Material Type"
-          ></v-select>
+          ></v-autocomplete>
 
           <v-text-field
           v-model="quantity"
@@ -43,13 +43,13 @@
           type="number"
           ></v-text-field>
 
-          <v-select
+          <v-autocomplete
           item-text="nama"
           item-value="id"
           v-model="unit"
           :items="units"
           label="Unit"
-          ></v-select>
+          ></v-autocomplete>
 
           <v-menu>
             <template v-slot:activator="{ on, attrs }">

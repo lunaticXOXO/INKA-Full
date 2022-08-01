@@ -1,106 +1,105 @@
 <template>
     <v-card
-        class="mx-auto text-center mt-6"
-        max-width="1000">
-        <br>
-        <h1>Tambah Pelanggan Baru</h1>
-        <v-form
-            class="pa-6"
-            ref="form"
-            v-model="valid"
-            @submit.prevent="submitHandler"
-            lazy-validation
+      class="mx-auto text-center mt-6"
+      max-width="1000">
+      <br>
+      <h1>Tambah Pelanggan Baru</h1>
+      <v-form
+        class="pa-6"
+        ref="form"
+        v-model="valid"
+        @submit.prevent="submitHandler"
+        lazy-validation>
+        
+        <v-text-field
+        v-model="id"
+        :rules="idRules"
+        label="ID"
+        required
+        ></v-text-field>
+
+        <v-text-field
+        v-model="nama"
+        label="Nama"
+        ></v-text-field>
+
+        <v-text-field
+        v-model="alamat1"
+        label="Alamat 1"
+        ></v-text-field>
+
+        <v-text-field
+        v-model="alamat2"
+        label="Alamat 2"
+        ></v-text-field>
+
+        <v-select
+        item-text="nama"
+        item-value="code"
+        v-model="kota"
+        :items="items"
+        label="Kota"
+        ></v-select>
+
+        <v-text-field
+        v-model="kodePos"
+        label="Kode Pos"
+        ></v-text-field>
+
+        <v-text-field
+        v-model="noTelepon"
+        label="Telepon"
+        ></v-text-field>
+
+        <v-text-field
+        v-model="fax"
+        label="Fax."
+        ></v-text-field>
+
+        <v-text-field
+        v-model="email"
+        :rules="emailRules"
+        label="Email"
+        ></v-text-field>
+
+        <v-text-field
+        v-model="situs"
+        label="Situs"
+        ></v-text-field>
+
+        <v-text-field
+        v-model="pic"
+        label="PIC"
+        ></v-text-field>
+
+        <v-text-field
+        v-model="catatan"
+        label="Catatan"
+        ></v-text-field>
+        
+        <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        type="submit"
+        @click="validate();"
         >
-            <v-text-field
-            v-model="id"
-            :rules="idRules"
-            label="ID"
-            required
-            ></v-text-field>
+        Submit
+        </v-btn>
 
-            <v-text-field
-            v-model="nama"
-            label="Nama"
-            ></v-text-field>
+        <v-btn
+        color="error"
+        class="mr-4"
+        @click="reset"
+        >
+        Reset
+        </v-btn>
+      </v-form>
 
-            <v-text-field
-            v-model="alamat1"
-            label="Alamat 1"
-            ></v-text-field>
-
-            <v-text-field
-            v-model="alamat2"
-            label="Alamat 2"
-            ></v-text-field>
-
-            <v-select
-            item-text="nama"
-            item-value="code"
-            v-model="kota"
-            :items="items"
-            label="Kota"
-            ></v-select>
-
-            <v-text-field
-            v-model="kodePos"
-            label="Kode Pos"
-            ></v-text-field>
-
-            <v-text-field
-            v-model="noTelepon"
-            label="Telepon"
-            ></v-text-field>
-
-            <v-text-field
-            v-model="fax"
-            label="Fax."
-            ></v-text-field>
-
-            <v-text-field
-            v-model="email"
-            :rules="emailRules"
-            label="Email"
-            ></v-text-field>
-
-            <v-text-field
-            v-model="situs"
-            label="Situs"
-            ></v-text-field>
-
-            <v-text-field
-            v-model="pic"
-            label="PIC"
-            ></v-text-field>
-
-            <v-text-field
-            v-model="catatan"
-            label="Catatan"
-            ></v-text-field>
-            
-            <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            type="submit"
-            @click="validate();"
-            >
-            Submit
-            </v-btn>
-
-            <v-btn
-            color="error"
-            class="mr-4"
-            @click="reset"
-            >
-            Reset
-            </v-btn>
-        </v-form>
-
-        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
-          {{snackbar.message}}
-      </v-snackbar>
-
-    </v-card>
+    <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+      {{snackbar.message}}
+    </v-snackbar>
+  </v-card>
 </template>
 
 <script>

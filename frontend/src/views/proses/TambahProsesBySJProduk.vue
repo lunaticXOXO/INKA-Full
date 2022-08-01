@@ -2,7 +2,7 @@
 <v-app>
     <v-card
         class="mx-auto text-center mt-6"
-        max="2000">
+        width="1000">
         <br>
         <h1>Tambah Proses Baru Sesuai Strk.Jns.Prod</h1>
         <v-form
@@ -20,21 +20,21 @@
             required
             ></v-text-field>
 
-            <v-select
+            <v-autocomplete
             item-text="nama"
             item-value="id"
             v-model="prosesSesudahnya"
             :items="items"
             label="Proses Sesudahnya"
-            ></v-select>
+            ></v-autocomplete>
 
-            <v-select
+            <v-autocomplete
             item-text="namajenisproses"
             item-value="id"
             v-model="jenisProses"
             :items="items2"
             label="Jenis Proses"
-            ></v-select>
+            ></v-autocomplete>
 
             <v-text-field
             v-model="nama"
@@ -47,11 +47,11 @@
             type="number"
             ></v-text-field>
 
-            <v-select
+            <v-autocomplete
             v-model="satuanDurasi"
             :items="items3"
             label="Satuan Durasi"
-            ></v-select>
+            ></v-autocomplete>
 
             <v-btn
             :disabled="!valid"
@@ -86,13 +86,13 @@
         </v-snackbar>
     </v-card>
      <div class="d-flex">
-            <v-card class="ml-6 text-center mt-6" width="700">
+            <v-card class="ml-6 text-center mt-6 mb-10" width="700">
                 <v-data-table
                     :headers="column2"
                     :items = "sjproduk">
                 </v-data-table>
             </v-card>
-            <v-card class="ml-12 text-center mt-6" width="700">
+            <v-card class="ml-12 text-center mt-6 mb-10" width="700">
                 <v-data-table
                     :headers="column3"
                     :items = "sjproduk">
