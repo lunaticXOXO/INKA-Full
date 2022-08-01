@@ -1,7 +1,8 @@
 <template>
+<v-app>
     <v-card
         class="mx-auto text-center mt-6"
-        max-width="1000">
+        width="1000">
         <br>
         <h1>Tambah Rincian Proyek Baru</h1>
         <v-form
@@ -75,12 +76,41 @@
           {{snackbar.message}}
         </v-snackbar>
     </v-card>
+
+     <div class="d-flex ml-14">
+            <v-card class="ml-14 text-center mt-6" width="500">
+                <h3>Proyek {{this.$route.params.id}}</h3>
+                <v-data-table
+                    :headers = "headers2"
+                    :items = "proyekinrincian">
+                </v-data-table>
+            </v-card>
+      
+            <v-card class="ml-15 text-center mt-6" width = "400">
+                  <h3>Customer Proyek {{this.$route.params.id}}</h3>
+                <v-data-table
+                    :headers = "headers3"
+                    :items = "customer"
+                >
+                </v-data-table>
+            </v-card>
+        </div>
+
+    </v-app>
 </template>
 
 <script>
   export default {
     data: () => ({
       valid: true,
+        headers2 : [
+            {text : 'ID Proyek', value : 'IdProyek'},
+            {text : 'Nama Proyek', value : 'NamaProyek'}
+        ],
+        headers3 : [
+            {text : 'ID Customer', value : 'IdCustomer'},
+            {text : 'Nama Customer',value : 'NamaCustomer'},
+        ],
      snackbar: {
         show: false,
         message: null,
@@ -91,6 +121,8 @@
       jenisProduk : '',
       items : undefined,
       id: '',
+      proyekinrincian : [],
+      customer : [],
       idRules: [
         v => !!v || 'ID is required',
         v => (v && v.length <= 5 && v.length >= 1) || 'ID must be 1-4 characters',
@@ -98,7 +130,8 @@
     }),
 
     mounted(){
-      this.fetchJenisProduk()
+      this.fetchJenisProduk(),
+      this.fetchProyekInRProyek()
     },
 
     methods: {
@@ -134,7 +167,9 @@
               message : "Insert Rincian Proyek by Proyek Success",
               color : 'green',
               show : true
-          }}
+          }
+            location.replace('/listRProyekbyProyek/' + this.$route.params.id)
+          }
           else if(response.data.status == "gagal"){
               this.snackbar = {
               message : "Insert Rincian Proyek by Proyek Gagal, ID sudah tersedia",
@@ -151,7 +186,24 @@
           console.log(error)
         }
       },
+      async fetchProyekInRProyek(){
+            try{
+                
+                const axios = require('axios')
+                const res = await axios.get('/rproyek/show_proyek_inrproyek/' + this.$route.params.id)
+                if(res == null){
+                    console.log("Data kosong")
+                }else{
+                    this.proyekinrincian = res.data
+                    this.customer = res.data
+                    console.log(res,this.proyekinrincian)
+                }
 
+            }catch(error){
+                alert("Error")
+                console.log(error)
+            }
+        },
       async fetchJenisProduk(){
         try{
           const axios = require('axios')

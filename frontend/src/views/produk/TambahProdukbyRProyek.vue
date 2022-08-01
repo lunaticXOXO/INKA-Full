@@ -89,7 +89,9 @@
               message : "Insert Produk by R.Proyek Success",
               color : 'green',
               show : true
-          }}
+          }
+            location.replace('/listProdukbyRProyek/' + this.$route.params.id)
+          }
           else if(response.data.Status == "Gagal"){
               this.snackbar = {
               message : "Insert Produk by R.Proyek Gagal, ID Sudah Tersedia!",

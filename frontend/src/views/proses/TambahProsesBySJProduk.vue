@@ -1,7 +1,8 @@
 <template>
+<v-app>
     <v-card
         class="mx-auto text-center mt-6"
-        max-width="1000">
+        max="2000">
         <br>
         <h1>Tambah Proses Baru Sesuai Strk.Jns.Prod</h1>
         <v-form
@@ -84,6 +85,21 @@
             {{snackbar.message}}
         </v-snackbar>
     </v-card>
+     <div class="d-flex">
+            <v-card class="ml-6 text-center mt-6" width="700">
+                <v-data-table
+                    :headers="column2"
+                    :items = "sjproduk">
+                </v-data-table>
+            </v-card>
+            <v-card class="ml-12 text-center mt-6" width="700">
+                <v-data-table
+                    :headers="column3"
+                    :items = "sjproduk">
+                </v-data-table>
+            </v-card>
+        </div>
+</v-app>
 </template>
 
 <script>
@@ -110,12 +126,31 @@
             items2: undefined,
             items3: [
                 "Minutes"
-            ]
+            ],
+             column2 : [
+                {text : 'ID Nodal', value : 'idNodal'},
+                {text : 'Nama', value : 'nama'},
+                {text : 'Induk Nodal',value : 'indukNodal'},
+                {text : 'ID Jenis Produk',value : 'IdJenisProduk'},
+                {text : 'Nama Jenis Produk',value : 'NamaJenisProduk'},
+                {text : 'ID Rincian Proyek',value : 'IdRincian'},
+            ],
+            column3 : [
+                {text : 'ID Nodal', value : 'idNodal'},
+                {text : 'Jumlah',value : 'jumlah'},
+                {text : 'Due Date Rincian',value : 'dueDateRincian'},
+                {text : 'ID Produk',value : 'IdProduk'},
+                {text : 'Nama Proyek',value : 'namaProyek'},
+                {text : 'ID Customer',value : 'IdCustomer'},
+                {text : 'Nama Customer',value : 'namaCustomer'}
+            ],
+            sjproduk : [],
         }),
-
+     
         mounted(){
             this.fetchProses(),
-            this.fetchJenisProses()
+            this.fetchJenisProses(),
+            this.fetchSJProdukInProses()
         },
 
         methods: {
@@ -169,6 +204,21 @@
                     console.log(error)
                 }
             },
+             async fetchSJProdukInProses(){
+                try{
+                const res = await axios.get('/proses/get_sjproduct_inprocess/' + this.$route.params.id)
+                if(res.data == null){
+                    alert("Data Kosong")
+                }else{
+                    this.sjproduk = res.data
+
+                    console.log(res,this.sjproduk)
+                }
+            } catch(error){
+                alert("Error")
+                console.log(error)
+            }
+        },
 
             async InsertProses(){
                 try{

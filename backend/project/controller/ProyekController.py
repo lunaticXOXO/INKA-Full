@@ -62,7 +62,7 @@ def AddProyek():
 def GetCustomerInProyek(idCustomer):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.id AS 'IdCustomer',a.nama AS 'NamaCustomer' FROM gen_r_customer a JOIN prd_r_proyek b ON b.customerid = a.id WHERE a.id = '"+idCustomer+"' GROUP BY a.id"
+    query = "SELECT a.id AS 'IdCustomer',a.nama AS 'NamaCustomer' FROM gen_r_customer a WHERE a.id = '"+idCustomer+"'"
     cursor.execute(query)
 
     records = cursor.fetchall()

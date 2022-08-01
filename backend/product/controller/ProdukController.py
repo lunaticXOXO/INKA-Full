@@ -43,7 +43,7 @@ def GetRProyekInProduk(id_rproyek):
   conn = database.connector()
   cursor = conn.cursor()
 
-  query = "SELECT a.id AS 'IdRincian', a.jumlah AS 'jumlah', a.dueDate, b.id AS 'IdProyek', b.nama AS 'NamaProyek', c.id AS 'IdCustomer',c.nama AS 'NamaCustomer' FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON b.id = a.proyek JOIN gen_r_customer c ON c.id = b.customerid JOIN prd_d_produk d ON d.rincianProyek = a.id WHERE a.id =  '"+id_rproyek+"'"
+  query = "SELECT a.id AS 'IdRincian', a.jumlah AS 'jumlah', a.dueDate, b.id AS 'IdProyek', b.nama AS 'NamaProyek', c.id AS 'IdCustomer', c.nama AS 'NamaCustomer' FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON b.id = a.proyek JOIN gen_r_customer c ON c.id = b.customerid WHERE a.id = '"+id_rproyek+"'"
   cursor.execute(query)
   records = cursor.fetchall()
 
@@ -77,7 +77,7 @@ def AddProduk():
 def AddProdukbyRincian(id_rincian):
   conn = database.connector()
   cursor = conn.cursor()
-  query = "SELECT a.rincianProyek FROM prd_d_produk a JOIN prd_r_rincianproyek b ON a.rincianProyek = b.id WHERE a.rincianProyek = '"+id_rincian+"' LIMIT 1"
+  query = "SELECT a.id FROM prd_r_rincianproyek a WHERE a.id = '"+id_rincian+"'"
   cursor.execute(query)
   records = cursor.fetchall()
   temp = ""

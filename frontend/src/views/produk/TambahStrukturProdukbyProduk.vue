@@ -1,7 +1,8 @@
 <template>
+<v-app>
     <v-card
         class="mx-auto text-center mt-6"
-        max-width="1000">
+        width="1000">
         <br>
         <h1>Tambah Struktur Produk Baru</h1>
         <v-form
@@ -78,6 +79,16 @@
           {{snackbar.message}}
         </v-snackbar>
     </v-card>
+     <div class="d-flex">
+            <v-card class="mx-auto text-center mt-10" width="1300">
+                <h3>Jenis Produk {{this.$route.params.id}}</h3>
+                <v-data-table
+                    :headers = "column2"
+                    :items = "jproduk">
+                </v-data-table>
+            </v-card>
+        </div>
+  </v-app>
 </template>
 
 <script>
@@ -104,10 +115,25 @@
         'Unit',
         'Set'
       ],
+      column2 : [
+                {text : 'ID Jenis Produk',value : 'IdJenisProduk'},
+                {text : 'Nama Jenis Produk',value : 'NamaJenisProduk'},
+                {text : 'ID Produk',value : 'IdProduk'},
+                {text : 'Due Date Produk',value : 'dueDateProduk'},
+                {text : 'ID Rincian Proyek',value : 'IdRincian'},
+                {text : 'Jumlah',value : 'jumlah'},
+                {text : 'Due Date Rincian',value : 'dueDateRincian'},
+                {text : 'ID Proyek', value : 'IdProyek'},
+                {text : 'Nama Proyek',value : 'namaProyek'},
+                {text : 'ID Customer',value : 'IdCustomer'},
+                {text : 'Nama Customer',value : 'namaCustomer'}
+            ],
+            jproduk : [],
     }),
 
     mounted(){
-        this.fetchData()
+        this.fetchData(),
+        this.fetchJProductInSJProduk()
     },
 
     methods: {
@@ -161,7 +187,9 @@
               message : "Insert Struktur Produk by Jenis Produk Success",
               color : 'green',
               show : true
-          }}
+          }
+            location.replace('/listStrukturJenisProduk/' + this.$route.params.id)
+          }
           else if(response.data.status == "gagal"){
               this.snackbar = {
               message : "Insert Struktur Produk by Jenis Produk Gagal, ID Nodal Sudah Tersedia!",
@@ -178,6 +206,17 @@
           console.log(error)
         }
       },
+
+      async fetchJProductInSJProduk(){
+            const res = await axios.get('/sjproduct/get_jproduct_insjproduct/' + this.$route.params.id)
+            if(res.data == null){
+                console.log("Data Kosong")
+            }else{
+               this.jproduk = res.data
+               console.log(res,this.jproduk)
+            }
+        },
+
 
     }
   }
