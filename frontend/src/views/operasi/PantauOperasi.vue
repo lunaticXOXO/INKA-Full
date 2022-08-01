@@ -1,38 +1,20 @@
 <template>
     <v-app>
-        <div class="d-flex">
-            <h1 class="ma-4">Pantau Operasi</h1>
-            <v-card
-            class="text-center ml-4 pa-2"
-            max-width="500"
-            flat
-            >
-                <v-form
-                    ref="form"
-                    @submit.prevent="submitHandler"
-                    v-model="valid"
-                    lazy-validation
-                >
-                    <div class="d-flex">
-                        <v-text-field
-                            v-model="idProduk"
-                            class="mr-4 text-center"
-                            label="Input ID Produk"
-                            type="text"
-                            >
-                        </v-text-field>
-                        <v-btn
-                            color="blue"
-                            class="mr-4 mt-4"
-                            type="submit"
-                            @click="submitHandler()"
-                            >
-                            Submit
-                        </v-btn>
-                    </div>
-                </v-form>
-            </v-card>
-        </div>
+        <h1 class="ma-4">Pantau Operasi</h1>
+        <v-card class="mx-auto text-center" width="400">
+            <v-data-table
+                :headers = "headers"
+                :items = "items2">
+                <template v-slot:[`item.id`]="{ item }">
+                    <span>{{item.id}}</span>
+                </template>
+                <template v-slot:[`item.aksi`]="{ item }">
+                    <v-btn class="mx-1" x-small color="blue" @click="submitHandler(item)">
+                        <v-icon small dark>mdi-check</v-icon>
+                    </v-btn>
+                </template>
+            </v-data-table>
+        </v-card>
         <v-flex d-flex>
             <v-layout wrap>
                 <v-flex md4 v-for="item in items" :key="item.idOperasi">
@@ -70,24 +52,32 @@
                 </v-flex>
             </v-layout>
         </v-flex>
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+            {{snackbar.message}}
+        </v-snackbar>
     </v-app>
 </template>
 
 <script>
 export default {
     data: () => ({
-      valid: true,
-      items:[],
-      snackbar: {
-        show: false,
-        message: null,
-        color: null
-      },
-      idProduk: undefined
+        headers : [
+            {text : 'ID Produk',value : 'id'},
+            {text : 'Action', value: 'aksi'}
+        ],
+        valid: true,
+        items:[],
+        items2: [],
+        idProduk: undefined,
+        snackbar: {
+            show: false,
+            message: null,
+            color: null
+        },
     }),
 
     mounted(){
-        //this.fetchData()
+        this.fetchData2()
     },
 
     methods: {
@@ -97,9 +87,36 @@ export default {
                 const res = await axios.get(`/operasi/pantau_operasi/` + idProduk);
                 if(res.data == null || res.data == []){
                     alert("Tidak ada Operasi!")
+                    this.snackbar = {
+                        message : "Tidak Ada Operasi",
+                        color : 'red',
+                        show : true
+                    }
                 }else{
                     this.items = res.data;
+                    this.snackbar = {
+                        message : "Operasi Ditampilkan",
+                        color : 'green',
+                        show : true
+                    }
                     console.log(res,this.items)
+                }
+            } 
+            catch(error){
+                alert("Error" + error)
+                console.log(error)
+            }
+        },
+
+        async fetchData2(){
+            try{
+                const axios = require('axios');
+                const res = await axios.get(`/product/get_product`);
+                if(res.data == null || res.data == []){
+                    alert("Tidak ada Operasi!")
+                }else{
+                    this.items2 = res.data;
+                    console.log(res,this.items2)
                 }
             } 
             catch(error){
@@ -166,9 +183,9 @@ export default {
             }
         },
 
-        submitHandler() {
-            console.log(this.idProduk)
-            this.fetchData(this.idProduk)
+        submitHandler(item) {
+            console.log(item.id)
+            this.fetchData(item.id)
         },
     }
 }
