@@ -21,7 +21,7 @@
             ></v-text-field>
 
             <v-select
-            item-text="id"
+            item-text="nama"
             item-value="id"
             v-model="prosesSesudahnya"
             :items="items"
@@ -29,7 +29,7 @@
             ></v-select>
 
             <v-select
-            item-text="id"
+            item-text="namajenisproses"
             item-value="id"
             v-model="jenisProses"
             :items="items2"

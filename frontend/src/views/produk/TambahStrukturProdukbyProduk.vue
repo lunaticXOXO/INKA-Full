@@ -21,7 +21,7 @@
             ></v-text-field>
 
             <v-select
-            item-text="idNodal"
+            item-text="nama"
             item-value="idNodal"
             v-model="nodeParent"
             :items="items"

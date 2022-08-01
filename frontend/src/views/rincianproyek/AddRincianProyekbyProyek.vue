@@ -35,7 +35,7 @@
             
            <v-select 
             v-model="jenisProduk"
-            item-text="id"
+            item-text="nama"
             item-value="id"
             :items ="items" 
             label="Jenis Produk">
