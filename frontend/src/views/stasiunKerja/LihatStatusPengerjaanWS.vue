@@ -2,142 +2,43 @@
   <v-app>
     <div>
       <div id="ganttastic-wrapper">
-        <g-gantt-chart
-          :chart-start="chartStart"
-          :chart-end="chartEnd"
-          :grid="grid"
-          :hide-timeaxis="hideTimeaxis"
-          :push-on-overlap="pushOnOverlap"
-          :highlighted-hours="highlightedHours"
-          :row-label-width="`${rowLabelWidth}%`"
-          :row-height="rowHeight"
-          :theme="selectedTheme"
-          @contextmenu-bar="onContextmenuBar($event)"
-          @dragend-bar="stoppedDraggingBar($event)"
-        >
-          <g-gantt-row 
-            v-for="row in rowList"
-            :key="row.title"
-            :label="row.label"
-            :bars="row.barList"
-            :highlight-on-hover="highlightOnHover"
-            bar-start="myStart"
-            bar-end="myEnd"
+        <v-card class="mt-10 mx-10">
+          <g-gantt-chart
+            :chart-start="chartStart"
+            :chart-end="chartEnd"
+            :grid="grid"
+            :hide-timeaxis="hideTimeaxis"
+            :push-on-overlap="pushOnOverlap"
+            :highlighted-hours="highlightedHours"
+            :row-label-width="`${rowLabelWidth}%`"
+            :row-height="rowHeight"
+            :theme="selectedTheme"
+            @contextmenu-bar="onContextmenuBar($event)"
+            @dragend-bar="stoppedDraggingBar($event)"
           >
-            <template #bar-label="{bar}">
-              <img
-                v-if="bar.image"
-                :src="require(`@/assets/${bar.image}`)"
-                height="20"
-                width="20"
-                class="mr-1"
-              >
-              <span>{{bar.label}}</span>
-            </template>
-          </g-gantt-row>
-        </g-gantt-chart>
+            <g-gantt-row 
+              v-for="row in rowList"
+              :key="row.title"
+              :label="row.label"
+              :bars="row.barList"
+              :highlight-on-hover="highlightOnHover"
+              bar-start="myStart"
+              bar-end="myEnd"
+            >
+              <template #bar-label="{bar}">
+                <img
+                  v-if="bar.image"
+                  :src="require(`@/assets/${bar.image}`)"
+                  height="20"
+                  width="20"
+                  class="mr-1"
+                >
+                <span>{{bar.label}}</span>
+              </template>
+            </g-gantt-row>
+          </g-gantt-chart>
+        </v-card>
       </div>
-
-      <v-card class="pa-2" flat>
-        <v-row justify="end">
-          <v-btn
-            dark
-            color="primary"
-            small 
-            class="mr-4"
-            href="https://github.com/InfectoOne/vue-ganttastic-homepage/blob/master/src/views/Example.vue"
-            target="blank"
-          >
-            <span>View code</span>
-            <v-icon right>mdi-code-tags</v-icon>
-          </v-btn>
-        </v-row>
-      </v-card>
-
-      <v-card 
-        width="100%"
-        height="28vh"
-        color ="#dff2ea"
-        class="d-none d-md-flex"
-      >
-        <v-row class="pa-2">
-          <v-col cols="3">
-            <v-checkbox
-              v-model="hideTimeaxis"
-              label="Hide timeaxis"
-              hide-details
-            />
-          </v-col>
-
-          <v-col cols="3">
-            <v-checkbox 
-              v-model="pushOnOverlap"
-              label="Push on overlap"
-              hide-details
-            />
-          </v-col>
-
-          <v-col cols="3">
-            <v-checkbox 
-              v-model="grid"
-              label="Grid"
-              hide-details
-            />
-          </v-col>
-
-          <v-col cols="3">
-            <v-checkbox 
-              v-model="highlightOnHover"
-              label="Highlight on hover"
-              hide-details
-            />
-          </v-col>
-
-          <v-col cols="3">
-            <v-select 
-              v-model="selectedTheme"
-              label="Theme"
-              :items="themes"
-              outlined
-              dense
-              hide-details
-            />
-          </v-col>
-
-          <v-col cols="3">
-            <v-slider
-              v-model="rowHeight"
-              label="Row height"
-              :min="20"
-              :max="100"
-              hide-details
-            />
-          </v-col>
-
-          <v-col cols="3">
-            <v-slider 
-              v-model="rowLabelWidth"
-              label="Row label width"
-              :min="10"
-              :max="50"
-              hide-details
-            />
-          </v-col>
-
-          <v-col cols="3">
-            <v-select 
-              v-model="highlightedHours"
-              label="Highlighted hours"
-              :items="hours"
-              multiple
-              outlined
-              dense
-              hide-details
-            />
-          </v-col>
-        </v-row>
-      </v-card>
-
       <v-menu 
         v-model="showContextmenu"
         :position-x="contextmenuX"
@@ -164,14 +65,14 @@ export default {
 
   data(){
     return {
-      chartStart: "2020-03-02 00:00",
-      chartEnd: "2020-03-04 00:00",
+      chartStart: "2022-08-01 00:00",
+      chartEnd: "2022-08-04 00:00",
       pushOnOverlap: false,
       grid: true,
       rowHeight: 40,
-      rowLabelWidth: 15,
+      rowLabelWidth: 10,
       hideTimeaxis: false,
-      highlightOnHover: false,
+      highlightOnHover: true,
       hours: [...Array(24).keys()],
       highlightedHours: [10,12],
       showContextmenu: false,
@@ -179,27 +80,14 @@ export default {
       contextmenuX: 0,
       contextmenuY: 0,
       selectedTheme: "vue",
-      themes: [
-        "default",
-        "vue",
-        "dark",
-        "material-blue",
-        "creamy",
-        "slumber",
-        "sky",
-        "crimson",
-        "grove",
-        "fuchsia",
-        "flare"
-      ],
       rowList: [
         {
-          label: "Row #1",
+          label: "WS1",
           barList: [
             {
-              myStart: "2020-03-03 18:00",
-              myEnd: "2020-03-03 23:00",
-              label: "Immobile",
+              myStart: "2022-08-01 18:00",
+              myEnd: "2022-08-01 23:00",
+              label: "Assy. Smartpoint",
               ganttBarConfig: {color:"white", backgroundColor: "#404040", opacity: 0.5, immobile: true}
             },
             {
@@ -212,7 +100,7 @@ export default {
         },
 
         {
-          label: "Row #2",
+          label: "WS2",
           barList: [
             {
               myStart: "2020-03-02 09:00",
@@ -237,7 +125,7 @@ export default {
         },
 
         {
-          label: "Row #3",
+          label: "WS3",
           barList: [
             {
               myStart: "2020-03-02 09:00",
@@ -267,7 +155,7 @@ export default {
         },
 
         {
-          label: "Row #4",
+          label: "WS4",
           barList: [
             {
               myStart: "2020-03-03 06:30",
