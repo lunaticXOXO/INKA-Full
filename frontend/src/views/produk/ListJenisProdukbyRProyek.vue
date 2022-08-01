@@ -36,11 +36,6 @@
             <br>
             <h2>List Jenis Produk by Rincian Proyek</h2><h2>{{this.$route.params.id}}</h2>
             <br>
-            <router-link to="/jenisProduk">
-                <v-btn color="primary" class="d-flex ml-4 mb-6">
-                    Add Jenis Produk
-                </v-btn>
-            </router-link>
             <v-card
             class="mx-auto text-center"
             max-width="1000">
