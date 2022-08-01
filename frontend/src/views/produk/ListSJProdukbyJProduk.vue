@@ -1,47 +1,18 @@
 <template>
     <v-app>
         <div class="d-flex">
-            <v-card class="mx-auto text-center mt-10" width="300">
+            <v-card class="mx-auto text-center mt-10" width="1300">
                 <h3>Jenis Produk {{this.$route.params.id}}</h3>
                 <v-data-table
                     :headers = "column2"
                     :items = "jproduk">
                 </v-data-table>
             </v-card>
-            <v-card class="mx-auto text-center mt-10">
-                <v-data-table
-                    :headers = "column3"
-                    :items = "produk"
-                >
-                </v-data-table>
-            </v-card>
-            <v-card class="mx-auto text-center mt-10">
-                 <v-data-table
-                    :headers = "column4"
-                    :items = "rproyek"
-                >
-                </v-data-table>
-            </v-card>
-
-            <v-card class="mx-auto text-center mt-10">
-                <v-data-table
-                    :headers = "column5"
-                    :items = "proyek"
-                >
-                </v-data-table>
-            </v-card>
-
-              <v-card class="mx-auto text-center mt-10">
-                <v-data-table
-                    :headers = "column6"
-                    :items = "customer"
-                >
-                </v-data-table>
-            </v-card>
         </div>
+        <br>
         <v-card class="mx-auto text-center mt-6" width="1000">
             <br>
-            <h1>List Struktur Jenis Produk by Jenis Produk</h1><h1>{{this.$route.params.id}}</h1>
+            <h2>List Struktur Jenis Produk by Jenis Produk</h2><h2>{{this.$route.params.id}}</h2>
             <br>
             <router-link :to="{name : 'Tambah Struktur Jenis Produk by Jenis Produk',params : {id : `${this.$route.params.id}`}}">
                 <v-btn color="primary" class="d-flex ml-4 mb-6">
@@ -131,33 +102,18 @@ export default {
             column2 : [
                 {text : 'ID Jenis Produk',value : 'IdJenisProduk'},
                 {text : 'Nama Jenis Produk',value : 'NamaJenisProduk'},
-            ],
-
-            column3 : [
                 {text : 'ID Produk',value : 'IdProduk'},
                 {text : 'Due Date Produk',value : 'dueDateProduk'},
-            ],
-            column4 : [
                 {text : 'ID Rincian Proyek',value : 'IdRincian'},
                 {text : 'Jumlah',value : 'jumlah'},
                 {text : 'Due Date Rincian',value : 'dueDateRincian'},
-            ],
-            column5 : [
                 {text : 'ID Proyek', value : 'IdProyek'},
                 {text : 'Nama Proyek',value : 'namaProyek'},
-            ],
-            column6 : [
                 {text : 'ID Customer',value : 'IdCustomer'},
                 {text : 'Nama Customer',value : 'namaCustomer'}
             ],
-
             jproduk : [],
-            produk : [],
-            rproyek : [],
-            proyek : [],
-            customer : [],
             sjproduk : [],
-            indukNodal: [],
             editedIndex: -1,
             editedItem: {
                 idNodal: '',
@@ -195,7 +151,7 @@ export default {
             }
         },
         
-           async fetchJProductInSJProduk(){
+        async fetchJProductInSJProduk(){
             const res = await axios.get('/sjproduct/get_jproduct_insjproduct/' + this.$route.params.id)
             if(res.data == null){
                 console.log("Data Kosong")
@@ -208,6 +164,7 @@ export default {
                console.log(res,this.jproduk)
             }
         },
+
         async updateData(){
             if (this.editedIndex > -1) {
                 Object.assign(this.sjproduk[this.editedIndex], this.editedItem)
@@ -245,7 +202,6 @@ export default {
         
         selectSJProduct(sjproduk){
             console.log(sjproduk.id)
-            //open(`/listProcessbySJProduk/${sjproduk.idNodal}`)
         }
     }  
 }

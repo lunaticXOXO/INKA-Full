@@ -8,6 +8,8 @@
                     :items = "rincianproyek">
                 </v-data-table> 
             </v-card>
+        </div>
+        <div class="d-flex">
              <v-card class="mx-auto text-center mt-10" width="400">
                 <v-data-table
                     :headers = "column3"
@@ -15,14 +17,14 @@
                 >
                 </v-data-table>
             </v-card>
-            <v-card class="mx-auto text-center mt-10" width="250">
+            <v-card class="mx-auto text-center mt-10" width="400">
                 <v-data-table
                     :headers = "column4"
                     :items = "proyek"
                 >
                 </v-data-table>
             </v-card>
-            <v-card class="mx-auto text-center mt-10" width="250">
+            <v-card class="mx-auto text-center mt-10" width="400">
                     <v-data-table
                     :headers = "column5"
                     :items = "customer"
@@ -32,7 +34,7 @@
         </div>
         <v-card class="mx-auto text-center mt-10" width="1000">
             <br>
-            <h1>List Jenis Produk by Rincian Proyek</h1><h1>{{this.$route.params.id}}</h1>
+            <h2>List Jenis Produk by Rincian Proyek</h2><h2>{{this.$route.params.id}}</h2>
             <br>
             <router-link to="/jenisProduk">
                 <v-btn color="primary" class="d-flex ml-4 mb-6">
