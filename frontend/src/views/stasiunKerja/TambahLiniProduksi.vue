@@ -1,64 +1,65 @@
 <template>
-    <v-card
-      class="mx-auto text-center mt-6"
-      max-width="1000">
-      <br>
-      <h1>Tambah Lini Produksi</h1>
-      <br>
-      <v-form
-        class="pa-6"
-        ref="form"
-        @submit.prevent="submitHandler"
-        v-model="valid"
-        lazy-validation
-        >
-          <v-text-field
-          v-model="id"
-          :counter="3"
-          :rules="idRules"
-          label="ID"
-          required
-          ></v-text-field>
+  <v-card
+    class="mx-auto text-center mt-6"
+    max-width="1000">
+    <br>
+    <h1>Tambah Lini Produksi</h1>
+    <br>
+    <v-form
+      class="pa-6"
+      ref="form"
+      @submit.prevent="submitHandler"
+      v-model="valid"
+      lazy-validation>
 
-          <v-text-field
-          v-model="nama"
-          label="Nama"
-          ></v-text-field>
+      <v-text-field
+      v-model="id"
+      :counter="3"
+      :rules="idRules"
+      label="ID"
+      required
+      ></v-text-field>
 
-          <v-btn
-          :disabled="!valid"
-          color="success"
-          class="mr-4"
-          type="submit"
-          @click="validate()"
-          >
-          Submit
-          </v-btn>
+      <v-text-field
+      v-model="nama"
+      label="Nama"
+      ></v-text-field>
 
-          <v-btn
-          color="error"
-          class="mr-4"
-          @click="reset"
-          >
-          Reset
-          </v-btn>
-      </v-form>
-      <div v-if="snackBar == true">
-        <v-snackbar top color="green" v-model="snackBar">
-          Insert Lini Produksi Sukses!
-        </v-snackbar>
-      </div>
+      <v-btn
+      :disabled="!valid"
+      color="success"
+      class="mr-4"
+      type="submit"
+      @click="validate()"
+      >
+      Submit
+      </v-btn>
 
-      <div v-else-if="snackBar == false">
-        <v-snackbar top color="red" v-model="snackBar">
-          Insert Lini Produksi Gagal!
-        </v-snackbar>
-      </div>
-
-      <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
-        {{snackbar.message}}
+      <v-btn
+      color="error"
+      class="mr-4"
+      @click="reset"
+      >
+      Reset
+      </v-btn>
+    </v-form>
+    
+    <div v-if="snackBar == true">
+      <v-snackbar top color="green" v-model="snackBar">
+        Insert Lini Produksi Sukses!
       </v-snackbar>
-    </v-card>
+    </div>
+
+    <div v-else-if="snackBar == false">
+      <v-snackbar top color="red" v-model="snackBar">
+        Insert Lini Produksi Gagal!
+      </v-snackbar>
+    </div>
+
+    <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+      {{snackbar.message}}
+    </v-snackbar>
+  </v-card>
 </template>
 
 <script>

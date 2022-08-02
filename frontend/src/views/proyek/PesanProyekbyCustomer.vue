@@ -1,76 +1,75 @@
 <template>
-<v-app>
-    <v-card
+  <v-app>
+      <v-card
         class="mx-auto text-center mt-6"
         width="1000">
         <br>
         <h1>Pesan Proyek Baru</h1>
         <v-form
-            class="pa-6"
-            ref="form"
-            @submit.prevent="submitHandler"
-            v-model="valid"
-            lazy-validation
-        >
-            <v-text-field
-            v-model="id"
-            :counter="20"
-            :rules="idRules"
-            label="ID"
-            required
-            ></v-text-field>
-            
-            <v-text-field
-            v-model="nama"
-            label="Nama"
-            ></v-text-field>
+          class="pa-6"
+          ref="form"
+          @submit.prevent="submitHandler"
+          v-model="valid"
+          lazy-validation>
 
+          <v-text-field
+          v-model="id"
+          :counter="20"
+          :rules="idRules"
+          label="ID"
+          required
+          ></v-text-field>
+          
+          <v-text-field
+          v-model="nama"
+          label="Nama"
+          ></v-text-field>
 
-            <v-btn
-              :disabled="!valid"
-              color="success"
-              class="mr-4"
-              type="submit"
-              @click="validate()"
-            >
-            Submit
-            </v-btn>
-
-            <v-btn
-            color="error"
+          <v-btn
+            :disabled="!valid"
+            color="success"
             class="mr-4"
-            @click="reset"
-            >
-            Reset
-            </v-btn>
+            type="submit"
+            @click="validate()"
+          >
+          Submit
+          </v-btn>
+
+          <v-btn
+          color="error"
+          class="mr-4"
+          @click="reset"
+          >
+          Reset
+          </v-btn>
         </v-form>
         <div v-if="snackBar == true">
           <v-snackbar top color="green" v-model="snackBar">
-             Pesan Proyek Sesuai Customer Sukses!
+            Pesan Proyek Sesuai Customer Sukses!
           </v-snackbar>
         </div>
 
         <div v-else-if="snackBar == false">
           <v-snackbar top color="red" v-model="snackBar">
-             Pesan Proyek Sesuai Customer Gagal!
+            Pesan Proyek Sesuai Customer Gagal!
           </v-snackbar>
         </div>
 
         <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
           {{snackbar.message}}
         </v-snackbar>
-    </v-card>
-    <div class="d-flex">
+      </v-card>
+      
+      <div class="d-flex">
         <v-card class="mt-10 text-center mx-10">
-        <h3>Customer</h3> <h3>{{this.$route.params.id}}</h3>   
-        <v-data-table 
-        :headers="column2"
-        :items="customerinproject"
-        >
-        </v-data-table>
+          <h3>Customer {{this.$route.params.id}}</h3>   
+          <v-data-table 
+            :headers="column2"
+            :items="customerinproject">
+          </v-data-table>
         </v-card>
-    </div>
-</v-app>
+      </div>
+  </v-app>
 </template>
 
 <script>

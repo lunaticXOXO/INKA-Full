@@ -19,7 +19,8 @@
     "vue-ganttastic": "^0.9.34",
     "vue-head": "^2.2.0",
     "vue-router": "^3.5.1",
-    "vuetify": "^2.6.0"
+    "vuetify": "^2.6.0",
+    "vuetify-datetime-picker": "^2.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

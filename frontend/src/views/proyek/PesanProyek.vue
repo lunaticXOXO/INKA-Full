@@ -9,8 +9,8 @@
             ref="form"
             @submit.prevent="submitHandler"
             v-model="valid"
-            lazy-validation
-        >
+            lazy-validation>
+
             <v-text-field
             v-model="id"
             :counter="20"
@@ -19,14 +19,14 @@
             required
             ></v-text-field>
           
-            <v-select
+            <v-autocomplete
               item-text="nama"
               item-value="id"
               v-model="pelanggan"
               :items="customer"
               label="Pelanggan"
               required>
-            </v-select>
+            </v-autocomplete>
             
             <v-text-field
             v-model="nama"
