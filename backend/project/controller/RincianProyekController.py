@@ -25,7 +25,7 @@ def ShowRincianProyekByProyek(id_proyek):
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id,a.jumlah,a.dueDate,a.proyek,a.jenisProduk FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON a.proyek = b.id WHERE b.id = '"+id_proyek+"'"
+    query = "SELECT a.id,a.jumlah,a.dueDate,a.proyek,c.nama FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON a.proyek = b.id JOIN prd_r_jenisproduk c ON c.id = a.jenisProduk WHERE b.id = '"+id_proyek+"'"
     cursor.execute(query)
 
     row_headers = [x[0] for x in cursor.description]

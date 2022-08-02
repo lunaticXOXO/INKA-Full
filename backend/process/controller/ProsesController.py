@@ -39,7 +39,7 @@ def ShowJenisProses():
 def ShowSJProdukInProcess(id_sjproduk):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.idNodal,a.nama,a.indukNodal,c.id AS 'IdJenisProduk',c.nama AS 'NamaJenisProduk', d.id AS 'IdRincian',d.jumlah,d.dueDate AS 'dueDateRincian', e.id AS 'IdProduk',e.dueDate AS 'dueDateProduk', f.id AS 'IdProyek',f.nama AS 'namaProyek', g.id AS 'IdCustomer',g.nama AS 'namaCustomer' FROM prd_r_strukturjnsprd a JOIN prd_r_proses b ON b.nodalOutput = a.idNodal JOIN prd_r_jenisproduk c ON c.id = a.jnsProduk JOIN prd_r_rincianproyek d ON d.jenisProduk = c.id JOIN prd_d_produk e ON e.rincianProyek = d.id JOIN prd_r_proyek f ON f.id = d.proyek JOIN gen_r_customer g ON g.id = f.customerid WHERE a.idNodal = '"+id_sjproduk+"' GROUP BY a.idNodal"
+    query = "SELECT a.idNodal,a.nama,a.indukNodal, c.id AS 'IdJenisProduk', c.nama AS 'NamaJenisProduk', d.id AS 'IdRincian',d.jumlah,d.dueDate AS 'dueDateRincian', e.id AS 'IdProduk',e.dueDate AS 'dueDateProduk', f.id AS 'IdProyek',f.nama AS 'namaProyek', g.id AS 'IdCustomer',g.nama AS 'namaCustomer' FROM prd_r_strukturjnsprd a JOIN prd_r_jenisproduk c ON c.id = a.jnsProduk JOIN prd_r_rincianproyek d ON d.jenisProduk = c.id JOIN prd_d_produk e ON e.rincianProyek = d.id JOIN prd_r_proyek f ON f.id = d.proyek JOIN gen_r_customer g ON g.id = f.customerid WHERE a.idNodal = '"+id_sjproduk+"' GROUP BY a.idNodal"
 
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]

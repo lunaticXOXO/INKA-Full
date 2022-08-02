@@ -52,7 +52,7 @@
                         <span v-else>{{item.satuan}}</span>
                     </template>
                     <template v-slot:[`item.jnsProduk`]="{ item }">
-                        <v-select v-model="editedItem.jnsProduk" item-text="id" item-value="id" :items="jenisproduk" v-if="item.idNodal == editedItem.idNodal"></v-select>
+                        <v-select v-model="editedItem.jnsProduk" item-text="namaJProduk" item-value="id" :items="jenisproduk" v-if="item.idNodal == editedItem.idNodal"></v-select>
                         <span v-else>{{item.jnsProduk}}</span>
                     </template>
                     <template v-slot:[`item.aksi`]="{ item }">
@@ -96,7 +96,7 @@ export default {
                 {text : 'Nama', value : 'nama'},
                 {text : 'Jumlah', value : 'jumlah'},
                 {text : 'Satuan', value : 'satuan'},
-                {text : 'ID Jenis Produk', value : 'id'},
+                {text : 'Jenis Produk', value : 'namaJProduk'},
                 {text : 'Action', value : 'aksi'}
             ],
             column2 : [

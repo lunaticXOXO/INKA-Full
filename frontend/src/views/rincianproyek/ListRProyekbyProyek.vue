@@ -108,10 +108,10 @@ export default {
         return{
             headers : [
                 {text : 'ID Rincian Proyek',value : 'id'},
+                {text : 'Jenis Produk',value : 'nama'},
                 {text : 'Jumlah',value : 'jumlah'},
                 {text : 'Due Date',value : 'dueDate'},
                 {text : 'Proyek',value : 'proyek'},
-                {text : 'Jenis Produk',value : 'jenisProduk'},
                 {text : 'Action', value : 'aksi'}
             ],
             headers2 : [
