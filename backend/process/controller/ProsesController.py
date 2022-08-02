@@ -43,7 +43,7 @@ def ShowSJProdukInProcess(id_sjproduk):
 
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
-
+    
     records = cursor.fetchall()
     json_data = []
 

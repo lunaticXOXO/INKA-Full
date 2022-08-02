@@ -34,17 +34,25 @@
             <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
         </v-menu>
 
+        
         <v-menu>
         <template v-slot:activator="{ on, attrs }">
             <v-text-field :value="datetime" v-bind="attrs" v-on="on" label="Due Time" prepend-icon="mdi-clock"></v-text-field>
         </template>
             <v-time-picker width="300" v-model="datetime"></v-time-picker>
         </v-menu>
-
+        
+        
         <!--
+         <v-menu>
+        <template v-slot:activator="{ on, attrs }">
+            <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
         <v-datetime-picker label="Select Datetime" v-model="datetime"> 
         </v-datetime-picker>
+        </template>
+        </v-menu>
         -->
+        
 
         <v-autocomplete 
         v-model="jenisProduk"
@@ -130,6 +138,7 @@
       jumlah : '',
       datetime: null,
       dueDate : null,
+      gabunganTanggal : null,
       jenisProduk : '',
       items : undefined,
       id: '',
@@ -170,7 +179,7 @@
           const response = await axios.post('/rproyek/add_rproyek_byproyek/' + this.$route.params.id,{
             id : this.id,
             jumlah : this.jumlah,
-            dueDate : this.dueDate,
+            gabunganTanggal : this.dueDate + ' ' +this.datetime,
             jenisProduk : this.jenisProduk
           })
           console.log(response)
