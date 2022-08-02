@@ -87,93 +87,8 @@ export default {
             routeHome: "/",
             drawer: false,
             items: [
-                {
-                action: 'mdi-chart-ppf',
-                active: false,
-                items: [
-                    { title: 'Lihat Produk', icon: 'mdi-eye',route : '/listProduk'},
-                    { title: 'Lihat Jenis Produk',icon : 'mdi-eye',route : '/listJenisProduk'},
-                    { title: 'Lihat Struktur Tipe Produk',icon : 'mdi-eye',route : '/listStrukturJenisProduk'},
-                    { title: 'Tambah Jenis Produk',icon : 'mdi-plus',route : '/tambahJenisProduk'},
-                ],
-                title: 'Produk',
-                },
 
-                {
-                action: 'mdi-projector-screen-variant-outline',
-                active: false,
-                items: [
-                    { title: 'List Proyek', icon: 'mdi-filter-variant', route: '/lihatProyek'},
-                    { title: 'Proses Terakhir', icon: 'mdi-state-machine', route: '/prosesTerakhir'},
-                ],
-                title: 'Proyek',
-                },
-
-                {
-                action: 'mdi-book-open-outline',
-                active: false,
-                items: [
-                    { title: 'List Rincian Proyek', icon: 'mdi-filter-variant', route: '/listRincianProyek'},
-                ],
-                title: 'Rincian Proyek',
-                },
-                
-                {
-                action: 'mdi-book-open-outline',
-                active: false,
-                items: [
-                    { title: 'Lihat List Proses', icon: 'mdi-eye', route: '/listProcess'},
-                ],
-                title: 'Proses',
-                },
-                
-                {
-                action: 'mdi-view-list',
-                active: false,
-                items: [
-                    { title: 'List Operasi', icon: 'mdi-filter-variant', route: '/listOperasi'},
-                    { title: 'Pantau Operasi', icon: 'mdi-eye', route: '/pantauOperasi'},
-                ],
-                title: 'Operasi',
-                },
-
-                {
-                action: 'mdi-blur',
-                active: false,
-                items: [
-                    { title: 'Pemesanan Material', icon: 'mdi-reorder-vertical', route: '/pesanMaterial'},
-                    { title: 'Jenis Material', icon: 'mdi-sort-variant', route: '/jenisMaterial'},
-                    { title: 'List Tipe Material', icon : 'mdi-filter-variant', route : '/listMaterialType'},
-                    { title: 'List Stock Material', icon : 'mdi-filter-variant', route : '/listStockMaterial'},
-                    { title: 'Tambah Material Consumable', icon : 'mdi-plus', route : '/tambahMaterialConsumable'},
-                ],
-                title: 'Material',
-                },
-
-                {
-                action: 'mdi-garage-variant',
-                active: false,
-                items: [
-                    { title: 'Tambah Stasiun Kerja', icon: 'mdi-plus', route: '/tambahStasiunKerja'},
-                    { title: 'Tambah Lini Produksi', icon: 'mdi-plus', route: '/tambahLiniProduksi'},
-                    { title: 'Lihat Stasiun Kerja', icon: 'mdi-eye', route: '/lihatStasiunKerja'},
-                    { title: 'List Stasiun Kerja', icon: 'mdi-filter-variant', route: '/listStasiun'},
-                    { title: 'List Lini Produksi', icon: 'mdi-filter-variant', route: '/listLiniProduksi'},
-                ],
-                title: 'Stasiun Kerja',
-                },
-
-                {
-                action: 'mdi-account-multiple',
-                active: false,
-                items: [
-                    { title: 'List Pelanggan', icon: 'mdi-playlist-check', route: '/listPelanggan'},
-                    { title: 'Tambah Pelanggan', icon: 'mdi-account-plus', route: '/tambahPelanggan'},
-                ],
-                title: 'Pelanggan',
-                },
-
-                {
+                  {
                 action: 'mdi-database',
                 active: false,
                 items: [
@@ -212,6 +127,96 @@ export default {
                 title: 'Negara',
                 },
 
+                 {
+                action: 'mdi-account-multiple',
+                active: false,
+                items: [
+                    { title: 'List Pelanggan', icon: 'mdi-playlist-check', route: '/listPelanggan'},
+                    { title: 'Tambah Pelanggan', icon: 'mdi-account-plus', route: '/tambahPelanggan'},
+                ],
+                title: 'Pelanggan',
+                },
+                
+                {
+                    action: 'mdi-projector-screen-variant-outline',
+                    active: false,
+                    items: [
+                        { title: 'List Proyek', icon: 'mdi-filter-variant', route: '/lihatProyek'},
+                        { title: 'Proses Terakhir', icon: 'mdi-state-machine', route: '/prosesTerakhir'},
+                    ],
+                title: 'Proyek',
+                },
+
+                {
+                action: 'mdi-book-open-outline',
+                active: false,
+                items: [
+                    { title: 'List Rincian Proyek', icon: 'mdi-filter-variant', route: '/listRincianProyek'},
+                ],
+                title: 'Rincian Proyek',
+                },
+                {
+                action: 'mdi-chart-ppf',
+                active: false,
+                items: [
+                    { title: 'Lihat Produk', icon: 'mdi-eye',route : '/listProduk'},
+                    { title: 'Lihat Jenis Produk',icon : 'mdi-eye',route : '/listJenisProduk'},
+                    { title: 'Lihat Struktur Tipe Produk',icon : 'mdi-eye',route : '/listStrukturJenisProduk'},
+                    { title: 'Tambah Jenis Produk',icon : 'mdi-plus',route : '/tambahJenisProduk'},
+                ],
+                title: 'Produk',
+                },
+
+              
+     
+                {
+                action: 'mdi-book-open-outline',
+                active: false,
+                items: [
+                    { title: 'Lihat List Proses', icon: 'mdi-eye', route: '/listProcess'},
+                ],
+                title: 'Proses',
+                },
+                
+                {
+                action: 'mdi-garage-variant',
+                active: false,
+                items: [
+                    { title: 'Tambah Stasiun Kerja', icon: 'mdi-plus', route: '/tambahStasiunKerja'},
+                    { title: 'Tambah Lini Produksi', icon: 'mdi-plus', route: '/tambahLiniProduksi'},
+                    { title: 'Lihat Stasiun Kerja', icon: 'mdi-eye', route: '/lihatStasiunKerja'},
+                    { title: 'List Stasiun Kerja', icon: 'mdi-filter-variant', route: '/listStasiun'},
+                    { title: 'List Lini Produksi', icon: 'mdi-filter-variant', route: '/listLiniProduksi'},
+                ],
+                title: 'Stasiun Kerja',
+                },
+
+
+                {
+                action: 'mdi-view-list',
+                active: false,
+                items: [
+                    { title: 'Pantau Operasi', icon: 'mdi-eye', route: '/pantauOperasi'},
+                ],
+                title: 'Operasi',
+                },
+
+                {
+                action: 'mdi-blur',
+                active: false,
+                items: [
+                    { title: 'Pemesanan Material', icon: 'mdi-reorder-vertical', route: '/pesanMaterial'},
+                    { title: 'Jenis Material', icon: 'mdi-sort-variant', route: '/jenisMaterial'},
+                    { title: 'List Tipe Material', icon : 'mdi-filter-variant', route : '/listMaterialType'},
+                    { title: 'List Stock Material', icon : 'mdi-filter-variant', route : '/listStockMaterial'},
+                    { title: 'Tambah Material Consumable', icon : 'mdi-plus', route : '/tambahMaterialConsumable'},
+                ],
+                title: 'Material',
+                },
+
+               
+               
+              
                 {
                 action: 'mdi-code-brackets',
                 active: false,

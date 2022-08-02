@@ -91,14 +91,15 @@ def AddRincianProyekByProyek(id_proyek):
     print(temp)
     print(type(temp))
     cursor = conn.cursor()
-    query = "INSERT INTO prd_r_rincianproyek (id, jumlah,jenisProduk, proyek) VALUES (%s,%s,%s,'"+temp+"')"
+    query = "INSERT INTO prd_r_rincianproyek (id, jumlah,dueDate,jenisProduk, proyek) VALUES (%s,%s,%s,%s,'"+temp+"')"
     try:
         data = request.json
         id_rproyek = data["id"]
         jumlah = data["jumlah"]
+        dueDate = data["gabunganTanggal"]
         jenisProduk = data["jenisProduk"]
     
-        values = (id_rproyek,jumlah,jenisProduk)
+        values = (id_rproyek,jumlah,str(dueDate),jenisProduk)
         cursor.execute(query,values)
         conn.commit()
         hasil = {"status" : "berhasil"}
