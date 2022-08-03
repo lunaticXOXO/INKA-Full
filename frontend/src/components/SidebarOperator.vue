@@ -7,7 +7,7 @@
             </v-btn>
             <v-app-bar-title class="text-uppercase">
                 <span class="font-weight-light white--text">Smart</span>
-                <span class="white--text">Works 4.0 | Admin</span>
+                <span class="white--text">Works 4.0 | Operator</span>
             </v-app-bar-title>
             <v-img 
                 max-height="50"
@@ -36,13 +36,13 @@
                 class="mr-3 ml-6">
             </v-img>
             <span class="font-weight-light white--text ">Welcome,</span>
-            <span class="white--text mr-6">admin</span>
+            <span class="white--text mr-6">operator</span>
             <v-btn @click="logout()" color="grey">
                 <span>Sign Out</span>
                 <v-icon right>mdi-arrow-right</v-icon>
             </v-btn>
         </v-app-bar>
-    
+
         <v-navigation-drawer app v-model="drawer" color="#555555" width="22%">
             <v-list>
                 <v-list-group
@@ -88,101 +88,26 @@ export default {
             drawer: false,
             items: [
                 {
-                action: 'mdi-database',
+                action: 'mdi-view-list',
                 active: false,
                 items: [
-                    {title : 'List Pemasok',icon : 'mdi-playlist-check',route : '/listPemasok'},
-                    { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'},
+                    { title: 'Pantau Operasi', icon: 'mdi-eye', route: '/pantauOperasi'},
                 ],
-                title: 'Pemasok',
+                title: 'Operasi',
                 },
 
                 {
-                action: 'mdi-account-star',
+                action: 'mdi-garage-variant',
                 active: false,
                 items: [
-                    { title: 'Tambah Operator', icon: 'mdi-account-plus', route: '/tambahOperator'},
+                    { title: 'Tambah Stasiun Kerja', icon: 'mdi-plus', route: '/tambahStasiunKerja'},
+                    { title: 'Tambah Lini Produksi', icon: 'mdi-plus', route: '/tambahLiniProduksi'},
+                    { title: 'Lihat Stasiun Kerja', icon: 'mdi-eye', route: '/lihatStasiunKerja'},
+                    { title: 'List Stasiun Kerja', icon: 'mdi-filter-variant', route: '/listStasiun'},
+                    { title: 'List Lini Produksi', icon: 'mdi-filter-variant', route: '/listLiniProduksi'},
                 ],
-                title: 'Operator',
+                title: 'Stasiun Kerja',
                 },
-
-                {
-                action: 'mdi-city',
-                active: false,
-                items: [
-                    { title: 'Lihat Kota', icon: 'mdi-eye', route: '/listKota'},
-                    { title: 'Tambah Kota', icon: 'mdi-plus', route: '/tambahKota'},
-                ],
-                title: 'Kota',
-                },
-
-                {
-                action: 'mdi-flag',
-                active: false,
-                items: [
-                    { title: 'Lihat Negara', icon: 'mdi-eye', route: '/listNegara'},
-                    { title: 'Tambah Negara', icon: 'mdi-plus', route: '/tambahNegara'},
-                ],
-                title: 'Negara',
-                },
-
-                {
-                action: 'mdi-account-multiple',
-                active: false,
-                items: [
-                    { title: 'List Pelanggan', icon: 'mdi-playlist-check', route: '/listPelanggan'},
-                    { title: 'Tambah Pelanggan', icon: 'mdi-account-plus', route: '/tambahPelanggan'},
-                ],
-                title: 'Pelanggan',
-                },
-                
-                {
-                action: 'mdi-projector-screen-variant-outline',
-                active: false,
-                items: [
-                    { title: 'List Proyek', icon: 'mdi-filter-variant', route: '/lihatProyek'},
-                    { title: 'Proses Terakhir', icon: 'mdi-state-machine', route: '/prosesTerakhir'},
-                ],
-                title: 'Proyek',
-                },
-
-                {
-                action: 'mdi-book-open-outline',
-                active: false,
-                items: [
-                    { title: 'List Rincian Proyek', icon: 'mdi-filter-variant', route: '/listRincianProyek'},
-                ],
-                title: 'Rincian Proyek',
-                },
-
-                {
-                action: 'mdi-chart-ppf',
-                active: false,
-                items: [
-                    { title: 'Lihat Produk', icon: 'mdi-eye',route : '/listProduk'},
-                ],
-                title: 'Produk',
-                },
-            
-                {
-                action: 'mdi-code-brackets',
-                active: false,
-                items: [
-                    { title: 'Tanggal Libur', icon: 'mdi-calendar-range', route: '/tambahLibur'},
-                ],
-                title: 'Referensi',
-                },
-
-                /*{
-                action: 'mdi-book-variant',
-                active: false,
-                items: [
-                    { title: 'Form', icon: 'mdi-note-plus-outline', route: '/form'},
-                    { title: 'Graph', icon: 'mdi-chart-line-variant', route: '/graph'},
-                    { title: 'Table', icon: 'mdi-table', route: '/table'},
-                ],
-                title: 'Dummy',
-                },*/
             ],
         }
     },
