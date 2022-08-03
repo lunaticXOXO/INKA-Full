@@ -7,7 +7,7 @@
             </v-btn>
             <v-app-bar-title class="text-uppercase">
                 <span class="font-weight-light white--text">Smart</span>
-                <span class="white--text">Works 4.0 | Admin</span>
+                <span class="white--text">Works 4.0 | User Umum</span>
             </v-app-bar-title>
             <v-img 
                 max-height="50"
@@ -36,13 +36,13 @@
                 class="mr-3 ml-6">
             </v-img>
             <span class="font-weight-light white--text ">Welcome,</span>
-            <span class="white--text mr-6">admin</span>
+            <span class="white--text mr-6">user umum</span>
             <v-btn @click="logout()" color="grey">
                 <span>Sign Out</span>
                 <v-icon right>mdi-arrow-right</v-icon>
             </v-btn>
         </v-app-bar>
-    
+
         <v-navigation-drawer app v-model="drawer" color="#555555" width="22%">
             <v-list>
                 <v-list-group
@@ -88,74 +88,33 @@ export default {
             drawer: false,
             items: [
                 {
-                action: 'mdi-database',
+                action: 'mdi-city',
                 active: false,
                 items: [
-                    {title : 'List Pemasok',icon : 'mdi-playlist-check',route : '/listPemasok'},
-                    { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'},
+                    { title: 'Lihat Kota', icon: 'mdi-eye', route: '/listKota'},
+                    { title: 'Tambah Kota', icon: 'mdi-plus', route: '/tambahKota'},
                 ],
-                title: 'Pemasok',
+                title: 'Kota',
                 },
 
                 {
-                action: 'mdi-account-star',
+                action: 'mdi-flag',
                 active: false,
                 items: [
-                    { title: 'Tambah Operator', icon: 'mdi-account-plus', route: '/tambahOperator'},
+                    { title: 'Lihat Negara', icon: 'mdi-eye', route: '/listNegara'},
+                    { title: 'Tambah Negara', icon: 'mdi-plus', route: '/tambahNegara'},
                 ],
-                title: 'Operator',
+                title: 'Negara',
                 },
 
                 {
-                action: 'mdi-account-multiple',
+                action: 'mdi-code-brackets',
                 active: false,
                 items: [
-                    { title: 'List Pelanggan', icon: 'mdi-playlist-check', route: '/listPelanggan'},
-                    { title: 'Tambah Pelanggan', icon: 'mdi-account-plus', route: '/tambahPelanggan'},
+                    { title: 'Tanggal Libur', icon: 'mdi-calendar-range', route: '/tambahLibur'},
                 ],
-                title: 'Pelanggan',
+                title: 'Referensi',
                 },
-                
-                {
-                action: 'mdi-projector-screen-variant-outline',
-                active: false,
-                items: [
-                    { title: 'List Proyek', icon: 'mdi-filter-variant', route: '/lihatProyek'},
-                    { title: 'Proses Terakhir', icon: 'mdi-state-machine', route: '/prosesTerakhir'},
-                ],
-                title: 'Proyek',
-                },
-
-                {
-                action: 'mdi-book-open-outline',
-                active: false,
-                items: [
-                    { title: 'List Rincian Proyek', icon: 'mdi-filter-variant', route: '/listRincianProyek'},
-                ],
-                title: 'Rincian Proyek',
-                },
-
-                {
-                action: 'mdi-chart-ppf',
-                active: false,
-                items: [
-                    { title: 'Lihat Produk', icon: 'mdi-eye',route : '/listProduk'},
-                ],
-                title: 'Produk',
-                },
-            
-                
-
-                /*{
-                action: 'mdi-book-variant',
-                active: false,
-                items: [
-                    { title: 'Form', icon: 'mdi-note-plus-outline', route: '/form'},
-                    { title: 'Graph', icon: 'mdi-chart-line-variant', route: '/graph'},
-                    { title: 'Table', icon: 'mdi-table', route: '/table'},
-                ],
-                title: 'Dummy',
-                },*/
             ],
         }
     },

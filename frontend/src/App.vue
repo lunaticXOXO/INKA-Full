@@ -16,7 +16,7 @@
       <SidebarManager />
     </div>
     <div v-else-if="idRole == 5">
-      <SidebarOperator />
+      <SidebarUmum />
     </div>
     
     <v-main>
@@ -31,8 +31,8 @@ import SidebarAdmin from './components/SidebarAdmin.vue'
 import SidebarManager from './components/SidebarManager.vue'
 import SidebarEngineer from './components/SidebarEngineer.vue'
 import SidebarMaterial from './components/SidebarMaterial.vue'
-import SidebarOperator from "./components/SidebarOperator.vue"
 import Login from "./services/Login.js"
+import SidebarUmum from './components/SidebarUmum.vue'
 
 export default {
   name: 'App',
@@ -42,7 +42,7 @@ export default {
     SidebarManager,
     SidebarEngineer,
     SidebarMaterial,
-    SidebarOperator
+    SidebarUmum
 },
 
   mounted() {
