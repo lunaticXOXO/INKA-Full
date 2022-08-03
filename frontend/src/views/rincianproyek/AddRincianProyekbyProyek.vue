@@ -27,21 +27,21 @@
         type="number"
         ></v-text-field>
 
+        <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
+
         <v-menu>
         <template v-slot:activator="{ on, attrs }">
             <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
         </template>
-            <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
         </v-menu>
 
-        
+        <v-time-picker width="300" v-model="datetime"></v-time-picker>
+
         <v-menu>
         <template v-slot:activator="{ on, attrs }">
             <v-text-field :value="datetime" v-bind="attrs" v-on="on" label="Due Time" prepend-icon="mdi-clock"></v-text-field>
         </template>
-            <v-time-picker width="300" v-model="datetime"></v-time-picker>
         </v-menu>
-        
         
         <!--
          <v-menu>
@@ -53,7 +53,6 @@
         </v-menu>
         -->
         
-
         <v-autocomplete 
         v-model="jenisProduk"
         item-text="nama"
