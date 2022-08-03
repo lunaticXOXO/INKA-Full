@@ -50,6 +50,10 @@ import TambahStrukturProdukbyProduk from '../views/produk/TambahStrukturProdukby
 import PesanProyekbyCustomer from '../views/proyek/PesanProyekbyCustomer.vue'
 import TambahStasiunKerjabyProcess from '../views/stasiunKerja/TambahStasiunKerjabyProcess.vue'
 import TambahProsesBySJProduk from '../views/proses/TambahProsesBySJProduk.vue'
+import ListKlasifikasiMaterial from '../views/material/ListKlasifikasiMaterial.vue'
+import AddKlasifikasiMaterial from '../views/material/AddKlasifikasiMaterial.vue'
+import ListGrupMaterial from '../views/material/ListGrupMaterial.vue'
+import AddGrupMaterial from '../views/material/AddGrupMaterial.vue'
 import ListMaterialType from '../views/material/ListMaterialType.vue'
 import ListStockMaterial from '../views/material/ListStockMaterial.vue'
 import TambahMaterialKosong from '../views/material/TambahMaterialKosong.vue'
@@ -538,7 +542,39 @@ const routes = [
       title : "Tambah Material Kosong - PT.INKA"
     }
   },
+  {
+    path : '/listKlasifikasiMaterial',
+    name : 'List Klasifikasi Material',
+    component : ListKlasifikasiMaterial,
+    meta : {
+      title : "List Klasifikasi Material - PT.INKA"
+    },
+  },
+  {
+     path : '/addKlasifikasiMaterial',
+     name : 'Tambah Klasifikasi Material',
+     component : AddKlasifikasiMaterial,
+     meta : {
+         title : "Tambah Klasifikasi Material"
+     }
+  },
 
+  {
+    path : '/addGrupMaterial',
+    name : 'Add Grup Material',
+    component : AddGrupMaterial,
+    meta : {
+      title : "Tambah Grup Material"
+    },
+  },
+  {
+    path : '/listGrupMaterial',
+    name : 'List Grup Material',
+    component : ListGrupMaterial,
+    meta : {
+      title : "List Grup Material - PT.INKA"
+    },
+  },
   {
     path : '/tambahMaterialConsumable',
     name : 'Tambah Material Consumable',

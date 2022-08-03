@@ -87,19 +87,61 @@ export default {
             routeHome: "/",
             drawer: false,
             items: [
+
+                {
+                   action: 'mdi-svg',
+                    active: false,
+                    items: [
+                        {title : 'List Klasifikasi Material',icon : 'mdi-playlist-check',route : '/listKlasifikasiMaterial'},
+                        {title : 'Add Klasifikasi Material',icon : 'mdi-plus',route : '/addKlasifikasiMaterial'}
+                    ],  
+                    title: 'Klasifikasi Material',  
+                },
+            
+                 {
+                   action: 'mdi-book',
+                    active: false,
+                    items: [
+                       {title : 'List Grup Material',icon : 'mdi-playlist-check',route : '/listGrupMaterial'},
+                       {title : 'Add Grup Material',icon : 'mdi-plus',route : '/addGrupMaterial'}
+                    ],
+                    title: 'Group Material',  
+                },
+
+
+                {
+                    action: 'mdi-account-star',
+                    active: false,
+                    items: [
+                        {title : 'List Pemasok',icon : 'mdi-playlist-check',route : '/listPemasok'},
+                        { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'},
+                    ],
+                    title: 'Pemasok',
+                },
+
+                {
+                    action: 'mdi-wrench',
+                    active: false,
+                    items: [
+                        { title: 'Tambah Tipe Material', icon: 'mdi-sort-variant', route: '/jenisMaterial'},
+                        { title: 'List Tipe Material', icon : 'mdi-filter-variant', route : '/listMaterialType'},
+                    ],
+                    title: 'Jenis Material',
+                },
                 {
                 action: 'mdi-blur',
                 active: false,
                 items: [
                     { title: 'Pemesanan Material', icon: 'mdi-reorder-vertical', route: '/pesanMaterial'},
-                    { title: 'Jenis Material', icon: 'mdi-sort-variant', route: '/jenisMaterial'},
-                    { title: 'List Tipe Material', icon : 'mdi-filter-variant', route : '/listMaterialType'},
                     { title: 'List Stock Material', icon : 'mdi-filter-variant', route : '/listStockMaterial'},
                     { title: 'Tambah Material Consumable', icon : 'mdi-plus', route : '/tambahMaterialConsumable'},
                 ],
-                title: 'Material',
+                title: 'Stock Material',
                 },
+
+             
             ],
+
         }
     },
 
