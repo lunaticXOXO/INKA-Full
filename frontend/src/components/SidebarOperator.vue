@@ -87,27 +87,7 @@ export default {
             routeHome: "/",
             drawer: false,
             items: [
-                {
-                action: 'mdi-view-list',
-                active: false,
-                items: [
-                    { title: 'Pantau Operasi', icon: 'mdi-eye', route: '/pantauOperasi'},
-                ],
-                title: 'Operasi',
-                },
-
-                {
-                action: 'mdi-garage-variant',
-                active: false,
-                items: [
-                    { title: 'Tambah Stasiun Kerja', icon: 'mdi-plus', route: '/tambahStasiunKerja'},
-                    { title: 'Tambah Lini Produksi', icon: 'mdi-plus', route: '/tambahLiniProduksi'},
-                    { title: 'Lihat Stasiun Kerja', icon: 'mdi-eye', route: '/lihatStasiunKerja'},
-                    { title: 'List Stasiun Kerja', icon: 'mdi-filter-variant', route: '/listStasiun'},
-                    { title: 'List Lini Produksi', icon: 'mdi-filter-variant', route: '/listLiniProduksi'},
-                ],
-                title: 'Stasiun Kerja',
-                },
+              
             ],
         }
     },

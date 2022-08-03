@@ -518,6 +518,11 @@ def show_product_inoperasi(id_product):
     hasil = ShowProductInOperasi(id_product)
     return hasil
 
+@app.route('/operasi/show_product_inpantauoperasi',methods = ['GET'])
+def show_product_inpantauoperasi():
+    hasil = ShowProductInPantauOperasi()
+    return hasil
+
 #USERS 
 @app.route('/register',methods = ['POST'])
 def register():

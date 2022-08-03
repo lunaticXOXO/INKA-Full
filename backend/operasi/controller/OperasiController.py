@@ -139,6 +139,20 @@ def GenerateOperation(idProduk):
     return hasil
 
 
+def ShowProductInPantauOperasi():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id , b.id AS 'IdRincian', b.jumlah, c.nama AS 'NamaProyek', d.nama AS 'NamaCustomer' FROM prd_d_produk a JOIN prd_r_rincianproyek b ON a.rincianProyek = b.id JOIN prd_r_proyek c ON c.id = b.proyek JOIN gen_r_customer d ON d.id = c.customerid"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
 def StartOperation(idOperasi):
     conn = database.connector()
     cursor = conn.cursor()

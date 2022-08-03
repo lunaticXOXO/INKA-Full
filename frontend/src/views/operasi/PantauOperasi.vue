@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <h1 class="ma-4">Pantau Operasi</h1>
-        <v-card class="mx-auto text-center" width="400">
+        <v-card class="mx-auto text-center" width="600">
             <v-data-table
                 :headers = "headers"
                 :items = "items2">
@@ -63,6 +63,10 @@ export default {
     data: () => ({
         headers : [
             {text : 'ID Produk',value : 'id'},
+            {text : 'ID Rincian Proyek',value : 'IdRincian'},
+            {text : 'Jumlah',value : 'jumlah'},
+            {text : 'Nama Proyek',value : 'NamaProyek'},
+            {text : 'Nama Customer',value : 'NamaCustomer'},
             {text : 'Action', value: 'aksi'}
         ],
         valid: true,
@@ -85,13 +89,13 @@ export default {
             try{
                 const axios = require('axios');
                 const res = await axios.get(`/operasi/pantau_operasi/` + idProduk);
-                if(res.data == null || res.data == []){
-                    alert("Tidak ada Operasi!")
+                if(res.data.length == 0 ){
                     this.snackbar = {
                         message : "Tidak Ada Operasi",
                         color : 'red',
                         show : true
-                    }
+                }
+
                 }else{
                     this.items = res.data;
                     this.snackbar = {
@@ -111,7 +115,7 @@ export default {
         async fetchData2(){
             try{
                 const axios = require('axios');
-                const res = await axios.get(`/product/get_product`);
+                const res = await axios.get(`/operasi/show_product_inpantauoperasi`);
                 if(res.data == null || res.data == []){
                     alert("Tidak ada Operasi!")
                 }else{
