@@ -4,6 +4,8 @@ import db.db_handler as db
 import numpy as np
 from datetime import timedelta
 from flask import request,make_response,jsonify
+import random
+import string
 
 def GetAllRincianProyek():
     conn = db.connector()
@@ -101,6 +103,19 @@ def AddRincianProyekByProyek(id_proyek):
     
         values = (id_rproyek,jumlah,str(dueDate),jenisProduk)
         cursor.execute(query,values)
+        query2 = "SELECT id FROM prd_r_rincianproyek a WHERE a.id = '"+id_rproyek+"'"
+        
+        id_rproyek_new = ""
+        cursor.execute(query2)
+        records = cursor.fetchall()
+        for data in records:
+            id_rproyek_new = data[0]
+        print(id_rproyek_new)
+        query3 = "INSERT INTO prd_d_produk(id,rincianProyek)VALUES(%s,%s)"
+        N = 9
+        id_product = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
+        values2 = (id_product,id_rproyek_new)
+        cursor.execute(query3,values2)
         conn.commit()
         hasil = {"status" : "berhasil"}
         print("Rincian Proyek Baru Ditambahkan!")
