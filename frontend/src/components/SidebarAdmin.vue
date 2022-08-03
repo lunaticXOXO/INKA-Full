@@ -87,15 +87,7 @@ export default {
             routeHome: "/",
             drawer: false,
             items: [
-                {
-                action: 'mdi-database',
-                active: false,
-                items: [
-                    {title : 'List Pemasok',icon : 'mdi-playlist-check',route : '/listPemasok'},
-                    { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'},
-                ],
-                title: 'Pemasok',
-                },
+              
 
                 {
                 action: 'mdi-account-star',
