@@ -145,7 +145,7 @@
       customer : [],
       idRules: [
         v => !!v || 'ID is required',
-        v => (v && v.length <= 5 && v.length >= 1) || 'ID must be 1-4 characters',
+        v => (v && v.length <= 10 && v.length >= 1) || 'ID must be 1-10 characters',
       ],
     }),
 

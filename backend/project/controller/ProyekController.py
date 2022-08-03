@@ -76,7 +76,7 @@ def GetCustomerInProyek(idCustomer):
 def AddProyekbyCustomer(id_customer):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.id FROM gen_r_customer a JOIN prd_r_proyek b ON b.customerid = a.id WHERE a.id = '"+id_customer+"' LIMIT 1"
+    query = "SELECT a.id FROM gen_r_customer a WHERE a.id = '"+id_customer+"'"
     cursor.execute(query)
     records = cursor.fetchall()
     temp = ""

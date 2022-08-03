@@ -42,7 +42,7 @@ def ShowSJProdukbyIDJenisProduk(id):
     conn = database.connector()
     cursor = conn.cursor()
     
-    query = "SELECT a.id,b.idNodal,b.nama,b.indukNodal,b.jumlah,b.satuan FROM prd_r_jenisproduk a JOIN prd_r_strukturjnsprd b ON b.jnsProduk = a.id WHERE a.id = '"+id+"' "
+    query = "SELECT a.nama AS 'namaJProduk',b.idNodal,b.nama,b.indukNodal,b.jumlah,b.satuan FROM prd_r_jenisproduk a JOIN prd_r_strukturjnsprd b ON b.jnsProduk = a.id WHERE a.id = '"+id+"' "
    
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
@@ -74,16 +74,17 @@ def AddSJProdukByJenisProduk(id_jproduk):
     conn = database.connector()
     cursor = conn.cursor()
     
-    query = "SELECT a.id FROM prd_r_jenisproduk a JOIN prd_r_strukturjnsprd b ON b.jnsProduk = a.id WHERE a.id = '"+id_jproduk+"' LIMIT 1"
+    query = "SELECT a.id FROM prd_r_jenisproduk a WHERE a.id = '"+id_jproduk+"' LIMIT 1"
 
     cursor.execute(query)
     records = cursor.fetchall()
-   
+    temp = ""
     for index in records:
         temp = index[0]
     
     print(temp)
     print(type(temp))
+    #1,2,3,27
     query = "INSERT INTO prd_r_strukturjnsprd(idNodal,indukNodal,jnsProduk,nama,jumlah,satuan)VALUES(%s,%s,'"+temp+"',%s,%s,%s)"
     try :
         data = request.json
@@ -92,10 +93,17 @@ def AddSJProdukByJenisProduk(id_jproduk):
         nama = data["nama"]
         jumlah = data["jumlah"]
         satuan = data["satuan"]
-        values = (idNodal,indukNodal,nama,jumlah,satuan)
-        cursor.execute(query,values)
-        conn.commit()
-        hasil = {"status":"berhasil"}
+        if indukNodal == "":
+            indukNodal = ""
+            values = (idNodal,indukNodal,nama,jumlah,satuan)
+            cursor.execute(query,values)
+            conn.commit()
+            hasil = {"status":"berhasil"}
+        else:
+            values = (idNodal,indukNodal,nama,jumlah,satuan)
+            cursor.execute(query,values)
+            conn.commit()
+            hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error" + str(e))
         hasil = {"status" : "gagal"}

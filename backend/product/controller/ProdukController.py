@@ -83,6 +83,7 @@ def AddProdukbyRincian(id_rincian):
   temp = ""
   for data in records:
     temp = data[0]
+    print(temp)
   
   query = "INSERT INTO prd_d_produk(id,rincianProyek)VALUES(%s,%s)"
   try:

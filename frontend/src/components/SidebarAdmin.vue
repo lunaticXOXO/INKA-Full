@@ -160,25 +160,23 @@ export default {
                 active: false,
                 items: [
                     { title: 'Lihat Produk', icon: 'mdi-eye',route : '/listProduk'},
-                    { title: 'Lihat Jenis Produk',icon : 'mdi-eye',route : '/listJenisProduk'},
-                    { title: 'Lihat Struktur Tipe Produk',icon : 'mdi-eye',route : '/listStrukturJenisProduk'},
-                    { title: 'Tambah Jenis Produk',icon : 'mdi-plus',route : '/tambahJenisProduk'},
+                    //{ title: 'Lihat Jenis Produk',icon : 'mdi-eye',route : '/listJenisProduk'},
+                    //{ title: 'Lihat Struktur Tipe Produk',icon : 'mdi-eye',route : '/listStrukturJenisProduk'},
+                    //{ title: 'Tambah Jenis Produk',icon : 'mdi-plus',route : '/tambahJenisProduk'},
                 ],
                 title: 'Produk',
                 },
 
-              
-     
-                {
+                /*{
                 action: 'mdi-book-open-outline',
                 active: false,
                 items: [
                     { title: 'Lihat List Proses', icon: 'mdi-eye', route: '/listProcess'},
                 ],
                 title: 'Proses',
-                },
+                },*/
                 
-                {
+                /*{
                 action: 'mdi-garage-variant',
                 active: false,
                 items: [
@@ -189,19 +187,19 @@ export default {
                     { title: 'List Lini Produksi', icon: 'mdi-filter-variant', route: '/listLiniProduksi'},
                 ],
                 title: 'Stasiun Kerja',
-                },
+                },*/
 
 
-                {
+                /*{
                 action: 'mdi-view-list',
                 active: false,
                 items: [
                     { title: 'Pantau Operasi', icon: 'mdi-eye', route: '/pantauOperasi'},
                 ],
                 title: 'Operasi',
-                },
+                },*/
 
-                {
+                /*{
                 action: 'mdi-blur',
                 active: false,
                 items: [
@@ -212,11 +210,9 @@ export default {
                     { title: 'Tambah Material Consumable', icon : 'mdi-plus', route : '/tambahMaterialConsumable'},
                 ],
                 title: 'Material',
-                },
+                },*/
 
-               
-               
-              
+            
                 {
                 action: 'mdi-code-brackets',
                 active: false,
@@ -226,7 +222,7 @@ export default {
                 title: 'Referensi',
                 },
 
-                {
+                /*{
                 action: 'mdi-book-variant',
                 active: false,
                 items: [
@@ -235,7 +231,7 @@ export default {
                     { title: 'Table', icon: 'mdi-table', route: '/table'},
                 ],
                 title: 'Dummy',
-                },
+                },*/
             ],
         }
     },

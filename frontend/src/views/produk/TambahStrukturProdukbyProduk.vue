@@ -106,9 +106,9 @@
       idNode: '',
       idNodeRules: [
         v => !!v || 'ID Nodal is required',
-        v => (v && v.length <= 7 && v.length >= 7) || 'ID Nodal must be 7 characters',
+        v => (v && v.length <= 5 && v.length >= 5) || 'ID Nodal must be 7 characters',
       ],
-      nodeParent: undefined,
+      nodeParent: '',
       unit: undefined,
       items: [],
       items2: [

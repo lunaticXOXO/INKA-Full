@@ -59,13 +59,7 @@
                             <v-icon small dark>mdi-check</v-icon>
                         </v-btn>
                         </router-link>
-
-                        <router-link :to="{name : 'List Jenis Produk by RProyek',params:{'id':`${item.id}`}}">
-                        <v-btn class="mx-1" x-small color="brown" @click="selectRinciantoJProduct(item)">
-                            <v-icon small dark>mdi-check</v-icon>
-                        </v-btn>
-                        </router-link>
-
+                        
                         <v-btn class="mx-1" x-small color="green" @click="editRincian(item)">
                             <v-icon small dark>mdi-pencil</v-icon>
                         </v-btn>

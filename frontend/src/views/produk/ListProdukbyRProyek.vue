@@ -27,11 +27,6 @@
             <br>
             <h1>Product List By Rincian Proyek</h1><h1>{{this.$route.params.id}}</h1>
             <br>
-            <router-link :to="{name : 'Tambah Produk by RProyek',params : {id : `${this.$route.params.id}`}}">
-                <v-btn color="primary" class="d-flex ml-4 mb-6">
-                    Add Produk
-                </v-btn>
-            </router-link>   
             <v-data-table 
                 :headers="column"
                 :items="produk"
