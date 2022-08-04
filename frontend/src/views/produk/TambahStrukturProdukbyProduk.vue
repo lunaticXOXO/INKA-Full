@@ -28,6 +28,14 @@
           label="Induk Nodal"
           ></v-autocomplete>
 
+          <v-autocomplete
+          item-text="nama"
+          item-value="code"
+          v-model="materialTypeCode"
+          :items="items3"
+          label="Material Type"
+          ></v-autocomplete>
+
           <v-text-field
           v-model="nama"
           label="Nama"
@@ -104,6 +112,7 @@
       nama: '',
       jumlah: '',
       idNode: '',
+      materialTypeCode : '',
       idNodeRules: [
         v => !!v || 'ID Nodal is required',
         v => (v && v.length <= 5 && v.length >= 5) || 'ID Nodal must be 7 characters',
@@ -115,6 +124,7 @@
         'Unit',
         'Set'
       ],
+      items3 : [],      
       column2 : [
                 {text : 'ID Jenis Produk',value : 'IdJenisProduk'},
                 {text : 'Nama Jenis Produk',value : 'NamaJenisProduk'},
@@ -133,7 +143,8 @@
 
     mounted(){
         this.fetchData(),
-        this.fetchJProductInSJProduk()
+        this.fetchJProductInSJProduk(),
+        this.fetchMaterialTypeName()
     },
 
     methods: {
@@ -170,11 +181,31 @@
         }
       },
 
+       /*async fetchDataMaterial(){
+        try{
+            const res = await axios.get(`/material/get_type`);
+            if(res.data == null){
+                console.log("Material Kosong")
+            }else{
+                this.items3 = res.data
+                console.log(res,this.items3)
+            }
+        } 
+        catch(error){
+            alert("Error" + error)
+            console.log(error)
+        }
+      },*/
+
+
+
+
       async InsertStrukturProdukbyJProduk(){
         try{
           const response = await axios.post('/sjproduct/insert_sjproduct_by_jproduct/' + this.$route.params.id,
             { idNodal: this.idNode,
               indukNodal: this.nodeParent,
+              materialTypeCode : this.materialTypeCode,
               jnsProduk: this.$route.params.id,
               nama: this.nama,
               jumlah: this.jumlah,
@@ -206,6 +237,16 @@
           console.log(error)
         }
       },
+
+        async fetchMaterialTypeName(){
+            const res = await axios.get('/material/get_type_name')
+            if(res.data == null){
+                console.log('Data kosong')
+            }else{
+               this.items3 = res.data
+               console.log(res,this.items3)
+            }
+        },
 
       async fetchJProductInSJProduk(){
         const res = await axios.get('/sjproduct/get_jproduct_insjproduct/' + this.$route.params.id)

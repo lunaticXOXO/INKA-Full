@@ -392,6 +392,11 @@ def get_type():
     hasil = GetMaterialType()
     return hasil
 
+@app.route('/material/get_type_name',methods = ['GET'])
+def get_type_name():
+    hasil = GetMaterialTypeDescription()
+    return hasil
+
 @app.route('/material/add_type',methods = ['POST'])
 def add_type():
     hasil = AddMaterialType()

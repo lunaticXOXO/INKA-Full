@@ -42,7 +42,7 @@ def ShowSJProdukbyIDJenisProduk(id):
     conn = database.connector()
     cursor = conn.cursor()
     
-    query = "SELECT a.nama AS 'namaJProduk',b.idNodal,b.nama,b.indukNodal,b.jumlah,b.satuan FROM prd_r_jenisproduk a JOIN prd_r_strukturjnsprd b ON b.jnsProduk = a.id WHERE a.id = '"+id+"' "
+    query = "SELECT a.nama AS 'namaJProduk', b.idNodal,b.nama,b.indukNodal,b.jumlah,b.satuan, c.code,c.nama AS 'namaMaterialType' FROM prd_r_jenisproduk a JOIN prd_r_strukturjnsprd b ON b.jnsProduk = a.id JOIN mat_r_materialtype c ON c.code = b.materialTypeCode WHERE a.id = '"+id+"'"
    
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
@@ -85,22 +85,23 @@ def AddSJProdukByJenisProduk(id_jproduk):
     print(temp)
     print(type(temp))
     #1,2,3,27
-    query = "INSERT INTO prd_r_strukturjnsprd(idNodal,indukNodal,jnsProduk,nama,jumlah,satuan)VALUES(%s,%s,'"+temp+"',%s,%s,%s)"
+    query = "INSERT INTO prd_r_strukturjnsprd(idNodal,indukNodal,jnsProduk,materialTypeCode,nama,jumlah,satuan)VALUES(%s,%s,'"+temp+"',%s,%s,%s,%s)"
     try :
         data = request.json
         idNodal = data["idNodal"]
         indukNodal = data["indukNodal"]
+        materialTypeCode = data["materialTypeCode"]
         nama = data["nama"]
         jumlah = data["jumlah"]
         satuan = data["satuan"]
         if indukNodal == "":
             indukNodal = ""
-            values = (idNodal,indukNodal,nama,jumlah,satuan)
+            values = (idNodal,indukNodal,materialTypeCode,nama,jumlah,satuan)
             cursor.execute(query,values)
             conn.commit()
             hasil = {"status":"berhasil"}
         else:
-            values = (idNodal,indukNodal,nama,jumlah,satuan)
+            values = (idNodal,indukNodal,materialTypeCode,nama,jumlah,satuan)
             cursor.execute(query,values)
             conn.commit()
             hasil = {"status" : "berhasil"}

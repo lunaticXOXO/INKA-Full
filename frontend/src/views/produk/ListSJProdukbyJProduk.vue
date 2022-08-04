@@ -10,7 +10,7 @@
             </v-card>
         </div>
         <br>
-        <v-card class="mx-auto text-center mt-6" width="1000">
+        <v-card class="mx-auto text-center mt-6" width="1200">
             <br>
             <h2>List Struktur Jenis Produk by Jenis Produk</h2><h2>{{this.$route.params.id}}</h2>
             <br>
@@ -97,6 +97,7 @@ export default {
                 {text : 'Jumlah', value : 'jumlah'},
                 {text : 'Satuan', value : 'satuan'},
                 {text : 'Jenis Produk', value : 'namaJProduk'},
+                {text : 'Material Type', value : 'namaMaterialType'},
                 {text : 'Action', value : 'aksi'}
             ],
             column2 : [
@@ -114,6 +115,7 @@ export default {
             ],
             jproduk : [],
             sjproduk : [],
+            material : [],
             editedIndex: -1,
             editedItem: {
                 idNodal: '',
@@ -150,7 +152,9 @@ export default {
                 console.log(res,this.sjproduk)
             }
         },
-        
+
+       
+     
         async fetchJProductInSJProduk(){
             const res = await axios.get('/sjproduct/get_jproduct_insjproduct/' + this.$route.params.id)
             if(res.data == null){

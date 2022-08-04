@@ -89,10 +89,10 @@
         v => !!v || 'Kode is required',
         v => (v && v.length <= 12 && v.length >= 3) || 'Kode must be 3-12 characters',
       ],
-      classificationCode: '',
-      groupCode: '',
-      list_klasifikasi: undefined,
-      list_grup: undefined,
+      classificationCode: null,
+      groupCode: null,
+      list_klasifikasi: '',
+      list_grup: '',
       snackbar : {
         show : false,
         color : null,
@@ -165,7 +165,10 @@
               message : "Tambah Jenis Material Berhasil",
               color : "green"
             }
+
+            location.replace('/listMaterialType')
           }
+
           else if(res.data.status == "gagal"){
             this.snackbar = {
               show : true,
