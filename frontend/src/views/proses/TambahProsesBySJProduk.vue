@@ -1,7 +1,5 @@
 <template>
 <v-app>
- 
-        
     <v-card
         class="mx-auto text-center mt-6"
         width="1000">
@@ -12,12 +10,11 @@
             ref="form"
             @submit.prevent="submitHandler"
             v-model="valid"
-            lazy-validation
-        >
+            lazy-validation>
 
             <v-autocomplete
-            item-text="namajenisproses"
             item-value="id"
+            :item-text="items2 => items2.id +' - '+ items2.namajenisproses"
             v-model="jenisProses"
             :items="items2"
             label="Jenis Proses"
@@ -38,8 +35,6 @@
             :items="items"
             label="Proses Sesudahnya"
             ></v-autocomplete>
-
-          
 
             <v-text-field
             v-model="nama"
@@ -86,8 +81,8 @@
             </v-snackbar>
         </div>
 
-        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
-            {{snackbar.message}}
+        <v-snackbar :color="snackBar.color" v-model="snackBar.show" top>
+            {{snackBar.message}}
         </v-snackbar>
     </v-card>
         <div class="d-flex">
@@ -112,7 +107,7 @@
     export default {
         data: () => ({
             valid: true,
-            snackbar: {
+            snackBar: {
                 show: false,
                 message: null,
                 color: null
@@ -207,7 +202,7 @@
                     }else{
                         this.items2 = res.data
                         this.jenisproses = res.data
-                        console.log(res,this.items4)
+                        console.log(res,this.items2)
                     }
                 }
                 catch(error){
@@ -215,21 +210,21 @@
                     console.log(error)
                 }
             },
-             async fetchSJProdukInProses(){
+            
+            async fetchSJProdukInProses(){
                 try{
-                const res = await axios.get('/proses/get_sjproduct_inprocess/' + this.$route.params.id)
-                if(res.data == null){
-                    alert("Data Kosong")
-                }else{
-                    this.sjproduk = res.data
-
-                    console.log(res,this.sjproduk)
+                    const res = await axios.get('/proses/get_sjproduct_inprocess/' + this.$route.params.id)
+                    if(res.data == null){
+                        alert("Data Kosong")
+                    }else{
+                        this.sjproduk = res.data
+                        console.log(res,this.sjproduk)
+                    }
+                }catch(error){
+                    alert("Error")
+                    console.log(error)
                 }
-            } catch(error){
-                alert("Error")
-                console.log(error)
-            }
-        },
+            },
 
             async InsertProses(){
                 try{
