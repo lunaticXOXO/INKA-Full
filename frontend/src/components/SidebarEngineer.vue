@@ -115,19 +115,19 @@ export default {
                     { title: 'Tambah Stasiun Kerja', icon: 'mdi-plus', route: '/tambahStasiunKerja'},
                     { title: 'Lihat Stasiun Kerja', icon: 'mdi-eye', route: '/lihatStasiunKerja'},
                     { title: 'List Stasiun Kerja', icon: 'mdi-filter-variant', route: '/listStasiun'},
-                     { title: 'Tambah Lini Produksi', icon: 'mdi-plus', route: '/tambahLiniProduksi'},
+                    { title: 'Tambah Lini Produksi', icon: 'mdi-plus', route: '/tambahLiniProduksi'},
                     { title: 'List Lini Produksi', icon: 'mdi-filter-variant', route: '/listLiniProduksi'},
                 ],
                 title: 'Lantai Produksi',
                 },
 
                 {
-                    action: 'mdi-view-list',
-                    active: false,
-                    items: [
-                        { title: 'Pantau Operasi', icon: 'mdi-eye', route: '/pantauOperasi'},
-                    ],
-                    title: 'Operasi',
+                action: 'mdi-view-list',
+                active: false,
+                items: [
+                    { title: 'Pantau Operasi', icon: 'mdi-eye', route: '/pantauOperasi'},
+                ],
+                title: 'Operasi',
                 },
             ],
         }
