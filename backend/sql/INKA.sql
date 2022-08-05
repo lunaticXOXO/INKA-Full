@@ -92,9 +92,17 @@ CREATE TABLE prd_d_operasi(
 
 
 CREATE TABLE prd_r_jenisproses(
-    IDJnsProses varchar(9) PRIMARY KEY NOT NULL,
+    id varchar(9) PRIMARY KEY NOT NULL,
     namaJenisProses varchar(25) NOT NULL
 );
+
+CREATE TABLE prd_r_prosesgroup(
+    id varchar(2) PRIMARY KEY NOT NULL,
+    nama varchar(30) NOT NULL
+
+);
+
+
 
 CREATE TABLE gen_r_country(
     code varchar(3) PRIMARY KEY NOT NULL,

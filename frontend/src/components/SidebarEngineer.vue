@@ -102,6 +102,8 @@ export default {
                 action: 'mdi-book-open-outline',
                 active: false,
                 items: [
+                     {title : 'Lihat List Jenis Proses',icon : 'mdi-eye',route : '/listJenisProses'},
+                     {title : 'Tambah Jenis Proses',icon : 'mdi-plus',route : 'addJenisProses'},
                     { title: 'Lihat List Proses', icon: 'mdi-eye', route: '/listProcess'},
                 ],
                 title: 'Proses',

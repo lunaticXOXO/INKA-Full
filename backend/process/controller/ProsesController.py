@@ -1,4 +1,5 @@
 from math import ceil
+from signal import valid_signals
 from tkinter.messagebox import QUESTION
 import pandas as pd
 import product.controller.JenisProdukController as jpcont
@@ -32,9 +33,64 @@ def ShowJenisProses():
     json_data = []
     for data in records:
        json_data.append(dict(zip(row_headers,data)))
-    #conn.commit()
-
+  
     return make_response(jsonify(json_data),200)
+
+
+def InsertJenisProses():
+    conn = database.connector()
+    cursor = conn.cursor()
+    try:
+        data = request.json
+        query = "INSERT INTO prd_r_jenisproses(id,namajenisproses)VALUES(%s,%s)"
+        id = data["id"]
+        namajenisproses = data["namajenisproses"]
+        values = (id,namajenisproses)
+        cursor.execute(query,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
+
+def ShowGroupProses():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM prd_r_prosesgroup"
+
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data))
+
+
+def InsertGroupProses():
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "INSERT prd_r_prosesgroup(id,nama)VALUES(%s,%s)"
+    try:
+        data = request.json
+        id = data["id"]
+        nama = data["nama"]
+        values = (id,nama)
+        cursor.execute(query,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
+
 
 def ShowSJProdukInProcess(id_sjproduk):
     conn = database.connector()
