@@ -112,7 +112,7 @@ def GenerateOperation(idProduk):
             counter = 1
             cek = False
             while cek == False:
-                if counter %2 != 0 and cek == False:
+                if counter % 2 != 0 and cek == False:
                     scehdulledFinishWorkDate = scehdulledFinishWorkDate + datetime.timedelta(minutes = durasi)
                     values1 = (id_operation,schedulledstartWorkDate,scehdulledFinishWorkDate,proses,stasiunKerja,idProduk)
                     cursor.execute(query,values1)

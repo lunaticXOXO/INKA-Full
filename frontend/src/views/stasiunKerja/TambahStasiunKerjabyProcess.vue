@@ -118,13 +118,17 @@
           }
           );
           console.log(response)
-          if(response.data.status == "berhasil"){
+          if(response.data.Status == "Berhasil"){
              this.snackbar = {
               message : "Insert Stasiun Kerja Success",
               color : 'green',
               show : true
-          }}
-          else if(response.data.status == "gagal"){
+          }
+
+            location.replace('/listStasiunKerjabyProcess/' + this.$route.params.id)
+          
+          }
+          else if(response.data.Status == "Gagal"){
               this.snackbar = {
               message : "Insert Stasiun Kerja Gagal, Kode sudah tersedia",
               color : 'red',
