@@ -50,6 +50,8 @@ import TambahStrukturProdukbyProduk from '../views/produk/TambahStrukturProdukby
 import PesanProyekbyCustomer from '../views/proyek/PesanProyekbyCustomer.vue'
 import TambahStasiunKerjabyProcess from '../views/stasiunKerja/TambahStasiunKerjabyProcess.vue'
 import TambahProsesBySJProduk from '../views/proses/TambahProsesBySJProduk.vue'
+import ListJenisProses from '../views/proses/ListJenisProses.vue'
+import TambahJenisProses from '../views/proses/TambahJenisProses.vue'
 import ListKlasifikasiMaterial from '../views/material/ListKlasifikasiMaterial.vue'
 import AddKlasifikasiMaterial from '../views/material/AddKlasifikasiMaterial.vue'
 import ListGrupMaterial from '../views/material/ListGrupMaterial.vue'
@@ -417,6 +419,8 @@ const routes = [
     }
   },
 
+  
+
   {
     path : '/listProcessbySJProduk/:id',
     name : 'List Process by Struktur Jenis Produk',
@@ -425,6 +429,28 @@ const routes = [
       title : "List Process by Struktur Jenis Produk - PT.INKA"
     }
   },
+
+    {
+
+      path : '/listJenisProses',
+      name : 'List Jenis Proses',
+      component : ListJenisProses,
+      meta : {
+         title : "List Jenis Proses - PT.INKA"
+      }
+       
+    },
+
+    {
+
+      path : '/addJenisProses',
+      name : 'Tambah Jenis Proses',
+      component : TambahJenisProses,
+      meta : {
+        title : "Tambah Jenis Proses - PT.INKA"
+      }
+
+    },
 
   {
     path : '/listLiniProduksi',

@@ -5,7 +5,7 @@
         <br>
         <h1>List Material Type</h1>
         <br>
-        <router-link to="/tambahMaterialType">
+        <router-link to="/jenisMaterial">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
                 Add Material Type
             </v-btn>
@@ -53,14 +53,14 @@
                 </span>
             </template>
 
-           <template v-slot:[`item.classificationCode`]="{ item }">
-              <v-select v-model="editedItem.classificationCode" item-text="descriptions" item-value="code" :items="classifications" v-if="item.code == editedItem.code"></v-select>
-              <span v-else>{{item.classificationCode}}</span>
+           <template v-slot:[`item.descriptionClassification`]="{ item }">
+              <v-select v-model="editedItem.descriptionClassification" item-text="descriptions" item-value="code" :items="classifications" v-if="item.code == editedItem.code"></v-select>
+              <span v-else>{{item.descriptionClassification}}</span>
           </template>
 
-            <template v-slot:[`item.groupCode`]="{ item }">
-              <v-select v-model="editedItem.groupCode" item-text="descriptions" item-value="code" :items="groups" v-if="item.code == editedItem.code"></v-select>
-              <span v-else>{{item.groupCode}}</span>
+            <template v-slot:[`item.descriptionGroup`]="{ item }">
+              <v-select v-model="editedItem.descriptionGroup" item-text="descriptions" item-value="code" :items="groups" v-if="item.code == editedItem.code"></v-select>
+              <span v-else>{{item.descriptionGroup}}</span>
           </template>
            
             <template v-slot:[`item.aksi`]="{ item }">
@@ -100,8 +100,8 @@
             {text : 'Nama',         value : 'nama'},
             {text : 'Is Available', value : 'isAvailable'},
             {text : 'Is Assy',      value : 'isAssy'},        
-            {text : 'Classification Code', value : 'classificationCode'},
-            {text : 'Group Code',        value : 'groupCode'},
+            {text : 'Classification', value : 'descriptionClassification'},
+            {text : 'Group Material',        value : 'descriptionGroup'},
             {text : 'Action', value : 'aksi'}
         ],
         classifications : [],

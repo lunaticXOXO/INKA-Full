@@ -1,5 +1,7 @@
 <template>
 <v-app>
+ 
+        
     <v-card
         class="mx-auto text-center mt-6"
         width="1000">
@@ -12,6 +14,15 @@
             v-model="valid"
             lazy-validation
         >
+
+            <v-autocomplete
+            item-text="namajenisproses"
+            item-value="id"
+            v-model="jenisProses"
+            :items="items2"
+            label="Jenis Proses"
+            ></v-autocomplete>
+
             <v-text-field
             v-model="id"
             :counter="9"
@@ -28,13 +39,7 @@
             label="Proses Sesudahnya"
             ></v-autocomplete>
 
-            <v-autocomplete
-            item-text="namajenisproses"
-            item-value="id"
-            v-model="jenisProses"
-            :items="items2"
-            label="Jenis Proses"
-            ></v-autocomplete>
+          
 
             <v-text-field
             v-model="nama"
@@ -85,8 +90,8 @@
             {{snackbar.message}}
         </v-snackbar>
     </v-card>
-     <div class="d-flex">
-            <v-card class="ml-6 text-center mt-6 mb-10" width="700">
+        <div class="d-flex">
+           <v-card class="ml-6 text-center mt-6 mb-10" width="700">
                 <v-data-table
                     :headers="column2"
                     :items = "sjproduk">
@@ -120,7 +125,7 @@
             nama: '',
             durasi: '',
             satuanDurasi: '',
-            prosesSesudahnya: undefined,
+            prosesSesudahnya: '',
             jenisProses: undefined,
             items: undefined,
             items2: undefined,
@@ -144,7 +149,12 @@
                 {text : 'ID Customer',value : 'IdCustomer'},
                 {text : 'Nama Customer',value : 'namaCustomer'}
             ],
+            column4 : [
+                {text : 'IdJenis',value : 'id'},
+                {text : 'Nama Jenis Proses',value : 'namajenisproses' }
+            ],
             sjproduk : [],
+            jenisproses : [],
         }),
      
         mounted(){
@@ -196,7 +206,8 @@
                         alert("Jenis Proses Kosong")
                     }else{
                         this.items2 = res.data
-                        console.log(res,this.items3)
+                        this.jenisproses = res.data
+                        console.log(res,this.items4)
                     }
                 }
                 catch(error){
@@ -238,7 +249,9 @@
                         message : "Insert Proses by SJProduk Success",
                         color : 'green',
                         show : true
-                    }}
+                    }
+                        location.replace('/listProcessbySJProduk/' + this.$route.params.id)
+                    }
                     else if(response.data.status == "gagal"){
                         this.snackbar = {
                         message : "Insert Proses by SJProduk Gagal, ID Sudah Tersedia!",

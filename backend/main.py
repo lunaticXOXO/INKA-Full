@@ -312,6 +312,18 @@ def get_jenisproses():
     hasil = ShowJenisProses()
     return hasil
 
+@app.route('/jenis_proses/insert_jenisproses',methods = ['POST'])
+def insert_jenisproses():
+    hasil = InsertJenisProses()
+    return hasil
+
+#GROUP PROSES
+@app.route('/group_proses/insert_groupproses',methods = ['POST'])
+def insert_groupproses():
+    hasil = InsertGroupProses()
+    return hasil
+
+
 #LINI PRODUKSI
 @app.route('/liniproduksi/show_liniproduksi',methods = ['GET'])
 def show_liniproduksi():
@@ -390,6 +402,11 @@ def update_group(code):
 @app.route('/material/get_type',methods = ['GET'])
 def get_type():
     hasil = GetMaterialType()
+    return hasil
+
+@app.route('/material/get_type_name',methods = ['GET'])
+def get_type_name():
+    hasil = GetMaterialTypeDescription()
     return hasil
 
 @app.route('/material/add_type',methods = ['POST'])
