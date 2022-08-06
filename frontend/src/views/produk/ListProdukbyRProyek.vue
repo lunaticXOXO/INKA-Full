@@ -1,21 +1,21 @@
 <template>
     <v-app>
         <div class="d-flex">
-            <v-card class="mx-auto text-center mt-6" width="600">
+            <v-card class="mx-auto text-center mt-6" width="500">
                 <h3>Rincian Proyek {{this.$route.params.id}}</h3>
                 <v-data-table
                     :headers= "column2"
                     :items= "rproyek">
                 </v-data-table>
             </v-card>
-            <v-card class="mx-auto text-center mt-6" width="400">
+            <v-card class="mx-auto text-center mt-6" width="350">
                 <v-data-table
                     :headers="column3"
                     :items = "proyek"
                 >
                 </v-data-table>
             </v-card>
-            <v-card class="mx-auto text-center mt-6" width="400">
+            <v-card class="mx-auto text-center mt-6" width="350">
                 <v-data-table
                     :headers="column4"
                     :items="customer"
