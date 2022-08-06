@@ -131,7 +131,7 @@ def HitungDueDateProduk(id_produk):
     tanggalDibuatNew = tanggalDibuat
     tanggalDueDateNew = tanggalDueDate
     
-    hitungHariBisnis = np.busday_count(tanggalDibuatNew,tanggalDueDateNew)
+    hitungHariBisnis = np.busday_count(tanggalDibuatNew.date(),tanggalDueDateNew.date())
     
     print("Tanggal Proyek Dipesan :", tanggalDibuatNew.strftime("%A"), tanggalDibuatNew)
     print("Due Date Proyek :", tanggalDueDateNew.strftime("%A"), tanggalDueDateNew)

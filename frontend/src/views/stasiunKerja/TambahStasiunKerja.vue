@@ -20,13 +20,10 @@
         required
         ></v-text-field>
 
-        <v-autocomplete
-        item-text="nama"
-        item-value="nama"
+        <v-text-field
         v-model="nama"
-        :items="items"
         label="Jenis Stasiun Kerja"
-        ></v-autocomplete>
+        ></v-text-field>
 
         <v-autocomplete
         item-text="id"
@@ -160,7 +157,11 @@
               message : "Insert Stasiun Kerja Success",
               color : 'green',
               show : true
-          }}
+          }
+
+            location.replace('/listStasiun')
+          
+          }
           else if(response.data.status == "gagal"){
               this.snackbar = {
               message : "Insert Stasiun Kerja Gagal, Kode sudah tersedia",
