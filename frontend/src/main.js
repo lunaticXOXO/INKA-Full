@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 Vue.use(VueAxios, Axios, DatetimePicker);
 
 Vue.prototype.$axios = Axios;
-Vue.axios.defaults.baseURL = `http://localhost:8181`;
+Vue.axios.defaults.baseURL = `https://backend-inka-deploy.herokuapp.com/`;
 
 new Vue({
   router,

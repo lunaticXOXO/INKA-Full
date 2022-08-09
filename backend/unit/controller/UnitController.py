@@ -1,7 +1,6 @@
 from flask import request,make_response,jsonify
 import db.db_handler as database
 
-
 def GetUnit():
     conn = database.connector()
     cursor = conn.cursor()

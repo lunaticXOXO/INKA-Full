@@ -102,8 +102,6 @@ CREATE TABLE prd_r_prosesgroup(
 
 );
 
-
-
 CREATE TABLE gen_r_country(
     code varchar(3) PRIMARY KEY NOT NULL,
     nama varchar(30) NOT NULL
