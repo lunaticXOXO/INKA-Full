@@ -12,6 +12,7 @@ Vue.use(VueAxios, Axios, DatetimePicker);
 
 Vue.prototype.$axios = Axios;
 Vue.axios.defaults.baseURL = `https://backend-inka-deploy.herokuapp.com/`;
+//Vue.axios.defaults.baseURL = `http://127.0.0.1:8181/`;
 
 new Vue({
   router,
