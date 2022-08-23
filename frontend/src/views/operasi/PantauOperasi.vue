@@ -23,6 +23,7 @@
                             <br>
                             <h3>{{ item.namaProses }}</h3>
                             <p>{{ item.idOperasi }}</p>
+                            <!--
                             <div class="d-flex">
                                 <v-btn
                                     color="success"
@@ -38,6 +39,7 @@
                                     Stop Operasi
                                 </v-btn>
                             </div>
+                            -->
                             <br>
                             <h3>Rencana Mulai</h3>
                             <p>{{ item.rencanaMulai }}</p>
