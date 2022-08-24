@@ -2,7 +2,8 @@ CREATE TABLE prd_r_proyek(
     id varchar(4) PRIMARY KEY NOT NULL,
     nama varchar(25) NOT NULL,
     tglDibuat date NOT NULL,
-    dueDate date NOT NULL
+    customerid varchar(5) NOT NULL,
+    FOREIGN KEY(customerid) REFERENCES gen_r_customer(id)
 );
 
 CREATE TABLE prd_r_jenisProduk(
@@ -31,18 +32,21 @@ CREATE TABLE prd_r_rincianProyek(
 CREATE TABLE prd_d_produk(
     id varchar(9) PRIMARY KEY NOT NULL,
     rincianProyek varchar(7) NOT NULL,
+    dueDate date NULL,
     FOREIGN KEY (rincianProyek) REFERENCES prd_r_rincianProyek(id)
 );
 
 CREATE TABLE prd_r_strukturJnsPrd(
     idNodal varchar(7) PRIMARY KEY NOT NULL,
-    indukNodal varchar(7) NOT NULL,
+    indukNodal varchar(7) NULL,
     jnsProduk varchar(4) NOT NULL,
-    nama varchar(25) NOT NULL,
+    materialTypeCode varchar(25) NOT NULL,
+    nama varchar(50) NOT NULL,
     jumlah float NOT NULL,
     satuan varchar(10) NOT NULL,
     FOREIGN KEY (indukNodal) REFERENCES prd_r_strukturJnsPrd(idNodal),
-    FOREIGN KEY (jnsProduk) REFERENCES prd_r_jenisProduk(id)
+    FOREIGN KEY (jnsProduk) REFERENCES prd_r_jenisProduk(id),
+    FOREIGN KEY (materialTypeCode) REFERENCES mat_r_materialtype(code)
 );
 
 CREATE TABLE gen_r_stasiunKerja(
@@ -64,7 +68,7 @@ CREATE TABLE prd_r_proses(
     jenisProses varchar(9),
     FOREIGN KEY (prosesSebelumnya) REFERENCES prd_r_proses(id),
     FOREIGN KEY (nodalOutput) REFERENCES prd_r_strukturJnsPrd(idNodal),
-    FOREIGN KEY (jenisProses) REFERENCES prd_r_jenisProduk(id)
+    FOREIGN KEY (jenisProses) REFERENCES prd_r_jenisproses(id)
 );
 
 CREATE TABLE gen_r_mampuProses(
@@ -226,7 +230,7 @@ CREATE TABLE mat_d_purchasematerial(
 );
 
 CREATE TABLE mat_d_purchaseitem(
-    id varchar(3) PRIMARY KEY NOT NULL,
+    id_item varchar(3) PRIMARY KEY NOT NULL,
     supplierCode varchar(5) NOT NULL,
     materialTypeCode varchar(5) NOT NULL,
     quantity int,
