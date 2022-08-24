@@ -36,7 +36,6 @@ import SidebarMaterial from './components/SidebarMaterial.vue'
 import Login from "./services/Login.js"
 import SidebarUmum from './components/SidebarUmum.vue'
 import SidebarDisplay from './components/SidebarDisplay.vue'
-import SidebarDisplay from './components/SidebarDisplay.vue'
 
 export default {
   name: 'App',
