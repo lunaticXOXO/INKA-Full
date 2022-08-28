@@ -14,7 +14,7 @@
 
             <v-autocomplete
             item-value="id"
-            :item-text="items2 => items2.id +' - '+ items2.namajenisproses"
+            :item-text="items2 => items2.id +' - '+ items2.namaJenisProses"
             v-model="jenisProses"
             :items="items2"
             label="Jenis Proses"
@@ -120,12 +120,12 @@
             nama: '',
             durasi: '',
             satuanDurasi: '',
-            prosesSesudahnya: '',
+            prosesSesudahnya: null,
             jenisProses: undefined,
             items: undefined,
             items2: undefined,
             items3: [
-                "Minutes"
+                "Menit"
             ],
              column2 : [
                 {text : 'ID Nodal', value : 'idNodal'},
@@ -146,7 +146,7 @@
             ],
             column4 : [
                 {text : 'IdJenis',value : 'id'},
-                {text : 'Nama Jenis Proses',value : 'namajenisproses' }
+                {text : 'Nama Jenis Proses',value : 'namaJenisProses' }
             ],
             sjproduk : [],
             jenisproses : [],

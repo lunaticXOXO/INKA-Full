@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <div class="d-flex ml-14">
-            <v-card class="ml-14 text-center mt-6" width="500">
+            <v-card class="ml-8 text-center mt-6" width="600">
                 <h3>Proyek {{this.$route.params.id}}</h3>
                 <v-data-table
                     :headers = "headers2"
@@ -9,7 +9,7 @@
                 </v-data-table>
             </v-card>
       
-            <v-card class="ml-15 text-center mt-6" width = "400">
+            <v-card class="ml-15 text-center mt-6" width = "500">
                   <h3>Customer Proyek {{this.$route.params.id}}</h3>
                 <v-data-table
                     :headers = "headers3"

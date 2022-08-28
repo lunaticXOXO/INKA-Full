@@ -87,8 +87,6 @@ export default {
             routeHome: "/",
             drawer: false,
             items: [
-              
-
                 {
                 action: 'mdi-account-star',
                 active: false,
@@ -136,8 +134,7 @@ export default {
                 title: 'Produk',
                 },
             
-
-                /*{
+                {
                 action: 'mdi-book-variant',
                 active: false,
                 items: [
@@ -146,7 +143,7 @@ export default {
                     { title: 'Table', icon: 'mdi-table', route: '/table'},
                 ],
                 title: 'Dummy',
-                },*/
+                },
             ],
         }
     },

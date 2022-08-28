@@ -17,7 +17,7 @@
 <style>
   #judul{
     font-size: 6rem;
-    margin-left: 25%;
-    margin-top: 10%;
+    margin-left: 30%;
+    margin-top: 15%;
   }
 </style>

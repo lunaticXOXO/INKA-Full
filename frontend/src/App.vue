@@ -18,7 +18,9 @@
     <div v-else-if="idRole == 5">
       <SidebarUmum />
     </div>
-    
+    <div v-else-if="idRole == 6">
+      <SidebarDisplay />
+    </div>
     <v-main>
       <router-view/>
     </v-main>
@@ -33,6 +35,7 @@ import SidebarEngineer from './components/SidebarEngineer.vue'
 import SidebarMaterial from './components/SidebarMaterial.vue'
 import Login from "./services/Login.js"
 import SidebarUmum from './components/SidebarUmum.vue'
+import SidebarDisplay from './components/SidebarDisplay.vue'
 
 export default {
   name: 'App',
@@ -42,7 +45,8 @@ export default {
     SidebarManager,
     SidebarEngineer,
     SidebarMaterial,
-    SidebarUmum
+    SidebarUmum,
+    SidebarDisplay
 },
 
   mounted() {

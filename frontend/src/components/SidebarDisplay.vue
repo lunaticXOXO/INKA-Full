@@ -7,7 +7,7 @@
             </v-btn>
             <v-app-bar-title class="text-uppercase">
                 <span class="font-weight-light white--text">Smart</span>
-                <span class="white--text">Works 4.0 | Engineer</span>
+                <span class="white--text">Works 4.0 | Display</span>
             </v-app-bar-title>
             <v-img 
                 max-height="50"
@@ -36,7 +36,7 @@
                 class="mr-3 ml-6">
             </v-img>
             <span class="font-weight-light white--text ">Welcome,</span>
-            <span class="white--text mr-6">engineer</span>
+            <span class="white--text mr-6">display</span>
             <v-btn @click="logout()" color="grey">
                 <span>Sign Out</span>
                 <v-icon right>mdi-arrow-right</v-icon>
@@ -88,39 +88,21 @@ export default {
             drawer: false,
             items: [
                 {
-                action: 'mdi-chart-ppf',
-                active: false,
-                items: [
-                    { title: 'Lihat Jenis Produk',icon : 'mdi-eye',route : '/listJenisProduk'},
-                    { title: 'Lihat Struktur Tipe Produk',icon : 'mdi-eye',route : '/listStrukturJenisProduk'},
-                    { title: 'Tambah Jenis Produk',icon : 'mdi-plus',route : '/tambahJenisProduk'},
-                ],
-                title: 'Produk',
-                },
-
-                {
-                action: 'mdi-book-open-outline',
-                active: false,
-                items: [
-                     {title : 'Lihat List Jenis Proses',icon : 'mdi-eye',route : '/listJenisProses'},
-                     {title : 'Tambah Jenis Proses',icon : 'mdi-plus',route : 'addJenisProses'},
-                    { title: 'Lihat List Proses', icon: 'mdi-eye', route: '/listProcess'},
-                ],
-                title: 'Proses',
-                },
-                
-
-                {
                 action: 'mdi-garage-variant',
                 active: false,
                 items: [
-                    { title: 'Tambah Stasiun Kerja', icon: 'mdi-plus', route: '/tambahStasiunKerja'},
-                    { title: 'Lihat Stasiun Kerja', icon: 'mdi-eye', route: '/lihatStasiunKerja'},
-                    { title: 'List Stasiun Kerja', icon: 'mdi-filter-variant', route: '/listStasiun'},
-                    { title: 'Tambah Lini Produksi', icon: 'mdi-plus', route: '/tambahLiniProduksi'},
-                    { title: 'List Lini Produksi', icon: 'mdi-filter-variant', route: '/listLiniProduksi'},
+                    { title: 'Lihat Status Pengerjaan', icon: 'mdi-eye', route: '/statusPengerjaanWS'},
                 ],
-                title: 'Lantai Produksi',
+                title: 'Stasiun Kerja',
+                },
+
+                {
+                action: 'mdi-view-list',
+                active: false,
+                items: [
+                    { title: 'Pantau Operasi', icon: 'mdi-eye', route: '/pantauOperasi'},
+                ],
+                title: 'Operasi',
                 },
             ],
         }

@@ -53,14 +53,14 @@
                 </span>
             </template>
 
-           <template v-slot:[`item.descriptionClassification`]="{ item }">
-              <v-select v-model="editedItem.descriptionClassification" item-text="descriptions" item-value="code" :items="classifications" v-if="item.code == editedItem.code"></v-select>
-              <span v-else>{{item.descriptionClassification}}</span>
+           <template v-slot:[`item.Classification`]="{ item }">
+              <v-select v-model="editedItem.Classification" item-text="Classification" item-value="Classification" :items="types" v-if="item.code == editedItem.code"></v-select>
+              <span v-else>{{item.Classification}}</span>
           </template>
 
-            <template v-slot:[`item.descriptionGroup`]="{ item }">
-              <v-select v-model="editedItem.descriptionGroup" item-text="descriptions" item-value="code" :items="groups" v-if="item.code == editedItem.code"></v-select>
-              <span v-else>{{item.descriptionGroup}}</span>
+            <template v-slot:[`item.Group`]="{ item }">
+              <v-select v-model="editedItem.Group" item-text="Group" item-value="Group" :items="types" v-if="item.code == editedItem.code"></v-select>
+              <span v-else>{{item.Group}}</span>
           </template>
            
             <template v-slot:[`item.aksi`]="{ item }">
@@ -96,16 +96,14 @@
       return {
         valid : true,
         column : [
-            {text : 'Code',         value : 'code'},
-            {text : 'Nama',         value : 'nama'},
-            {text : 'Is Available', value : 'isAvailable'},
-            {text : 'Is Assy',      value : 'isAssy'},        
-            {text : 'Classification', value : 'descriptionClassification'},
-            {text : 'Group Material',        value : 'descriptionGroup'},
-            {text : 'Action', value : 'aksi'}
+            {text : 'Code',           value : 'code'},
+            {text : 'Nama',           value : 'nama'},
+            {text : 'Is Available',   value : 'isAvailable'},
+            {text : 'Is Assy',        value : 'isAssy'},        
+            {text : 'Classification', value : 'Classification'},
+            {text : 'Group Material', value : 'Group'},
+            {text : 'Action',         value : 'aksi'}
         ],
-        classifications : [],
-        groups : [],
         types : [],
         
         editedIndex: -1,
@@ -114,25 +112,24 @@
           nama: '',
           isAvailable: '',
           isAssy: '',
-          classificationCode : '',
-          groupCode: '',
+          Classification : '',
+          Group: '',
          
         },
+        
         defaultItem: {
           code: '',
           nama: '',
           isAvailable: '',
           isAssy: '',
-          classificationCode : '',
-          groupCode: '',
+          Classification : '',
+          Group: '',
         },
       }
     },
   
     mounted(){
-        this.fetchMaterial(),
-        this.fetchGroups(),
-        this.fetchClassification()
+        this.fetchMaterial()
     },
     methods: {
       close () {
@@ -147,36 +144,7 @@
         this.editedIndex = this.types.indexOf(types);
         this.editedItem = Object.assign({},types);
       },
-      async fetchClassification(){
-          try{
-              const axios = require('axios')
-              const res = await axios.get('/material/show_classification')
-              if(res.data == null){
-                 console.log("Data classification kosong")
-              }else{
-                  this.classifications = res.data
-                  console.log(res,this.classifications)
-              }
-          }catch(error){
-              console.log(error)
-          }
-      },
 
-      async fetchGroups(){
-        try{
-
-            const axios = require('axios')
-            const res = await axios.get('/material/show_groups')
-            if(res.data == null){
-                console.log("Data Groups Kosong")
-            }else{
-                this.groups = res.data
-                console.log(res,this.groups)
-            }
-        }catch(error){
-            console.log(error)
-        }
-      },
       async fetchMaterial(){
         try{
           const axios = require('axios');

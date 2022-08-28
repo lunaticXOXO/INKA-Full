@@ -117,7 +117,7 @@
         v => !!v || 'ID Nodal is required',
         v => (v && v.length <= 5 && v.length >= 5) || 'ID Nodal must be 7 characters',
       ],
-      nodeParent: '',
+      nodeParent: null,
       unit: undefined,
       items: [],
       items2: [
@@ -126,19 +126,19 @@
       ],
       items3 : [],      
       column2 : [
-                {text : 'ID Jenis Produk',value : 'IdJenisProduk'},
-                {text : 'Nama Jenis Produk',value : 'NamaJenisProduk'},
-                {text : 'ID Produk',value : 'IdProduk'},
-                {text : 'Due Date Produk',value : 'dueDateProduk'},
-                {text : 'ID Rincian Proyek',value : 'IdRincian'},
-                {text : 'Jumlah',value : 'jumlah'},
-                {text : 'Due Date Rincian',value : 'dueDateRincian'},
-                {text : 'ID Proyek', value : 'IdProyek'},
-                {text : 'Nama Proyek',value : 'namaProyek'},
-                {text : 'ID Customer',value : 'IdCustomer'},
-                {text : 'Nama Customer',value : 'namaCustomer'}
-            ],
-            jproduk : [],
+        {text : 'ID Jenis Produk',value : 'IdJenisProduk'},
+        {text : 'Nama Jenis Produk',value : 'NamaJenisProduk'},
+        {text : 'ID Produk',value : 'IdProduk'},
+        {text : 'Due Date Produk',value : 'dueDateProduk'},
+        {text : 'ID Rincian Proyek',value : 'IdRincian'},
+        {text : 'Jumlah',value : 'jumlah'},
+        {text : 'Due Date Rincian',value : 'dueDateRincian'},
+        {text : 'ID Proyek', value : 'IdProyek'},
+        {text : 'Nama Proyek',value : 'namaProyek'},
+        {text : 'ID Customer',value : 'IdCustomer'},
+        {text : 'Nama Customer',value : 'namaCustomer'}
+      ],
+      jproduk : [],
     }),
 
     mounted(){
@@ -197,9 +197,6 @@
         }
       },*/
 
-
-
-
       async InsertStrukturProdukbyJProduk(){
         try{
           const response = await axios.post('/sjproduct/insert_sjproduct_by_jproduct/' + this.$route.params.id,
@@ -238,15 +235,15 @@
         }
       },
 
-        async fetchMaterialTypeName(){
-            const res = await axios.get('/material/get_type_name')
-            if(res.data == null){
-                console.log('Data kosong')
-            }else{
-               this.items3 = res.data
-               console.log(res,this.items3)
-            }
-        },
+      async fetchMaterialTypeName(){
+        const res = await axios.get('/material/get_type_name')
+        if(res.data == null){
+            console.log('Data kosong')
+        }else{
+            this.items3 = res.data
+            console.log(res,this.items3)
+        }
+      },
 
       async fetchJProductInSJProduk(){
         const res = await axios.get('/sjproduct/get_jproduct_insjproduct/' + this.$route.params.id)

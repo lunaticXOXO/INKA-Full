@@ -116,16 +116,6 @@ export default {
                 ],
                 title: 'Operator',
                 },
-
-                {
-                action: 'mdi-garage-variant',
-                active: false,
-                items: [
-                    { title: 'Lihat Status Pengerjaan', icon: 'mdi-eye', route: '/statusPengerjaanWS'},
-                ],
-                title: 'Stasiun Kerja',
-                }
-
             ],
         }
     },
