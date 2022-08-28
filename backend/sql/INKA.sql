@@ -152,7 +152,7 @@ CREATE TABLE gen_r_supplier(
 );
 
 CREATE TABLE opd_r_operator(
-    code varchar(5) PRIMARY KEY NOT NULL,
+    id varchar(5) PRIMARY KEY NOT NULL,
     nama varchar(30) NOT NULL,
     adress1 varchar(50) NOT NULL,
     postalcode varchar(5) NOT NULL,
@@ -296,4 +296,48 @@ CREATE TABLE mat_r_ToolNeed(
     FOREIGN KEY (idNodeOutput) REFERENCES prd_r_proses(nodalOutput)
 );
 
+
+CREATE TABLE opr_r_operatorqualification(
+    codes varchar(2) PRIMARY KEY NOT NULL,
+    descriptions varchar(30) NOT NULL
+);
+
+CREATE TABLE prd_r_operatorrequirement(
+    qualificationCode varchar(2),
+    processCode varchar(9),
+    PRIMARY KEY(qualificationCode,processCode),
+    FOREIGN KEY (qualificationCode) REFERENCES opr_r_operatorqualification(codes),
+    FOREIGN KEY (processCode) REFERENCES prd_r_proses(id)
+);
+
+CREATE TABLE opr_d_operatorlevel(
+    operatorid varchar(5) NOT NULL,
+    qualificationCode varchar(2) NOT NULL,
+    PRIMARY KEY (operatorid,qualificationCode),
+    FOREIGN KEY (operatorid) REFERENCES  opd_r_operator(code),
+    FOREIGN KEY (qualificationCode) REFERENCES opr_r_operatorqualification(codes)
+);
+
+
+CREATE TABLE opr_d_operatoronws(
+
+    id varchar(10) PRIMARY KEY NOT NULL,
+    operatorid varchar(5) NOT NULL,
+    workstationCode varchar(4) NOT NULL,
+    login datetime,
+    logout datetime,
+    FOREIGN KEY(operatorid) REFERENCES opd_r_operator(id),
+    FOREIGN KEY(workstationCode) REFERENCES gen_r_stasiunKerja(id)
+
+);
+
+CREATE TABLE opr_d_dictoperator(
+
+    uuid varchar(30) PRIMARY KEY NOT NULL,
+    operatorid varchar(5) NOT NULL,
+    created datetime,
+    expired datetime,
+    FOREIGN KEY(operatorid) REFERENCES opd_r_operator(id)
+
+);
 

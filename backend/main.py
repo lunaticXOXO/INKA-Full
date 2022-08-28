@@ -22,6 +22,8 @@ from material.MaterialConsumable.controller.MaterialConsumableController import 
 from unit.controller.UnitController import *
 from users.controller.UserController import *
 from operasi.controller.OperasiController import *
+from operators.controller.OperatorController import *
+
 from flask import Flask,session
 from flask_cors import CORS
 #from flask_restful import Api
@@ -539,6 +541,24 @@ def show_product_inoperasi(id_product):
 def show_product_inpantauoperasi():
     hasil = ShowProductInPantauOperasi()
     return hasil
+
+
+#Operator
+@app.route('/operator/add_operator',methods = ['POST'])
+def add_operator():
+    hasil = AddOperator()
+    return hasil
+
+@app.route('/operator/get_operator',methods = ['GET'])
+def get_operator():
+    hasil = ShowOperator()
+    return hasil
+
+@app.route('/qualification/add_qualification',methods = ['POST'])
+def add_qualification():
+    hasil = AddQualification()
+    return hasil
+
 
 #USERS 
 @app.route('/register',methods = ['POST'])
