@@ -37,6 +37,29 @@ def ShowJenisProses():
     return make_response(jsonify(json_data),200)
 
 
+def AddRequirementByProcess(id):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query_select = "SELECT id FROM prd_r_proses WHERE id = '"+id+"'"
+    cursor.execute(query_select)
+    records = cursor.fetchall()
+    id_proses = ""
+    for data in records:
+        id_proses = data[0]
+
+    query_insert = "INSERT INTO prd_r_operatorrequirement(qualificationCode,processCode)VALUES(%s,%s)"
+    try:
+        data = request.json
+        qualificationCode = data["qualificationCode"]
+        values = (qualificationCode,id_proses)
+        cursor.execute(query_insert,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
 def InsertJenisProses():
     conn = database.connector()
     cursor = conn.cursor()
