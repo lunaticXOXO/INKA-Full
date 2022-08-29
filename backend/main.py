@@ -544,6 +544,11 @@ def add_qualification():
     hasil = AddQualification()
     return hasil
 
+@app.route('/qualification/get_qualification',methods = ['POST'])
+def get_qualification():
+    hasil = GetQualification()
+    return hasil
+
 # Process Requirement
 @app.route('/requirement/add_process_requirement/<id>',methods = ['POST'])
 def add_process_requirement(id):
