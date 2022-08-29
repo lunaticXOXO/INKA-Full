@@ -560,6 +560,13 @@ def add_qualification():
     return hasil
 
 
+# Process Requirement
+@app.route('/requirement/add_process_requirement/<id>',methods = ['POST'])
+def add_process_requirement(id):
+    hasil = AddRequirementByProcess(id)
+    return hasil
+
+
 #USERS 
 @app.route('/register',methods = ['POST'])
 def register():
