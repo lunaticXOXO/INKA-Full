@@ -10,7 +10,7 @@ def ShowOperasiFromProduct(idProduct):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id AS 'idOperasi',a.proses,b.nama AS 'namaProses',c.keterangan,a.rencanaMulai,a.rencanaSelesai FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN gen_r_stasiunkerja c ON c.id = a.stasiunKerja WHERE produk = '"+idProduct+"' ORDER BY proses,rencanaMulai ASC"
+    query = "SELECT a.id AS 'idOperasi',a.rencanaMulai,a.rencanaSelesai, b.id AS 'idProses',b.nama AS 'namaProses',a.produk, i.operatorid,j.nama AS 'namaOperator' ,k.keterangan AS 'keteranganWS' FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = b.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id JOIN opr_d_operatorneed i ON i.operationid = a.id JOIN opd_r_operator j ON j.code = i.operatorid JOIN gen_r_stasiunkerja k ON k.id = a.stasiunKerja WHERE h.id = '"+idProduct+"' ORDER BY a.rencanaMulai ASC"
     cursor.execute(query)
 
     records = cursor.fetchall()
@@ -35,7 +35,8 @@ def ShowProductInOperasi(id_product):
         rencana_mulai_min = str(rencana_mulai_min)
     print(rencana_mulai_min)
 
-    query = "SELECT a.id,a.rencanaMulai, b.id AS 'idProduk',b.dueDate AS 'dueDateProduk', c.id AS 'idRincian',c.jumlah,c.dueDate AS 'dueDateRincian', d.id AS 'idProyek', d.nama AS 'namaProyek', e.id AS 'idCustomer', e.nama AS 'namaCustomer' FROM prd_d_operasi a JOIN prd_d_produk b ON b.id = a.produk JOIN prd_r_rincianproyek c ON c.id = b.rincianProyek JOIN prd_r_proyek d ON d.id = c.proyek JOIN gen_r_customer e ON e.id = d.customerid WHERE a.produk = '"+id_product+"' AND a.rencanaMulai = '"+rencana_mulai_min+"'"
+    #query = "SELECT a.id,a.rencanaMulai, b.id AS 'idProduk',b.dueDate AS 'dueDateProduk', c.id AS 'idRincian',c.jumlah,c.dueDate AS 'dueDateRincian', d.id AS 'idProyek', d.nama AS 'namaProyek', e.id AS 'idCustomer', e.nama AS 'namaCustomer' FROM prd_d_operasi a JOIN prd_d_produk b ON b.id = a.produk JOIN prd_r_rincianproyek c ON c.id = b.rincianProyek JOIN prd_r_proyek d ON d.id = c.proyek JOIN gen_r_customer e ON e.id = d.customerid WHERE a.produk = '"+id_product+"' AND a.rencanaMulai = '"+rencana_mulai_min+"'"
+    query = "SELECT a.id AS 'idOperasi',a.rencanaMulai,a.rencanaSelesai, b.id AS 'idProses',b.nama AS 'namaProses',a.produk, i.operatorid,j.nama AS 'namaOperator' FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = b.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id JOIN opr_d_operatorneed i ON i.operationid = a.id JOIN opd_r_operator j ON j.code = i.operatorid WHERE h.id = '"+idProduct+"' ORDER BY a.proses,a.rencanaMulai ASC"
     cursor.execute(query)
     records_query = cursor.fetchall()
     json_data = []
@@ -49,7 +50,7 @@ def PantauOperasi(idProduct):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id AS 'idOperasi',a.rencanaMulai,a.rencanaSelesai,b.id AS 'idProses',b.nama AS 'namaProses',a.produk FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = b.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id WHERE h.id = '"+idProduct+"' ORDER BY a.proses,a.rencanaMulai ASC"
+    query = "SELECT a.id AS 'idOperasi',a.rencanaMulai,a.rencanaSelesai, b.id AS 'idProses',b.nama AS 'namaProses',a.produk, i.operatorid,j.nama AS 'namaOperator' FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = b.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id JOIN opr_d_operatorneed i ON i.operationid = a.id JOIN opd_r_operator j ON j.code = i.operatorid WHERE h.id = '"+idProduct+"' ORDER BY a.proses,a.rencanaMulai ASC"
     cursor.execute(query)
 
     records = cursor.fetchall()
@@ -108,7 +109,7 @@ def GenerateOperation(idProduk):
 
       
         #Kemampuan operator yang dimiliki 
-        query7 = "SELECT a.operatorid,a.qualificationCode,b.descriptions FROM opr_d_operatorlevel a JOIN opr_r_operatorqualification b ON b.id = a.qualificationCode"
+        query7 = "SELECT a.operatorid,a.qualificationCode,b.descriptions FROM opr_d_operatorlevel a JOIN opr_r_operatorqualification b ON b.codes = a.qualificationCode"
         cursor.execute(query7)
         recordsqualification = cursor.fetchall()
 
