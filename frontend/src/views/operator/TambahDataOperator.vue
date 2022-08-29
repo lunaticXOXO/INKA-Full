@@ -60,6 +60,7 @@
       label="Kualifikasi"
       ></v-autocomplete>
 
+      <!--
       <v-file-input
         required
         v-model="gambar"
@@ -69,7 +70,8 @@
         prepend-icon="mdi-camera"
         @change="onAddFiles">
       </v-file-input>
-      
+      -->
+
       <v-btn
       :disabled="!valid"
       color="success"
@@ -103,13 +105,13 @@
       kodePos: '',
       noTelepon: '',
       id: '',
-      gambar: '',
+      //gambar: '',
       idRules: [
         v => !!v || 'ID is required',
       ],
-      gambarRules: [
-        v => !!v || 'Photo is required',
-      ],
+      //gambarRules: [
+      //  v => !!v || 'Photo is required',
+      //],
       email: '',
       emailRules: [
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -150,7 +152,7 @@
         console.log(this.kodePos)
         console.log(this.noTelepon)
         console.log(this.email)
-        console.log(this.gambar)
+        //console.log(this.gambar)
       },
 
       onAddFiles(files) {
@@ -177,7 +179,7 @@
       async fetchKualifikasi(){
         try{
           const axios = require('axios');
-          const res = await axios.get(`/operator/get_qualification`);
+          const res = await axios.get(`/qualification/get_qualification`);
           if(res.data == null){
               alert("Kualifikasi Kosong")
           }else{
@@ -196,36 +198,36 @@
           const response = await axios.post('/operator/add_operator',
             { id: this.id,
               nama: this.nama,
-              alamat: this.alamat,
-              kota : this.kota,
-              kodepos : this.kodePos,
-              noTelepon : this.noTelepon,
+              adress1: this.alamat,
+              city : this.kota,
+              postalcode : this.kodePos,
+              phone : this.noTelepon,
               email : this.email,
-              profile : this.gambar
+              qualificationCode : this.pilihanKualifikasi
             }
           );
           console.log(response,this.data)
 
           if(response.data.status == "berhasil"){
               this.snackbar = {
-                message : 'Insert data Operator Berhasil',
+                message : 'Insert Data Operator Berhasil',
                 color : 'green',
                 show : true
             }
           }
           else if(response.data.status == "gagal"){
               this.snackbar = {
-                message : 'Insert data operator gagal',
+                message : 'Insert Data Operator gagal',
                 color : 'red',
                 show : true
               }
           }
         }
         catch(error){
-          alert("Insert Kota Failed")
+          alert("Insert Data Operator Failed")
           console.log(error)
           this.snackbar = {
-                message : 'Insert data operator error',
+                message : 'Insert Data Operator error',
                 color : 'red',
                 show : true
           }

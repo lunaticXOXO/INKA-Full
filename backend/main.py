@@ -86,7 +86,6 @@ def update_customer(id):
     hasil = UpdateCustomer(id)
     return hasil
 
-
 #SUPPLIER
 @app.route('/supplier/get_supplier',methods = ['GET'])
 def get_supplier():
@@ -134,13 +133,11 @@ def update_proyek(id):
     hasil = UpdateProyek(id)
     return hasil
 
-
 #RINCIAN PROYEK
 @app.route('/rproyek/show_rproyek',methods = ['GET'])
 def show_rproyek():
     hasil = GetAllRincianProyek()
     return hasil
-
 
 @app.route('/rproyek/show_rproyek_by_proyek/<id_proyek>',methods = ['GET'])
 def show_rproyek_by_proyek(id_proyek):
@@ -167,7 +164,6 @@ def add_rproyek_byproyek(id_proyek):
     hasil = AddRincianProyekByProyek(id_proyek)
     return hasil
 
-
 @app.route('/rproyek/add_rproyek',methods = ['POST'])
 def add_rproyek():
     hasil = AddRincianProyek()
@@ -183,7 +179,6 @@ def update_duedate_rproyek(id_proyek):
 def get_product():
     hasil = GetAllProduk()
     return hasil
-
 
 @app.route('/product/get_product_by_rproyek/<id_rproyek>',methods = ['GET'])
 def get_product_by_rproyek(id_rproyek):
@@ -325,7 +320,6 @@ def insert_groupproses():
     hasil = InsertGroupProses()
     return hasil
 
-
 #LINI PRODUKSI
 @app.route('/liniproduksi/show_liniproduksi',methods = ['GET'])
 def show_liniproduksi():
@@ -416,12 +410,10 @@ def add_type():
     hasil = AddMaterialType()
     return hasil
 
-
 @app.route('/material/update_type/<code>',methods = ['POST'])
 def update_type(code):
     hasil = UpdateMaterialType(code)
     return hasil
-
 
 @app.route('/material/search_type/<nama>',methods = ['GET'])
 def search_type(nama):
@@ -433,7 +425,6 @@ def search_type(nama):
 def show_material_supplier():
     hasil = ShowSupplierWithMaterialType()
     return hasil
-
 
 @app.route('/supplier_material/add_material_supplier',methods = ['POST'])
 def add_material_supplier():
@@ -478,7 +469,6 @@ def get_material_onws():
     hasil = GetMaterialOnWS()
     return hasil
 
-
 @app.route('/material_ws/add_material_onws',methods = ['POST'])
 def add_material_onws():
     hasil = AddMaterialOnWS()
@@ -495,12 +485,10 @@ def get_material_byproses(idProcess):
     hasil = GetMaterialConsumablebyProcess(idProcess)
     return hasil
 
-
 @app.route('/material_consumable/add_material_consumable',methods = ['POST'])
 def add_material_consumable():
     hasil = addMaterialConsumable()
     return hasil
-
 
 #OPERASI
 @app.route('/operasi/generate_operasi/<idProduk>',methods = ['POST'])
@@ -514,12 +502,10 @@ def get_operasi_byproduk(idProduk):
     hasil = ShowOperasiFromProduct(idProduk)
     return hasil
 
-
 @app.route('/operasi/pantau_operasi/<idProduct>',methods = ['GET'])
 def pantau_operasi(idProduct):
     hasil = PantauOperasi(idProduct)
     return hasil
-
 
 @app.route('/operasi/start_operasi/<idOperasi>',methods = ['POST'])
 def start_operasi(idOperasi):
@@ -542,7 +528,6 @@ def show_product_inpantauoperasi():
     hasil = ShowProductInPantauOperasi()
     return hasil
 
-
 #Operator
 @app.route('/operator/add_operator',methods = ['POST'])
 def add_operator():
@@ -558,7 +543,6 @@ def get_operator():
 def add_qualification():
     hasil = AddQualification()
     return hasil
-
 
 #USERS 
 @app.route('/register',methods = ['POST'])
