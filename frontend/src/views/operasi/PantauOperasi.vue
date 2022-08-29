@@ -40,7 +40,8 @@
                                 </v-btn>
                             </div>
                             -->
-                            <h3>Stasiun Kerja : {{item.keterangan}}</h3>
+                            <h3>Operator : {{item.namaOperator}}</h3>
+                            <h3>Stasiun Kerja : {{item.keteranganWS}}</h3>
                             <br>
                             <h3>Rencana Mulai</h3>
                             <p>{{ item.rencanaMulai }}</p>
