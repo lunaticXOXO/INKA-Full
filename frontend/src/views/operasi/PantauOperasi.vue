@@ -40,6 +40,7 @@
                                 </v-btn>
                             </div>
                             -->
+                            <h3>Stasiun Kerja : {{item.keterangan}}</h3>
                             <br>
                             <h3>Rencana Mulai</h3>
                             <p>{{ item.rencanaMulai }}</p>
@@ -66,7 +67,6 @@ export default {
         headers : [
             {text : 'ID Produk',value : 'id'},
             {text : 'ID Rincian Proyek',value : 'IdRincian'},
-            {text : 'Jumlah',value : 'jumlah'},
             {text : 'Nama Proyek',value : 'NamaProyek'},
             {text : 'Nama Customer',value : 'NamaCustomer'},
             {text : 'Action', value: 'aksi'}
@@ -90,7 +90,7 @@ export default {
         async fetchData(idProduk){
             try{
                 const axios = require('axios');
-                const res = await axios.get(`/operasi/pantau_operasi/` + idProduk);
+                const res = await axios.get(`/operasi/get_operasi_byproduk/` + idProduk);
                 if(res.data.length == 0 ){
                     this.snackbar = {
                         message : "Tidak Ada Operasi",

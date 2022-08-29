@@ -2,7 +2,8 @@ CREATE TABLE prd_r_proyek(
     id varchar(4) PRIMARY KEY NOT NULL,
     nama varchar(25) NOT NULL,
     tglDibuat date NOT NULL,
-    dueDate date NOT NULL
+    customerid varchar(5) NOT NULL,
+    FOREIGN KEY(customerid) REFERENCES gen_r_customer(id)
 );
 
 CREATE TABLE prd_r_jenisProduk(
@@ -31,18 +32,21 @@ CREATE TABLE prd_r_rincianProyek(
 CREATE TABLE prd_d_produk(
     id varchar(9) PRIMARY KEY NOT NULL,
     rincianProyek varchar(7) NOT NULL,
+    dueDate date NULL,
     FOREIGN KEY (rincianProyek) REFERENCES prd_r_rincianProyek(id)
 );
 
 CREATE TABLE prd_r_strukturJnsPrd(
     idNodal varchar(7) PRIMARY KEY NOT NULL,
-    indukNodal varchar(7) NOT NULL,
+    indukNodal varchar(7) NULL,
     jnsProduk varchar(4) NOT NULL,
-    nama varchar(25) NOT NULL,
+    materialTypeCode varchar(25) NOT NULL,
+    nama varchar(50) NOT NULL,
     jumlah float NOT NULL,
     satuan varchar(10) NOT NULL,
     FOREIGN KEY (indukNodal) REFERENCES prd_r_strukturJnsPrd(idNodal),
-    FOREIGN KEY (jnsProduk) REFERENCES prd_r_jenisProduk(id)
+    FOREIGN KEY (jnsProduk) REFERENCES prd_r_jenisProduk(id),
+    FOREIGN KEY (materialTypeCode) REFERENCES mat_r_materialtype(code)
 );
 
 CREATE TABLE gen_r_stasiunKerja(
@@ -64,7 +68,7 @@ CREATE TABLE prd_r_proses(
     jenisProses varchar(9),
     FOREIGN KEY (prosesSebelumnya) REFERENCES prd_r_proses(id),
     FOREIGN KEY (nodalOutput) REFERENCES prd_r_strukturJnsPrd(idNodal),
-    FOREIGN KEY (jenisProses) REFERENCES prd_r_jenisProduk(id)
+    FOREIGN KEY (jenisProses) REFERENCES prd_r_jenisproses(id)
 );
 
 CREATE TABLE gen_r_mampuProses(
@@ -148,7 +152,7 @@ CREATE TABLE gen_r_supplier(
 );
 
 CREATE TABLE opd_r_operator(
-    code varchar(5) PRIMARY KEY NOT NULL,
+    id varchar(5) PRIMARY KEY NOT NULL,
     nama varchar(30) NOT NULL,
     adress1 varchar(50) NOT NULL,
     postalcode varchar(5) NOT NULL,
@@ -224,7 +228,7 @@ CREATE TABLE mat_d_purchasematerial(
 );
 
 CREATE TABLE mat_d_purchaseitem(
-    id varchar(3) PRIMARY KEY NOT NULL,
+    id_item varchar(3) PRIMARY KEY NOT NULL,
     supplierCode varchar(5) NOT NULL,
     materialTypeCode varchar(5) NOT NULL,
     quantity int,
@@ -292,4 +296,48 @@ CREATE TABLE mat_r_ToolNeed(
     FOREIGN KEY (idNodeOutput) REFERENCES prd_r_proses(nodalOutput)
 );
 
+
+CREATE TABLE opr_r_operatorqualification(
+    codes varchar(2) PRIMARY KEY NOT NULL,
+    descriptions varchar(30) NOT NULL
+);
+
+CREATE TABLE prd_r_operatorrequirement(
+    qualificationCode varchar(2),
+    processCode varchar(9),
+    PRIMARY KEY(qualificationCode,processCode),
+    FOREIGN KEY (qualificationCode) REFERENCES opr_r_operatorqualification(codes),
+    FOREIGN KEY (processCode) REFERENCES prd_r_proses(id)
+);
+
+CREATE TABLE opr_d_operatorlevel(
+    operatorid varchar(5) NOT NULL,
+    qualificationCode varchar(2) NOT NULL,
+    PRIMARY KEY (operatorid,qualificationCode),
+    FOREIGN KEY (operatorid) REFERENCES  opd_r_operator(code),
+    FOREIGN KEY (qualificationCode) REFERENCES opr_r_operatorqualification(codes)
+);
+
+
+CREATE TABLE opr_d_operatoronws(
+
+    id varchar(10) PRIMARY KEY NOT NULL,
+    operatorid varchar(5) NOT NULL,
+    workstationCode varchar(4) NOT NULL,
+    login datetime,
+    logout datetime,
+    FOREIGN KEY(operatorid) REFERENCES opd_r_operator(id),
+    FOREIGN KEY(workstationCode) REFERENCES gen_r_stasiunKerja(id)
+
+);
+
+CREATE TABLE opr_d_dictoperator(
+
+    uuid varchar(30) PRIMARY KEY NOT NULL,
+    operatorid varchar(5) NOT NULL,
+    created datetime,
+    expired datetime,
+    FOREIGN KEY(operatorid) REFERENCES opd_r_operator(id)
+
+);
 

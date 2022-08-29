@@ -30,7 +30,7 @@
         async fetchData(){
             try{
                 const axios = require('axios');
-                const res = await axios.get(`/operasi/get_operasi_byproduk/PR_02`);
+                const res = await axios.get(`/operasi/get_operasi_byproduk/` + this.$route.params.id);
                 if(res.data == null){
                     alert("Operasi Kosong")
                 }else{

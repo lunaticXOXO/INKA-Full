@@ -111,11 +111,19 @@ def AddRincianProyekByProyek(id_proyek):
         for data in records:
             id_rproyek_new = data[0]
         print(id_rproyek_new)
+        index = 1
+        print(jumlah)
+        print("Type jumlah : ",type(jumlah))
+        new_jumlah = int(jumlah)
         query3 = "INSERT INTO prd_d_produk(id,rincianProyek)VALUES(%s,%s)"
         N = 9
-        id_product = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
-        values2 = (id_product,id_rproyek_new)
-        cursor.execute(query3,values2)
+        for index in range(new_jumlah):
+            id_product = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
+            values2 = (id_product,id_rproyek_new)
+            cursor.execute(query3,values2)
+            #conn.commit()
+            
+        print("index : ",index)
         conn.commit()
         hasil = {"status" : "berhasil"}
         print("Rincian Proyek Baru Ditambahkan!")
