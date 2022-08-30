@@ -70,8 +70,6 @@ def AddOperator():
     
     return hasil
 
-
-
 def GetOperasiByOperatorLogin(username):
     conn = database.connector()
     cursor = conn.cursor()

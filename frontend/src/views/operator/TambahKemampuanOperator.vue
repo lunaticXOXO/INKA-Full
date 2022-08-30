@@ -13,7 +13,13 @@
             v-model="valid"
             lazy-validation>
   
-            
+            <v-autocomplete
+            item-text="descriptions"
+            item-value="codes"
+            v-model="kemampuan"
+            :items="listKemampuan"
+            label="Kemampuan Operator"
+            ></v-autocomplete>
 
             <v-btn
               :disabled="!valid"
@@ -33,14 +39,14 @@
             Reset
             </v-btn>
           </v-form>
-          <div v-if="snackBar == true">
-            <v-snackbar top color="green" v-model="snackBar">
+          <div v-if="snackbar == true">
+            <v-snackbar top color="green" v-model="snackbar">
                 Tambah Kemampuan Operator Sukses!
             </v-snackbar>
           </div>
   
-          <div v-else-if="snackBar == false">
-            <v-snackbar top color="red" v-model="snackBar">
+          <div v-else-if="snackbar == false">
+            <v-snackbar top color="red" v-model="snackbar">
                 Tambah Kemampuan Operator Gagal!
             </v-snackbar>
           </div>
@@ -104,31 +110,29 @@
         async InsertKemampuanOperator(){
           try{
             const axios = require('axios');
-            const response = await axios.post('/proyek/add_newproyek_by_customer/' + this.$route.params.id,
-              { id: this.id,
-                nama: this.nama,
+            const response = await axios.post('/operator/add_operatorlevel/' + this.$route.params.id,
+              { qualificationCode: this.kemampuan,
               }
              );
             console.log(response,this.data)
             if(response.data.status == "berhasil"){
-               this.snackbar = {
-                message : "Pesan Proyek Sesuai Customer Success",
-                color : 'green',
-                show : true
-              
-            }
-            location.replace('/proyekListbyCustomer/' + this.$route.params.id)
+                this.snackbar = {
+                    message : "Insert Kemampuan Opr. Success",
+                    color : 'green',
+                    show : true
+                }
             }
             else if(response.data.status == "gagal"){
                 this.snackbar = {
-                message : "Pesan Proyek Sesuai Customer Gagal",
-                color : 'red',
-                show : true
-            }}
+                    message : "Insert Kemampuan Opr. Failed, Kemampuan Sudah Terdaftar!",
+                    color : 'red',
+                    show : true
+                }
+            }
           }
           catch(error){
             this.snackbar = {
-              message : "Pesan Proyek Sesuai Customer Error",
+              message : "Insert Kemampuan Opr. Error",
               color : 'error',
               show : true
             }
