@@ -60,6 +60,12 @@
       label="Kualifikasi"
       ></v-autocomplete>
 
+      <v-text-field
+      v-model="userName"
+      :rules="userRules"
+      label="Username"
+      ></v-text-field>
+
       <!--
       <v-file-input
         required
@@ -105,9 +111,13 @@
       kodePos: '',
       noTelepon: '',
       id: '',
+      userName: '',
       //gambar: '',
       idRules: [
         v => !!v || 'ID is required',
+      ],
+      userRules: [
+        v => !!v || 'Username is required',
       ],
       //gambarRules: [
       //  v => !!v || 'Photo is required',
@@ -203,7 +213,8 @@
               postalcode : this.kodePos,
               phone : this.noTelepon,
               email : this.email,
-              qualificationCode : this.pilihanKualifikasi
+              qualificationCode : this.pilihanKualifikasi,
+              username : this.userName
             }
           );
           console.log(response,this.data)
