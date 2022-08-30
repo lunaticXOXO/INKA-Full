@@ -25,14 +25,7 @@
                     class="mb-1 mr-4">
                 </v-img>
                 <v-spacer></v-spacer>
-                <v-img
-                    id="border" 
-                    max-height="40"
-                    max-width="40" 
-                    src="../assets/contoh-profile.jpg"
-                    class="mr-3 ml-6">
-                </v-img>
-                <span class="font-weight-light white--text ">Welcome,</span>
+                <span class="font-weight-light white--text ">Workstation:</span>
                 <span class="white--text mr-6">ws0001</span>
                 <v-btn @click="logout()" color="grey">
                     <span>Sign Out</span>
@@ -59,20 +52,20 @@
             </div>
             <div class = "ma-6">
                 <h3>Operator</h3>
-                <v-card class="mx-auto mb-6 text-center mt-6" width="350">
-                    <v-data-table
-                        :headers = "headers2"
-                        :items = "items2">
-                    </v-data-table>
-                </v-card>
-                <v-text-field
-                v-model="kodeMaterial"
-                disabled
-                >
-                </v-text-field>
-                <v-btn class="mx-auto blue white--text" width="350">
-                    OPERASI SELESAI
-                </v-btn>
+                <div class="mx-auto mt-6">
+                    <span class="mr-10">Foto</span>
+                    <span class="ml-10">Nama</span>
+                </div>
+                <div class="mt-10">
+                    <v-text-field
+                    v-model="kodeMaterial"
+                    disabled
+                    >
+                    </v-text-field>
+                    <v-btn class="mx-auto blue white--text" width="350">
+                        OPERASI SELESAI
+                    </v-btn>
+                </div>
             </div>
         </div>
     </v-main>
@@ -87,9 +80,26 @@ export default {
             route: "/login",
             routeHome: "/",
             drawer: false,
-            items: [
-              
+            headers : [
+                {text : 'Code',         value : 'code'},
+                {text : 'Nama',         value : 'nama'},
+                {text : 'Email',        value : 'email'},
+                {text : 'Alamat 1',     value : 'adress1'},
+                {text : 'Kota',         value : 'city'},
+                {text : 'Phone',        value : 'phone'},
+                {text : 'Kode Pos',     value : 'postalcode'}
             ],
+            headers2 : [
+                {text : 'Code',         value : 'code'},
+                {text : 'Nama',         value : 'nama'},
+                {text : 'Email',        value : 'email'},
+                {text : 'Alamat 1',     value : 'adress1'},
+                {text : 'Kota',         value : 'city'},
+                {text : 'Phone',        value : 'phone'},
+                {text : 'Kode Pos',     value : 'postalcode'}
+            ],
+            items: undefined,
+            items2: undefined,
         }
     },
 
