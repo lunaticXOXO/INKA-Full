@@ -52,14 +52,6 @@
       label="Email"
       ></v-text-field>
 
-      <v-autocomplete
-      item-text="description"
-      item-value="codes"
-      v-model="pilihanKualifikasi"
-      :items="kualifikasi"
-      label="Kualifikasi"
-      ></v-autocomplete>
-
       <v-text-field
       v-model="userName"
       :rules="userRules"
@@ -128,8 +120,6 @@
       ],
       kota: undefined,
       items: undefined,
-      pilihanKualifikasi: undefined,
-      kualifikasi: undefined,
       snackbar:{
         show : false,
         message : null,
@@ -139,8 +129,7 @@
     }),
 
     mounted(){
-        this.fetchData(),
-        this.fetchKualifikasi()
+        this.fetchData()
     },
 
     methods: {
@@ -186,22 +175,6 @@
         }
       },
 
-      async fetchKualifikasi(){
-        try{
-          const axios = require('axios');
-          const res = await axios.get(`/qualification/get_qualification`);
-          if(res.data == null){
-              alert("Kualifikasi Kosong")
-          }else{
-              this.kualifikasi = res.data;
-              console.log(res,this.data)
-          }
-        }catch(error){
-          alert("Error")
-          console.log(error)
-        }
-      },
-
       async InsertOperator(){
         try{
           const axios = require('axios');
@@ -213,7 +186,6 @@
               postalcode : this.kodePos,
               phone : this.noTelepon,
               email : this.email,
-              qualificationCode : this.pilihanKualifikasi,
               username : this.userName
             }
           );
