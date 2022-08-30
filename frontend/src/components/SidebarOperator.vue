@@ -4,7 +4,7 @@
             <v-app-bar app color="#6f6f6f">
                 <v-app-bar-title class="text-uppercase">
                     <span class="font-weight-light white--text">Smart</span>
-                    <span class="white--text">Works 4.0 | Operator</span>
+                    <span class="white--text">Works 4.0 | WS</span>
                 </v-app-bar-title>
                 <v-img 
                     max-height="50"
@@ -40,6 +40,41 @@
                 </v-btn>
             </v-app-bar>
         </nav>
+        <div class="d-flex">
+            <div class = "ma-6">
+                <h3>Operasi</h3>
+                <v-card class="mx-auto mb-6 text-center mt-6" width="900">
+                    <v-data-table
+                        :headers = "headers"
+                        :items = "items">
+                    </v-data-table>
+                </v-card>
+                <h3>Material</h3>
+                <v-card class="mx-auto mb-6 text-center mt-6" width="900">
+                    <v-data-table
+                        :headers = "headers2"
+                        :items = "items2">
+                    </v-data-table>
+                </v-card>
+            </div>
+            <div class = "ma-6">
+                <h3>Operator</h3>
+                <v-card class="mx-auto mb-6 text-center mt-6" width="350">
+                    <v-data-table
+                        :headers = "headers2"
+                        :items = "items2">
+                    </v-data-table>
+                </v-card>
+                <v-text-field
+                v-model="kodeMaterial"
+                disabled
+                >
+                </v-text-field>
+                <v-btn class="mx-auto blue white--text" width="350">
+                    OPERASI SELESAI
+                </v-btn>
+            </div>
+        </div>
     </v-main>
 </template>
 

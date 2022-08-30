@@ -63,6 +63,8 @@ import TambahMaterialConsumable from '../views/material/TambahMaterialConsumable
 import LihatStatusPengerjaanWS from '../views/stasiunKerja/LihatStatusPengerjaanWS.vue'
 import LihatStatusPengerjaanProyek from '../views/proyek/StatusPengerjaanProyek.vue'
 import OperasibyProduct from '../views/operasi/ListOperasibyProduct.vue'
+import ListOperator from '../views/operator/ListOperator.vue'
+import TambahKemampuanOperator from '../views/operator/TambahKemampuanOperator.vue'
 
 Vue.use(VueRouter)
 
@@ -634,6 +636,24 @@ const routes = [
     component : OperasibyProduct,
     meta : {
       title : "Operasi by Produk - PT.INKA"
+    }
+  },
+
+  {
+    path : '/listOperator',
+    name : 'List Operator',
+    component : ListOperator,
+    meta : {
+      title : "List Operator - PT.INKA"
+    }
+  },
+
+  {
+    path : '/tambahKemampuanOperator/:id',
+    name : 'Tambah Kemampuan Operator',
+    component : TambahKemampuanOperator,
+    meta : {
+      title : "Tambah Kemampuan Operator - PT.INKA"
     }
   },
 ]
