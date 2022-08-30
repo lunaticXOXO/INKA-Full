@@ -1,5 +1,6 @@
 from flask import request,make_response,jsonify
 import db.db_handler as database
+import hashlib
 
 def AddQualification():
     conn = database.connector()

@@ -571,7 +571,6 @@ def get_requirement_byprocess(idProcess):
 
 
 
-
 #USERS 
 @app.route('/register',methods = ['POST'])
 def register():
