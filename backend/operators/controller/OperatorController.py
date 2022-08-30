@@ -16,6 +16,7 @@ def AddQualification():
     except Exception as e:
         print("Error",str(e))
         hasil = {"status" : "gagal"}
+
     return hasil
 
 
@@ -50,19 +51,22 @@ def AddOperator():
 
         values1 = (code,nama,adress1,postalcode,phone,email,city)
         cursor.execute(query,values1)
-        query2 = "INSERT INTO opr_d_operatorlevel(operatorid,qualificationCode)VALUES(%s,%s)"
-        qualificationCode = data["qualificationCode"]
-        values2 = (code,qualificationCode)
+
+        query2 = "INSERT INTO users(username,passwords,userType)VALUES(%s,%s,%s)"
+        username = data['username']
+        password = '12345ws'
+        passwordEncrypt = hashlib.md5(password.encode('utf8')).hexdigest()
+        values2 = (username,passwordEncrypt,7)
         cursor.execute(query2,values2)
         conn.commit()
+
         hasil = {"status" : "berhasil"}
 
     except Exception as e:
         print("Error",str(e))
         hasil = {"status" : "gagal"}
+    
     return hasil
-
-
 
 def ShowOperator():
     conn = database.connector()
@@ -76,6 +80,5 @@ def ShowOperator():
 
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
+    
     return make_response(jsonify(json_data),200)
-
-
