@@ -60,6 +60,39 @@ def AddRequirementByProcess(id):
         hasil = {"status" : "gagal"}
     return hasil
 
+
+def ShowRequirementProcess():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.processCode AS 'IdProses',b.nama AS 'NamaProses',c.codes AS 'RequirementCode',c.descriptions FROM prd_r_operatorrequirement a JOIN prd_r_proses b ON b.id = a.processCode JOIN opr_r_operatorqualification c ON c.codes = a.qualificationCode"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
+
+
+def ShowRequirmentByIdProcess(idProcess):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.processCode AS 'IdProses', b.nama AS 'NamaProses', c.codes AS 'RequirementCode', c.descriptions FROM prd_r_operatorrequirement a JOIN prd_r_proses b ON b.id = a.processCode JOIN opr_r_operatorqualification c ON c.codes = a.qualificationCode WHERE a.processCode = '"+idProcess+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
+
+
 def InsertJenisProses():
     conn = database.connector()
     cursor = conn.cursor()
