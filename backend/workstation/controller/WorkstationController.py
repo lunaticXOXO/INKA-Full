@@ -35,6 +35,21 @@ def ShowWorkStationbyProcess(id_process):
       return make_response(jsonify(json_data),200)
 
 
+def statusPengerjaanWS():
+      conn = database.connector()
+      cursor = conn.cursor()
+
+      query = "SELECT a.id AS 'idOperasi',c.nama AS 'namaStasiunKerja',b.nama AS 'namaProses',a.rencanaMulai,a.rencanaSelesai FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN gen_r_stasiunkerja C ON c.id = a.stasiunKerja"
+      cursor.execute(query)
+
+      row_headers = [x[0] for x in cursor.description]
+      records = cursor.fetchall()
+      json_data = []
+
+      for data in records:
+            json_data.append(dict(zip(row_headers,data)))
+      
+      return make_response(jsonify(json_data),200)
 
 
 def UpdateWorkstation(id):

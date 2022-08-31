@@ -357,6 +357,13 @@ def add_stasiun_kerja():
     hasil = AddWorkstation()
     return hasil
 
+
+@app.route('/stasiun_kerja/status_pengerjaan_stasiunkerja',methods = ['GET'])
+def pemantauan_stasiunkerja():
+    hasil = statusPengerjaanWS()
+    return hasil
+
+
 @app.route('/stasiun_kerja/add_stasiun_by_process/<id_process>',methods = ['POST'])
 def add_stasiun_by_process(id_process):
     hasil = AddWorkStationbyProcess(id_process)

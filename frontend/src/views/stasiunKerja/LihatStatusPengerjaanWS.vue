@@ -17,10 +17,11 @@
             @dragend-bar="stoppedDraggingBar($event)"
           >
             <g-gantt-row 
-              v-for="row in rowList"
-              :key="row.title"
-              :label="row.label"
-              :bars="row.barList"
+              v-for="item in items"
+              :key="item.idOperasi"
+              :label="item.namaStasiunKerja"
+              :bars="item.barList"
+                
               :highlight-on-hover="highlightOnHover"
               bar-start="myStart"
               bar-end="myEnd"
@@ -80,8 +81,26 @@ export default {
       contextmenuX: 0,
       contextmenuY: 0,
       selectedTheme: "vue",
+      items : [
+      /*{barList : [
+              {
+                myStart : 'rencanaMulai',
+                myEnd : 'rencanaSelesai',
+                label : 'namaProses'
+              }
+
+          ]}*/
+      ],
       rowList: [
-        {
+          /*{barList : [
+              {
+                myStart : 'rencanaMulai',
+                myEnd : 'rencanaSelesai',
+                label : 'namaProses'
+              }
+
+          ]}*/
+        /*{
           label: "WS1",
           barList: [
             {
@@ -169,13 +188,15 @@ export default {
               ganttBarConfig: {color:"white", backgroundColor: "#f2840f", borderRadius: 0}
             }, 
           ]
-        }
+        }*/
 
       ]
     }
   },
 
-
+  mounted(){
+    this.fetchDataStatusWS()
+  },
   methods: {
 
     stoppedDraggingBar(){
@@ -190,6 +211,19 @@ export default {
         clearTimeout(this.contextmenuTimeout)
       }
       this.contextmenuTimeout = setTimeout(() => this.showContextmenu = false, 3000)
+    },
+
+    async fetchDataStatusWS(){
+      const axios = require('axios')
+      const res = await axios.get('/stasiun_kerja/status_pengerjaan_stasiunkerja')
+      if(res.data == null){
+         console.log("Data kosong")
+      }else{
+        this.items = res.data
+        console.log(res,this.items)
+
+      }
+
     }
 
   }
