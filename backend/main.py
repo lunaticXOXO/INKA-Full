@@ -549,24 +549,20 @@ def get_qualification():
     hasil = GetQualification()
     return hasil
 
-
 @app.route('/operator/add_operatorlevel/<code>',methods = ['POST'])
 def add_operatorlevel(code):
     hasil = AddLevelByOperator(code)
     return hasil
-
 
 @app.route('/operator/get_oplevel_byoperator/<code>',methods = ['POST'])
 def get_oplevel_byoperator(code):
     hasil = ShowOperatorLevelbyOperator(code)
     return hasil
 
-
 @app.route('/operator/get_operasi_byoperator/<username>',methods = ['GET'])
 def get_operasi_byoperator(username):
     hasil = GetOperasiByOperatorLogin(username)
     return hasil
-
 
 # Process Requirement
 @app.route('/requirement/add_process_requirement/<id>',methods = ['POST'])
@@ -574,21 +570,15 @@ def add_process_requirement(id):
     hasil = AddRequirementByProcess(id)
     return hasil
 
-
 @app.route('/requirement/get_requirement_allprocess',methods = ['GET'])
 def get_requirement_allprocess():
     hasil = ShowRequirementProcess()
     return hasil
 
-
 @app.route('/requirement/get_requirement_byprocess/<idProcess>')
 def get_requirement_byprocess(idProcess):
     hasil = ShowRequirmentByIdProcess(idProcess)
     return hasil
-
-
-
-
 
 #USERS 
 @app.route('/register',methods = ['POST'])
