@@ -72,16 +72,28 @@ export default {
                       passwords: this.passwords
                     })
                     .then((response) => {
+                        if(response.status == 'berhasil'){
+                            this.session.start()
+                            this.session.set('jwt', response.body.token)
+            
+                        }
                         console.log(response.data.userType)
+                        console.log(response.data.username)
                         let tipeUser
+                        let uname
                         tipeUser = response.data.userType
+                        uname = response.data.username
                         this.loginService.addToUserType(tipeUser)
+                        this.loginService.addToUsername(uname)
                         this.loading = false
                         this.snackBar = true
                         location.replace("/")
+                    
+                       
                     })
                     .catch((error) => {
                         console.log(error)
+
                     });
                 }, 3000)
             }

@@ -26,7 +26,7 @@
                 </v-img>
                 <v-spacer></v-spacer>
                 <span class="font-weight-light white--text ">Workstation:</span>
-                <span class="white--text mr-6">ws0001</span>
+                <span class="white--text mr-6"></span>
                 <v-btn @click="logout()" color="grey">
                     <span>Sign Out</span>
                     <v-icon right>mdi-arrow-right</v-icon>
@@ -42,7 +42,7 @@
                         :items = "items">
                     </v-data-table>
                 </v-card>
-                <h3>Material</h3>
+                <h3>Material yang diperlukan</h3>
                 <v-card class="mx-auto mb-6 text-center mt-6" width="900">
                     <v-data-table
                         :headers = "headers2"
@@ -81,34 +81,70 @@ export default {
             routeHome: "/",
             drawer: false,
             headers : [
-                {text : 'Code',         value : 'code'},
-                {text : 'Nama',         value : 'nama'},
-                {text : 'Email',        value : 'email'},
-                {text : 'Alamat 1',     value : 'adress1'},
-                {text : 'Kota',         value : 'city'},
-                {text : 'Phone',        value : 'phone'},
-                {text : 'Kode Pos',     value : 'postalcode'}
+                {text : 'Code',               value : 'idOperasi'},
+                {text : 'Nama',               value : 'namaProses'},
+                {text : 'Rencana Mulai',      value : 'rencanaMulai'},
+                {text : 'Rencana Selesai',    value : 'rencanaSelesai'},
+                {text : 'Mulai',              value : 'mulai'},
+                {text : 'Selesai',            value : 'selesai'},
+              
             ],
             headers2 : [
                 {text : 'Code',         value : 'code'},
                 {text : 'Nama',         value : 'nama'},
-                {text : 'Email',        value : 'email'},
-                {text : 'Alamat 1',     value : 'adress1'},
-                {text : 'Kota',         value : 'city'},
-                {text : 'Phone',        value : 'phone'},
-                {text : 'Kode Pos',     value : 'postalcode'}
+                {text : 'Jumlah',value : 'jumlah'},
+                {text : 'Satuan',value : 'satuan'}
             ],
             items: undefined,
             items2: undefined,
+           
         }
     },
-
+    mounted(){
+        this.fetchOperasi(),
+        this.fetchMaterial()
+    },
     methods: {
         logout() {
             this.route = "/login"
             location.replace("/login")
             this.loginService.removeUserType()
+        },
+
+       async fetchOperasi(){
+            try{
+
+            const axios = require('axios')
+            console.log(this.loginService.getCurrentUsername())
+            const res =  await axios.get('/operator/get_operasi_byoperator/' + this.loginService.getCurrentUsername() );
+            if(res.data == null){
+                console.log("Data kosong")
+            }else{
+                this.items = res.data
+                console.log(res,this.items)
+            }
+            }catch(error){
+                console.log(error)
+            }
+           
+        },
+
+        async fetchMaterial(){
+            try{
+                const axios = require('axios')
+                const res = await axios.get('/operator/get_material_byoperator/' + this.loginService.getCurrentUsername())
+                if(res.data == null){
+                    console.log("Data kosong")
+                }else{
+                    this.items2 = res.data
+                    console.log(res,this.items2)
+                }
+            }catch(error){
+                console.log(error)
+            }
         }
+
+     
     },
 }
 </script>

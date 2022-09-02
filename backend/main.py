@@ -571,6 +571,12 @@ def get_operasi_byoperator(username):
     hasil = GetOperasiByOperatorLogin(username)
     return hasil
 
+
+@app.route('/operator/get_material_byoperator/<username>',methods = ['GET'])
+def get_material_byoperator(username):
+    hasil = GetMaterialbyOperatorLogin(username)
+    return hasil
+
 # Process Requirement
 @app.route('/requirement/add_process_requirement/<id>',methods = ['POST'])
 def add_process_requirement(id):

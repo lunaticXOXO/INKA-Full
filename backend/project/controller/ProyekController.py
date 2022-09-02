@@ -120,3 +120,10 @@ def UpdateProyek(id):
 
     return hasil
   
+
+
+
+def showProgressProyek():
+    conn = database.connector()
+    cursor = conn.cursor()
+    

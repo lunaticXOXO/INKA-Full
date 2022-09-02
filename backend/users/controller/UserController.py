@@ -24,7 +24,9 @@ def Login():
         session['loggedin'] = True
         session['username'] = username
         hasil = {"status" : "berhasil",
-                 "userType" : userType}
+                 "userType" : userType,
+                "username" : username
+                 }
     else:
         hasil = {"status" : "gagal"}
     return hasil

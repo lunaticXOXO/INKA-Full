@@ -78,6 +78,8 @@ const routes = [
     }
   },
 
+  
+
   {
     path: '/graph',
     name: 'GraphPage',
