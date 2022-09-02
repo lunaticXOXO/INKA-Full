@@ -21,7 +21,6 @@
               :key="item.idOperasi"
               :label="item.namaStasiunKerja"
               :bars="item.barList"
-                
               :highlight-on-hover="highlightOnHover"
               bar-start="myStart"
               bar-end="myEnd"
@@ -197,9 +196,10 @@ export default {
   mounted(){
     this.fetchDataStatusWS()
   },
-  methods: {
 
+  methods: {
     stoppedDraggingBar(){
+
     },
 
     onContextmenuBar(e){
@@ -217,15 +217,12 @@ export default {
       const axios = require('axios')
       const res = await axios.get('/stasiun_kerja/status_pengerjaan_stasiunkerja')
       if(res.data == null){
-         console.log("Data kosong")
+         console.log("Data Pengerjaan Kosong")
       }else{
         this.items = res.data
         console.log(res,this.items)
-
       }
-
     }
-
   }
 }
 </script>

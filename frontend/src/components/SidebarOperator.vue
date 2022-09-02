@@ -60,6 +60,7 @@
                     <v-text-field
                     v-model="kodeMaterial"
                     disabled
+                    outlined
                     >
                     </v-text-field>
                     <v-btn class="mx-auto blue white--text" width="350">
@@ -108,7 +109,7 @@ export default {
             this.route = "/login"
             location.replace("/login")
             this.loginService.removeUserType()
-        }
+        },
     },
 }
 </script>

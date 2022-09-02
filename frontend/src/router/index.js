@@ -65,6 +65,7 @@ import LihatStatusPengerjaanProyek from '../views/proyek/StatusPengerjaanProyek.
 import OperasibyProduct from '../views/operasi/ListOperasibyProduct.vue'
 import ListOperator from '../views/operator/ListOperator.vue'
 import TambahKemampuanOperator from '../views/operator/TambahKemampuanOperator.vue'
+import ListOperatorHadir from '../views/operator/ListOperatorHadir.vue'
 
 Vue.use(VueRouter)
 
@@ -654,6 +655,15 @@ const routes = [
     component : TambahKemampuanOperator,
     meta : {
       title : "Tambah Kemampuan Operator - PT.INKA"
+    }
+  },
+
+  {
+    path : '/listOperatorHadir',
+    name : 'List Operator Hadir',
+    component : ListOperatorHadir,
+    meta : {
+      title : "List Operator Hadir - PT.INKA"
     }
   },
 ]
