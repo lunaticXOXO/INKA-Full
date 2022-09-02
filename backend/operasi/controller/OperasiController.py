@@ -177,6 +177,9 @@ def ShowProductInPantauOperasi():
         json_data.append(dict(zip(row_headers,data)))
     return make_response(jsonify(json_data),200)
 
+
+
+
 def StartOperation(idOperasi):
     conn = database.connector()
     cursor = conn.cursor()

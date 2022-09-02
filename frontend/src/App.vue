@@ -80,6 +80,7 @@ export default {
     const data = [];
       return {
           idRole: null,
+          username : '',
           loginService: new Login(),
           data,
       };
@@ -88,7 +89,9 @@ export default {
   methods: {
     async fetchData() {
         this.idRole = this.loginService.getCurrentUserType();
+        this.username = this.loginService.getCurrentUsername();
         console.log(this.idRole)
+        console.log(this.username)
     },
   },
 };

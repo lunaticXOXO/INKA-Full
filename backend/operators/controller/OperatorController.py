@@ -73,24 +73,45 @@ def AddOperator():
 def GetOperasiByOperatorLogin(username):
     conn = database.connector()
     cursor = conn.cursor()
-    sess = session['username']
-    query_cek = "SELECT username FROM opd_r_operator WHERE username = '"+sess+"'"
+
+    #sess = session['username']
+    #print("Sess : ",sess)
+    query_cek = "SELECT username FROM opd_r_operator WHERE username = '"+username+"'"
     cursor.execute(query_cek)
     records = cursor.fetchall()
     username = ""
     for data in records:
         username = data[0]
     
-    if session['username'] == username:
-        query_get_operasi = "SELECT * FROM opr_d_operatorneed a JOIN prd_d_operasi b ON b.id = a.operationid JOIN opd_r_operator c ON c.code = a.operatorid WHERE c.username = '"+username+"'"
-        cursor.execute(query_get_operasi)
-        records = cursor.fetchall()
-        json_data = []
-        row_headers = [x[0] for x in cursor.description]
-        for data in records:
-            json_data.append(dict(zip(row_headers,data)))
-        return make_response(jsonify(json_data),200)
+    #if session['username'] == username:
+    query_get_operasi = "SELECT b.id AS 'idOperasi',d.nama AS 'namaProses', b.rencanaMulai,b.rencanaSelesai, b.mulai,b.selesai FROM opr_d_operatorneed a JOIN prd_d_operasi b ON b.id = a.operationid JOIN opd_r_operator c ON c.code = a.operatorid JOIN prd_r_proses d ON d.id = b.proses WHERE c.username = '"+username+"'"
+    cursor.execute(query_get_operasi)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
 
+
+def GetMaterialbyOperatorLogin(username):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query_cek = "SELECT username FROM opd_r_operator WHERE username = '"+username+"'"
+    cursor.execute(query_cek)
+    records = cursor.fetchall()
+    username = ""
+    for data in records:
+        username = data[0]
+    
+    query_get_material = "SELECT f.code,e.nama,e.jumlah,e.satuan FROM opr_d_operatorneed a JOIN opd_r_operator b ON b.code = a.operatorid JOIN prd_d_operasi c ON c.id = a.operationid JOIN prd_r_proses d ON d.id = c.proses JOIN prd_r_strukturjnsprd e ON e.idNodal = d.nodalOutput JOIN mat_r_materialtype f ON f.code = e.materialTypeCode WHERE b.username = '"+username+"'"
+    cursor.execute(query_get_material)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
 
 def AddLevelByOperator(code):
     conn = database.connector()

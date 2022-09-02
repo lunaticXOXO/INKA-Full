@@ -20,10 +20,9 @@
               v-for="item in items"
               :key="item.idOperasi"
               :label="item.namaStasiunKerja"
-              :bars="item.barList"
-              :highlight-on-hover="highlightOnHover"
-              bar-start="myStart"
-              bar-end="myEnd"
+              :bars="item.bars"
+              :bar-start="item.bars.rencanaMulai"
+              :bar-end="item.bars.rencanaSelesai"
             >
               <template #bar-label="{bar}">
                 <img
@@ -65,7 +64,7 @@ export default {
 
   data(){
     return {
-      chartStart: "2022-08-01 00:00",
+      chartStart: "2022-08-02 00:00",
       chartEnd: "2022-08-03 00:00",
       pushOnOverlap: false,
       grid: true,
@@ -81,14 +80,14 @@ export default {
       contextmenuY: 0,
       selectedTheme: "vue",
       items : [
-      /*{barList : [
+      {bars : [
               {
                 myStart : 'rencanaMulai',
                 myEnd : 'rencanaSelesai',
                 label : 'namaProses'
               }
 
-          ]}*/
+          ]}
       ],
       rowList: [
           /*{barList : [
