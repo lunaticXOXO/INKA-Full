@@ -65,6 +65,9 @@ import LihatStatusPengerjaanProyek from '../views/proyek/StatusPengerjaanProyek.
 import OperasibyProduct from '../views/operasi/ListOperasibyProduct.vue'
 import ListOperator from '../views/operator/ListOperator.vue'
 import TambahKemampuanOperator from '../views/operator/TambahKemampuanOperator.vue'
+import ListMaterialByPemasok from '../views/pemasok/ListMaterialByPemasok.vue'
+import TambahMaterialTypebyPemasok from '../views/pemasok/TambahMaterialTypebyPemasok.vue'
+
 
 Vue.use(VueRouter)
 
@@ -658,6 +661,28 @@ const routes = [
       title : "Tambah Kemampuan Operator - PT.INKA"
     }
   },
+
+  {
+
+    path : '/listMaterialTypeBySupplier/:id',
+    name : 'List Material Type By Supplier',
+    component : ListMaterialByPemasok,
+    meta : {
+
+        title : "List Material Type By Supplier - PT INKA"
+    }
+  },
+
+  {
+
+    path : '/tambahMaterialTypebyPemasok/:id',
+    name : 'Tambah Material Type by Pemasok',
+    component : TambahMaterialTypebyPemasok,
+    meta : {
+        title : "Tambah Material Type By Supplier - PT.INKA"
+    }
+
+  }
 ]
 
 const router = new VueRouter({

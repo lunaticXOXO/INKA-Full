@@ -60,11 +60,13 @@
                   </v-icon>
               </div>
               <div v-else>
-                <!--<router-link :to="{name : 'Proyek by Customer',params:{id : `${item.code}`}}">-->
+                <router-link :to="{name : 'List Material Type By Supplier',params:{id : `${item.code}`}}">
+
                 <v-btn class="mx-1" x-small color="blue" @click="selectSupplier(item)">
                     <v-icon small dark>mdi-check</v-icon>
                 </v-btn>
-                <!--</router-link>-->
+                </router-link>
+                
                 <v-btn class="mx-1" x-small color="green" @click="editSupplier(item)">
                     <v-icon small dark>mdi-pencil</v-icon>
                 </v-btn>

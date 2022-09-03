@@ -200,7 +200,6 @@ def PurchaseNewMaterial():
     conn = database.connector()
     cursor = conn.cursor()
     N = 5
-    N2 = 3
     query = "INSERT INTO mat_d_purchasematerial(id,nama,purchaserName,purchaseDate)VALUES(%s,%s,%s,%s)"
     query2 = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)VALUES(%s,%s,%s,%s,%s,%s,%s)"
     query3 = "INSERT INTO mat_d_materialstock(id,purchaseId,orders,materialTypeCode,supplierCode,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
@@ -209,13 +208,12 @@ def PurchaseNewMaterial():
     data3 = request.json
     try:
         id_purchase = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
-        id_fix_purchase = id_purchase
+        #id_fix_purchase = id_purchase
         nama = data["nama"]
         purchaserName = data["purchaserName"]
-        purchaseDate = datetime.datetime.now()
-
-        id_item = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N2))
-        id_fix_item = id_item
+        purchaseDate = data["purchaseDate"]
+        
+        id_item = data2["id_item"]
         supplierCode = data2["supplierCode"]
         materialTypeCode = data2["materialTypeCode"]
         quantity = data2["quantity"]
@@ -223,21 +221,23 @@ def PurchaseNewMaterial():
         schedulledArrival = data2["schedulledArrival"]
         
         id_stock = data3["id"]
-        purchaseId = id_fix_purchase
-        orders = id_fix_item
+        
+        
         supplierCodeMat = supplierCode
-        materialTypeCodeMat = materialTypeCode
+      
         merk = data3["merk"]
         matquantity = quantity
         matunit = unit
         arrivalDate = datetime.datetime.now() + datetime.timedelta(days=7)
 
-        values  = (id_fix_purchase,nama,purchaserName,purchaseDate)
-        values2 = (id_fix_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,id_fix_purchase)
-        values3 = (id_stock,purchaseId,orders,materialTypeCodeMat,supplierCodeMat,merk,matquantity,matunit,arrivalDate)
+        values  = (id_purchase,nama,purchaserName,purchaseDate)
+        values2 = (id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,id_purchase)
+        values3 = (id_stock,id_purchase,id_item,materialTypeCode,supplierCodeMat,merk,matquantity,matunit,arrivalDate)
 
         cursor.execute(query,values)
+        #conn.commit()
         cursor.execute(query2,values2)
+        #conn.commit()
         cursor.execute(query3,values3)
         conn.commit()
         hasil = {"status" : "berhasil"}
@@ -246,3 +246,4 @@ def PurchaseNewMaterial():
         print("Error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
+
