@@ -60,6 +60,7 @@
                     <v-text-field
                     v-model="kodeMaterial"
                     disabled
+                    outlined
                     >
                     </v-text-field>
                     <v-btn class="mx-auto blue white--text" width="350">

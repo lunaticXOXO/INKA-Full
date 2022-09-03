@@ -91,7 +91,7 @@ export default {
                 action: 'mdi-garage-variant',
                 active: false,
                 items: [
-                    { title: 'Lihat Status Pengerjaan', icon: 'mdi-eye', route: '/statusPengerjaanWS'},
+                    { title: 'Jadwal Pengerjaan', icon: 'mdi-calendar', route: '/statusPengerjaanWS'},
                 ],
                 title: 'Stasiun Kerja',
                 },
@@ -103,6 +103,24 @@ export default {
                     { title: 'Pantau Operasi', icon: 'mdi-eye', route: '/pantauOperasi'},
                 ],
                 title: 'Operasi',
+                },
+
+                {
+                action: 'mdi-account-star',
+                active: false,
+                items: [
+                    { title: 'List Operator Hadir', icon: 'mdi-playlist-check', route: '/listOperatorHadir'},
+                ],
+                title: 'Operator',
+                },
+
+                {
+                action: 'mdi-progress-helper',
+                active: false,
+                items: [
+                    { title: 'Status Pengerjaan Proyek', icon: 'mdi-book', route: '/statusPengerjaanProyek'},
+                ],
+                title: 'Progress',
                 },
             ],
         }
