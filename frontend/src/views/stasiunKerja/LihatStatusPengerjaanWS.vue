@@ -1,3 +1,4 @@
+<!--
 <template>
   <v-app>
     <div>
@@ -221,6 +222,7 @@ export default {
         this.items = res.data
         console.log(res,this.items)
       }
+
     }
   }
 }
@@ -233,7 +235,7 @@ export default {
   }
 </style>
 
-<!--
+
 <template>
   <div>
     <div id="ganttastic-wrapper">
@@ -551,3 +553,206 @@ export default {
   }
 </style>
 -->
+
+<template>
+  <v-card>
+    <v-card class="mt-10 mx-10">
+      <h2>Default</h2>
+      <g-gantt-chart
+        :chart-start="myChartStart"
+        :chart-end="myChartEnd"
+      >
+        <g-gantt-row
+          v-for="row in rows"
+          :key="row.label"
+          :label="row.label"
+          :bars="row.bars"
+          bar-start="myStart"
+          bar-end="myEnd"
+          >
+          <template #bar-label="{bar}">
+            <span>{{bar.label}}</span>
+          </template>
+        </g-gantt-row>
+      </g-gantt-chart>
+    </v-card>
+
+    <v-card class="mt-10 mx-10">
+      <h2>JSON Auto</h2>
+      <g-gantt-chart
+        :chart-start="myChartStartCustom"
+        :chart-end="myChartEndCustom"
+      >
+        <g-gantt-row
+          v-for="row in items"
+          :key="row.namaStasiunKerja"
+          :label="row.namaStasiunKerja"
+          :bars="items"
+          bar-start="rencanaMulai"
+          bar-end="rencanaSelesai"
+        />
+      </g-gantt-chart>
+    </v-card>
+    
+    <v-card class="mt-10 mx-10">
+      <h2>JSON Manual</h2>
+      <g-gantt-chart
+        :chart-start="myChartStartCustom"
+        :chart-end="myChartEndCustom"
+      >
+        <g-gantt-row
+          v-for="row in items2"
+          :key="row.namaStasiunKerja"
+          :label="row.namaStasiunKerja"
+          :bars="items2"
+          bar-start="rencanaMulai"
+          bar-end="rencanaSelesai"
+        >
+          <template #bar-label="{bar}">
+            <span>{{bar.namaProses}}</span>
+          </template>
+        </g-gantt-row>
+      </g-gantt-chart>
+    </v-card>
+
+    <v-card class="mt-10 mx-10">
+      <h2>JSON Adjust</h2>
+      <g-gantt-chart
+        :chart-start="myChartStartCustom"
+        :chart-end="myChartEndCustom"
+      >
+        <g-gantt-row
+          v-for="row in items3"
+          :key="row.label"
+          :label="row.label"
+          :bars="row.bars"
+          bar-start="rencanaMulai"
+          bar-end="rencanaSelesai"
+        >
+          <template #bar-label="{bar}">
+            <span>{{bar.namaProses}}</span>
+          </template>
+        </g-gantt-row>
+      </g-gantt-chart>
+    </v-card>
+  </v-card>
+</template>
+
+<script>
+
+import {GGanttChart, GGanttRow} from 'vue-ganttastic'
+var today = new Date();
+var newDate = new Date(Date.now()+1*24*60*60*1000);
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var date2 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+ newDate.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+' '+time;
+var dateTime2 = date2+' '+time;
+
+export default {
+  components:{
+    GGanttChart,
+    GGanttRow
+  },
+
+  data(){
+    return {
+      items: undefined,
+      myChartStart: "2020-03-01 00:00",
+      myChartEnd: "2020-03-03 00:00",
+      myChartStartCustom: dateTime,
+      myChartEndCustom: dateTime2,
+      items2:[
+        {
+          "idOperasi":"23NGWLRG3",
+          "namaProses":"Setting brake boogie",
+          "namaStasiunKerja":"WS8",
+          "rencanaMulai":"2022-09-03 23:00",
+          "rencanaSelesai":"2022-09-04 01:00"
+        },
+        {
+          "idOperasi":"NABNJ4PL4",
+          "namaProses":"Bogie Installation",
+          "namaStasiunKerja":"WS8",
+          "rencanaMulai":"2022-09-04 03:00",
+          "rencanaSelesai":"2022-09-04 06:00"
+        },
+        {
+          "idOperasi":"RKKXZTTQP",
+          "namaProses":"Test beban",
+          "namaStasiunKerja":"WS9",
+          "rencanaMulai":"2022-09-04 08:00",
+          "rencanaSelesai":"2022-09-04 11:00"
+        },
+        {
+          "idOperasi":"SX7RQUVPP",
+          "namaProses":"Bogie Assy NON Handbrake",
+          "namaStasiunKerja":"WS8",
+          "rencanaMulai":"2022-09-04 12:00",
+          "rencanaSelesai":"2022-09-04 16:00"
+        }
+      ],
+
+      rows: [
+        {
+          label: "My row #1",
+          bars: [
+            {
+              myStart: "2020-03-01 12:10",
+              myEnd: "2020-03-01 16:35"
+            }
+          ]
+        },
+        {
+          label: "My row #2",
+          bars: [
+            {
+              myStart: "2020-03-02 01:00",
+              myEnd: "2020-03-02 12:00"
+            },
+            {
+              myStart: "2020-03-02 13:00",
+              myEnd: "2020-03-02 22:00"
+            }
+          ]
+        }
+      ],
+      
+      items3:[
+        {
+          label: "",
+          bars: [
+            {
+              rencanaMulai: "",
+              rencanaSelesai: ""
+            }
+          ]
+        }
+      ],
+    }
+  },
+
+  mounted(){
+    this.fetchDataStatusWS()
+  },
+
+  methods:{
+    async fetchDataStatusWS(){
+      const axios = require('axios')
+      const res = await axios.get('/stasiun_kerja/status_pengerjaan_stasiunkerja')
+      if(res.data == null){
+          console.log("Data Pengerjaan Kosong")
+      }else{
+        this.items = res.data
+        //this.items3.label = res.data[0].namaStasiunKerja
+        //this.items3.bars.rencanaMulai = res.data[0].rencanaMulai
+        //this.items3.bars.rencanaSelesai = res.data[0].rencanaSelesai
+        //console.log(this.items3.label)
+        //console.log(this.items3.bars[0].rencanaMulai)
+        //console.log(this.items3.bars[0].rencanaSelesai)
+        console.log(res,this.items)
+      }
+    }
+  }
+}
+</script>
