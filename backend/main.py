@@ -102,6 +102,17 @@ def update_supplier(code):
     hasil = UpdateSupplier(code)
     return hasil
 
+@app.route('/supplier/add_materialtype_bysupplier/<code>',methods = ['POST'])
+def add_materialtype_bysupplier(code):
+    hasil = AddMaterialTypeSupplierbySupplier(code)
+    return hasil
+
+
+@app.route('/supplier/get_materialtype_bysupplier/<code>',methods = ['GET'])
+def get_materialtype_bysupplier(code):
+    hasil = ShowMaterialTypeSupplierBySupplier(code)
+    return hasil
+
 #PROYEK
 @app.route('/proyek/get_allproyek',methods = ['GET'])
 def get_allproyek():

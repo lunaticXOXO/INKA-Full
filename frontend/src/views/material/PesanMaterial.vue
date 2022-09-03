@@ -3,7 +3,7 @@
         class="mx-auto text-center mt-6"
         max-width="1000">
         <br>
-        <h1>Pesan Material Baru</h1>
+        <h1>Tambah material masuk</h1>
         <v-form
           class="pa-6"
           ref="form"
@@ -11,6 +11,11 @@
           v-model="valid"
           lazy-validation>
         
+          <v-text-field
+          v-model="id_item"
+          label="Id Order"
+          ></v-text-field>
+
           <v-text-field
           v-model="nama"
           label="Nama"
@@ -37,11 +42,6 @@
           label="Material Type"
           ></v-autocomplete>
 
-          <v-text-field
-          v-model="quantity"
-          label="Quantity"
-          type="number"
-          ></v-text-field>
 
           <v-autocomplete
           item-text="nama"
@@ -50,6 +50,14 @@
           :items="units"
           label="Unit"
           ></v-autocomplete>
+
+
+          <v-menu>
+            <template v-slot:activator="{ on, attrs }">
+                <v-text-field :value="tanggalPurchase" v-bind="attrs" v-on="on" label="Purchase Date" prepend-icon="mdi-calendar"></v-text-field>
+            </template>
+            <v-date-picker width="1000" v-model="tanggalPurchase"></v-date-picker>
+          </v-menu>
 
           <v-menu>
             <template v-slot:activator="{ on, attrs }">
@@ -69,6 +77,12 @@
           <v-text-field
           v-model="merk"
           label="Merk"
+          ></v-text-field>
+          
+          <v-text-field
+          v-model="quantity"
+          label="Quantity"
+          type="number"
           ></v-text-field>
 
           <v-btn
@@ -106,6 +120,7 @@
         v => !!v || 'ID Stock is required',
         v => (v && v.length <= 11 && v.length >= 1) || 'ID must be 1-11 characters',
       ],
+      id_item : '',
       supply: '',
       supplier: undefined,
       type: '',
@@ -114,6 +129,7 @@
       units: undefined,
       quantity: '',
       tanggal: null,
+      tanggalPurchase : null,
       merk: '',
       snackbar : {
         show : false,
@@ -203,7 +219,9 @@
         try{
           const axios = require('axios');
           const response = await axios.post('/material/order_new_material',
-            { nama: this.nama,
+            { 
+              id_item : this.id_item,
+              nama: this.nama,
               purchaserName: this.purchaser,
               supplierCode: this.supply,
               materialTypeCode: this.type,
@@ -211,7 +229,8 @@
               unit: this.unit,
               id: this.id_stock,
               merk: this.merk,
-              schedulledArrival: this.tanggal
+              schedulledArrival: this.tanggal,
+              purchaseDate : this.tanggalPurchase
             }
           );
           console.log(response,this.data)

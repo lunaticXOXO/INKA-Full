@@ -204,7 +204,10 @@
               message : "Insert Data Pemasok Success",
               color : 'green',
               show : true
-          }}
+          }
+        
+          location.replace('/listPemasok')
+        }
           else if(res.data.status == "gagal"){
               this.snackbar = {
               message : "Insert Data Pemasok Gagal, Code Sudah Tersedia!",
