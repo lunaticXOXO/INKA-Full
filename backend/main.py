@@ -151,6 +151,11 @@ def accumulate_percentage_proyek(idOperasi):
     return hasil
 
 
+@app.route('/proyek/show_percentage_proyek',methods = ['GET'])
+def show_percentage_proyek():
+    hasil = showPercentageAllProyek()
+    return hasil
+
 #RINCIAN PROYEK
 @app.route('/rproyek/show_rproyek',methods = ['GET'])
 def show_rproyek():

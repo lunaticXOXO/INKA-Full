@@ -172,13 +172,16 @@ def AccumulatePercentageProyek(idOperasi):
     return hasil
     
 
-    
 
-
-
-
-
-def showProgressProyek():
+def showPercentageAllProyek():
     conn = database.connector()
     cursor = conn.cursor()
-    
+    query = "SELECT a.id,a.nama,a.percentage FROM prd_r_proyek a"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
