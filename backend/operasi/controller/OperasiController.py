@@ -213,8 +213,14 @@ def StartOperation(idOperasi):
 def EndOperation(idOperasi):
     conn = database.connector()
     cursor = conn.cursor()
+
+    #update kolom selesai
     query = "UPDATE prd_d_operasi SET selesai = '"+datetime.datetime.now()+"' WHERE id = '"+idOperasi+"'"
     cursor.execute(query)
+
+    #status menjadi 1 atau selesai
+    query2 = "UPDATE prd_d_operasi SET status = 1 WHERE id = '"+idOperasi+"'"
+    cursor.execute(query2)
     conn.commit()
     hasil = {"status" : "berhasil"}
     return hasil

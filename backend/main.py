@@ -144,6 +144,13 @@ def update_proyek(id):
     hasil = UpdateProyek(id)
     return hasil
 
+
+@app.route('/proyek/accumulate_percentage_proyek/<idOperasi>',methods = ['POST'])
+def accumulate_percentage_proyek(idOperasi):
+    hasil = AccumulatePercentageProyek(idOperasi)
+    return hasil
+
+
 #RINCIAN PROYEK
 @app.route('/rproyek/show_rproyek',methods = ['GET'])
 def show_rproyek():
