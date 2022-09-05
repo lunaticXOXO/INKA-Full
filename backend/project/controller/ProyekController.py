@@ -130,6 +130,7 @@ def AccumulatePercentageProyek(idOperasi):
     conn = database.connector()
     cursor = conn.cursor()
 
+
     #meng GET data id proyek dari id operasi yang di klik
     query_get_idproyek = "SELECT d.id FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_r_rincianproyek c ON b.rincianproyek = c.id JOIN prd_r_proyek d ON c.proyek = d.id WHERE a.id = '"+idOperasi+"'"
     cursor.execute(query_get_idproyek)
@@ -155,17 +156,22 @@ def AccumulatePercentageProyek(idOperasi):
     cursor.execute(query_all)
     records_operasi = cursor.fetchall()
     nstatus = 0
+   
     for index in records_operasi:
-        nstatus = index[4]
-        if nstatus == 1:
-            counter += counter
+         nstatus = index[4]
+         if nstatus == 1:
+            counter = counter + nstatus
+
     nilai_percentage = (counter / jml_totalop_int) * 100
+   
 
     try:
-        query_update_percentage = "UPDATE prd_r_proyek SET percentage = '"+nilai_percentage+"' WHERE id = '"+id_proyek+"' "
-        cursor.execute(query_update_percentage)
+        query_update_percentage = "UPDATE prd_r_proyek SET percentage = %s WHERE id = %s"
+        values3 = (nilai_percentage,id_proyek)
+        cursor.execute(query_update_percentage,values3)
         conn.commit()
         hasil = {"status" : "berhasil"}
+
     except Exception as e:
         print("Error",str(e))
         hasil = {"status" : "gagal"}
