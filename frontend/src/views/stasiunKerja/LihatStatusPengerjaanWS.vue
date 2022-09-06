@@ -555,7 +555,23 @@ export default {
 -->
 
 <template>
-  <v-card>
+  <v-app>
+    <h3 class="ml-10 mt-6">Tanggal Mulai Pencarian</h3>
+    <v-menu class="ml-10 mt-6">
+      <template v-slot:activator="{ on, attrs }">
+        <v-text-field class="ml-10" :value="tanggalPencarian" v-bind="attrs" v-on="on" label="Tanggal Pencarian" prepend-icon="mdi-calendar"></v-text-field>
+      </template>
+      <v-date-picker width="1000" v-model="tanggalPencarian"></v-date-picker>
+    </v-menu>
+    <v-btn
+      color="success"
+      class="ml-10"
+      width="200"
+      type="submit"
+      @click="validate()">
+      Submit
+    </v-btn>
+
     <v-card class="mt-10 mx-10">
       <h2>Default</h2>
       <g-gantt-chart
@@ -635,19 +651,19 @@ export default {
         </g-gantt-row>
       </g-gantt-chart>
     </v-card>
-  </v-card>
+  </v-app>
 </template>
 
 <script>
 
 import {GGanttChart, GGanttRow} from 'vue-ganttastic'
-var today = new Date();
-var newDate = new Date(Date.now()+1*24*60*60*1000);
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-var date2 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+ newDate.getDate();
-var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-var dateTime = date+' '+time;
-var dateTime2 = date2+' '+time;
+//var today = new Date();
+//var newDate = new Date(Date.now()+1*24*60*60*1000);
+//var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+//var date2 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+ newDate.getDate();
+//var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+//var dateTime = date+' '+time;
+//var dateTime2 = date2+' '+time;
 
 export default {
   components:{
@@ -658,38 +674,41 @@ export default {
   data(){
     return {
       items: undefined,
+      tanggalPencarian: '',
       myChartStart: "2020-03-01 00:00",
       myChartEnd: "2020-03-03 00:00",
-      myChartStartCustom: dateTime,
-      myChartEndCustom: dateTime2,
+      //myChartStartCustom: dateTime,
+      //myChartEndCustom: dateTime2,
+      myChartStartCustom:'',
+      myChartEndCustom:'',
       items2:[
         {
           "idOperasi":"23NGWLRG3",
           "namaProses":"Setting brake boogie",
           "namaStasiunKerja":"WS8",
-          "rencanaMulai":"2022-09-03 23:00",
-          "rencanaSelesai":"2022-09-04 01:00"
+          "rencanaMulai":"2022-09-04 07:00",
+          "rencanaSelesai":"2022-09-04 10:00"
         },
         {
           "idOperasi":"NABNJ4PL4",
           "namaProses":"Bogie Installation",
           "namaStasiunKerja":"WS8",
-          "rencanaMulai":"2022-09-04 03:00",
-          "rencanaSelesai":"2022-09-04 06:00"
+          "rencanaMulai":"2022-09-04 12:00",
+          "rencanaSelesai":"2022-09-04 15:00"
         },
         {
           "idOperasi":"RKKXZTTQP",
           "namaProses":"Test beban",
           "namaStasiunKerja":"WS9",
-          "rencanaMulai":"2022-09-04 08:00",
-          "rencanaSelesai":"2022-09-04 11:00"
+          "rencanaMulai":"2022-09-04 17:00",
+          "rencanaSelesai":"2022-09-04 19:00"
         },
         {
           "idOperasi":"SX7RQUVPP",
           "namaProses":"Bogie Assy NON Handbrake",
           "namaStasiunKerja":"WS8",
-          "rencanaMulai":"2022-09-04 12:00",
-          "rencanaSelesai":"2022-09-04 16:00"
+          "rencanaMulai":"2022-09-04 20:00",
+          "rencanaSelesai":"2022-09-04 23:00"
         }
       ],
 
@@ -741,18 +760,31 @@ export default {
       const axios = require('axios')
       const res = await axios.get('/stasiun_kerja/status_pengerjaan_stasiunkerja')
       if(res.data == null){
-          console.log("Data Pengerjaan Kosong")
+        console.log("Data Pengerjaan Kosong")
       }else{
         this.items = res.data
+        //var stringify = JSON.stringify(res.data[0].rencanaMulai)
+        //var hasil = JSON.parse(stringify)
+        //console.log(hasil)
         //this.items3.label = res.data[0].namaStasiunKerja
         //this.items3.bars.rencanaMulai = res.data[0].rencanaMulai
         //this.items3.bars.rencanaSelesai = res.data[0].rencanaSelesai
         //console.log(this.items3.label)
         //console.log(this.items3.bars[0].rencanaMulai)
         //console.log(this.items3.bars[0].rencanaSelesai)
+        //console.log(res.data[0].rencanaMulai)
         console.log(res,this.items)
       }
-    }
+    },
+
+    validate(){
+      const date = new Date(this.tanggalPencarian)
+      date.setDate(date.getDate() + 2);
+      this.myChartStartCustom = this.tanggalPencarian
+      this.myChartEndCustom = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+      console.log(this.myChartStartCustom)
+      console.log(this.myChartEndCustom)
+    },
   }
 }
 </script>
