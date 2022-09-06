@@ -1,3 +1,4 @@
+from operasi.controller.OperasiController import EndOperation
 from project.controller.RincianProyekController import *
 from datetime import datetime
 import db.db_handler as database
@@ -121,9 +122,72 @@ def UpdateProyek(id):
     return hasil
   
 
+def AccumulatePercentageProyek(idOperasi):
 
+    #Memberhentikan operasi, tanda sudah beres & mengupdate status operasi menjadi 1.
+    EndOperation(idOperasi)
 
-def showProgressProyek():
     conn = database.connector()
     cursor = conn.cursor()
+
+
+    #meng GET data id proyek dari id operasi yang di klik
+    query_get_idproyek = "SELECT d.id FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_r_rincianproyek c ON b.rincianproyek = c.id JOIN prd_r_proyek d ON c.proyek = d.id WHERE a.id = '"+idOperasi+"'"
+    cursor.execute(query_get_idproyek)
+    records = cursor.fetchall()
+    id_proyek = ''
+    for data in records:
+        id_proyek = data[0]
+    print("Id Proyek : ",id_proyek)
+
+    #Menghitung jumlah operasi dari suatu proyek
+    query_count_operasi = "SELECT COUNT(a.id) AS 'jumlahOperasi' FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_r_rincianproyek c ON b.rincianproyek = c.id JOIN prd_r_proyek d ON c.proyek = d.id WHERE d.id = '"+id_proyek+"'"
+    cursor.execute(query_count_operasi)
+    records2 = cursor.fetchall()
+    jml = ''
+    jml_totalop_int = 0
+    for data in records2:
+        jml = data[0]
+    jml_totalop_int = int(jml)
+
+    nilai_percentage = 0
+    counter = 0
+    query_all = "SELECT a.id,a.rencanaMulai,a.rencanaSelesai,a.produk,a.status FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_r_rincianproyek c ON b.rincianproyek = c.id JOIN prd_r_proyek d ON c.proyek = d.id WHERE d.id = '"+id_proyek+"'"
+    cursor.execute(query_all)
+    records_operasi = cursor.fetchall()
+    nstatus = 0
+   
+    for index in records_operasi:
+         nstatus = index[4]
+         if nstatus == 1:
+            counter = counter + nstatus
+
+    nilai_percentage = (counter / jml_totalop_int) * 100
+   
+
+    try:
+        query_update_percentage = "UPDATE prd_r_proyek SET percentage = %s WHERE id = %s"
+        values3 = (nilai_percentage,id_proyek)
+        cursor.execute(query_update_percentage,values3)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
     
+
+
+def showPercentageAllProyek():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id,a.nama,a.percentage FROM prd_r_proyek a"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
