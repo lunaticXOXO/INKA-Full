@@ -572,6 +572,7 @@ export default {
       Submit
     </v-btn>
 
+    <!--
     <v-card class="mt-10 mx-10">
       <h2>Default</h2>
       <g-gantt-chart
@@ -609,6 +610,7 @@ export default {
         />
       </g-gantt-chart>
     </v-card>
+    -->
     
     <v-card class="mt-10 mx-10">
       <h2>JSON Manual</h2>
