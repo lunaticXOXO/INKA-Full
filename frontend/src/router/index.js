@@ -672,8 +672,7 @@ const routes = [
   },
 
   {
-
-    path : 'listRProyekbyProyekDSP/:id',
+    path : '/listRProyekbyProyekDSP/:id',
     name : 'List Rincian Proyek by Proyek DSP',
     component : ListRProyekbyProyekDSP,
     meta : {
@@ -682,16 +681,12 @@ const routes = [
   },
 
   {
-
-    path : 'listProdukbyRProyek/:id',
+    path : '/listProdukbyRProyekDSP/:id',
     name : 'List Produk by Rproyek DSP',
     component : ListProdukbyRProyekDSP,
     meta : {
-
-        title : "List Produk by Rincian Proyek - PT.INKA"
-
+      title : "List Produk by Rincian Proyek DSP - PT.INKA"
     }
-
   },
 
 ]
