@@ -163,11 +163,12 @@ def AccumulatePercentageProyek(idOperasi):
             counter = counter + nstatus
 
     nilai_percentage = (counter / jml_totalop_int) * 100
-   
-
+    nilai_percentage_string = ""
+    nilai_percentage_string = str(nilai_percentage)
+    nilai_percentage_string += "%"
     try:
         query_update_percentage = "UPDATE prd_r_proyek SET percentage = %s WHERE id = %s"
-        values3 = (nilai_percentage,id_proyek)
+        values3 = (nilai_percentage_string,id_proyek)
         cursor.execute(query_update_percentage,values3)
         conn.commit()
         hasil = {"status" : "berhasil"}

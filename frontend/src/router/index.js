@@ -66,6 +66,8 @@ import OperasibyProduct from '../views/operasi/ListOperasibyProduct.vue'
 import ListOperator from '../views/operator/ListOperator.vue'
 import TambahKemampuanOperator from '../views/operator/TambahKemampuanOperator.vue'
 import ListOperatorHadir from '../views/operator/ListOperatorHadir.vue'
+import ListRProyekbyProyekDSP from '../views/rincianproyek/ListRProyekbyProyekDSP.vue'
+import ListProdukbyRProyekDSP from '../views/produk/ListProdukbyRProyekDSP.vue'
 
 Vue.use(VueRouter)
 
@@ -668,6 +670,30 @@ const routes = [
       title : "List Operator Hadir - PT.INKA"
     }
   },
+
+  {
+
+    path : 'listRProyekbyProyekDSP/:id',
+    name : 'List Rincian Proyek by Proyek DSP',
+    component : ListRProyekbyProyekDSP,
+    meta : {
+      title : "List Rincian Proyek by Proyek DSP - PT.INKA"
+    }
+  },
+
+  {
+
+    path : 'listProdukbyRProyek/:id',
+    name : 'List Produk by Rproyek DSP',
+    component : ListProdukbyRProyekDSP,
+    meta : {
+
+        title : "List Produk by Rincian Proyek - PT.INKA"
+
+    }
+
+  },
+
 ]
 
 const router = new VueRouter({
