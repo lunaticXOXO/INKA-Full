@@ -208,6 +208,12 @@ def get_product_by_rproyek(id_rproyek):
     hasil = GetProdukbyRProyek(id_rproyek)
     return hasil 
 
+
+@app.route('/product/get_product_by_rproyekDSP/<id_rproyek>',methods = ['GET'])
+def get_product_by_rproyekDSP(id_rproyek):
+    hasil = GetProdukbyRProyekDSP(id_rproyek)
+    return hasil
+
 @app.route('/product/add_product',methods = ['POST'])   
 def add_product():
     hasil = AddProduk()

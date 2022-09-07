@@ -17,12 +17,15 @@
               <template v-slot:[`item.nama`]="{ item }">
                   <span>{{item.nama}}</span>
               </template>
+              <template v-slot:[`item.progress`]="{ item }">
+                  <span>{{item.progress}}</span><p>%</p>
+              </template>
               <template v-slot:[`item.customerid`]="{ item }">
                   <span>{{item.customerid}}</span>
               </template>
               <template v-slot:[`item.aksi`]="{ item }">
-                <router-link :to="{name : 'List Rincian Proyek by Proyek',params:{id : `${item.id}`}}">
-                  <v-btn class="mx-1" x-small color="blue" @click="selectProyek(item)">
+                <router-link :to="{name : 'List Rincian Proyek by Proyek DSP',params:{id : `${item.id}`}}">
+                  <v-btn class="mx-1" x-small color="blue" >
                     <v-icon small dark>mdi-check</v-icon>
                   </v-btn>
                 </router-link>
@@ -40,6 +43,7 @@
       headers:[
         {text : 'ID',               value : 'id'},
         {text : 'Nama',             value : 'nama'},
+        {text : 'Progress',         value : 'percentage'},
         {text : 'Customer ID',      value : 'customerid'},
         {text : 'Action',           value : 'aksi'}        
       ],

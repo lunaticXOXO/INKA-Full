@@ -23,6 +23,21 @@ def GetAllProduk():
   return  make_response(jsonify(json_data),200)
 
 
+def GetProdukbyRProyekDSP(id_rproyek):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT a.id,c.nama AS 'jenisProduk',a.dueDate,d.percentage FROM prd_d_produk a JOIN prd_r_rincianproyek b ON b.id = a.rincianproyek JOIN prd_r_jenisproduk c ON c.id = b.jenisProduk JOIN prd_r_proyek d ON d.id = b.proyek WHERE b.id = '"+id_rproyek+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+  
+    for data in records:
+      json_data.append(dict(zip(row_headers,data)))
+  
+    return  make_response(jsonify(json_data),200)
+
 def GetProdukbyRProyek(id_rproyek):
   conn = database.connector()
   cursor = conn.cursor()
