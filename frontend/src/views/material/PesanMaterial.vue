@@ -3,7 +3,7 @@
         class="mx-auto text-center mt-6"
         max-width="1000">
         <br>
-        <h1>Tambah material masuk</h1>
+        <h1>Tambah Material Masuk</h1>
         <v-form
           class="pa-6"
           ref="form"

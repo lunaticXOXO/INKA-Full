@@ -1,6 +1,6 @@
 <template>
     <v-card  
-        class="mx-auto text-center"
+        class="mx-auto text-center mt-10"
         max-width="1000">
 
         <h2>List Klasifikasi</h2>

@@ -92,6 +92,7 @@ export default {
                 active: false,
                 items: [
                     { title: 'Pantau Operasi WS', icon: 'mdi-eye', route: '/pantauOperasi'},
+                    { title: 'Grafik Proyek dan Operator', icon: 'mdi-chart-line-variant', route: '/graph'},
                 ],
                 title: 'Stasiun',
                 },
