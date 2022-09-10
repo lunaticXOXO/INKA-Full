@@ -25,6 +25,11 @@
                             <br>
                             <h3>{{ item.namaProses }}</h3>
                             <p>{{ item.idOperasi }}</p>
+                            <v-chip
+                                :color="getColor()"
+                                dark>
+                                <p class="mt-4 black--text">Tidak Ada Operasi</p>
+                            </v-chip>
                             <!--
                             <div class="d-flex">
                                 <v-btn
@@ -91,6 +96,10 @@ export default {
     },
 
     methods: {
+        getColor() {
+            return 'yellow'
+        },
+
         async fetchData(idProduk){
             try{
                 const axios = require('axios');

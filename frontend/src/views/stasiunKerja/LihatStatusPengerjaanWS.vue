@@ -556,16 +556,37 @@ export default {
 
 <template>
   <v-app>
+    <h3 class="ml-10 mt-6">Pilih Stasiun Kerja</h3>
+    <v-card class="mx-auto" max-width="1250" elevation="0">
+          <v-container fluid>
+              <v-row dense>
+                  <v-col
+                      v-for="item in itemsWS"
+                      :key="item.name"
+                      :cols="item.flex">
+                      <v-card class="mx-auto justify-center text-center" elevation="0" outlined>
+                          <div class="d-flex ml-2 text-center">
+                              <v-checkbox></v-checkbox>
+                              <p class="mt-5">{{ item.name }}</p>  
+                          </div>
+                      </v-card>
+                  </v-col>
+              </v-row>
+          </v-container>
+      </v-card>
     <h3 class="ml-10 mt-6">Tanggal Mulai Pencarian</h3>
-    <v-menu class="ml-10 mt-6">
-      <template v-slot:activator="{ on, attrs }">
-        <v-text-field class="ml-10" :value="tanggalPencarian" v-bind="attrs" v-on="on" label="Tanggal Pencarian" prepend-icon="mdi-calendar"></v-text-field>
-      </template>
-      <v-date-picker width="1000" v-model="tanggalPencarian"></v-date-picker>
-    </v-menu>
+    <v-card class="ml-2" max-width="400" elevation="0">
+      <v-menu class="ml-10 mt-6">
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field class="ml-10" :value="tanggalPencarian" v-bind="attrs" v-on="on" label="Tanggal Pencarian" prepend-icon="mdi-calendar"></v-text-field>
+        </template>
+        <v-date-picker width="1000" v-model="tanggalPencarian"></v-date-picker>
+      </v-menu>
+    </v-card>
     <v-btn
       color="success"
-      class="ml-10"
+      class="mx-auto text-center" 
+      max-width="1200"
       width="200"
       type="submit"
       @click="validate()">
@@ -683,6 +704,17 @@ export default {
       //myChartEndCustom: dateTime2,
       myChartStartCustom:'',
       myChartEndCustom:'',
+      itemsWS: [
+        { name: 'MINOR BUSHING',                flex: 2 },
+        { name: 'MINOR AXLE BOX & WHEEL ASSY',  flex: 3 },
+        { name: 'MINOR ASSY BOLSTER',           flex: 3 },
+        { name: 'ASSY BRAKE RIGING',            flex: 2 },
+        { name: 'BOGIE FITTING 1',              flex: 2 },
+        { name: 'BOGIE FITTING 2',              flex: 2 },
+        { name: 'FITTING ACCESORIES BOGIE 1',   flex: 3 },
+        { name: 'FITTING ACCESORIES BOGIE 2',   flex: 3 },
+        { name: 'LOAD TEST',                    flex: 2 },
+      ],
       items2:[
         {
           "idOperasi":"23NGWLRG3",
