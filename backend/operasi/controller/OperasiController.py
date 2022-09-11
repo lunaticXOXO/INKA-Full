@@ -75,6 +75,8 @@ def GetProcessofProduct(idProduk):
     return make_response(jsonify(json_data),200)
 
 
+
+
 def GenerateOperation(idProduk):
     conn = database.connector()
     cursor = conn.cursor()
