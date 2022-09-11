@@ -134,17 +134,6 @@ export default {
                 ],
                 title: 'Produk',
                 },
-            
-                {
-                action: 'mdi-book-variant',
-                active: false,
-                items: [
-                    { title: 'Form', icon: 'mdi-note-plus-outline', route: '/form'},
-                    { title: 'Graph', icon: 'mdi-chart-line-variant', route: '/graph'},
-                    { title: 'Table', icon: 'mdi-table', route: '/table'},
-                ],
-                title: 'Dummy',
-                },
             ],
         }
     },

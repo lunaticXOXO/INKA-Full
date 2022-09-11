@@ -91,18 +91,10 @@ export default {
                 action: 'mdi-garage-variant',
                 active: false,
                 items: [
-                    { title: 'Jadwal Pengerjaan', icon: 'mdi-calendar', route: '/statusPengerjaanWS'},
+                    { title: 'Pantau Operasi WS', icon: 'mdi-eye', route: '/pantauOperasi'},
+                    { title: 'Grafik Proyek dan Operator', icon: 'mdi-chart-line-variant', route: '/graph'},
                 ],
-                title: 'Stasiun Kerja',
-                },
-
-                {
-                action: 'mdi-view-list',
-                active: false,
-                items: [
-                    { title: 'Pantau Operasi', icon: 'mdi-eye', route: '/pantauOperasi'},
-                ],
-                title: 'Operasi',
+                title: 'Stasiun',
                 },
 
                 {
@@ -112,6 +104,24 @@ export default {
                     { title: 'List Operator Hadir', icon: 'mdi-playlist-check', route: '/listOperatorHadir'},
                 ],
                 title: 'Operator',
+                },
+
+                {
+                action: 'mdi-view-list',
+                active: false,
+                items: [
+                { title: 'Jadwal Operasi WS', icon: 'mdi-calendar', route: '/statusOperasi'},
+                ],
+                title: 'Operasi',
+                },
+
+                {
+                action: 'mdi-calendar',
+                active: false,
+                items: [
+                { title: 'Jadwal Pengerjaan', icon: 'mdi-calendar', route: '/statusPengerjaanWS'},
+                ],
+                title: 'Jadwal',
                 },
 
                 {

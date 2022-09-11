@@ -556,22 +556,44 @@ export default {
 
 <template>
   <v-app>
+    <h3 class="ml-10 mt-6">Pilih Stasiun Kerja</h3>
+    <v-card class="mx-auto" max-width="1250" elevation="0">
+          <v-container fluid>
+              <v-row dense>
+                  <v-col
+                      v-for="item in itemsWS"
+                      :key="item.name"
+                      :cols="item.flex">
+                      <v-card class="mx-auto justify-center text-center" elevation="0" outlined>
+                          <div class="d-flex ml-2 text-center">
+                              <v-checkbox></v-checkbox>
+                              <p class="mt-5">{{ item.name }}</p>  
+                          </div>
+                      </v-card>
+                  </v-col>
+              </v-row>
+          </v-container>
+      </v-card>
     <h3 class="ml-10 mt-6">Tanggal Mulai Pencarian</h3>
-    <v-menu class="ml-10 mt-6">
-      <template v-slot:activator="{ on, attrs }">
-        <v-text-field class="ml-10" :value="tanggalPencarian" v-bind="attrs" v-on="on" label="Tanggal Pencarian" prepend-icon="mdi-calendar"></v-text-field>
-      </template>
-      <v-date-picker width="1000" v-model="tanggalPencarian"></v-date-picker>
-    </v-menu>
+    <v-card class="ml-2" max-width="400" elevation="0">
+      <v-menu class="ml-10 mt-6">
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field class="ml-10" :value="tanggalPencarian" v-bind="attrs" v-on="on" label="Tanggal Pencarian" prepend-icon="mdi-calendar"></v-text-field>
+        </template>
+        <v-date-picker width="1000" v-model="tanggalPencarian"></v-date-picker>
+      </v-menu>
+    </v-card>
     <v-btn
       color="success"
-      class="ml-10"
+      class="mx-auto text-center" 
+      max-width="1200"
       width="200"
       type="submit"
       @click="validate()">
       Submit
     </v-btn>
-
+    <br>
+    <!--
     <v-card class="mt-10 mx-10">
       <h2>Default</h2>
       <g-gantt-chart
@@ -609,6 +631,57 @@ export default {
         />
       </g-gantt-chart>
     </v-card>
+    -->
+    <div class="text-center">
+      <v-dialog
+        v-model="dialog"
+        width="500"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="red lighten-2"
+            dark
+            v-bind="attrs"
+            v-on="on"
+          >
+            Pop Up
+          </v-btn>
+        </template>
+
+        <v-card>
+          <v-card-title class="text-h5 grey lighten-2">
+            Detail Operasi
+          </v-card-title>
+
+          <v-card-text>
+            <br>
+            <p>ID Operasi : 0322090600011</p>
+            <p>Proses : Bogie Assy NON Handbrake</p>
+            <p>Lokasi Stasiun Kerja : FITTING BOGIE ACCESORIES 2</p>
+            <p>Material : </p>
+            <p>Operator : </p>
+            <br>
+            <p>Rencana Mulai : 09 September 2022 9.00</p>
+            <p>Rencana Selesai : 09 September 2022 13.00</p>
+            <p>Mulai : </p>
+            <p>Selesai : </p>
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="primary"
+              text
+              @click="dialog = false"
+            >
+              Back
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
     
     <v-card class="mt-10 mx-10">
       <h2>JSON Manual</h2>
@@ -674,6 +747,7 @@ export default {
   data(){
     return {
       items: undefined,
+      dialog: false,
       tanggalPencarian: '',
       myChartStart: "2020-03-01 00:00",
       myChartEnd: "2020-03-03 00:00",
@@ -681,6 +755,17 @@ export default {
       //myChartEndCustom: dateTime2,
       myChartStartCustom:'',
       myChartEndCustom:'',
+      itemsWS: [
+        { name: 'MINOR BUSHING',                flex: 2 },
+        { name: 'MINOR AXLE BOX & WHEEL ASSY',  flex: 3 },
+        { name: 'MINOR ASSY BOLSTER',           flex: 3 },
+        { name: 'ASSY BRAKE RIGING',            flex: 2 },
+        { name: 'BOGIE FITTING 1',              flex: 2 },
+        { name: 'BOGIE FITTING 2',              flex: 2 },
+        { name: 'FITTING ACCESORIES BOGIE 1',   flex: 3 },
+        { name: 'FITTING ACCESORIES BOGIE 2',   flex: 3 },
+        { name: 'LOAD TEST',                    flex: 2 },
+      ],
       items2:[
         {
           "idOperasi":"23NGWLRG3",

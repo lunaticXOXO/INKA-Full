@@ -224,7 +224,7 @@ def add_product_by_rproyek(id_rincian):
     hasil = AddProdukbyRincian(id_rincian)
     return hasil
 
-@app.route('/product/get_rpoyek_inproduct/<id_rproyek>',methods = ['GET'])
+@app.route('/product/get_rproyek_inproduct/<id_rproyek>',methods = ['GET'])
 def get_rproyek_inproduct(id_rproyek):
     hasil = GetRProyekInProduk(id_rproyek)
     return hasil

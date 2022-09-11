@@ -1,6 +1,8 @@
 <template>
     <v-app>
-        <h1 class="ma-4">Pantau Operasi</h1>
+        <v-card class="mx-auto text-center mt-6 mb-6" max-width="1000" elevation="0">
+            <h1>Pantau Operasi</h1>
+        </v-card>
         <v-card class="mx-auto text-center" width="600">
             <v-data-table
                 :headers = "headers"
@@ -23,6 +25,11 @@
                             <br>
                             <h3>{{ item.namaProses }}</h3>
                             <p>{{ item.idOperasi }}</p>
+                            <v-chip
+                                :color="getColor()"
+                                dark>
+                                <p class="mt-4 black--text">Tidak Ada Operasi</p>
+                            </v-chip>
                             <!--
                             <div class="d-flex">
                                 <v-btn
@@ -40,9 +47,10 @@
                                 </v-btn>
                             </div>
                             -->
-                            <h3>Operator : {{item.namaOperator}}</h3>
-                            <h3>Stasiun Kerja : {{item.keteranganWS}}</h3>
-                            <br>
+                            <h3>Operator</h3>
+                            <p>{{item.namaOperator}}</p>
+                            <h3>Stasiun Kerja</h3>
+                            <p>{{item.keteranganWS}}</p>
                             <h3>Rencana Mulai</h3>
                             <p>{{ item.rencanaMulai }}</p>
                             <h3>Rencana Selesai</h3>
@@ -88,6 +96,10 @@ export default {
     },
 
     methods: {
+        getColor() {
+            return 'yellow'
+        },
+
         async fetchData(idProduk){
             try{
                 const axios = require('axios');
@@ -97,8 +109,7 @@ export default {
                         message : "Tidak Ada Operasi",
                         color : 'red',
                         show : true
-                }
-
+                    }
                 }else{
                     this.items = res.data;
                     this.snackbar = {

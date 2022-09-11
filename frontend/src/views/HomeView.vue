@@ -1,7 +1,7 @@
 <template>
-  <div class="pa-10">
+  <v-card class="mx-auto text-center" max-width="1000" elevation="0">
     <p id="judul" class="font-weight-thin">SmartWorks 4.0</p>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -17,7 +17,6 @@
 <style>
   #judul{
     font-size: 6rem;
-    margin-left: 30%;
-    margin-top: 15%;
+    margin-top: 20%;
   }
 </style>
