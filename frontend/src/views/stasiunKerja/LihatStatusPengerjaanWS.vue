@@ -592,7 +592,7 @@ export default {
       @click="validate()">
       Submit
     </v-btn>
-
+    <br>
     <!--
     <v-card class="mt-10 mx-10">
       <h2>Default</h2>
@@ -632,6 +632,56 @@ export default {
       </g-gantt-chart>
     </v-card>
     -->
+    <div class="text-center">
+      <v-dialog
+        v-model="dialog"
+        width="500"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="red lighten-2"
+            dark
+            v-bind="attrs"
+            v-on="on"
+          >
+            Pop Up
+          </v-btn>
+        </template>
+
+        <v-card>
+          <v-card-title class="text-h5 grey lighten-2">
+            Detail Operasi
+          </v-card-title>
+
+          <v-card-text>
+            <br>
+            <p>ID Operasi : 0322090600011</p>
+            <p>Proses : Bogie Assy NON Handbrake</p>
+            <p>Lokasi Stasiun Kerja : FITTING BOGIE ACCESORIES 2</p>
+            <p>Material : </p>
+            <p>Operator : </p>
+            <br>
+            <p>Rencana Mulai : 09 September 2022 9.00</p>
+            <p>Rencana Selesai : 09 September 2022 13.00</p>
+            <p>Mulai : </p>
+            <p>Selesai : </p>
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="primary"
+              text
+              @click="dialog = false"
+            >
+              Back
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
     
     <v-card class="mt-10 mx-10">
       <h2>JSON Manual</h2>
@@ -697,6 +747,7 @@ export default {
   data(){
     return {
       items: undefined,
+      dialog: false,
       tanggalPencarian: '',
       myChartStart: "2020-03-01 00:00",
       myChartEnd: "2020-03-03 00:00",

@@ -30,32 +30,47 @@
       </v-btn>
 
       <h3 class="ml-10 mt-6">Hasil Pencarian</h3>
-      <v-card class="ml-10 mt-8" max-width="1000" elevation="0">
-        <v-data-table 
-            :headers = "column"
-            :items = "items3"
-            hide-default-footer>
-            <template v-slot:[`item.h`]="{ item }">
-                <v-chip
-                    :color="getColor()"
-                    dark>
-                    {{ item.h }}
-                </v-chip>
-            </template>
-            <template v-slot:[`item.aksi`]="{ item }">
-                <v-btn class="mx-1" x-small color="green" @click="selectOperasi(item)">
-                    <v-icon small dark>mdi-check</v-icon>
-                </v-btn>
-            </template>
-        </v-data-table>
+      <v-card class="ml-10 mt-8" max-width="1250" elevation="0">
+        <div class="d-flex">
+            <v-card max-width="800" elevation="0">
+                <v-data-table 
+                    :headers = "column"
+                    :items = "items3"
+                    hide-default-footer>
+                    <template v-slot:[`item.h`]="{ item }">
+                        <v-chip
+                            :color="getColor()"
+                            dark>
+                            {{ item.h }}
+                        </v-chip>
+                    </template>
+                    <template v-slot:[`item.aksi`]="{ item }">
+                        <v-btn class="mx-1" x-small color="green" @click="selectOperasi(item)">
+                            <v-icon small dark>mdi-check</v-icon>
+                        </v-btn>
+                    </template>
+                </v-data-table>
+            </v-card>
+            <v-card class="ml-10" max-width="450" elevation="0">
+                <h3>ID Operasi : {{idoperasi}}</h3>
+                <h3>Proses : {{proses}}</h3>
+                <h3>Stasiun Kerja : {{stasiun}}</h3>
+                <h3>Material : {{material}}</h3>
+                <h3>Operator : {{operators}}</h3>
+                <h3>Rencana Mulai : {{rmulai}}</h3>
+                <h3>Rencana Selesai : {{rselesai}}</h3>
+                <h3>Mulai : {{mulai}}</h3>
+                <h3>Selesai : {{selesai}}</h3>
+            </v-card>
+        </div>
       </v-card>
       <br><br>
     </v-app>
   </template>
   
   <script>
-    export default{
-        data(){
+  export default{
+    data(){
         return {
             items: [
                 { name: 'MINOR BUSHING',                flex: 2 },
@@ -144,22 +159,85 @@
                 },
             ],
             items3: undefined,
+            idoperasi: '',
+            proses: '',
+            stasiun: '',
+            material: '',
+            operators: '',
+            rmulai: '',
+            rselesai: '',
+            mulai: '',
+            selesai: '',
             checkbox: false,
         }
-        },
+    },
     
-        mounted(){
+    mounted(){
+    
+    },
+    
+    methods:{
+        getColor() {
+            return 'blue'
+        },
         
+        validate(){
+            this.items3 = this.items2
         },
-    
-        methods:{
-            getColor() {
-                return 'blue'
-            },
-            
-            validate(){
-                this.items3 = this.items2
-            },
+
+        selectOperasi(item){
+            if(item.idOperasi == "0322090600003"){
+                this.idoperasi = "0322090600003"
+                this.proses = "Bogie Assy NON Handbrake"
+                this.stasiun = "FITTING ACCESORIES BOGIE 2"
+                this.material = ""
+                this.operators = ""
+                this.rmulai = "08 September 2022 7.00"
+                this.rselesai = "08 September 2022 10.00"
+                this.mulai = ""
+                this.selesai = ""
+            }else if(item.idOperasi == "0322090600002"){
+                this.idoperasi = "0322090600002"
+                this.proses = "Bogie Installation"
+                this.stasiun = "FITTING ACCESORIES BOGIE 2"
+                this.material = ""
+                this.operators = ""
+                this.rmulai = "08 September 2022 10.00"
+                this.rselesai = "08 September 2022 14.00"
+                this.mulai = ""
+                this.selesai = ""
+            }else if(item.idOperasi == "0322090600001"){
+                this.idoperasi = "0322090600001"
+                this.proses = "Setting Brake Bogie"
+                this.stasiun = "FITTING ACCESORIES BOGIE 2"
+                this.material = ""
+                this.operators = ""
+                this.rmulai = "08 September 2022 14.00"
+                this.rselesai = "08 September 2022 15.30"
+                this.mulai = ""
+                this.selesai = ""
+            }else if(item.idOperasi == "0322090600011"){
+                this.idoperasi = "0322090600011"
+                this.proses = "Test Beban"
+                this.stasiun = "FITTING ACCESORIES BOGIE 2"
+                this.material = ""
+                this.operators = ""
+                this.rmulai = "09 September 2022 7.00"
+                this.rselesai = "09 September 2022 11.00"
+                this.mulai = ""
+                this.selesai = ""
+            }else if(item.idOperasi == "0322090600010"){
+                this.idoperasi = "0322090600010"
+                this.proses = "Bogie Assy Handbrake"
+                this.stasiun = "FITTING ACCESORIES BOGIE 2"
+                this.material = ""
+                this.operators = ""
+                this.rmulai = "09 September 2022 11.00"
+                this.rselesai = "09 September 2022 14.00"
+                this.mulai = ""
+                this.selesai = ""
+            }
         },
-    }
+    },
+  }
 </script>
