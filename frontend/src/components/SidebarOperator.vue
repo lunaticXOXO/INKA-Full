@@ -218,17 +218,21 @@ export default {
                 this.btn1 = {
                     color : 'blue',
                     text : 'Operasi Selesai'
+                    
                 }
             }
 
             if(res.data[0].selesai != null){
-                this.btn.disabled = true
+                this.btn1 = {
+                    disabled : true
+                }
                 const res2 =  await axios.post('/proyek/accumulate_percentage_proyek/' +  this.items[0].idOperasi );
                 if(res2.data.status == 'berhasil'){
                     console.log(res2)
                 }else{
                    console.log(res2)
                 }
+                
             }
 
             }catch(error){
