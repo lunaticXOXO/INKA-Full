@@ -341,3 +341,10 @@ CREATE TABLE opr_d_dictoperator(
 
 );
 
+CREATE TABLE cpl_progress(
+
+   proyek varchar(20) NOT NULL,
+   selesai DATETIME NOT NULL,  
+   percentage float,
+   FOREIGN KEY(proyek) REFERENCES prd_r_proyek(id)
+);

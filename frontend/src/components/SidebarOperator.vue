@@ -63,9 +63,91 @@
                     outlined
                     >
                     </v-text-field>
-                    <v-btn class="mx-auto blue white--text" width="350">
-                        OPERASI SELESAI
+                   
+                    <v-dialog
+                        v-model="dialog"
+                        width="500"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                  
+                    <v-btn
+                        v-model = "btn1"
+                        class="mx-auto blue white--text" 
+                        width="350" 
+                        :color="btn1.color"
+                        v-bind="attrs"
+                        v-on="on"
+                    >
+                        {{btn1.text}}
                     </v-btn>
+                    
+                    </template>
+                    
+                    <v-card>
+                        <div v-if = "btn1.color == 'green'">
+                        <v-card-title class="text-h5 grey lighten-2">
+                         Operasi 
+                        </v-card-title>
+                        <br>
+                        
+                            <v-card-text>
+                            Mulai Operasi ?
+                        </v-card-text>
+                        <v-divider></v-divider>
+  
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            
+                            <v-btn
+                                v-model = "btn2"
+                                color="blue"
+                                text
+                                @click="startOperation()">
+                                Mulai
+                            </v-btn>
+
+                            <v-btn
+                                v-model = "btn2"
+                                color="red"
+                                text
+                                @click="dialog = false">
+                                Kembali
+                            </v-btn>
+                        </v-card-actions>
+                        </div>
+
+                        <div v-else>
+                            <v-card-title class="text-h5 grey lighten-2">
+                                Operasi 
+                            </v-card-title>
+                            <br>
+                            <v-card-text>
+                            Akhiri Operasi ?
+                        </v-card-text>
+                        <v-divider></v-divider>
+  
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            
+                            <v-btn
+                                v-model = "btn2"
+                                color="blue"
+                                text
+                                @click="akhiriOperation()">
+                                Akhiri
+                            </v-btn>
+
+                            <v-btn
+                                v-model = "btn2"
+                                color="red"
+                                text
+                                @click="dialog = false">
+                                Kembali
+                            </v-btn>
+                        </v-card-actions>   
+                        </div>
+                    </v-card>
+                    </v-dialog>
                 </div>
             </div>
         </div>
@@ -81,6 +163,7 @@ export default {
             route: "/login",
             routeHome: "/",
             drawer: false,
+            dialog : false,
             headers : [
                 {text : 'Code',               value : 'idOperasi'},
                 {text : 'Nama',               value : 'namaProses'},
@@ -98,13 +181,20 @@ export default {
             ],
             items: undefined,
             items2: undefined,
-           
+
+            btn1 : {
+                text : 'Operasi Mulai',
+                color : 'green'
+            },
+            btn2 : undefined
         }
     },
-    mounted(){
+
+    mounted() {
         this.fetchOperasi(),
         this.fetchMaterial()
     },
+
     methods: {
         logout() {
             this.route = "/login"
@@ -114,20 +204,36 @@ export default {
 
        async fetchOperasi(){
             try{
-
-            const axios = require('axios')
-            console.log(this.loginService.getCurrentUsername())
-            const res =  await axios.get('/operator/get_operasi_byoperator/' + this.loginService.getCurrentUsername() );
+                const axios = require('axios')
+                console.log(this.loginService.getCurrentUsername())
+                const res =  await axios.get('/operator/get_operasi_byoperator/' + this.loginService.getCurrentUsername() );
             if(res.data == null){
                 console.log("Data kosong")
             }else{
                 this.items = res.data
                 console.log(res,this.items)
             }
+
+            if(res.data[0].mulai != null){
+                this.btn1 = {
+                    color : 'blue',
+                    text : 'Operasi Selesai'
+                }
+            }
+
+            if(res.data[0].selesai != null){
+                this.btn.disabled = true
+                const res2 =  await axios.post('/proyek/accumulate_percentage_proyek/' +  this.items[0].idOperasi );
+                if(res2.data.status == 'berhasil'){
+                    console.log(res2)
+                }else{
+                   console.log(res2)
+                }
+            }
+
             }catch(error){
                 console.log(error)
             }
-           
         },
 
         async fetchMaterial(){
@@ -143,8 +249,49 @@ export default {
             }catch(error){
                 console.log(error)
             }
-        }
+        },
 
+        async startOperation(){
+            try{
+                const axios = require('axios')
+                const res = await axios.post('/operasi/start_operasi/' + this.items[0].idOperasi)
+                if(res.data.status == 'berhasil'){
+                    //window.location.reload(),
+                    //this.btn = {
+                    //    color : 'red',
+                    //    text : 'Operasi Selsai',
+                    //}
+                    console.log(res)
+                }else{
+                    console.log(res)
+                }
+            }catch(error){
+                console.log(error)
+            }
+            this.dialog = false
+            //window.location.reload()
+            this.btn1 = {
+                color : 'red',
+                text : 'Operasi Selesai'
+            }
+            window.location.reload()
+        },
+    
+        async akhiriOperation(){
+            try{
+                const axios = require('axios')
+                const res = await axios.post('/proyek/accumulate_percentage_proyek/' + this.items[0].idOperasi)
+                if(res.data.status == 'berhasil'){
+                    console.log(res)
+                }else{
+                    console.log(res)
+                }
+            }catch(error){
+                console.log(error)
+            }
+
+            window.location.reload()
+        }
      
     },
 }

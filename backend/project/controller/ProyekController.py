@@ -140,6 +140,15 @@ def AccumulatePercentageProyek(idOperasi):
         id_proyek = data[0]
     print("Id Proyek : ",id_proyek)
 
+    #Get jumlah pesanan / jumlah item proyek
+    query_count_nrincian = "SELECT a.jumlah FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON b.id = a.proyek WHERE b.id = '"+id_proyek+"'"
+    cursor.execute(query_count_nrincian)
+    records_jumlah = cursor.fetchall()
+    jumlah_itemproyek_str = ''
+    for index in records_jumlah:
+        jumlah_itemproyek_str = index[0]
+
+    jumlah_itemproyek_int = int(jumlah_itemproyek_str)
     #Menghitung jumlah operasi dari suatu proyek
     query_count_operasi = "SELECT COUNT(a.id) AS 'jumlahOperasi' FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_r_rincianproyek c ON b.rincianproyek = c.id JOIN prd_r_proyek d ON c.proyek = d.id WHERE d.id = '"+id_proyek+"'"
     cursor.execute(query_count_operasi)
@@ -162,14 +171,17 @@ def AccumulatePercentageProyek(idOperasi):
          if nstatus == 1:
             counter = counter + nstatus
 
-    nilai_percentage = (counter / jml_totalop_int) * 100
-    nilai_percentage_string = ""
-    nilai_percentage_string = str(nilai_percentage)
-    nilai_percentage_string += "%"
+    nilai_percentage = (counter / jml_totalop_int / jumlah_itemproyek_int) * 100
+    print(nilai_percentage)
     try:
         query_update_percentage = "UPDATE prd_r_proyek SET percentage = %s WHERE id = %s"
-        values3 = (nilai_percentage_string,id_proyek)
+        values3 = (nilai_percentage,id_proyek)
         cursor.execute(query_update_percentage,values3)
+        query_insert_cpl = "INSERT INTO cpl_progress(proyek,selesai,percentage)VALUES(%s,%s,%s)"
+        date_finish = datetime.now()
+        values4 = (id_proyek,date_finish,nilai_percentage)
+        print("Idproyek : ",id_proyek,"date : ",date_finish,"percentage : ",nilai_percentage)
+        cursor.execute(query_insert_cpl,values4)
         conn.commit()
         hasil = {"status" : "berhasil"}
 
