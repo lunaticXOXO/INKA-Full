@@ -639,7 +639,7 @@ export default {
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            color="red lighten-2"
+            color="blue lighten-2"
             dark
             v-bind="attrs"
             v-on="on"
@@ -698,12 +698,60 @@ export default {
           bar-end="rencanaSelesai"
         >
           <template #bar-label="{bar}">
-            <span>{{bar.namaProses}}</span>
+            <v-dialog
+              v-model="dialog2"
+              width="500"
+              :retain-focus="false"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="blue lighten-2"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                {{bar.namaProses}}
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="text-h5 grey lighten-2">
+                  Detail Operasi
+                </v-card-title>
+
+                <v-card-text>
+                  <br>
+                  <p>ID Operasi : {{bar.idOperasi}}</p>
+                  <p>Proses : {{bar.namaProses}}</p>
+                  <p>Lokasi Stasiun Kerja : {{bar.namaStasiunKerja}}</p>
+                  <p>Material : </p>
+                  <p>Operator : </p>
+                  <br>
+                  <p>Rencana Mulai : {{bar.rencanaMulai}}</p>
+                  <p>Rencana Selesai : {{bar.rencanaSelesai}}</p>
+                  <p>Mulai : </p>
+                  <p>Selesai : </p>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="dialog2 = false"
+                  >
+                    Back
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </template>
         </g-gantt-row>
       </g-gantt-chart>
     </v-card>
-
+    <!--
     <v-card class="mt-10 mx-10">
       <h2>JSON Adjust</h2>
       <g-gantt-chart
@@ -724,6 +772,7 @@ export default {
         </g-gantt-row>
       </g-gantt-chart>
     </v-card>
+    -->
   </v-app>
 </template>
 
@@ -748,6 +797,7 @@ export default {
     return {
       items: undefined,
       dialog: false,
+      dialog2: undefined,
       tanggalPencarian: '',
       myChartStart: "2020-03-01 00:00",
       myChartEnd: "2020-03-03 00:00",
