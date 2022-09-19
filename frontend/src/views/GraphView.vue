@@ -3,11 +3,12 @@
     <div class="d-flex">
       <v-card
         class="mx-auto text-center mt-6"
-        color="gray"
+        color="black"
         dark
         max-width="1000"
       >
-      <v-card-text>
+      <v-card>
+        <!--
         <v-sheet color="rgba(0, 0, 0, .12)">
           <v-sparkline
             :value="value"
@@ -15,7 +16,7 @@
             height="100"
             padding="24"
             stroke-linecap="round"
-            smooth
+            curve
             type="trend"
           >
             <template v-slot:label="item">
@@ -23,13 +24,18 @@
             </template>
           </v-sparkline>
         </v-sheet>
-      </v-card-text>
-
-      <v-card-text>
+        -->
+        <div class="app">
+      <apexcharts width="550" type="line" :options="chartOptions" :series="series"></apexcharts>
+    </div>
+    <v-card-text>
         <div class="text-h4 font-weight-thin">
-          Jumlah Proyek Dipesan 1 Minggu
+          Persentasi Progress Proyek
         </div>
       </v-card-text>
+      </v-card>
+   
+
 
     <v-divider></v-divider>
     </v-card>
@@ -68,12 +74,6 @@
     </v-card>
   </div>
 
-  <div class="mx-auto mt-8">
-    <v-data-table
-      :headers = "column"
-      :items = "jenisproduk">
-    </v-data-table>
-  </div>
 
   <div class="d-flex mx-auto mt-8">
     <v-card
@@ -108,6 +108,29 @@
       trend-line-color="red"
     />
     </v-card>
+
+    <v-card
+      class="mx-14"
+    >
+      <vue-bar-line
+      :show-y-axis="true"
+      :show-x-axis="true"
+      :show-values="true"
+      :points="[3,5,2,1,4]"
+      :width="400"
+      :height="200"
+      :use-custom-labels="true"
+      :custom-labels="wsLabels"
+      :show-trend-line="true"
+      :trend-line-width="2"
+      trend-line-color="red"
+
+      >
+      </vue-bar-line>
+
+    </v-card>
+    
+
   </div>
   
   </v-app>
@@ -115,12 +138,16 @@
 
 <script>
   import VueBarGraph from '../components/VueBarGraph.vue';
+  import VueApexCharts from 'vue-apexcharts'
+
   export default {
     components:{
-      VueBarGraph
+      VueBarGraph,
+      apexcharts: VueApexCharts,
     },
-
-    data: () => ({
+    
+    data : function(){
+    return {
       value: [
         2,
         6,
@@ -141,6 +168,35 @@
       ],
       monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
       wsLabels: ['WS1', 'WS2', 'WS3', 'WS4', 'WS5', 'WS6', 'WS7', 'WS8', 'WS9', 'WS10'],
-    }),
+
+      
+      chartOptions: {
+            chart: {
+              id: 'vuechart-example',
+            },
+            xaxis: {
+              categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+            },
+            stroke : {
+                curve : 'smooth'
+            }
+          },
+          series: [{
+           
+            data: [30, 40, 45, 50, 49, 60, 70, 81]
+          }]
+    }
+
+    },
+
+    methods: {
+        updateChart() {
+      
+          const newData = this.series[0].data.map
+          this.series = [{
+            data: newData
+          }]
+        }
+      }
   }
 </script>

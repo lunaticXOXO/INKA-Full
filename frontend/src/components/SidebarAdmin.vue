@@ -87,15 +87,7 @@ export default {
             routeHome: "/",
             drawer: false,
             items: [
-                {
-                action: 'mdi-account-star',
-                active: false,
-                items: [
-                    { title: 'List Operator', icon: 'mdi-playlist-check', route: '/listOperator'},
-                    { title: 'Tambah Operator', icon: 'mdi-account-plus', route: '/tambahOperator'},
-                ],
-                title: 'Operator',
-                },
+              
 
                 {
                 action: 'mdi-account-multiple',
