@@ -20,7 +20,6 @@ export default class Login {
     console.log("Set Item: ", this.KEY, JSON.stringify(currentUserType[0]))
     localStorage.setItem(this.KEY, JSON.stringify(currentUserType[0]));
   }
-
   
   addToUsername(username) {
     const currentUsername = JSON.parse(localStorage.getItem(this.username)) || [];
@@ -28,7 +27,6 @@ export default class Login {
     console.log("Set username: ", this.username, JSON.stringify(currentUsername[0]))
     localStorage.setItem(this.username, JSON.stringify(currentUsername[0]));
   }
-  
 
   removeUserType() {
     localStorage.removeItem(this.KEY)

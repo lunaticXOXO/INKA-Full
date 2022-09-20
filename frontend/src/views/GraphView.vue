@@ -5,10 +5,9 @@
         class="mx-auto text-center mt-6"
         color="black"
         dark
-        max-width="1000"
-      >
+        max-width="1000">
       <v-card>
-        <!--
+        <!-- Sparkline Biasa
         <v-sheet color="rgba(0, 0, 0, .12)">
           <v-sparkline
             :value="value"
@@ -26,18 +25,15 @@
         </v-sheet>
         -->
         <div class="app">
-      <apexcharts width="550" type="line" :options="chartOptions" :series="series"></apexcharts>
-    </div>
-    <v-card-text>
-        <div class="text-h4 font-weight-thin">
-          Persentasi Progress Proyek
+          <apexcharts width="550" type="line" :options="chartOptions" :series="series"></apexcharts>
         </div>
-      </v-card-text>
+        <v-card-text>
+          <div class="text-h4 font-weight-thin">
+            Kurva S
+          </div>
+        </v-card-text>
       </v-card>
-   
-
-
-    <v-divider></v-divider>
+      <v-divider></v-divider>
     </v-card>
 
     <v-card
@@ -69,12 +65,11 @@
         Jumlah Jam Kerja Operator di WS1
       </div>
     </v-card-text>
-
     <v-divider></v-divider>
     </v-card>
   </div>
 
-
+  <!-- BAR GRAPH
   <div class="d-flex mx-auto mt-8">
     <v-card
       class="mx-14"
@@ -124,79 +119,70 @@
       :show-trend-line="true"
       :trend-line-width="2"
       trend-line-color="red"
-
       >
       </vue-bar-line>
-
     </v-card>
-    
-
   </div>
-  
+  -->
   </v-app>
 </template>
 
 <script>
-  import VueBarGraph from '../components/VueBarGraph.vue';
+  //import VueBarGraph from '../components/VueBarGraph.vue';
   import VueApexCharts from 'vue-apexcharts'
 
   export default {
     components:{
-      VueBarGraph,
+      //VueBarGraph,
       apexcharts: VueApexCharts,
     },
     
     data : function(){
-    return {
-      value: [
-        2,
-        6,
-        7,
-        9,
-        11,
-        12,
-        15,
-      ],
-      value2: [
-        4,
-        2,
-        3,
-        1,
-        7,
-        6,
-        5,
-      ],
-      monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
-      wsLabels: ['WS1', 'WS2', 'WS3', 'WS4', 'WS5', 'WS6', 'WS7', 'WS8', 'WS9', 'WS10'],
-
-      
-      chartOptions: {
-            chart: {
-              id: 'vuechart-example',
-            },
-            xaxis: {
-              categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
-            },
-            stroke : {
-                curve : 'smooth'
-            }
+      return {
+        value: [
+          2,
+          6,
+          7,
+          9,
+          11,
+          12,
+          15,
+        ],
+        value2: [
+          4,
+          2,
+          3,
+          1,
+          7,
+          6,
+          5,
+        ],
+        monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+        wsLabels: ['WS1', 'WS2', 'WS3', 'WS4', 'WS5', 'WS6', 'WS7', 'WS8', 'WS9', 'WS10'],
+        chartOptions: {
+          chart: {
+            id: 'vuechart-example',
           },
-          series: [{
-           
-            data: [30, 40, 45, 50, 49, 60, 70, 81]
-          }]
-    }
-
+          xaxis: {
+            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+          },
+          stroke : {
+              curve : 'smooth'
+          }
+        },
+        series: [{
+          data: [30, 40, 45, 50, 49, 60, 70, 81]
+        }]
+      }
     },
 
     methods: {
-        updateChart() {
-      
-          const newData = this.series[0].data.map
-          this.series = [{
-            data: newData
-          }]
-        }
+      updateChart() {
+        const newData = this.series[0].data.map
+        this.series = [{
+          data: newData
+        }]
       }
+    }
   }
 </script>
