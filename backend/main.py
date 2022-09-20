@@ -156,6 +156,12 @@ def show_percentage_proyek():
     hasil = showPercentageAllProyek()
     return hasil
 
+
+@app.route('/proyek/show_progress_proyek',methods = ['GET'])
+def show_progress_proyek():
+    hasil = showpercentageProgressProyek()
+    return hasil
+
 #RINCIAN PROYEK
 @app.route('/rproyek/show_rproyek',methods = ['GET'])
 def show_rproyek():
