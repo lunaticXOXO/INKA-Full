@@ -175,7 +175,8 @@
               id: 'vuechart-example',
             },
             xaxis: {
-              categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+              categories: ['Sat, 17 Sep 2022 22:28:34 GMT','Sun, 18 Sep 2022 16:29:57 GMT','Sun, 18 Sep 2022 21:37:49 GMT','Sun, 18 Sep 2022 21:37:50 GMT'],
+              categories2 : undefined
             },
             stroke : {
                 curve : 'smooth'
@@ -183,12 +184,15 @@
           },
           series: [{
            
-            data: [30, 40, 45, 50, 49, 60, 70, 81]
+            data: [25, 50, 75,100],
+            data2 : undefined
           }]
     }
 
     },
-
+    mounted(){
+      this.fetchProgressProyek()
+    },
     methods: {
         updateChart() {
       
@@ -196,7 +200,24 @@
           this.series = [{
             data: newData
           }]
+        },
+
+        async fetchProgressProyek(){
+            const axios = require('axios')
+            const res = await axios.get('/proyek/show_progress_proyek')
+            if(res.data == null){
+               console.log("Data kosong")
+            }else{
+              this.chartOptions.xaxis.categories2 = res.data[0].selesai
+              this.chartOptions.series.data2 = res.data[0].percentage
+              //console.log(this.chartOptions.xaxis.categories2,this.chartOptions.series.data2)
+              console.log(res)
+            }            
+
         }
+        
+
+      
       }
   }
 </script>
