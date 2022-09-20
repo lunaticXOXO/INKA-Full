@@ -130,7 +130,7 @@ def AccumulatePercentageProyek(idOperasi):
     conn = database.connector()
     cursor = conn.cursor()
     #meng GET data id proyek dari id operasi yang di klik
-    query_get_idproyek = "SELECT d.id,d.selesai FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_r_rincianproyek c ON b.rincianproyek = c.id JOIN prd_r_proyek d ON c.proyek = d.id WHERE a.id = '"+idOperasi+"'"
+    query_get_idproyek = "SELECT d.id,a.selesai FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_r_rincianproyek c ON b.rincianproyek = c.id JOIN prd_r_proyek d ON c.proyek = d.id WHERE a.id = '"+idOperasi+"'"
     cursor.execute(query_get_idproyek)
     records = cursor.fetchall()
     id_proyek = ''
@@ -139,8 +139,8 @@ def AccumulatePercentageProyek(idOperasi):
         id_proyek = data[0]
         tanggalSelesai = data[1]
 
-    print("Id Proyek       : ",id_proyek)
-    print("Tanggal Selesai : ",tanggalSelesai)
+    #print("Id Proyek       : ",id_proyek)
+    #print("Tanggal Selesai : ",tanggalSelesai)
 
     #Get jumlah pesanan / jumlah item proyek
     query_count_nrincian = "SELECT a.jumlah FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON b.id = a.proyek WHERE b.id = '"+id_proyek+"'"
@@ -169,20 +169,23 @@ def AccumulatePercentageProyek(idOperasi):
     nstatus = 0
    
     for index in records_operasi:
-         nstatus = index[4]
-         if nstatus == 1:
+        nstatus = index[4]
+        if nstatus == 1:
             counter = counter + nstatus
+
 
     nilai_percentage = (counter / jml_totalop_int / jumlah_itemproyek_int) * 100
     print(nilai_percentage)
+    tanggalStr = tanggalSelesai.strftime("%m/%d/%Y, %H:%M")
+    print('tangal str : ',tanggalStr)
+    query_update_percentage = "UPDATE prd_r_proyek SET percentage = %s WHERE id = %s"
+    query_insert_cpl = "INSERT INTO cpl_progress(proyek,selesai,selesai_str,percentage)VALUES(%s,%s,%s,%s)"
     try:
-        query_update_percentage = "UPDATE prd_r_proyek SET percentage = %s WHERE id = %s"
+        
         values3 = (nilai_percentage,id_proyek)
         cursor.execute(query_update_percentage,values3)
-        query_insert_cpl = "INSERT INTO cpl_progress(proyek,selesai,percentage)VALUES(%s,%s,%s)"
-       
-        values4 = (id_proyek,tanggalSelesai,nilai_percentage)
-        print("Idproyek : ",id_proyek,"date : ",tanggalSelesai,"percentage : ",nilai_percentage)
+        values4 = (id_proyek,tanggalSelesai,tanggalStr,nilai_percentage)
+        print("Idproyek : ",id_proyek,"date : ",tanggalSelesai,"date_str : ",tanggalStr,"percentage : ",nilai_percentage)
         cursor.execute(query_insert_cpl,values4)
         conn.commit()
         hasil = {"status" : "berhasil"}
@@ -196,7 +199,7 @@ def AccumulatePercentageProyek(idOperasi):
 def showpercentageProgressProyek():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT * FROM cpl_progress"
+    query = "SELECT * FROM cpl_progress GROUP BY selesai_str"
     cursor.execute(query)
 
     records = cursor.fetchall()

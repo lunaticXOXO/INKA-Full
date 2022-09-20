@@ -165,7 +165,8 @@
             },
             xaxis: {
               categories: ['17/09/2022','18/09/2022','19/09/2022','20/09/2022'],
-              categories2 : undefined
+              categories2 : [],
+              //categories : []
             },
             stroke : {
                 curve : 'smooth'
@@ -174,10 +175,13 @@
           series: [{
            
             data: [25, 50, 75,100],
-            data2 : undefined
-          }]
-    }
+            //data : [],
+            data2 : []
+          }],
 
+          records : []
+    }
+   
     },
     mounted(){
       this.fetchProgressProyek()
@@ -197,10 +201,18 @@
             if(res.data == null){
                console.log("Data kosong")
             }else{
-              this.chartOptions.xaxis.categories2 = res.data[0].selesai
-              this.chartOptions.series.data2 = res.data[0].percentage
+             
+              for(var i = 0; i < res.data.length; i++ ){
+                  this.chartOptions.xaxis.categories = res.data[i].selesai_str
+                  this.series.data = res.data[i].percentage
+                 
+              }
+
+              console.log(this.chartOptions.xaxis.categories,this.series.data)
+              //this.chartOptions.xaxis.categories2 = res.data[0].selesai
+              //this.chartOptions.series.data2 = res.data[0].percentage
               //console.log(this.chartOptions.xaxis.categories2,this.chartOptions.series.data2)
-              console.log(res)
+              
             }            
 
         }
