@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <div class="d-flex">
       <v-card
         class="mx-auto text-center mt-6"
         color="black"
@@ -25,7 +24,7 @@
         </v-sheet>
         -->
         <div class="app">
-          <apexcharts width="550" type="line" :options="chartOptions" :series="series"></apexcharts>
+          <apexcharts width="650" type="line" :options="chartOptions" :series="series"></apexcharts>
         </div>
         <v-card-text>
           <div class="text-h4 font-weight-thin">
@@ -67,7 +66,6 @@
     </v-card-text>
     <v-divider></v-divider>
     </v-card>
-  </div>
 
   <!-- BAR GRAPH
   <div class="d-flex mx-auto mt-8">
@@ -166,7 +164,7 @@
               id: 'vuechart-example',
             },
             xaxis: {
-              categories: ['Sat, 17 Sep 2022 22:28:34 GMT','Sun, 18 Sep 2022 16:29:57 GMT','Sun, 18 Sep 2022 21:37:49 GMT','Sun, 18 Sep 2022 21:37:50 GMT'],
+              categories: ['17/09/2022','18/09/2022','19/09/2022','20/09/2022'],
               categories2 : undefined
             },
             stroke : {
