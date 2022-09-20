@@ -1,13 +1,11 @@
 <template>
     <v-card  
-        class="mx-auto text-center"
+        class="mx-auto text-center mt-8"
         max-width="1000">
-
-        <h2>List Jenis Proses</h2>
+        <h1>List Jenis Proses</h1>
         <v-data-table
           :headers = "column"
-          :items = "jenisproses"
-        >
+          :items = "jenisproses">
         </v-data-table>
     </v-card>
 </template>
@@ -18,8 +16,8 @@ export default{
     data(){
         return{
             column : [
-                {text : 'Id',value : 'id'},
-                {text : 'Nama Jenis Proses',value : 'namajenisproses'},
+                {text : 'ID',value : 'id'},
+                {text : 'Nama Jenis Proses',value : 'namaJenisProses'},
             ],
             jenisproses : []
         }

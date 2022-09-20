@@ -5,10 +5,9 @@
         class="mx-auto text-center mt-6"
         color="black"
         dark
-        max-width="1000"
-      >
+        max-width="1000">
       <v-card>
-        <!--
+        <!-- Sparkline Biasa
         <v-sheet color="rgba(0, 0, 0, .12)">
           <v-sparkline
             :value="value"
@@ -26,18 +25,15 @@
         </v-sheet>
         -->
         <div class="app">
-      <apexcharts width="550" type="line" :options="chartOptions" :series="series"></apexcharts>
-    </div>
-    <v-card-text>
-        <div class="text-h4 font-weight-thin">
-          Persentasi Progress Proyek
+          <apexcharts width="550" type="line" :options="chartOptions" :series="series"></apexcharts>
         </div>
-      </v-card-text>
+        <v-card-text>
+          <div class="text-h4 font-weight-thin">
+            Kurva S
+          </div>
+        </v-card-text>
       </v-card>
-   
-
-
-    <v-divider></v-divider>
+      <v-divider></v-divider>
     </v-card>
 
     <v-card
@@ -69,12 +65,11 @@
         Jumlah Jam Kerja Operator di WS1
       </div>
     </v-card-text>
-
     <v-divider></v-divider>
     </v-card>
   </div>
 
-
+  <!-- BAR GRAPH
   <div class="d-flex mx-auto mt-8">
     <v-card
       class="mx-14"
@@ -124,25 +119,21 @@
       :show-trend-line="true"
       :trend-line-width="2"
       trend-line-color="red"
-
       >
       </vue-bar-line>
-
     </v-card>
-    
-
   </div>
-  
+  -->
   </v-app>
 </template>
 
 <script>
-  import VueBarGraph from '../components/VueBarGraph.vue';
+  //import VueBarGraph from '../components/VueBarGraph.vue';
   import VueApexCharts from 'vue-apexcharts'
 
   export default {
     components:{
-      VueBarGraph,
+      //VueBarGraph,
       apexcharts: VueApexCharts,
     },
     
@@ -215,9 +206,9 @@
             }            
 
         }
-        
-
+      
       
       }
-  }
+    }
+  
 </script>
