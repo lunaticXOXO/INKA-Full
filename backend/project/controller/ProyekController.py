@@ -129,16 +129,18 @@ def AccumulatePercentageProyek(idOperasi):
 
     conn = database.connector()
     cursor = conn.cursor()
-
-
     #meng GET data id proyek dari id operasi yang di klik
-    query_get_idproyek = "SELECT d.id FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_r_rincianproyek c ON b.rincianproyek = c.id JOIN prd_r_proyek d ON c.proyek = d.id WHERE a.id = '"+idOperasi+"'"
+    query_get_idproyek = "SELECT d.id,d.selesai FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_r_rincianproyek c ON b.rincianproyek = c.id JOIN prd_r_proyek d ON c.proyek = d.id WHERE a.id = '"+idOperasi+"'"
     cursor.execute(query_get_idproyek)
     records = cursor.fetchall()
     id_proyek = ''
+    tanggalSelesai = ''
     for data in records:
         id_proyek = data[0]
-    print("Id Proyek : ",id_proyek)
+        tanggalSelesai = data[1]
+
+    print("Id Proyek       : ",id_proyek)
+    print("Tanggal Selesai : ",tanggalSelesai)
 
     #Get jumlah pesanan / jumlah item proyek
     query_count_nrincian = "SELECT a.jumlah FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON b.id = a.proyek WHERE b.id = '"+id_proyek+"'"
@@ -178,9 +180,9 @@ def AccumulatePercentageProyek(idOperasi):
         values3 = (nilai_percentage,id_proyek)
         cursor.execute(query_update_percentage,values3)
         query_insert_cpl = "INSERT INTO cpl_progress(proyek,selesai,percentage)VALUES(%s,%s,%s)"
-        date_finish = datetime.now()
-        values4 = (id_proyek,date_finish,nilai_percentage)
-        print("Idproyek : ",id_proyek,"date : ",date_finish,"percentage : ",nilai_percentage)
+       
+        values4 = (id_proyek,tanggalSelesai,nilai_percentage)
+        print("Idproyek : ",id_proyek,"date : ",tanggalSelesai,"percentage : ",nilai_percentage)
         cursor.execute(query_insert_cpl,values4)
         conn.commit()
         hasil = {"status" : "berhasil"}
