@@ -37,9 +37,17 @@
                 </v-card>
             </v-col>
         </v-main>
-        <v-snackbar top color="green" v-model="snackBar" open="/">
+        <div v-if="snackBar == true">
+        <v-snackbar top color="green" v-model="snackBar">
             Login Success!
         </v-snackbar>
+        </div>
+
+        <div v-if="snackBar2 == true">
+        <v-snackbar top color="red" v-model="snackBar2">
+            Wrong Username or Password!
+        </v-snackbar>
+        </div>
     </div>
 </template>
 
@@ -53,6 +61,7 @@ export default {
         passwordShow: false,
         loading: false,
         snackBar: false,
+        snackBar2: false,
         username: '',
         passwords: '',
         passwordRules: [
@@ -72,30 +81,27 @@ export default {
                       passwords: this.passwords
                     })
                     .then((response) => {
-                        if(response.status == 'berhasil'){
-                            this.session.start()
-                            this.session.set('jwt', response.body.token)
-            
+                        if(response.data.status == 'berhasil'){
+                            let tipeUser
+                            let uname
+                            tipeUser = response.data.userType
+                            uname = response.data.username
+                            this.loginService.addToUserType(tipeUser)
+                            this.loginService.addToUsername(uname)
+                            this.loading = false
+                            this.snackBar = true
+                            location.replace("/")
+                        }else if(response.data.status == 'gagal'){
+                            this.loading = false
+                            this.snackBar2 = true
+                            location.replace("/login")
                         }
-                        console.log(response.data.userType)
-                        console.log(response.data.username)
-                        let tipeUser
-                        let uname
-                        tipeUser = response.data.userType
-                        uname = response.data.username
-                        this.loginService.addToUserType(tipeUser)
-                        this.loginService.addToUsername(uname)
-                        this.loading = false
-                        this.snackBar = true
-                        location.replace("/")
-                    
-                       
+                        console.log(response)
                     })
                     .catch((error) => {
                         console.log(error)
-
                     });
-                }, 3000)
+                }, 2000)
             }
         }
     }
