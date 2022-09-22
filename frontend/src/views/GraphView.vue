@@ -207,7 +207,7 @@
                   this.series.data = res.data[i].percentage
                  
               }
-
+              console.log(this.series.data[0])
               console.log(this.chartOptions.xaxis.categories,this.series.data)
               //this.chartOptions.xaxis.categories2 = res.data[0].selesai
               //this.chartOptions.series.data2 = res.data[0].percentage

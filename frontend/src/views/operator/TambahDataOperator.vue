@@ -30,7 +30,7 @@
 
       <v-autocomplete
       item-text="nama"
-      item-value="id"
+      item-value="code"
       v-model="kota"
       :items="items"
       label="Kota"
