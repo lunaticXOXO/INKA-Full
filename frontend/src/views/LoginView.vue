@@ -94,7 +94,6 @@ export default {
                         }else if(response.data.status == 'gagal'){
                             this.loading = false
                             this.snackBar2 = true
-                            location.replace("/login")
                         }
                         console.log(response)
                     })
