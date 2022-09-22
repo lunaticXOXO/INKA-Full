@@ -45,7 +45,7 @@
 
         <div v-if="snackBar2 == true">
         <v-snackbar top color="red" v-model="snackBar2">
-            Wrong Username or Password!
+            Username or Password Incorrect!
         </v-snackbar>
         </div>
     </div>
