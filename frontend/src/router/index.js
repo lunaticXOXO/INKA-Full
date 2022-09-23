@@ -696,7 +696,6 @@ const routes = [
       title : "Status Operasi - PT.INKA"
     }
   },
-
 ]
 
 const router = new VueRouter({

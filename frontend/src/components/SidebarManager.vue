@@ -111,8 +111,6 @@ export default {
                 active: false,
                 items: [
                     { title: 'Jumlah Jam Kerja Operator', icon: 'mdi-account-plus', route: '/jamKerjaOperator'},
-                    { title: 'Jumlah Jam Kerja Operator WS', icon: 'mdi-plus', route: '/jamKerjaOperatorWS'},
-                    { title: 'Operator Hadir', icon: 'mdi-state-machine', route: '/operatorHadir'},
                 ],
                 title: 'Operator',
                 },
