@@ -24,7 +24,9 @@
         </v-sheet>
         -->
         <div class="app">
+          <template>
           <apexcharts width="650" type="line" :options="chartOptions" :series="series"></apexcharts>
+        </template>
         </div>
         <v-card-text>
           <div class="text-h4 font-weight-thin">
@@ -164,9 +166,9 @@
               id: 'vuechart-example',
             },
             xaxis: {
-              categories: ['17/09/2022','18/09/2022','19/09/2022','20/09/2022'],
+              //categories: ['17/09/2022','18/09/2022','19/09/2022','20/09/2022'],
               categories2 : [],
-              //categories : []
+              categories : []
             },
             stroke : {
                 curve : 'smooth'
@@ -174,12 +176,12 @@
           },
           series: [{
            
-            data: [25, 50, 75,100],
-            //data : [],
-            data2 : []
+            //data: [25, 50, 75,100],
+            data : [],
+           
           }],
-
-          records : []
+          
+         
     }
    
     },
@@ -187,32 +189,19 @@
       this.fetchProgressProyek()
     },
     methods: {
-        updateChart() {
       
-          const newData = this.series[0].data.map
-          this.series = [{
-            data: newData
-          }]
-        },
-
         async fetchProgressProyek(){
+         
             const axios = require('axios')
-            const res = await axios.get('/proyek/show_progress_proyek')
+            const res = await axios.get('/proyek/show_progress_percentage_proyek')
             if(res.data == null){
                console.log("Data kosong")
             }else{
              
-              for(var i = 0; i < res.data.length; i++ ){
-                  this.chartOptions.xaxis.categories = res.data[i].selesai_str
-                  this.series.data = res.data[i].percentage
-                 
-              }
-              console.log(this.series.data[0])
-              console.log(this.chartOptions.xaxis.categories,this.series.data)
-              //this.chartOptions.xaxis.categories2 = res.data[0].selesai
-              //this.chartOptions.series.data2 = res.data[0].percentage
-              //console.log(this.chartOptions.xaxis.categories2,this.chartOptions.series.data2)
-              
+              this.series.data= res.data
+              console.log(this.series.data)
+             
+       
             }            
 
         }
