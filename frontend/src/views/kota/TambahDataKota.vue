@@ -19,7 +19,7 @@
             required
             ></v-text-field>
 
-            <v-select
+            <v-autocomplete
             v-if="items"
             item-text="nama"
             item-value="code"
@@ -28,7 +28,7 @@
             :rules="[v => !!v || 'Negara is required']"
             label="Negara"
             required
-            ></v-select>
+            ></v-autocomplete>
 
             <v-text-field
             v-model="nama"

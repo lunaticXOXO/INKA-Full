@@ -75,9 +75,11 @@
       validate () {
         this.$refs.form.validate()
       },
+
       reset () {
         this.$refs.form.reset()
       },
+
       submitHandler() {
         console.log(this.id)
       },
@@ -96,7 +98,6 @@
         catch(error){
             alert("Error")
             console.log(error)
-
         }
       },
     }

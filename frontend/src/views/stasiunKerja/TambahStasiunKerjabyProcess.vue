@@ -1,57 +1,58 @@
 <template>
-    <v-card
-      class="mx-auto text-center mt-6"
-      max-width="1000">
-      <br>
-      <h1>Tambah Stasiun Kerja Baru by Proses</h1>
-      <br>
-      <v-form
-        class="pa-6"
-        ref="form"
-        @submit.prevent="submitHandler"
-        v-model="valid"
-        lazy-validation
-        >
-          <v-select
-          item-text="nama"
-          item-value="id"
-          v-model="stasiunKerja"
-          :items="items"
-          label="Stasiun Kerja"
-          ></v-select>
-          
-          <v-btn
-          :disabled="!valid"
-          color="success"
-          class="mr-4"
-          type="submit"
-          @click="validate()">
-          Submit
-          </v-btn>
+  <v-card
+    class="mx-auto text-center mt-6"
+    max-width="1000">
+    <br>
+    <h1>Tambah Stasiun Kerja Baru by Proses</h1>
+    <br>
+    <v-form
+      class="pa-6"
+      ref="form"
+      @submit.prevent="submitHandler"
+      v-model="valid"
+      lazy-validation>
 
-          <v-btn
-          color="error"
-          class="mr-4"
-          @click="reset">
-          Reset
-          </v-btn>
-      </v-form>
-      <div v-if="snackBar == true">
-        <v-snackbar top color="green" v-model="snackBar">
-          Insert Stasiun Kerja Sukses!
-        </v-snackbar>
-      </div>
+      <v-autocomplete
+      item-text="nama"
+      item-value="id"
+      v-model="stasiunKerja"
+      :items="items"
+      label="Stasiun Kerja"
+      ></v-autocomplete>
+      
+      <v-btn
+      :disabled="!valid"
+      color="success"
+      class="mr-4"
+      type="submit"
+      @click="validate()">
+      Submit
+      </v-btn>
 
-      <div v-else-if="snackBar == false">
-        <v-snackbar top color="red" v-model="snackBar">
-          Insert Stasiun Kerja Gagal!
-        </v-snackbar>
-      </div>
-
-      <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
-        {{snackbar.message}}
+      <v-btn
+      color="error"
+      class="mr-4"
+      @click="reset">
+      Reset
+      </v-btn>
+    </v-form>
+    
+    <div v-if="snackBar == true">
+      <v-snackbar top color="green" v-model="snackBar">
+        Insert Stasiun Kerja Sukses!
       </v-snackbar>
-    </v-card>
+    </div>
+
+    <div v-else-if="snackBar == false">
+      <v-snackbar top color="red" v-model="snackBar">
+        Insert Stasiun Kerja Gagal!
+      </v-snackbar>
+    </div>
+
+    <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+      {{snackbar.message}}
+    </v-snackbar>
+  </v-card>
 </template>
 
 <script>
@@ -117,13 +118,17 @@
           }
           );
           console.log(response)
-          if(response.data.status == "berhasil"){
+          if(response.data.Status == "Berhasil"){
              this.snackbar = {
               message : "Insert Stasiun Kerja Success",
               color : 'green',
               show : true
-          }}
-          else if(response.data.status == "gagal"){
+          }
+
+            location.replace('/listStasiunKerjabyProcess/' + this.$route.params.id)
+          
+          }
+          else if(response.data.Status == "Gagal"){
               this.snackbar = {
               message : "Insert Stasiun Kerja Gagal, Kode sudah tersedia",
               color : 'red',

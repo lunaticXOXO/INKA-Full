@@ -1,104 +1,157 @@
 <template>
+<v-app>
     <v-card
-        class="mx-auto text-center mt-6"
-        max-width="1000">
-        <br>
-        <h1>Tambah Rincian Proyek Baru</h1>
-        <v-form
-            class="pa-6"
-            ref="form"
-            @submit.prevent="submitHandler"
-            v-model="valid"
-            lazy-validation
+      class="mx-auto text-center mt-6"
+      width="1000">
+      <br>
+      <h1>Tambah Rincian Proyek Baru</h1>
+
+      <v-form
+        class="pa-6"
+        ref="form"
+        @submit.prevent="submitHandler"
+        v-model="valid"
+        lazy-validation>
+        
+        <v-text-field
+        v-model="id"
+        :counter="4"
+        :rules="idRules"
+        label="ID"
+        required
+        ></v-text-field>
+
+        <v-text-field
+        v-model="jumlah"
+        label="Jumlah"
+        type="number"
+        ></v-text-field>
+
+        <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
+
+        <v-menu>
+        <template v-slot:activator="{ on, attrs }">
+            <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
+        </template>
+        </v-menu>
+
+        <v-time-picker width="300" v-model="datetime"></v-time-picker>
+
+        <v-menu>
+        <template v-slot:activator="{ on, attrs }">
+            <v-text-field :value="datetime" v-bind="attrs" v-on="on" label="Due Time" prepend-icon="mdi-clock"></v-text-field>
+        </template>
+        </v-menu>
+        
+        <!--
+         <v-menu>
+        <template v-slot:activator="{ on, attrs }">
+            <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
+        <v-datetime-picker label="Select Datetime" v-model="datetime"> 
+        </v-datetime-picker>
+        </template>
+        </v-menu>
+        -->
+        
+        <v-autocomplete 
+        v-model="jenisProduk"
+        item-text="nama"
+        item-value="id"
+        :items ="items" 
+        label="Jenis Produk">
+        </v-autocomplete>
+
+        <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        type="submit"
+        @click="validate()"
         >
-            <v-text-field
-            v-model="id"
-            :counter="4"
-            :rules="idRules"
-            label="ID"
-            required
-            ></v-text-field>
+        Submit
+        </v-btn>
 
-            <v-text-field
-            v-model="jumlah"
-            label="Jumlah"
-            type="number"
-            ></v-text-field>
+        <v-btn
+        color="error"
+        class="mr-4"
+        @click="reset"
+        >
+        Reset
+        </v-btn>
+      </v-form>
 
-            <v-menu>
-            <template v-slot:activator="{ on, attrs }">
-                <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
-            </template>
-                <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
-            </v-menu>
-            
-           <v-select 
-            v-model="jenisProduk"
-            item-text="id"
-            item-value="id"
-            :items ="items" 
-            label="Jenis Produk">
-            </v-select>
-
-            <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            type="submit"
-            @click="validate()"
-            >
-            Submit
-            </v-btn>
-
-            <v-btn
-            color="error"
-            class="mr-4"
-            @click="reset"
-            >
-            Reset
-            </v-btn>
-        </v-form>
-
-        <div v-if="snackBar == true">
-          <v-snackbar top color="green" v-model="snackBar">
-            Insert Rincian Proyek by Proyek Sukses!
-          </v-snackbar>
-        </div>
-
-        <div v-else-if="snackBar == false">
-          <v-snackbar top color="red" v-model="snackBar">
-            Insert Rincian Proyek by Proyek Gagal!
-          </v-snackbar>
-        </div>
-
-        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
-          {{snackbar.message}}
+      <div v-if="snackBar == true">
+        <v-snackbar top color="green" v-model="snackBar">
+          Insert Rincian Proyek by Proyek Sukses!
         </v-snackbar>
+      </div>
+
+      <div v-else-if="snackBar == false">
+        <v-snackbar top color="red" v-model="snackBar">
+          Insert Rincian Proyek by Proyek Gagal!
+        </v-snackbar>
+      </div>
+
+      <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+        {{snackbar.message}}
+      </v-snackbar>
     </v-card>
+
+    <div class="d-flex ml-14">
+      <v-card class="ml-14 text-center mt-6" width="500">
+        <h3>Proyek {{this.$route.params.id}}</h3>
+        <v-data-table
+            :headers = "headers2"
+            :items = "proyekinrincian">
+        </v-data-table>
+      </v-card>
+
+      <v-card class="ml-15 text-center mt-6" width = "400">
+        <h3>Customer Proyek {{this.$route.params.id}}</h3>
+          <v-data-table
+            :headers = "headers3"
+            :items = "customer">
+          </v-data-table>
+      </v-card>
+    </div>
+  </v-app>
 </template>
 
 <script>
   export default {
     data: () => ({
       valid: true,
+        headers2 : [
+            {text : 'ID Proyek', value : 'IdProyek'},
+            {text : 'Nama Proyek', value : 'NamaProyek'}
+        ],
+        headers3 : [
+            {text : 'ID Customer', value : 'IdCustomer'},
+            {text : 'Nama Customer',value : 'NamaCustomer'},
+        ],
      snackbar: {
         show: false,
         message: null,
         color: null
       },
       jumlah : '',
+      datetime: null,
       dueDate : null,
+      gabunganTanggal : null,
       jenisProduk : '',
       items : undefined,
       id: '',
+      proyekinrincian : [],
+      customer : [],
       idRules: [
         v => !!v || 'ID is required',
-        v => (v && v.length <= 5 && v.length >= 1) || 'ID must be 1-4 characters',
+        v => (v && v.length <= 10 && v.length >= 1) || 'ID must be 1-10 characters',
       ],
     }),
 
     mounted(){
-      this.fetchJenisProduk()
+      this.fetchJenisProduk(),
+      this.fetchProyekInRProyek()
     },
 
     methods: {
@@ -125,7 +178,7 @@
           const response = await axios.post('/rproyek/add_rproyek_byproyek/' + this.$route.params.id,{
             id : this.id,
             jumlah : this.jumlah,
-            dueDate : this.dueDate,
+            gabunganTanggal : this.dueDate + ' ' +this.datetime,
             jenisProduk : this.jenisProduk
           })
           console.log(response)
@@ -134,7 +187,9 @@
               message : "Insert Rincian Proyek by Proyek Success",
               color : 'green',
               show : true
-          }}
+          }
+            location.replace('/listRProyekbyProyek/' + this.$route.params.id)
+          }
           else if(response.data.status == "gagal"){
               this.snackbar = {
               message : "Insert Rincian Proyek by Proyek Gagal, ID sudah tersedia",
@@ -151,7 +206,24 @@
           console.log(error)
         }
       },
+      async fetchProyekInRProyek(){
+            try{
+                
+                const axios = require('axios')
+                const res = await axios.get('/rproyek/show_proyek_inrproyek/' + this.$route.params.id)
+                if(res == null){
+                    console.log("Data kosong")
+                }else{
+                    this.proyekinrincian = res.data
+                    this.customer = res.data
+                    console.log(res,this.proyekinrincian)
+                }
 
+            }catch(error){
+                alert("Error")
+                console.log(error)
+            }
+        },
       async fetchJenisProduk(){
         try{
           const axios = require('axios')

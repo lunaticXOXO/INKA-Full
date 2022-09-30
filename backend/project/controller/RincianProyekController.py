@@ -4,6 +4,8 @@ import db.db_handler as db
 import numpy as np
 from datetime import timedelta
 from flask import request,make_response,jsonify
+import random
+import string
 
 def GetAllRincianProyek():
     conn = db.connector()
@@ -25,7 +27,7 @@ def ShowRincianProyekByProyek(id_proyek):
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id,a.jumlah,a.dueDate,a.proyek,a.jenisProduk FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON a.proyek = b.id WHERE b.id = '"+id_proyek+"'"
+    query = "SELECT a.id,a.jumlah,a.dueDate,a.proyek,c.nama FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON a.proyek = b.id JOIN prd_r_jenisproduk c ON c.id = a.jenisProduk WHERE b.id = '"+id_proyek+"'"
     cursor.execute(query)
 
     row_headers = [x[0] for x in cursor.description]
@@ -37,6 +39,20 @@ def ShowRincianProyekByProyek(id_proyek):
     
     return make_response(jsonify(json_data),200)
 
+
+def ShowProyekInRProyek(id_proyek):
+    conn = db.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT a.id AS 'IdProyek', a.nama AS 'NamaProyek', b.id AS 'IdCustomer', b.nama AS 'NamaCustomer' FROM prd_r_proyek a JOIN gen_r_customer b ON b.id = a.customerid WHERE a.id =  '"+id_proyek+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
 
 def AddRincianProyek():
     conn = db.connector()
@@ -77,15 +93,37 @@ def AddRincianProyekByProyek(id_proyek):
     print(temp)
     print(type(temp))
     cursor = conn.cursor()
-    query = "INSERT INTO prd_r_rincianproyek (id, jumlah,jenisProduk, proyek) VALUES (%s,%s,%s,'"+temp+"')"
+    query = "INSERT INTO prd_r_rincianproyek (id, jumlah,dueDate,jenisProduk, proyek) VALUES (%s,%s,%s,%s,'"+temp+"')"
     try:
         data = request.json
         id_rproyek = data["id"]
         jumlah = data["jumlah"]
+        dueDate = data["gabunganTanggal"]
         jenisProduk = data["jenisProduk"]
     
-        values = (id_rproyek,jumlah,jenisProduk)
+        values = (id_rproyek,jumlah,str(dueDate),jenisProduk)
         cursor.execute(query,values)
+        query2 = "SELECT id FROM prd_r_rincianproyek a WHERE a.id = '"+id_rproyek+"'"
+        
+        id_rproyek_new = ""
+        cursor.execute(query2)
+        records = cursor.fetchall()
+        for data in records:
+            id_rproyek_new = data[0]
+        print(id_rproyek_new)
+        index = 1
+        print(jumlah)
+        print("Type jumlah : ",type(jumlah))
+        new_jumlah = int(jumlah)
+        query3 = "INSERT INTO prd_d_produk(id,rincianProyek)VALUES(%s,%s)"
+        N = 9
+        for index in range(new_jumlah):
+            id_product = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
+            values2 = (id_product,id_rproyek_new)
+            cursor.execute(query3,values2)
+            #conn.commit()
+            
+        print("index : ",index)
         conn.commit()
         hasil = {"status" : "berhasil"}
         print("Rincian Proyek Baru Ditambahkan!")
@@ -120,16 +158,18 @@ def UpdateRProyek(id_rproyek):
 
 
 
-def HitungDueDateRProyek(id_proyek):
-    hasil1 = HitungDurasiProses(id_proyek)
+def HitungDueDateRProyek(id_produk):
+    hasil1 = HitungDurasiProses(id_produk)
 
     conn = db.connector()
     cursor = conn.cursor()
 
     query = "SELECT a.jumlah, b.tglDibuat, b.dueDate FROM prd_r_rincianproyek a "
     query = query + "JOIN prd_r_proyek b ON "
-    query = query + "b.id = a.proyek "
-    query = query + "WHERE b.id = '"+id_proyek+"'"
+    query = query + "b.id = a.proyek"
+    query = query + "JOIN prd_d_produk c ON"
+    query = query + "c.rincianProyek = a.id"
+    query = query + "WHERE c.id = '"+id_produk+"'"
     
     cursor.execute(query)
 

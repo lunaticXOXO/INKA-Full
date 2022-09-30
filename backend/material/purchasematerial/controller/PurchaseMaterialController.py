@@ -1,33 +1,45 @@
 import datetime
+from turtle import pu
 import db.db_handler as database
 from flask import request,make_response,jsonify
+
+
+def OffForeign():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SET GLOBAL FOREIGN_KEY_CHECKS = 0;"
+    cursor.execute(query)
 
 def PurchaseMaterial():
     conn = database.connector()
     cursor = conn.cursor()
-
-    query = "INSERT INTO mat_d_purchasematerial(id,nama,purchaseName,purchaseDate)VALUES(%s,%s,%s,%s)"
-    query2 = "INSERT INTO mat_d_purchaseitem(id,supplierCode,materialTypeCode,unit,schedulledArrival,purchaseId)VALUES(%s,%s,%s,%s,%s,%s)"
+    cursor2 = conn.cursor()
+    query = "INSERT INTO mat_d_purchasematerial(id,nama,purchaserName,purchaseDate)VALUES(%s,%s,%s,%s)"
+    query2 = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)VALUES(%s,%s,%s,%s,%s,%s,%s)"
     try:
         data = request.json
-        data2 = request.json
+        
         id = data["id"]
         nama = data["nama"]
         purchaserName = data["purchaserName"]
-        purchaseDate = datetime.now()
-        id_item = data2["id"]
-        supplierCode = data2["supplierCode"]
-        materialTypeCode = data2["materialTypeCode"]
-        unit = data2["unit"]
-        schedulledArrival = datetime.now() + datetime.timedelta(days=7)
-        purchaseId = data2["purchaseId"]
-
-        values = (id,nama,purchaserName,purchaseDate)
-        values2 = (id_item,supplierCode,materialTypeCode,unit,schedulledArrival,purchaseId)
-        
+        now = datetime.datetime.now()
+       
+        values = (id,nama,purchaserName,now)
         cursor.execute(query,values)
-        cursor.execute(query2,values2)
         conn.commit()
+
+        id_item = data["id_item"]
+        supplierCode = data["supplierCode"]
+        materialTypeCode = data["materialTypeCode"]
+        quantity = data["quantity"]
+        unit = data["unit"]
+        purchaseId = data["purchaseId"]
+        schedulledArrival = now + datetime.timedelta(days=7)
+
+        values2 = (id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)    
+        cursor2.execute(query2,values2)
+        conn.commit()
+        
         hasil = {"status" : "berhasil"}
 
     except Exception as e:

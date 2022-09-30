@@ -1,74 +1,71 @@
 <template>
-    <v-card
-      class="mx-auto text-center mt-6"
-      max-width="1000">
-      <br>
-      <h1>Tambah Stasiun Kerja Baru</h1>
-      <br>
-      <v-form
-        class="pa-6"
-        ref="form"
-        @submit.prevent="submitHandler"
-        v-model="valid"
-        lazy-validation
-        >
-          <v-text-field
-          v-model="id"
-          :counter="6"
-          :rules="idRules"
-          label="ID"
-          required
-          ></v-text-field>
+  <v-card
+    class="mx-auto text-center mt-6"
+    max-width="1000">
+    <br>
+    <h1>Tambah Stasiun Kerja Baru</h1>
+    <br>
+    <v-form
+      class="pa-6"
+      ref="form"
+      @submit.prevent="submitHandler"
+      v-model="valid"
+      lazy-validation
+      >
+        <v-text-field
+        v-model="id"
+        :counter="6"
+        :rules="idRules"
+        label="ID"
+        required
+        ></v-text-field>
 
-          <v-select
-          item-text="nama"
-          item-value="nama"
-          v-model="nama"
-          :items="items"
-          label="Jenis Stasiun Kerja"
-          ></v-select>
+        <v-text-field
+        v-model="nama"
+        label="Jenis Stasiun Kerja"
+        ></v-text-field>
 
-          <v-select
-          item-text="id"
-          item-value="id"
-          v-model="liniproduksi"
-          :items="items2"
-          label="Lini Produksi"
-          ></v-select>
+        <v-autocomplete
+        item-text="id"
+        item-value="id"
+        v-model="liniproduksi"
+        :items="items2"
+        label="Lini Produksi"
+        ></v-autocomplete>
 
-          <v-btn
-          :disabled="!valid"
-          color="success"
-          class="mr-4"
-          type="submit"
-          @click="validate()">
-          Submit
-          </v-btn>
+        <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        type="submit"
+        @click="validate()">
+        Submit
+        </v-btn>
 
-          <v-btn
-          color="error"
-          class="mr-4"
-          @click="reset">
-          Reset
-          </v-btn>
-      </v-form>
-        
-      <div v-if="snackBar == true">
-        <v-snackbar top color="green" v-model="snackBar">
-          Insert Stasiun Kerja Sukses!
-        </v-snackbar>
-      </div>
-
-      <div v-else-if="snackBar == false">
-        <v-snackbar top color="red" v-model="snackBar">
-          Insert Stasiun Kerja Gagal!
-        </v-snackbar>
-      </div>
-
-      <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
-        {{snackbar.message}}
+        <v-btn
+        color="error"
+        class="mr-4"
+        @click="reset">
+        Reset
+        </v-btn>
+    </v-form>
+      
+    <div v-if="snackBar == true">
+      <v-snackbar top color="green" v-model="snackBar">
+        Insert Stasiun Kerja Sukses!
       </v-snackbar>
-    </v-card>
+    </div>
+
+    <div v-else-if="snackBar == false">
+      <v-snackbar top color="red" v-model="snackBar">
+        Insert Stasiun Kerja Gagal!
+      </v-snackbar>
+    </div>
+
+    <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+      {{snackbar.message}}
+    </v-snackbar>
+  </v-card>
 </template>
 
 <script>
@@ -160,7 +157,11 @@
               message : "Insert Stasiun Kerja Success",
               color : 'green',
               show : true
-          }}
+          }
+
+            location.replace('/listStasiun')
+          
+          }
           else if(response.data.status == "gagal"){
               this.snackbar = {
               message : "Insert Stasiun Kerja Gagal, Kode sudah tersedia",

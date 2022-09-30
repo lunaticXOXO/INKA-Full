@@ -1,4 +1,5 @@
 from math import ceil
+from signal import valid_signals
 from tkinter.messagebox import QUESTION
 import pandas as pd
 import product.controller.JenisProdukController as jpcont
@@ -32,9 +33,136 @@ def ShowJenisProses():
     json_data = []
     for data in records:
        json_data.append(dict(zip(row_headers,data)))
-    #conn.commit()
-
+  
     return make_response(jsonify(json_data),200)
+
+
+def AddRequirementByProcess(id):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query_select = "SELECT id FROM prd_r_proses WHERE id = '"+id+"'"
+    cursor.execute(query_select)
+    records = cursor.fetchall()
+    id_proses = ""
+    for data in records:
+        id_proses = data[0]
+
+    query_insert = "INSERT INTO prd_r_operatorrequirement(qualificationCode,processCode)VALUES(%s,%s)"
+    try:
+        data = request.json
+        qualificationCode = data["qualificationCode"]
+        values = (qualificationCode,id_proses)
+        cursor.execute(query_insert,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
+
+def ShowRequirementProcess():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.processCode AS 'IdProses',b.nama AS 'NamaProses',c.codes AS 'RequirementCode',c.descriptions FROM prd_r_operatorrequirement a JOIN prd_r_proses b ON b.id = a.processCode JOIN opr_r_operatorqualification c ON c.codes = a.qualificationCode"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
+
+
+def ShowRequirmentByIdProcess(idProcess):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.processCode AS 'IdProses', b.nama AS 'NamaProses', c.codes AS 'RequirementCode', c.descriptions FROM prd_r_operatorrequirement a JOIN prd_r_proses b ON b.id = a.processCode JOIN opr_r_operatorqualification c ON c.codes = a.qualificationCode WHERE a.processCode = '"+idProcess+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
+
+
+def InsertJenisProses():
+    conn = database.connector()
+    cursor = conn.cursor()
+    try:
+        data = request.json
+        query = "INSERT INTO prd_r_jenisproses(id,namajenisproses)VALUES(%s,%s)"
+        id = data["id"]
+        namajenisproses = data["namajenisproses"]
+        values = (id,namajenisproses)
+        cursor.execute(query,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
+
+def ShowGroupProses():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM prd_r_prosesgroup"
+
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data))
+
+
+def InsertGroupProses():
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "INSERT prd_r_prosesgroup(id,nama)VALUES(%s,%s)"
+    try:
+        data = request.json
+        id = data["id"]
+        nama = data["nama"]
+        values = (id,nama)
+        cursor.execute(query,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
+
+
+def ShowSJProdukInProcess(id_sjproduk):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.idNodal,a.nama,a.indukNodal, c.id AS 'IdJenisProduk', c.nama AS 'NamaJenisProduk', d.id AS 'IdRincian',d.jumlah,d.dueDate AS 'dueDateRincian', e.id AS 'IdProduk',e.dueDate AS 'dueDateProduk', f.id AS 'IdProyek',f.nama AS 'namaProyek', g.id AS 'IdCustomer',g.nama AS 'namaCustomer' FROM prd_r_strukturjnsprd a JOIN prd_r_jenisproduk c ON c.id = a.jnsProduk JOIN prd_r_rincianproyek d ON d.jenisProduk = c.id JOIN prd_d_produk e ON e.rincianProyek = d.id JOIN prd_r_proyek f ON f.id = d.proyek JOIN gen_r_customer g ON g.id = f.customerid WHERE a.idNodal = '"+id_sjproduk+"'"
+
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    
+    records = cursor.fetchall()
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
 
 
 def ShowProsesbySJProduk(idNodal):
@@ -150,6 +278,25 @@ def AddProcessBySJProduk(id_sjproduk):
         hasil = {"status" : "gagal"}
 
     return hasil
+
+
+def HitungDurasiProsesbyProduk(id_produk):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT a.id, a.nama, b.idNodal, b.nama, b.jumlah, c.id, c.nama, c.durasi, c.satuandurasi, d.id, d.jumlah, e.id, e.nama, e.tglDibuat, f.id AS 'ID Produk' FROM prd_r_jenisproduk a JOIN prd_r_strukturjnsprd b ON b.jnsProduk = a.id JOIN prd_r_proses c ON c.nodalOutput = b.idNodal JOIN prd_r_rincianproyek d ON d.jenisProduk = a.id JOIN prd_r_proyek e ON e.id = d.proyek JOIN prd_d_produk f ON f.rincianProyek = d.id WHERE f.id = '"+id_produk+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    hitungDurasi = 0
+    
+    for data in records:
+        hitungDurasi = hitungDurasi + data[7]
+    
+    hitungJam = hitungDurasi/60
+    print("Durasi :", ceil(hitungJam), "Jam Per Produk")
+
+    return ceil(hitungJam)
 
 
 def HitungDurasiProses(id_proyek):

@@ -19,29 +19,29 @@
             required
             ></v-text-field>
 
-            <v-select
+            <v-autocomplete
             item-text="id"
             item-value="id"
             v-model="prosesSesudahnya"
             :items="items"
             label="Proses Sesudahnya"
-            ></v-select>
+            ></v-autocomplete>
 
-            <v-select
+            <v-autocomplete
             item-text="idNodal"
             item-value="idNodal"
             v-model="nodalOutput"
             :items="items2"
             label="Nodal Output"
-            ></v-select>
+            ></v-autocomplete>
 
-            <v-select
+            <v-autocomplete
             item-text="id"
             item-value="id"
             v-model="jenisProses"
             :items="items3"
             label="Jenis Proses"
-            ></v-select>
+            ></v-autocomplete>
 
             <v-text-field
             v-model="nama"
@@ -54,11 +54,11 @@
             type="number"
             ></v-text-field>
 
-            <v-select
+            <v-autocomplete
             v-model="satuanDurasi"
             :items="items4"
             label="Satuan Durasi"
-            ></v-select>
+            ></v-autocomplete>
 
             <v-btn
             :disabled="!valid"

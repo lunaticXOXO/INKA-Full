@@ -12,26 +12,30 @@
             lazy-validation>
 
             <v-text-field
-            v-model="kode"
+            v-model="code"
             :counter="12"
             :rules="kodeRules"
-            label="Kode"
+            label="Code"
             required
             ></v-text-field>
 
-            <v-select
-            v-model="klasifikasi"
+            <v-autocomplete
+            v-model="classificationCode"
             :items="list_klasifikasi"
+            item-text="descriptions"
+            item-value="code"
             label="Klasifikasi"
             required
-            ></v-select>
+            ></v-autocomplete>
 
-            <v-select
-            v-model="grup"
+            <v-autocomplete
+            v-model="groupCode"
             :items="list_grup"
+            item-text="descriptions"
+            item-value="code"
             label="Grup"
             required
-            ></v-select>
+            ></v-autocomplete>
 
             <v-text-field
             v-model="nama"
@@ -39,13 +43,13 @@
             ></v-text-field>
 
             <v-checkbox
-            v-model="available"
+            v-model="isAvailable"
             label="Is Available?"
             required
             ></v-checkbox>
 
             <v-checkbox
-            v-model="assy"
+            v-model="isAssy"
             label="Is Assy?"
             required
             ></v-checkbox>
@@ -67,6 +71,9 @@
             </v-btn>
 
         </v-form>
+          <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+            {{snackbar.message}}
+        </v-snackbar>
     </v-card>
 </template>
 
@@ -74,34 +81,105 @@
   export default {
     data: () => ({
       valid: true,
-      available: false,
-      assy: false,
+      isAvailable: false,
+      isAssy: false,
       nama: '',
       kode: '',
       kodeRules: [
         v => !!v || 'Kode is required',
-        v => (v && v.length <= 12 && v.length >= 9) || 'Kode must be 9-12 characters',
+        v => (v && v.length <= 12 && v.length >= 3) || 'Kode must be 3-12 characters',
       ],
-      klasifikasi: null,
-      grup: null,
-      list_klasifikasi: undefined,
-      list_grup: undefined,
+      classificationCode: null,
+      groupCode: null,
+      list_klasifikasi: '',
+      list_grup: '',
+      snackbar : {
+        show : false,
+        color : null,
+        message : null,
+      }
     }),
+
+    mounted(){
+      this.getClassification(),
+      this.getGroups()
+    },
 
     methods: {
       validate () {
-        this.$refs.form.validate()
+        if(this.$refs.form.validate()){
+          this.addJenisMaterial()
+        }
       },
+
       reset () {
         this.$refs.form.reset()
       },
+
       submitHandler() {
         console.log(this.kode)
-        console.log(this.klasifikasi)
-        console.log(this.grup)
+        console.log(this.assy)
+        console.log(this.available)
         console.log(this.nama)
-        console.log(this.checkbox)
+        console.log(this.classificationCode)
+        console.log(this.groupCode)
       },
+
+      async getClassification(){
+        const axios = require('axios')
+        const res = await axios.get('/material/show_classification')
+        if(res.data == null){
+          console.log('Classification Kosong')
+        } else {
+          this.list_klasifikasi = res.data
+        }
+        console.log(res,this.klasifikasi)
+      },
+
+      async getGroups(){
+        const axios = require('axios')
+        const res = await axios.get('/material/show_groups')
+        if(res.data == null){
+          console.log('Group kosong')
+        } else {
+          this.list_grup = res.data
+        }
+        console.log(res,this.list_grup)
+      },
+
+      async addJenisMaterial(){
+        try{
+          const axios = require('axios')
+          const res = await axios.post('/material/add_type',{
+              code : this.code,
+              nama : this.nama,
+              isAvailable : this.isAvailable,
+              isAssy : this.isAssy,
+              classificationCode : this.classificationCode,
+              groupCode : this.groupCode
+          })
+        
+           if(res.data.status == "berhasil"){
+            this.snackbar = {
+              show : true,
+              message : "Tambah Jenis Material Berhasil",
+              color : "green"
+            }
+
+            location.replace('/listMaterialType')
+          }
+
+          else if(res.data.status == "gagal"){
+            this.snackbar = {
+              show : true,
+              message : "Tambah Jenis Material Gagal",
+              color : "red"
+            }
+          }
+        }catch(error){
+          console.log(error)
+        }
+      }
     },
   }
 </script>

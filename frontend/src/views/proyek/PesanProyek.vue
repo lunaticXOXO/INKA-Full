@@ -9,8 +9,8 @@
             ref="form"
             @submit.prevent="submitHandler"
             v-model="valid"
-            lazy-validation
-        >
+            lazy-validation>
+
             <v-text-field
             v-model="id"
             :counter="20"
@@ -19,14 +19,14 @@
             required
             ></v-text-field>
           
-            <v-select
+            <v-autocomplete
               item-text="nama"
               item-value="id"
               v-model="pelanggan"
               :items="customer"
               label="Pelanggan"
               required>
-            </v-select>
+            </v-autocomplete>
             
             <v-text-field
             v-model="nama"
@@ -129,15 +129,15 @@
             }
            );
           console.log(response,this.data)
-          if(response.data.status == "berhasil"){
+          if(response.data.Status == "Berhasil"){
              this.snackbar = {
               message : "Pesan Proyek Success",
               color : 'green',
               show : true
           }}
-          else if(response.data.status == "gagal"){
+          else if(response.data.Status == "Gagal"){
               this.snackbar = {
-              message : "Pesan Proyek Gagal",
+              message : "Pesan Proyek Gagal, ID sudah tersedia!",
               color : 'red',
               show : true
           }}

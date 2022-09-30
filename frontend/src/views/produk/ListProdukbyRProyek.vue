@@ -1,60 +1,79 @@
 <template>
-
-    <v-card class="mt-10 text-center mx-10" max-width="1450">
-        <br>
-        <h1>Product List By Rincian Proyek</h1><h1>{{this.$route.params.id}}</h1>
-        <br>
-
-         <router-link :to="{name : 'Tambah Produk by RProyek',params : {id : `${this.$route.params.id}`}}">
-            <v-btn color="primary" class="d-flex ml-4 mb-6">
-                Add Produk
-            </v-btn>
-        </router-link>
-      
-   
-
-        <v-data-table 
-        :headers="column"
-        :items="produk"
-        >
-        <template v-slot:[`item.id`]="{ item }">
-            <div v-if="item.id === editedItem.id">
-                <v-text-field disabled v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
-                <span v-else>{{item.id}}</span>
-            </div>
-            <div v-else>
-                <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
-                <span v-else>{{item.id}}</span>
-            </div>
-        </template>
-        <template v-slot:[`item.rincianProyek`]="{ item }">
-            <v-select v-model="editedItem.rincianProyek" item-text="id" item-value="id" :items="rincian" v-if="item.id == editedItem.id"></v-select>
-            <span v-else>{{item.rincianProyek}}</span>
-        </template>
-        <template v-slot:[`item.aksi`]="{ item }">
-            <div v-if="item.id == editedItem.id">
-                <v-icon color="red" class="mr-3" @click="close()">
-                mdi-window-close
-                </v-icon>
-                <v-icon color="green" @click="updateProduk()">
-                mdi-content-save
-                </v-icon>
-            </div>
-            <div v-else>
-                <v-btn class="mx-1" x-small color="green" @click="editProduct(item)">
-                    <v-icon small dark>mdi-pencil</v-icon>
-                </v-btn>
-                <v-btn class="mx-1" x-small color="red" @click="deleteProduct(item)">
-                    <v-icon small dark>mdi-trash-can-outline</v-icon>
-                </v-btn>
-            </div>
-        </template>
-        </v-data-table>
-    </v-card>
+    <v-app>
+        <div class="d-flex">
+            <v-card class="mx-auto text-center mt-6" width="500">
+                <h3>Rincian Proyek {{this.$route.params.id}}</h3>
+                <v-data-table
+                    :headers= "column2"
+                    :items= "rproyek">
+                </v-data-table>
+            </v-card>
+            <v-card class="mx-auto text-center mt-6" width="350">
+                <v-data-table
+                    :headers="column3"
+                    :items = "proyek"
+                >
+                </v-data-table>
+            </v-card>
+            <v-card class="mx-auto text-center mt-6" width="350">
+                <v-data-table
+                    :headers="column4"
+                    :items="customer"
+                >
+                </v-data-table>
+            </v-card>
+        </div>
+        <v-card class="mx-auto text-center mt-6" width="1000">
+            <br>
+            <h1>Product List By Rincian Proyek</h1><h1>{{this.$route.params.id}}</h1>
+            <br>
+            <v-data-table 
+                :headers="column"
+                :items="produk"
+                >
+                <template v-slot:[`item.id`]="{ item }">
+                    <div v-if="item.id === editedItem.id">
+                        <v-text-field disabled v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                        <span v-else>{{item.id}}</span>
+                    </div>
+                    <div v-else>
+                        <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                        <span v-else>{{item.id}}</span>
+                    </div>
+                </template>
+                <template v-slot:[`item.rincianProyek`]="{ item }">
+                    <v-select v-model="editedItem.rincianProyek" item-text="id" item-value="id" :items="rincian" v-if="item.id == editedItem.id"></v-select>
+                    <span v-else>{{item.rincianProyek}}</span>
+                </template>
+                <template v-slot:[`item.aksi`]="{ item }">
+                    <div v-if="item.id == editedItem.id">
+                        <v-icon color="red" class="mr-3" @click="close()">
+                        mdi-window-close
+                        </v-icon>
+                        <v-icon color="green" @click="updateProduk()">
+                        mdi-content-save
+                        </v-icon>
+                    </div>
+                    <div v-else>
+                        <!--<router-link :to="{name:'Operasi by Produk',params:{'id': `${item.id}`}}">
+                            <v-btn class="mx-1" x-small color="blue" @click="selectOperasitoProduct(item)">
+                                <v-icon small dark>mdi-check</v-icon>
+                            </v-btn>
+                        </router-link>-->
+                        <v-btn class="mx-1" x-small color="green" @click="editProduct(item)">
+                            <v-icon small dark>mdi-pencil</v-icon>
+                        </v-btn>
+                        <v-btn class="mx-1" x-small color="red" @click="deleteProduct(item)">
+                            <v-icon small dark>mdi-trash-can-outline</v-icon>
+                        </v-btn>
+                    </div>
+                </template>
+            </v-data-table>
+        </v-card>
+    </v-app>
 </template>
 
 <script>
-
 export default {
     data(){
         return{
@@ -63,7 +82,23 @@ export default {
                 {text : 'Rincian Proyek',value : 'rincianProyek'},
                 {text : 'Action',value : 'aksi'}
             ],
-            produk : [],
+            column2 : [
+                {text : 'ID Rincian Proyek', value : 'IdRincian'},
+                {text : 'Jumlah', value : 'jumlah'},
+                {text : 'Due Date',value : 'dueDate'},
+               
+            ],
+            column3 : [
+                {text : 'ID Proyek',value : 'IdProyek'},
+                {text : 'Nama Proyek',value : 'NamaProyek'},
+            ],
+            
+            column4 : [
+                {text : 'ID Customer', value : 'IdCustomer'},
+                {text : 'Nama Customer',value : 'NamaCustomer'}
+            ],
+            rproyek : [],
+            produk  : [],
             rincian : [],
             editedIndex : -1,
             editedItem : {
@@ -79,7 +114,8 @@ export default {
 
     mounted(){
         this.fetchProductbyRProyek(),
-        this.fetchRincianProyek()
+        this.fetchRincianProyek(),
+        this.fetchRincianInProduk()
     },
 
     methods : {
@@ -114,6 +150,25 @@ export default {
             }
         },
 
+        async fetchRincianInProduk(){
+            try{
+                
+                const axios = require('axios')
+                const res = await axios.get('/product/get_rpoyek_inproduct/' + this.$route.params.id)
+                if(res.data == null){
+                    console.log("Data kosong")
+                }else{
+                    this.rproyek = res.data
+                    this.proyek = res.data
+                    this.customer = res.data
+                    console.log(res,this.rincianinproduk)
+                }
+
+            }catch(error){
+                alert("Error")
+            }
+        },
+
         async updateProduk(){
             if (this.editedIndex > -1) {
                 Object.assign(this.produk[this.editedIndex], this.editedItem)
@@ -139,6 +194,10 @@ export default {
             }, 300)
         },
 
+        selectOperasitoProduct(item){
+            console.log(item.id)
+        },
+
         editProduct(product){
             console.log('ID : ' + product.id)
             this.editedIndex = this.produk.indexOf(product)
@@ -150,5 +209,4 @@ export default {
         }
     }
 }
-
 </script>

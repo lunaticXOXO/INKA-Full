@@ -15,7 +15,6 @@ import TambahJnsProd from '../views/produk/TambahJenisProduk.vue'
 import TambahStrProd from '../views/produk/TambahStrukturProduk.vue'
 import TambahJnsMaterial from '../views/material/JenisMaterial.vue'
 import PesanMaterial from '../views/material/PesanMaterial.vue'
-import KelolaMaterial from '../views/material/KelolaMaterial.vue'
 import TambahProyek from '../views/proyek/PesanProyek.vue'
 import ProsesTerakhir from '../views/proyek/ProsesTerakhir.vue'
 import TambahStasiunKerja from '../views/stasiunKerja/TambahStasiunKerja.vue'
@@ -51,6 +50,25 @@ import TambahStrukturProdukbyProduk from '../views/produk/TambahStrukturProdukby
 import PesanProyekbyCustomer from '../views/proyek/PesanProyekbyCustomer.vue'
 import TambahStasiunKerjabyProcess from '../views/stasiunKerja/TambahStasiunKerjabyProcess.vue'
 import TambahProsesBySJProduk from '../views/proses/TambahProsesBySJProduk.vue'
+import ListJenisProses from '../views/proses/ListJenisProses.vue'
+import TambahJenisProses from '../views/proses/TambahJenisProses.vue'
+import ListKlasifikasiMaterial from '../views/material/ListKlasifikasiMaterial.vue'
+import AddKlasifikasiMaterial from '../views/material/AddKlasifikasiMaterial.vue'
+import ListGrupMaterial from '../views/material/ListGrupMaterial.vue'
+import AddGrupMaterial from '../views/material/AddGrupMaterial.vue'
+import ListMaterialType from '../views/material/ListMaterialType.vue'
+import ListStockMaterial from '../views/material/ListStockMaterial.vue'
+import TambahMaterialKosong from '../views/material/TambahMaterialKosong.vue'
+import TambahMaterialConsumable from '../views/material/TambahMaterialConsumable.vue'
+import LihatStatusPengerjaanWS from '../views/stasiunKerja/LihatStatusPengerjaanWS.vue'
+import LihatStatusPengerjaanProyek from '../views/proyek/StatusPengerjaanProyek.vue'
+import OperasibyProduct from '../views/operasi/ListOperasibyProduct.vue'
+import ListOperator from '../views/operator/ListOperator.vue'
+import TambahKemampuanOperator from '../views/operator/TambahKemampuanOperator.vue'
+import ListOperatorHadir from '../views/operator/ListOperatorHadir.vue'
+import ListRProyekbyProyekDSP from '../views/rincianproyek/ListRProyekbyProyekDSP.vue'
+import ListProdukbyRProyekDSP from '../views/produk/ListProdukbyRProyekDSP.vue'
+import StatusOperasi from '../views/operasi/StatusOperasi.vue'
 
 Vue.use(VueRouter)
 
@@ -155,11 +173,11 @@ const routes = [
   },
 
   {
-    path: '/jenisProduk',
+    path: '/tambahJenisProduk',
     name: 'Tambah Jenis Produk',
     component: TambahJnsProd,
     meta: {
-      title: "Jenis Produk - PT.INKA"
+      title: "Tambah Jenis Produk - PT.INKA"
     }
   },
 
@@ -187,15 +205,6 @@ const routes = [
     component: TambahJnsMaterial,
     meta: {
       title: "Jenis Material - PT.INKA"
-    }
-  },
-
-  {
-    path: '/kelolaMaterial',
-    name: 'Kelola Material',
-    component: KelolaMaterial,
-    meta: {
-      title: "Kelola Material - PT.INKA"
     }
   },
 
@@ -416,6 +425,8 @@ const routes = [
     }
   },
 
+  
+
   {
     path : '/listProcessbySJProduk/:id',
     name : 'List Process by Struktur Jenis Produk',
@@ -424,6 +435,28 @@ const routes = [
       title : "List Process by Struktur Jenis Produk - PT.INKA"
     }
   },
+
+    {
+
+      path : '/listJenisProses',
+      name : 'List Jenis Proses',
+      component : ListJenisProses,
+      meta : {
+         title : "List Jenis Proses - PT.INKA"
+      }
+       
+    },
+
+    {
+
+      path : '/addJenisProses',
+      name : 'Tambah Jenis Proses',
+      component : TambahJenisProses,
+      meta : {
+        title : "Tambah Jenis Proses - PT.INKA"
+      }
+
+    },
 
   {
     path : '/listLiniProduksi',
@@ -505,6 +538,7 @@ const routes = [
       title : "Memilih Stasiun Kerja by Process - PT.INKA"
     }
   },
+
   {
     path : '/tambahProsesbySJProduk/:id',
     name : 'Tambah Proses by Struktur Jenis Produk',
@@ -512,8 +546,156 @@ const routes = [
     meta : {
       title : "Tambah Proses by Struktur Jenis Produk - PT.INKA"
     }
-  }
+  },
 
+  {
+    path : '/listMaterialType',
+    name : 'List Tipe Material',
+    component : ListMaterialType,
+    meta : {
+      title : "List Tipe Material - PT.INKA"
+    }
+  },
+
+  {
+    path : '/listStockMaterial',
+    name : 'List Stock Material',
+    component : ListStockMaterial,
+    meta : {
+      title : "List Stock Material - PT.INKA"
+    }
+  },
+
+  {
+    path : '/tambahMaterialKosong/:id',
+    name : 'Tambah Material Kosong',
+    component : TambahMaterialKosong,
+    meta : {
+      title : "Tambah Material Kosong - PT.INKA"
+    }
+  },
+  {
+    path : '/listKlasifikasiMaterial',
+    name : 'List Klasifikasi Material',
+    component : ListKlasifikasiMaterial,
+    meta : {
+      title : "List Klasifikasi Material - PT.INKA"
+    },
+  },
+  {
+     path : '/addKlasifikasiMaterial',
+     name : 'Tambah Klasifikasi Material',
+     component : AddKlasifikasiMaterial,
+     meta : {
+         title : "Tambah Klasifikasi Material"
+     }
+  },
+
+  {
+    path : '/addGrupMaterial',
+    name : 'Add Grup Material',
+    component : AddGrupMaterial,
+    meta : {
+      title : "Tambah Grup Material"
+    },
+  },
+  {
+    path : '/listGrupMaterial',
+    name : 'List Grup Material',
+    component : ListGrupMaterial,
+    meta : {
+      title : "List Grup Material - PT.INKA"
+    },
+  },
+  {
+    path : '/tambahMaterialConsumable',
+    name : 'Tambah Material Consumable',
+    component : TambahMaterialConsumable,
+    meta : {
+      title : "Tambah Material Consumable - PT.INKA"
+    }
+  },
+
+  {
+    path : '/statusPengerjaanWS',
+    name : 'Status Pengerjaan WS',
+    component : LihatStatusPengerjaanWS,
+    meta : {
+      title : "Status Pengerjaan WS - PT.INKA"
+    }
+  },
+
+  {
+    path : '/statusPengerjaanProyek',
+    name : 'Status Pengerjaan Proyek',
+    component : LihatStatusPengerjaanProyek,
+    meta : {
+      title : "Status Pengerjaan Proyek - PT.INKA"
+    }
+  },
+
+  {
+    path : '/operasibyProduct/:id',
+    name : 'Operasi by Produk',
+    component : OperasibyProduct,
+    meta : {
+      title : "Operasi by Produk - PT.INKA"
+    }
+  },
+
+  {
+    path : '/listOperator',
+    name : 'List Operator',
+    component : ListOperator,
+    meta : {
+      title : "List Operator - PT.INKA"
+    }
+  },
+
+  {
+    path : '/tambahKemampuanOperator/:id',
+    name : 'Tambah Kemampuan Operator',
+    component : TambahKemampuanOperator,
+    meta : {
+      title : "Tambah Kemampuan Operator - PT.INKA"
+    }
+  },
+
+  {
+    path : '/listOperatorHadir',
+    name : 'List Operator Hadir',
+    component : ListOperatorHadir,
+    meta : {
+      title : "List Operator Hadir - PT.INKA"
+    }
+  },
+
+  {
+    path : '/listRProyekbyProyekDSP/:id',
+    name : 'List Rincian Proyek by Proyek DSP',
+    component : ListRProyekbyProyekDSP,
+    meta : {
+      title : "List Rincian Proyek by Proyek DSP - PT.INKA"
+    }
+  },
+
+  {
+    path : '/listProdukbyRProyekDSP/:id',
+    name : 'List Produk by Rproyek DSP',
+    component : ListProdukbyRProyekDSP,
+    meta : {
+      title : "List Produk by Rincian Proyek DSP - PT.INKA"
+    }
+  },
+
+  {
+    path : '/statusOperasi',
+    name : 'Status Operasi',
+    component : StatusOperasi,
+    meta : {
+      title : "Status Operasi - PT.INKA"
+    }
+  },
 ]
 
 const router = new VueRouter({

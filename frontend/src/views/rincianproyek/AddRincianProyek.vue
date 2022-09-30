@@ -1,87 +1,87 @@
 <template>
-    <v-card
-        class="mx-auto text-center mt-6"
-        max-width="1000">
-        <br>
-        <h1>Tambah Rincian Proyek Baru</h1>
-        <v-form
-            class="pa-6"
-            ref="form"
-            @submit.prevent="submitHandler"
-            v-model="valid"
-            lazy-validation
-            >
-            <v-text-field
-            v-model="id"
-            :counter="5"
-            :rules="idRules"
-            label="ID"
-            required
-            ></v-text-field>
+  <v-card
+    class="mx-auto text-center mt-6"
+    max-width="1000">
+    <br>
+    <h1>Tambah Rincian Proyek Baru</h1>
+    <v-form
+      class="pa-6"
+      ref="form"
+      @submit.prevent="submitHandler"
+      v-model="valid"
+      lazy-validation
+      >
+      <v-text-field
+      v-model="id"
+      :counter="5"
+      :rules="idRules"
+      label="ID"
+      required
+      ></v-text-field>
 
-            <v-text-field
-            v-model="jumlah"
-            label="Jumlah"
-            type="number"
-            ></v-text-field>
+      <v-text-field
+      v-model="jumlah"
+      label="Jumlah"
+      type="number"
+      ></v-text-field>
 
-            <v-menu>
-                <template v-slot:activator="{ on, attrs }">
-                    <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
-                </template>
-                <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
-            </v-menu>
-              
-            <v-select
-            v-model="jenisProduk"
-            :items="items2"
-            item-text="id"
-            item-value="id"
-            label="Jenis Produk">
-            </v-select>
+      <v-menu>
+          <template v-slot:activator="{ on, attrs }">
+              <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
+          </template>
+          <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
+      </v-menu>
+        
+      <v-autocomplete
+      v-model="jenisProduk"
+      :items="items2"
+      item-text="id"
+      item-value="id"
+      label="Jenis Produk">
+      </v-autocomplete>
 
-            <v-select 
-            v-model="proyek"
-            item-text="id"
-            item-value="id"
-            :items ="items" 
-            label="Proyek">
-            </v-select>
+      <v-autocomplete 
+      v-model="proyek"
+      item-text="id"
+      item-value="id"
+      :items ="items" 
+      label="Proyek">
+      </v-autocomplete>
 
-            <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            type="submit"
-            @click="validate()"
-            >
-            Submit
-            </v-btn>
+      <v-btn
+      :disabled="!valid"
+      color="success"
+      class="mr-4"
+      type="submit"
+      @click="validate()"
+      >
+      Submit
+      </v-btn>
 
-            <v-btn
-            color="error"
-            class="mr-4"
-            @click="reset"
-            >
-            Reset
-            </v-btn>
-        </v-form>
-        <div v-if="snackBar == true">
-          <v-snackbar top color="green" v-model="snackBar">
-            Insert Rincian Proyek Sukses!
-          </v-snackbar>
-        </div>
-
-        <div v-else-if="snackBar == false">
-          <v-snackbar top color="red" v-model="snackBar">
-            Insert Rincian Proyek Gagal!
-          </v-snackbar>
-        </div>
-
-      <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
-        {{snackbar.message}}
+      <v-btn
+      color="error"
+      class="mr-4"
+      @click="reset"
+      >
+      Reset
+      </v-btn>
+    </v-form>
+    <div v-if="snackBar == true">
+      <v-snackbar top color="green" v-model="snackBar">
+        Insert Rincian Proyek Sukses!
       </v-snackbar>
-    </v-card>
+    </div>
+
+    <div v-else-if="snackBar == false">
+      <v-snackbar top color="red" v-model="snackBar">
+        Insert Rincian Proyek Gagal!
+      </v-snackbar>
+    </div>
+
+    <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+      {{snackbar.message}}
+    </v-snackbar>
+  </v-card>
 </template>
 
 <script>
@@ -141,13 +141,13 @@
             proyek : this.proyek
           })
           console.log(response)
-          if(response.data.status == "berhasil"){
+          if(response.data.Status == "Berhasil"){
              this.snackbar = {
               message : "Insert Rincian Proyek Success",
               color : 'green',
               show : true
           }}
-          else if(response.data.status == "gagal"){
+          else if(response.data.Status == "Gagal"){
               this.snackbar = {
               message : "Insert Rincian Proyek Gagal, ID sudah tersedia",
               color : 'red',

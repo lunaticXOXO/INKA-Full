@@ -1,7 +1,8 @@
 <template>
+<v-app>
     <v-card
         class="mx-auto text-center mt-6"
-        max-width="1000">
+        width="1000">
         <br>
         <h1>Tambah Proses Baru Sesuai Strk.Jns.Prod</h1>
         <v-form
@@ -9,8 +10,16 @@
             ref="form"
             @submit.prevent="submitHandler"
             v-model="valid"
-            lazy-validation
-        >
+            lazy-validation>
+
+            <v-autocomplete
+            item-value="id"
+            :item-text="items2 => items2.id +' - '+ items2.namaJenisProses"
+            v-model="jenisProses"
+            :items="items2"
+            label="Jenis Proses"
+            ></v-autocomplete>
+
             <v-text-field
             v-model="id"
             :counter="9"
@@ -19,21 +28,13 @@
             required
             ></v-text-field>
 
-            <v-select
-            item-text="id"
+            <v-autocomplete
+            item-text="nama"
             item-value="id"
             v-model="prosesSesudahnya"
             :items="items"
             label="Proses Sesudahnya"
-            ></v-select>
-
-            <v-select
-            item-text="id"
-            item-value="id"
-            v-model="jenisProses"
-            :items="items2"
-            label="Jenis Proses"
-            ></v-select>
+            ></v-autocomplete>
 
             <v-text-field
             v-model="nama"
@@ -46,11 +47,11 @@
             type="number"
             ></v-text-field>
 
-            <v-select
+            <v-autocomplete
             v-model="satuanDurasi"
             :items="items3"
             label="Satuan Durasi"
-            ></v-select>
+            ></v-autocomplete>
 
             <v-btn
             :disabled="!valid"
@@ -80,10 +81,25 @@
             </v-snackbar>
         </div>
 
-        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
-            {{snackbar.message}}
+        <v-snackbar :color="snackBar.color" v-model="snackBar.show" top>
+            {{snackBar.message}}
         </v-snackbar>
     </v-card>
+        <div class="d-flex">
+           <v-card class="ml-6 text-center mt-6 mb-10" width="700">
+                <v-data-table
+                    :headers="column2"
+                    :items = "sjproduk">
+                </v-data-table>
+            </v-card>
+            <v-card class="ml-12 text-center mt-6 mb-10" width="700">
+                <v-data-table
+                    :headers="column3"
+                    :items = "sjproduk">
+                </v-data-table>
+            </v-card>
+        </div>
+</v-app>
 </template>
 
 <script>
@@ -91,7 +107,7 @@
     export default {
         data: () => ({
             valid: true,
-            snackbar: {
+            snackBar: {
                 show: false,
                 message: null,
                 color: null
@@ -104,18 +120,42 @@
             nama: '',
             durasi: '',
             satuanDurasi: '',
-            prosesSesudahnya: undefined,
+            prosesSesudahnya: null,
             jenisProses: undefined,
             items: undefined,
             items2: undefined,
             items3: [
-                "Minutes"
-            ]
+                "Menit"
+            ],
+             column2 : [
+                {text : 'ID Nodal', value : 'idNodal'},
+                {text : 'Nama', value : 'nama'},
+                {text : 'Induk Nodal',value : 'indukNodal'},
+                {text : 'ID Jenis Produk',value : 'IdJenisProduk'},
+                {text : 'Nama Jenis Produk',value : 'NamaJenisProduk'},
+                {text : 'ID Rincian Proyek',value : 'IdRincian'},
+            ],
+            column3 : [
+                {text : 'ID Nodal', value : 'idNodal'},
+                {text : 'Jumlah',value : 'jumlah'},
+                {text : 'Due Date Rincian',value : 'dueDateRincian'},
+                {text : 'ID Produk',value : 'IdProduk'},
+                {text : 'Nama Proyek',value : 'namaProyek'},
+                {text : 'ID Customer',value : 'IdCustomer'},
+                {text : 'Nama Customer',value : 'namaCustomer'}
+            ],
+            column4 : [
+                {text : 'IdJenis',value : 'id'},
+                {text : 'Nama Jenis Proses',value : 'namaJenisProses' }
+            ],
+            sjproduk : [],
+            jenisproses : [],
         }),
-
+     
         mounted(){
             this.fetchProses(),
-            this.fetchJenisProses()
+            this.fetchJenisProses(),
+            this.fetchSJProdukInProses()
         },
 
         methods: {
@@ -161,11 +201,27 @@
                         alert("Jenis Proses Kosong")
                     }else{
                         this.items2 = res.data
-                        console.log(res,this.items3)
+                        this.jenisproses = res.data
+                        console.log(res,this.items2)
                     }
                 }
                 catch(error){
                     alert(error)
+                    console.log(error)
+                }
+            },
+            
+            async fetchSJProdukInProses(){
+                try{
+                    const res = await axios.get('/proses/get_sjproduct_inprocess/' + this.$route.params.id)
+                    if(res.data == null){
+                        alert("Data Kosong")
+                    }else{
+                        this.sjproduk = res.data
+                        console.log(res,this.sjproduk)
+                    }
+                }catch(error){
+                    alert("Error")
                     console.log(error)
                 }
             },
@@ -188,7 +244,9 @@
                         message : "Insert Proses by SJProduk Success",
                         color : 'green',
                         show : true
-                    }}
+                    }
+                        location.replace('/listProcessbySJProduk/' + this.$route.params.id)
+                    }
                     else if(response.data.status == "gagal"){
                         this.snackbar = {
                         message : "Insert Proses by SJProduk Gagal, ID Sudah Tersedia!",

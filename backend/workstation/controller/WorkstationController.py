@@ -1,6 +1,19 @@
 from datetime import datetime
 import db.db_handler as database
 from flask import request,make_response,jsonify
+import json
+import dateutil.parser
+import datetime
+from json import JSONEncoder
+
+
+class DateTimeEncoder(JSONEncoder):
+        #Override the default method
+        def default(self, obj):
+            if isinstance(obj, (datetime.date, datetime.datetime)):
+                return obj.isoformat()
+
+
 
 def GetAllWorkstation():
     conn = database.connector()
@@ -35,6 +48,29 @@ def ShowWorkStationbyProcess(id_process):
       return make_response(jsonify(json_data),200)
 
 
+def statusPengerjaanWS():
+      conn = database.connector()
+      cursor = conn.cursor()
+
+      query = "SELECT a.id AS 'idOperasi',c.nama AS 'namaStasiunKerja',b.nama AS 'namaProses',a.rencanaMulai,a.rencanaSelesai FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN gen_r_stasiunkerja C ON c.id = a.stasiunKerja"
+      cursor.execute(query)
+
+      row_headers = [x[0] for x in cursor.description]
+      records = cursor.fetchall()
+      json_data = []
+     
+      for data in records:
+            #json.dumps(data, default=str)
+            json_data.append(dict(zip(row_headers,data)))
+      
+      return make_response(jsonify(json.dumps(json_data,default=str)),200)
+
+
+
+def DecodeDateTime(empDict):
+   if 'joindate' in empDict:
+      empDict["joindate"] = dateutil.parser.parse(empDict["joindate"])
+      return empDict
 
 
 def UpdateWorkstation(id):
