@@ -84,6 +84,40 @@
       submitHandler() {
         console.log(this.tanggal)
       },
+
+      async InsertTanggalLibur() {
+        try{
+          const axios = require('axios');
+          const response = await axios.post('/holiday',
+            { tanggal: this.tanggal 
+            }
+          );
+          console.log(response,this.data)
+
+          if(response.data.status == "berhasil"){
+              this.snackbar = {
+                message : 'Insert Tanggal Libur Berhasil',
+                color : 'green',
+                show : true
+            }
+          }
+          else if(response.data.status == "gagal"){
+              this.snackbar = {
+                message : 'Insert Tanggal Libur Gagal',
+                color : 'red',
+                show : true
+              }
+          }
+        }
+        catch(error){
+          console.log(error)
+          this.snackbar = {
+                message : 'Insert Data Operator Error',
+                color : 'red',
+                show : true
+          }
+        }
+      }
     },
   }
 </script>
