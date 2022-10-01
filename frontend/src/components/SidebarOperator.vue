@@ -59,7 +59,8 @@
                 <div class="mt-10">
                     <v-text-field
                     v-model="kodeMaterial"
-                    disabled
+                    @keyup.enter="parseBarcode"
+                    autofocus
                     outlined
                     >
                     </v-text-field>
@@ -200,6 +201,12 @@ export default {
             this.route = "/login"
             location.replace("/login")
             this.loginService.removeUserType()
+        },
+
+        parseBarcode(){
+            //Kodingan untuk insert material berdasarkan barcode yang di scan
+            console.log(this.kodeMaterial)
+
         },
 
        async fetchOperasi(){
