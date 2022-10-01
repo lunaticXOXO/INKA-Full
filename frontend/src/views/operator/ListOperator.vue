@@ -152,7 +152,7 @@
       },
 
       deleteOperator(operators){
-          console.log('Code : ' + operators.code)
+          console.log('Deleted Operator : ' + operators.code)
           try{
               const axios = require('axios');
               axios.delete(`/operator/delete_operator/${operators.code}`);
