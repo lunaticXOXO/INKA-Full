@@ -64,7 +64,7 @@
     </v-card-text>
     <v-divider></v-divider>
     </v-card>
-
+    <br><br>
   <!-- BAR GRAPH
   <div class="d-flex mx-auto mt-8">
     <v-card
@@ -144,7 +144,6 @@
           12,
           15,
         ],
-
         value2: [
           4,
           2,
@@ -154,24 +153,22 @@
           6,
           5,
         ],
-
         monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
-
         wsLabels: ['WS1', 'WS2', 'WS3', 'WS4', 'WS5', 'WS6', 'WS7', 'WS8', 'WS9', 'WS10'],
 
         chartOptions: {
           series: [],
           dataLabels: {
-              enabled: false
+            enabled: false
           },
           stroke: {
-              curve: 'straight'
+            curve: 'straight'
           },
           grid: {
-              row: {
-                  colors: ['#f3f3f3', 'transparent'],
-                  opacity: 0.5
-              },
+            row: {
+              colors: ['#f3f3f3', 'transparent'],
+              opacity: 0.5
+            },
           },
         },
       }
@@ -181,20 +178,19 @@
       this.fetchProgressProyek()
     },
     methods: {
-      
-        async fetchProgressProyek(){
-         
-            const axios = require('axios')
-            const res = await axios.get('/proyek/show_progress_percentage_proyek')
-            if(res.data == null){
-                console.log("Data kosong")
-            }else{
-                console.log(res.data)
-            }       
-            this.$refs.realtimeChart.updateSeries([{
-                data: res.data,
-            }], false, true);
-        }
+      async fetchProgressProyek(){
+        const axios = require('axios')
+        const res = await axios.get('/proyek/show_progress_proyek')
+        if(res.data == null){
+            console.log("Data kosong")
+        }else{
+            console.log(res.data)
+        }       
+        this.$refs.realtimeChart.updateSeries([{
+            name: 'Persentase',
+            data: res.data
+        }], false, true);
       }
     }
+  }
 </script>

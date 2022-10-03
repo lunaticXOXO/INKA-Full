@@ -111,7 +111,7 @@
         },
 
         deleteNegara(negara){
-            console.log('ID : ' + negara.code)
+            console.log('Deleted Country : ' + negara.code)
             try{
                 const axios = require('axios');
                 axios.delete(`/negara/deleteNegara/${negara.code}`);

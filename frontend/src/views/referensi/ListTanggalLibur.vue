@@ -3,14 +3,14 @@
         class="mx-auto text-center mt-6"
         max-width="1000">
         <br>
-        <h1>List Kota</h1>
+        <h1>List Tanggal Libur</h1>
         <br>
         <v-card
         class="mx-auto text-center"
         max-width="1000">
             <v-data-table
                 :headers = "headers"
-                :items = "kota">
+                :items = "tglLibur">
                 <template v-slot:[`item.code`]="{ item }">
                     <div v-if="item.code === editedItem.code">
                         <v-text-field disabled v-model="editedItem.code" :hide-details="true" dense single-line :autofocus="true" v-if="item.code == editedItem.code"></v-text-field>
@@ -25,10 +25,7 @@
                     <v-text-field v-model="editedItem.nama" :hide-details="true" dense single-line v-if="item.code == editedItem.code" ></v-text-field>
                     <span v-else>{{item.nama}}</span>
                 </template>
-                <template v-slot:[`item.country`]="{ item }">
-                    <v-select v-model="editedItem.country" item-text="nama" item-value="code" :items="negara" v-if="item.code == editedItem.code"></v-select>
-                    <span v-else>{{item.country}}</span>
-                </template>
+               
                 <template v-slot:[`item.aksi`]="{ item }">
                     <div v-if="item.code == editedItem.code">
                         <v-icon color="red" class="mr-3" @click="close">
