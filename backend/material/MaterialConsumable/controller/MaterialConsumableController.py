@@ -5,10 +5,13 @@ from flask import request,make_response,jsonify
 
 
 
-def GetMaterialConsumablebyProcess(idProcess):
+def GetMaterialConsumable():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.processCode,a.materialStock,a.materialTypeCode,a.idNodal,a.quantity,a.unit FROM mat_r_consumable a JOIN prd_r_proses b ON b.id = a.processCode WHERE b.id = '"+idProcess+"'"
+    query = "SELECT a.PROCESSCODE,"
+    query += "a.MATERIALTYPECODE,a.IDNODE,"
+    query += "a.QUANTITY,a.UNIT FROM mat_r_consumable a" 
+  
     cursor.execute(query)
     records = cursor.fetchall()
 

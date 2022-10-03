@@ -1,3 +1,4 @@
+from cgi import print_directory
 from math import ceil
 from process.controller.ProsesController import HitungDurasiProses
 import db.db_handler as db
@@ -6,6 +7,7 @@ from datetime import timedelta
 from flask import request,make_response,jsonify
 import random
 import string
+from operasi.controller.OperasiController import *
 
 def GetAllRincianProyek():
     conn = db.connector()
@@ -111,19 +113,22 @@ def AddRincianProyekByProyek(id_proyek):
         for data in records:
             id_rproyek_new = data[0]
         print(id_rproyek_new)
-        index = 1
+        
         print(jumlah)
         print("Type jumlah : ",type(jumlah))
         new_jumlah = int(jumlah)
+        print("jumlah : ",new_jumlah)
+
         query3 = "INSERT INTO prd_d_produk(id,rincianProyek)VALUES(%s,%s)"
-        N = 9
-        for index in range(new_jumlah):
-            id_product = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
-            values2 = (id_product,id_rproyek_new)
-            cursor.execute(query3,values2)
-            #conn.commit()
-            
-        print("index : ",index)
+
+        #for index in range(new_jumlah):
+        idProduct = GenerateSNProduct()
+        values2 = (idProduct,id_rproyek_new)
+        cursor.execute(query3,values2)
+        GenerateOperation(idProduct)
+        
+      
+        
         conn.commit()
         hasil = {"status" : "berhasil"}
         print("Rincian Proyek Baru Ditambahkan!")
@@ -134,6 +139,12 @@ def AddRincianProyekByProyek(id_proyek):
     
     return hasil
 
+
+
+def GenerateSNProduct():
+    N = 9
+    id_product = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
+    return id_product
 
 def UpdateRProyek(id_rproyek):
     conn = db.connector()
@@ -175,12 +186,13 @@ def HitungDueDateRProyek(id_produk):
 
     records = cursor.fetchall()
     hasilPerkalian = 1        
-    
+    tanggalDibuat = ""
+    tanggalDueDate = ""
+
     for data in records:
         print("Jumlah Pesanan :",data[0], "Produk")
         data[1]
         data[2]
-       
         hasilPerkalian = data[0]
         tanggalDibuat  =  data[1]
         tanggalDueDate = data[2]

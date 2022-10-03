@@ -65,6 +65,11 @@ def update_city(code):
     hasil = UpdateCity(code)
     return hasil
 
+@app.route('/city/delete_city/<code>',methods = ['DELETE'])
+def delete_city(code):
+    hasil = DeleteCity(code)
+    return hasil
+
 #CUSTOMER
 @app.route('/customers/get_customers',methods = ['GET'])
 def get_customers():
@@ -256,9 +261,9 @@ def get_jproduct_by_rproyek(id_rproyek):
     hasil = GetJenisProdukbyRincianProyek(id_rproyek)
     return hasil
 
-@app.route('/jproduct/get_jproduct/<id>',methods = ['GET'])
-def get_jproduct_byId(id):
-    hasil = GetJenisProductById(id)
+@app.route('/jproduct/get_jproduct/<CODE>',methods = ['GET'])
+def get_jproduct_byId(CODE):
+    hasil = GetJenisProductById(CODE)
     return hasil
 
 @app.route('/jproduct/get_rincian_injproduct/<id_rincian>',methods = ['GET'])
@@ -527,9 +532,9 @@ def update_material_onws(id):
     return hasil
 
 #MATERIAL CONSUMABLE
-@app.route('/material_consumable/get_material_byproses/<idProcess>',methods = ['GET'])
-def get_material_byproses(idProcess):
-    hasil = GetMaterialConsumablebyProcess(idProcess)
+@app.route('/material_consumable/get_material_consumable',methods = ['GET'])
+def get_material_consumable():
+    hasil = GetMaterialConsumable()
     return hasil
 
 @app.route('/material_consumable/add_material_consumable',methods = ['POST'])

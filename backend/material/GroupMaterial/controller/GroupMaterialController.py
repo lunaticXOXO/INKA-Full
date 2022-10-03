@@ -22,12 +22,12 @@ def AddGroups():
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "INSERT INTO mat_r_group(code,descriptions,remark)VALUES(%s,%s,%s)"
+    query = "INSERT INTO mat_r_group(CODE,DESCRIPTION,REMARK)VALUES(%s,%s,%s)"
     try:
         data = request.json
-        code = data["code"]
-        descriptions = data["descriptions"]
-        remark = data["remark"]
+        code = data["CODE"]
+        descriptions = data["DESCRIPTION"]
+        remark = data["REMARK"]
         values = (code,descriptions,remark)
         cursor.execute(query,values)
         conn.commit()
@@ -42,12 +42,12 @@ def UpdateGroups(code):
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "UPDATE mat_r_group SET code = %s, descriptions = %s, remark = %s WHERE code = '"+code+"'"
+    query = "UPDATE mat_r_group SET CODE = %s, DESCRIPTION = %s, REMARK = %s WHERE CODE = '"+code+"'"
     try:
         data = request.json
-        code = data["code"]
-        descriptions = data["descriptions"]
-        remark = data["remark"]
+        code = data["CODE"]
+        descriptions = data["DESCRIPTION"]
+        remark = data["REMARK"]
         values = (code,descriptions,remark)
         cursor.execute(query,values)
         conn.commit()

@@ -21,11 +21,11 @@ def AddClassification():
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "INSERT INTO mat_r_classification(code,descriptions)VALUES(%s,%s)"
+    query = "INSERT INTO mat_r_classification(CODE,DESCRIPTION)VALUES(%s,%s)"
     try:
         data = request.json
-        code = data["code"]
-        descriptions = data["descriptions"]
+        code = data["CODE"]
+        descriptions = data["DESCRIPTION"]
         values = (code,descriptions)
         cursor.execute(query,values)
         conn.commit()
@@ -40,11 +40,11 @@ def UpdateClassification(code):
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "UPDATE mat_r_classification SET code = %s,descriptions = %s WHERE code = '"+code+"'"
+    query = "UPDATE mat_r_classification SET CODE = %s,DESCRIPTION = %s WHERE CODE = '"+code+"'"
     try:
         data = request.json
-        code = data["code"]
-        descriptions = data["descriptions"]
+        code = data["CODE"]
+        descriptions = data["DESCRIPTION"]
         values = (code,descriptions)
         cursor.execute(query,values)
         conn.commit()

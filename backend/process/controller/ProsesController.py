@@ -11,7 +11,10 @@ def ShowProses():
     conn = database.connector()
     cursor = conn.cursor()
     #data = request.json
-    query = "SELECT a.id, a.nama, a.durasi, a.satuanDurasi,a.jenisProses,a.prosesSesudahnya, c.idNodal FROM prd_r_proses a JOIN prd_r_strukturjnsprd c ON c.idNodal = a.nodalOutput"
+    query = "SELECT a.CODE, a.NAME, a.DURATION," 
+    query += "a.DURATIONUNIT,a.jenisProses,a.prosesSesudahnya," 
+    query += "c.idNodal FROM prd_r_proses a "
+    query += "JOIN prd_r_strukturjnsprd c ON c.idNodal = a.nodalOutput"
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
     records = cursor.fetchall()

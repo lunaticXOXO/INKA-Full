@@ -56,3 +56,18 @@ def UpdateCity(code):
         hasil = {"status" : "gagal"}
 
     return hasil
+
+
+def DeleteCity(code):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "DELTE FROM gen_r_city WHERE city = '"+code+"'"
+    try:
+        cursor.execute(query)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil

@@ -126,7 +126,8 @@ def HitungDueDateProduk(id_produk):
     cursor.execute(query)
     records = cursor.fetchall()
     hasilPerkalian = 1        
-
+    tanggalDibuat = ""
+    tanggalDueDate = ""
     
     print("test")
     for data in records:
@@ -143,15 +144,18 @@ def HitungDueDateProduk(id_produk):
     sabtuMingguDalamSebulan = (16 * 4)
     durasiBaru = hasilPerkalian + sabtuMingguDalamSebulan
     durasiBaru2 = durasiBaru / 8
-    tanggalDibuatNew = tanggalDibuat
-    tanggalDueDateNew = tanggalDueDate
     
-    hitungHariBisnis = np.busday_count(tanggalDibuatNew.date(),tanggalDueDateNew.date())
+    print(tanggalDibuat)
+    tanggalDibuatNew = datetime.strptime(tanggalDibuat,'%Y/%m/%d')
+
+    #tanggalDueDateNew = datetime. strftime(tanggalDueDate)
     
-    print("Tanggal Proyek Dipesan :", tanggalDibuatNew.strftime("%A"), tanggalDibuatNew)
-    print("Due Date Proyek :", tanggalDueDateNew.strftime("%A"), tanggalDueDateNew)
-    print("Banyak Hari Kerja Antara Dipesan dan Due Date :", hitungHariBisnis)
-    print("Durasi Rincian Proyek :", ceil(hasilPerkalian), "Jam Atau", ceil(durasiHari), "Hari (Sabtu dan Minggu Kerja)")
+    #hitungHariBisnis = np.busday_count(tanggalDibuatNew.date(),tanggalDueDateNew.date())
+    
+    #print("Tanggal Proyek Dipesan :", tanggalDibuatNew.strftime("%A"), tanggalDibuatNew)
+    #print("Due Date Proyek :", tanggalDueDateNew.strftime("%A"), tanggalDueDateNew)
+    #print("Banyak Hari Kerja Antara Dipesan dan Due Date :", hitungHariBisnis)
+    #print("Durasi Rincian Proyek :", ceil(hasilPerkalian), "Jam Atau", ceil(durasiHari), "Hari (Sabtu dan Minggu Kerja)")
     newdays = ceil(durasiBaru2)
     print("Durasi Rincian Proyek :",ceil(durasiBaru), "Jam Atau",newdays, "Hari (Sabtu dan Minggu Libur)")
     duedateproduk = tanggalDibuatNew + timedelta(days = newdays)

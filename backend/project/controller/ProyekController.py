@@ -199,7 +199,7 @@ def AccumulatePercentageProyek(idOperasi):
 def showpercentageProgressProyek():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.percentage FROM cpl_progress a GROUP BY selesai_str"
+    query = "SELECT selesai_str as 'x',percentage as 'y' FROM cpl_progress a GROUP BY selesai_str"
     cursor.execute(query)
 
     records = cursor.fetchall()

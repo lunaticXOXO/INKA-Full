@@ -27,7 +27,7 @@ def ShowProductInOperasi(id_product):
     cursor = conn.cursor()
     rencana_mulai_min = ""
 
-    query_min = "SELECT MIN(a.rencanaMulai) FROM prd_d_operasi a"
+    query_min = "SELECT MIN(a.SCHEDULLEDSTARTOPERATION) FROM prd_d_operation a"
     cursor.execute(query_min)
     records = cursor.fetchall()
     for data in records:
@@ -36,7 +36,7 @@ def ShowProductInOperasi(id_product):
     print(rencana_mulai_min)
 
     #query = "SELECT a.id,a.rencanaMulai, b.id AS 'idProduk',b.dueDate AS 'dueDateProduk', c.id AS 'idRincian',c.jumlah,c.dueDate AS 'dueDateRincian', d.id AS 'idProyek', d.nama AS 'namaProyek', e.id AS 'idCustomer', e.nama AS 'namaCustomer' FROM prd_d_operasi a JOIN prd_d_produk b ON b.id = a.produk JOIN prd_r_rincianproyek c ON c.id = b.rincianProyek JOIN prd_r_proyek d ON d.id = c.proyek JOIN gen_r_customer e ON e.id = d.customerid WHERE a.produk = '"+id_product+"' AND a.rencanaMulai = '"+rencana_mulai_min+"'"
-    query = "SELECT a.id AS 'idOperasi',a.rencanaMulai,a.rencanaSelesai, b.id AS 'idProses',b.nama AS 'namaProses',a.produk, i.operatorid,j.nama AS 'namaOperator' FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = b.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id JOIN opr_d_operatorneed i ON i.operationid = a.id JOIN opd_r_operator j ON j.code = i.operatorid WHERE h.id = '"+id_product+"' ORDER BY a.proses,a.rencanaMulai ASC"
+    query = "SELECT a.ID AS 'idOperasi',a.SCHEDULLEDSTARTOPERATION,a.SCHEDULLEDFINISHOPERATION, b.id AS 'idProses',b.nama AS 'namaProses',a.produk, i.operatorid,j.nama AS 'namaOperator' FROM prd_d_operation a JOIN prd_r_process b ON b.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = b.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id JOIN opr_d_operatorneed i ON i.operationid = a.id JOIN opd_r_operator j ON j.code = i.operatorid WHERE h.id = '"+id_product+"' ORDER BY a.proses,a.rencanaMulai ASC"
     cursor.execute(query)
     records_query = cursor.fetchall()
     json_data = []
@@ -134,6 +134,7 @@ def fetchRequirementsCode(idProduk):
 
 def fetchSchedulledStart(idProduk):
     recordDate = []
+    schedulledstartWorkDate = ""
     recordDate = fetchDateProyektoOperation(idProduk)
     for data in recordDate:
         schedulledstartWorkDate = data[0]
@@ -142,6 +143,7 @@ def fetchSchedulledStart(idProduk):
 
 def fetchSchedulledFinish(idProduk):
     recordDate = []
+    scehdulledFinishWorkDate = ""
     recordDate = fetchDateProyektoOperation(idProduk)
     for data in recordDate:
        scehdulledFinishWorkDate = data[0]
@@ -153,72 +155,64 @@ def GenerateOperation(idProduk):
     conn = database.connector()
     cursor = conn.cursor()
     
+    N = 9
+    counter=1
+    print("ID Product : ",idProduk)
+    proses = ""   
+    stasiunKerja = ""
+    recordsFetch = []
+    records_oprqualification = []
 
     query = "INSERT INTO prd_d_operasi(id,rencanaMulai,rencanaSelesai,proses,stasiunKerja,produk)VALUES(%s,%s,%s,%s,%s,%s)"
     query_insert_operatorneed = "INSERT INTO opr_d_operatorneed(operationid,operatorid)VALUES(%s,%s)"     
     try:
        
-        
-        N = 9
-        counter=1
-        proses = ""   
-        stasiunKerja = ""
-        schedulledstartWorkDate = ""
-        scehdulledFinishWorkDate = ""
-        print("test")
-        recordsFetch = []
-        records_oprqualification = []
-
+       
         recordsFetch = fetchProcesstoOperation(idProduk)
         records_oprqualification = fetchOperatorQualification()
         schedulledstartWorkDate = fetchSchedulledStart(idProduk)
-        scehdulledFinishWorkDate = fetchSchedulledFinish(idProduk)
+        schedulledFinishWorkDate = fetchSchedulledFinish(idProduk)
+       
+        print(recordsFetch)
        #Requirement Code => punya proses
        #Qualification => punya operator
+
         for index in recordsFetch:
             id_operation = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
             proses = index[0]
             stasiunKerja = index[1]
             durasi = index[2]
             requirementsCode = index[3]
-           
-            cek = False
+            cek = False 
             while cek == False:
                 if counter % 2 != 0 and cek == False:
-                    scehdulledFinishWorkDate = scehdulledFinishWorkDate + datetime.timedelta(minutes = durasi)
-                    values1 = (id_operation,schedulledstartWorkDate,scehdulledFinishWorkDate,proses,stasiunKerja,idProduk)
+                    schedulledFinishWorkDate = schedulledFinishWorkDate + datetime.timedelta(minutes = durasi)
+                    values1 = (id_operation,schedulledstartWorkDate,schedulledFinishWorkDate,proses,stasiunKerja,idProduk)
                     cursor.execute(query,values1)
-                    schedulledstartWorkDate = scehdulledFinishWorkDate
+                    schedulledstartWorkDate = schedulledFinishWorkDate
                     for index2 in records_oprqualification:
                         operatorid = index2[0]
                         qualificationCode = index2[1]
                         if qualificationCode == requirementsCode:
                             values_oprneed = (id_operation,operatorid)
                             cursor.execute(query_insert_operatorneed,values_oprneed)
-                    #InsertOperatorNeed(id_operation,idProduk)
+                   
                     cek = True
                 elif counter %2 == 0 and cek == False:
-                    scehdulledFinishWorkDate = scehdulledFinishWorkDate + datetime.timedelta(minutes = durasi)
+                    schedulledFinishWorkDate = schedulledFinishWorkDate + datetime.timedelta(minutes = durasi)
                     cursor.execute(query,values1)
-                    schedulledstartWorkDate = scehdulledFinishWorkDate
+                    schedulledstartWorkDate = schedulledFinishWorkDate
                     for index2 in records_oprqualification:
                         operatorid = index2[0]
                         qualificationCode = index2[1]
                         if qualificationCode == requirementsCode:
                             values_oprneed = (id_operation,operatorid)
                             cursor.execute(query_insert_operatorneed,values_oprneed)
-                    #InsertOperatorNeed(id_operation,idProduk)
                     cek = True
-            print("")
         counter = counter + 1
-                    
-        dueDateproduk = HitungDueDateProduk(idProduk)
-        query4 = "UPDATE prd_d_produk SET dueDate = %s WHERE id = %s"
-        print("test")
-        values2 = (dueDateproduk,idProduk)
-        cursor.execute(query4,values2) 
-        conn.commit()
+        #conn.commit()
         hasil = {"status" : "berhasil"}
+        print(hasil)
     except Exception as e:
         print("Error",str(e))
         hasil = {"status" : "gagal"}
