@@ -2,9 +2,7 @@
   <v-app>
       <v-card
         class="mx-auto text-center mt-6"
-        color="black"
-        dark
-        max-width="1000">
+        width="1000">
       <v-card>
         <!-- Sparkline Biasa
         <v-sheet color="rgba(0, 0, 0, .12)">
@@ -24,12 +22,10 @@
         </v-sheet>
         -->
         <div class="app">
-          <template>
-          <apexcharts width="650" type="line" :options="chartOptions" :series="series"></apexcharts>
-        </template>
+          <apexchart ref="realtimeChart" type="line" height="350" :options="chartOptions" :series="chartOptions.series"></apexchart>
         </div>
         <v-card-text>
-          <div class="text-h4 font-weight-thin">
+          <div class="text-h4">
             Kurva S
           </div>
         </v-card-text>
@@ -134,57 +130,53 @@
   export default {
     components:{
       //VueBarGraph,
-      apexcharts: VueApexCharts,
+      apexchart: VueApexCharts,
     },
     
     data : function(){
-    return {
-      value: [
-        2,
-        6,
-        7,
-        9,
-        11,
-        12,
-        15,
-      ],
-      value2: [
-        4,
-        2,
-        3,
-        1,
-        7,
-        6,
-        5,
-      ],
-      monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
-      wsLabels: ['WS1', 'WS2', 'WS3', 'WS4', 'WS5', 'WS6', 'WS7', 'WS8', 'WS9', 'WS10'],
+      return {
+        value: [
+          2,
+          6,
+          7,
+          9,
+          11,
+          12,
+          15,
+        ],
 
-      
-      chartOptions: {
-            chart: {
-              id: 'vuechart-example',
-            },
-            xaxis: {
-              //categories: ['17/09/2022','18/09/2022','19/09/2022','20/09/2022'],
-              categories2 : [],
-              categories : []
-            },
-            stroke : {
-                curve : 'smooth'
-            }
+        value2: [
+          4,
+          2,
+          3,
+          1,
+          7,
+          6,
+          5,
+        ],
+
+        monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+
+        wsLabels: ['WS1', 'WS2', 'WS3', 'WS4', 'WS5', 'WS6', 'WS7', 'WS8', 'WS9', 'WS10'],
+
+        chartOptions: {
+          series: [],
+          dataLabels: {
+              enabled: false
           },
-          series: [{
-           
-            //data: [25, 50, 75,100],
-            data : [],
-           
-          }],
-          
-         
-    }
-   
+          stroke: {
+              curve: 'straight'
+          },
+          grid: {
+              row: {
+                  colors: ['#f3f3f3', 'transparent'],
+                  opacity: 0.5
+              },
+          },
+        },
+      }
     },
+
     mounted(){
       this.fetchProgressProyek()
     },
@@ -195,19 +187,14 @@
             const axios = require('axios')
             const res = await axios.get('/proyek/show_progress_percentage_proyek')
             if(res.data == null){
-               console.log("Data kosong")
+                console.log("Data kosong")
             }else{
-             
-              this.series.data= res.data
-              console.log(this.series.data)
-             
-       
-            }            
-
+                console.log(res.data)
+            }       
+            this.$refs.realtimeChart.updateSeries([{
+                data: res.data,
+            }], false, true);
         }
-      
-      
       }
     }
-  
 </script>
