@@ -27,7 +27,7 @@ def GetProdukbyRProyekDSP(id_rproyek):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id,c.nama AS 'jenisProduk',a.dueDate,d.percentage FROM prd_d_produk a JOIN prd_r_rincianproyek b ON b.id = a.rincianproyek JOIN prd_r_jenisproduk c ON c.id = b.jenisProduk JOIN prd_r_proyek d ON d.id = b.proyek WHERE b.id = '"+id_rproyek+"'"
+    query = "SELECT a.id,c.nama AS 'jenisProduk',a.dueDate,d.percentage FROM prd_d_produk a JOIN prd_r_rincianproyek b ON b.id = a.rincianproyek JOIN prd_r_jenisproduk c ON c.id = b.jenisProduk JOIN prd_d_proyek d ON d.id = b.proyek WHERE b.id = '"+id_rproyek+"'"
     cursor.execute(query)
     records = cursor.fetchall()
     row_headers = [x[0] for x in cursor.description]
@@ -58,7 +58,7 @@ def GetRProyekInProduk(id_rproyek):
   conn = database.connector()
   cursor = conn.cursor()
 
-  query = "SELECT a.id AS 'IdRincian', a.jumlah AS 'jumlah', a.dueDate, b.id AS 'IdProyek', b.nama AS 'NamaProyek', c.id AS 'IdCustomer', c.nama AS 'NamaCustomer' FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON b.id = a.proyek JOIN gen_r_customer c ON c.id = b.customerid WHERE a.id = '"+id_rproyek+"'"
+  query = "SELECT a.id AS 'IdRincian', a.jumlah AS 'jumlah', a.dueDate, b.id AS 'IdProyek', b.nama AS 'NamaProyek', c.id AS 'IdCustomer', c.nama AS 'NamaCustomer' FROM prd_r_rincianproyek a JOIN prd_d_proyek b ON b.id = a.proyek JOIN gen_r_customer c ON c.id = b.customerid WHERE a.id = '"+id_rproyek+"'"
   cursor.execute(query)
   records = cursor.fetchall()
 
@@ -121,7 +121,7 @@ def HitungDueDateProduk(id_produk):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.jumlah, b.tglDibuat,a.dueDate FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON b.id = a.proyek JOIN prd_d_produk c ON c.rincianProyek = a.id WHERE c.id = '"+id_produk+"'"
+    query = "SELECT a.jumlah, b.tglDibuat,a.dueDate FROM prd_r_rincianproyek a JOIN prd_d_proyek b ON b.id = a.proyek JOIN prd_d_produk c ON c.rincianProyek = a.id WHERE c.id = '"+id_produk+"'"
     
     cursor.execute(query)
     records = cursor.fetchall()

@@ -29,7 +29,7 @@ def ShowRincianProyekByProyek(id_proyek):
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id,a.jumlah,a.dueDate,a.proyek,c.nama FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON a.proyek = b.id JOIN prd_r_jenisproduk c ON c.id = a.jenisProduk WHERE b.id = '"+id_proyek+"'"
+    query = "SELECT a.id,a.jumlah,a.dueDate,a.proyek,c.nama FROM prd_r_rincianproyek a JOIN prd_d_proyek b ON a.proyek = b.id JOIN prd_r_jenisproduk c ON c.id = a.jenisProduk WHERE b.id = '"+id_proyek+"'"
     cursor.execute(query)
 
     row_headers = [x[0] for x in cursor.description]
@@ -46,7 +46,7 @@ def ShowProyekInRProyek(id_proyek):
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id AS 'IdProyek', a.nama AS 'NamaProyek', b.id AS 'IdCustomer', b.nama AS 'NamaCustomer' FROM prd_r_proyek a JOIN gen_r_customer b ON b.id = a.customerid WHERE a.id =  '"+id_proyek+"'"
+    query = "SELECT a.id AS 'IdProyek', a.nama AS 'NamaProyek', b.id AS 'IdCustomer', b.nama AS 'NamaCustomer' FROM prd_d_proyek a JOIN gen_r_customer b ON b.id = a.customerid WHERE a.id =  '"+id_proyek+"'"
     cursor.execute(query)
     records = cursor.fetchall()
     row_headers = [x[0] for x in cursor.description]
@@ -84,7 +84,7 @@ def AddRincianProyekByProyek(id_proyek):
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id FROM prd_r_proyek a WHERE a.id = '"+id_proyek+"' LIMIT 1"
+    query = "SELECT a.id FROM prd_d_proyek a WHERE a.id = '"+id_proyek+"' LIMIT 1"
 
     cursor.execute(query)
     records = cursor.fetchall()
@@ -112,10 +112,11 @@ def AddRincianProyekByProyek(id_proyek):
         records = cursor.fetchall()
         for data in records:
             id_rproyek_new = data[0]
+
         print(id_rproyek_new)
-        
         print(jumlah)
         print("Type jumlah : ",type(jumlah))
+        
         new_jumlah = int(jumlah)
         print("jumlah : ",new_jumlah)
 
@@ -126,9 +127,6 @@ def AddRincianProyekByProyek(id_proyek):
         values2 = (idProduct,id_rproyek_new)
         cursor.execute(query3,values2)
         GenerateOperation(idProduct)
-        
-      
-        
         conn.commit()
         hasil = {"status" : "berhasil"}
         print("Rincian Proyek Baru Ditambahkan!")
@@ -138,7 +136,6 @@ def AddRincianProyekByProyek(id_proyek):
         hasil = {"status" : "gagal"}
     
     return hasil
-
 
 
 def GenerateSNProduct():
@@ -176,7 +173,7 @@ def HitungDueDateRProyek(id_produk):
     cursor = conn.cursor()
 
     query = "SELECT a.jumlah, b.tglDibuat, b.dueDate FROM prd_r_rincianproyek a "
-    query = query + "JOIN prd_r_proyek b ON "
+    query = query + "JOIN prd_d_proyek b ON "
     query = query + "b.id = a.proyek"
     query = query + "JOIN prd_d_produk c ON"
     query = query + "c.rincianProyek = a.id"
