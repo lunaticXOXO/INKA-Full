@@ -45,6 +45,9 @@ def ShowWorkStationbyProcess(id_process):
       for data in records:
             json_data.append(dict(zip(row_headers,data)))
       
+
+      cursor.close()
+      conn.close()
       return make_response(jsonify(json_data),200)
 
 
@@ -63,6 +66,9 @@ def statusPengerjaanWS():
             #json.dumps(data, default=str)
             json_data.append(dict(zip(row_headers,data)))
       
+      cursor.close()
+      conn.close()
+
       return make_response(jsonify(json.dumps(json_data,default=str)),200)
 
 
@@ -87,6 +93,9 @@ def UpdateWorkstation(id):
             values = (id,nama,liniproduksi)
             cursor.execute(query,values)
             conn.commit()
+            cursor.close()
+            conn.close()
+
             hasil = {"status" : "berhasil"}
       except Exception as e:
             print("Error",str(e))
@@ -110,6 +119,8 @@ def AddWorkstation():
 
         cursor.execute(query,values)
         conn.commit()
+        cursor.close()
+        conn.close()
         hasil = {"status" : "berhasil"}
         print("Workstation Baru Ditambahkan!")
   except Exception as e:
@@ -137,6 +148,8 @@ def AddWorkStationbyProcess(id_process):
             values = (temp,stasiunKerja)
             cursor.execute(query,values)
             conn.commit()
+            cursor.close()
+            conn.close()
             hasil = {"Status" : "Berhasil"}
 
       except Exception as e:
@@ -158,6 +171,8 @@ def UpdateWorkstation(id):
       values = (id,nama,berlaku,liniproduksi)
       cursor.execute(query,values)
       conn.commit()
+      cursor.close()
+      conn.close()
       hasil = {"Status" : "Berhasil"}
   except Exception as e:
       print("Error",str(e))

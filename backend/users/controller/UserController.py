@@ -56,6 +56,8 @@ def Register():
         values = (username,passwords,userType)
         cursor.execute(query,values)
         conn.commit()
+        cursor.close()
+        conn.close()
         hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error",str(e))

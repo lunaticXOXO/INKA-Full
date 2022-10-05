@@ -34,7 +34,11 @@ def ShowAllSJProduk():
     json_data = []
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
+
     conn.commit()
+    cursor.close()
+    conn.close()
+
     return make_response(jsonify(json_data),200)
 
 
@@ -51,7 +55,10 @@ def ShowSJProdukbyIDJenisProduk(id):
     json_data = []
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
+
     conn.commit()
+    cursor.close()
+    conn.close()
 
     return make_response(jsonify(json_data),200)
 
@@ -68,6 +75,10 @@ def ShowJProdukInSJProduk(id_jproduk):
     json_data = []
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+
     return make_response(jsonify(json_data),200)
 
 def AddSJProdukByJenisProduk(id_jproduk):
@@ -104,6 +115,9 @@ def AddSJProdukByJenisProduk(id_jproduk):
             values = (idNodal,indukNodal,materialTypeCode,nama,jumlah,satuan)
             cursor.execute(query,values)
             conn.commit()
+            cursor.close()
+            conn.close()
+
             hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error" + str(e))
@@ -126,6 +140,8 @@ def AddStrukturJenisProduk():
         values = (idNodal, indukNodal, jnsProduk, nama, jumlah, satuan)
         cursor.execute(query,values)
         conn.commit()
+        cursor.close()
+        conn.close()
         hasil = {"status" : "berhasil"}
         print("Struktur Jenis Produk Baru Ditambahkan!")
     except Exception as e:
@@ -150,6 +166,8 @@ def UpdateStrukturJenisProduk(idNodal):
         values = (idNodal,indukNodal,jnsProduk,nama,jumlah,satuan)
         cursor.execute(query,values)
         conn.commit()
+        cursor.close()
+        conn.close()
         hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error",str(e))

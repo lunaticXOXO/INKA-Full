@@ -29,6 +29,8 @@ def AddClassification():
         values = (code,descriptions)
         cursor.execute(query,values)
         conn.commit()
+        cursor.close()
+        conn.close()
         hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error",str(e))
@@ -48,6 +50,8 @@ def UpdateClassification(code):
         values = (code,descriptions)
         cursor.execute(query,values)
         conn.commit()
+        cursor.close()
+        conn.close()
         hasil = {"status" : "berhasil"}
     
     except Exception as e:

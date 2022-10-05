@@ -22,9 +22,9 @@ def PurchaseMaterial():
         id = data["id"]
         nama = data["nama"]
         purchaserName = data["purchaserName"]
-        now = datetime.datetime.now()
+        purchaseDate = data["purchaseDate"]
        
-        values = (id,nama,purchaserName,now)
+        values = (id,nama,purchaserName,purchaseDate)
         cursor.execute(query,values)
         conn.commit()
 
@@ -34,12 +34,13 @@ def PurchaseMaterial():
         quantity = data["quantity"]
         unit = data["unit"]
         purchaseId = data["purchaseId"]
-        schedulledArrival = now + datetime.timedelta(days=7)
+        schedulledArrival = data["schedulledArrival"]
 
         values2 = (id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)    
         cursor2.execute(query2,values2)
         conn.commit()
-        
+        cursor.close()
+        conn.close()
         hasil = {"status" : "berhasil"}
 
     except Exception as e:

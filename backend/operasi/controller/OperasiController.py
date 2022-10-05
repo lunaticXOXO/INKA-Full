@@ -80,31 +80,21 @@ def GetProcessofProduct(idProduk):
 def fetchProcesstoOperation(idProduk):
     conn = database.connector()
     cursor = conn.cursor()
+    recordsFetch = []
     query3 = "SELECT c.id AS 'IdProses',a.stasiunKerja,c.durasi,i.qualificationCode FROM gen_r_mampuproses a JOIN prd_r_proses c ON c.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = c.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id JOIN prd_r_operatorrequirement i ON i.processCode = c.id WHERE h.id = '"+idProduk+"'ORDER BY c.id DESC"
-    #query3 = "SELECT c.id AS 'IdProses',a.stasiunKerja,c.durasi,i.qualificationCode"
-    #query3 = query3  +   "FROM gen_r_mampuproses a "
-    #query3 = query3  +   "JOIN prd_r_proses c ON c.id = a.proses"
-    #query3 = query3  +   "JOIN prd_r_strukturjnsprd d ON d.idNodal = c.nodalOutput"
-    #query3 = query3  +   "JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk"
-    #query3 = query3  +   "JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id"
-    #query3 = query3  +   "JOIN prd_r_proyek g ON g.id = f.proyek"
-    #query3 = query3  +   "JOIN prd_d_produk h ON h.rincianProyek = f.id"         
-    ##query3 = query3  +   "JOIN prd_r_operatorrequirement i ON i.processCode = c.id"
-    #query3 = query3 +    "WHERE h.id = '"+idProduk+"' ORDER BY c.id DESC"
-
+   
     cursor.execute(query3)
+    print(idProduk)
     recordsFetch = cursor.fetchall()
+    print("records Fetch : ",recordsFetch)
     return recordsFetch
 
 
 def fetchDateProyektoOperation(idProduk):
     conn = database.connector()
+    recorddate = []
     cursor = conn.cursor()
     query5 = "SELECT a.tglDibuat FROM prd_r_proyek a JOIN prd_r_rincianproyek b ON b.proyek = a.id JOIN prd_d_produk c ON c.rincianProyek = b.id WHERE c.id = '"+idProduk+"'"
-    #query5 = "SELECT a.tglDibuat FROM prd_r_proyek a"
-    #query5 = query5 + "JOIN prd_r_rincianproyek b ON b.proyek = a.id"
-    #query5 = query5 + "JOIN prd_d_produk c ON c.rincianProyek = b.id"
-    #query5 = query5 + "WHERE c.id = '"+idProduk+"'"
     cursor.execute(query5)
     recorddate = cursor.fetchall()
     return recorddate
@@ -113,13 +103,12 @@ def fetchDateProyektoOperation(idProduk):
 
 def fetchOperatorQualification():
     conn = database.connector()
+    recordsqualification = []
     cursor = conn.cursor()
     query7 = "SELECT a.operatorid,a.qualificationCode,b.descriptions FROM opr_d_operatorlevel a JOIN opr_r_operatorqualification b ON b.codes = a.qualificationCode"
-    #query7 = "SELECT a.operatorid,a.qualificationCode,b.descriptions"
-    ##query7 = query7 + "FROM opr_d_operatorlevel a"
-    #query7 = query7 + "JOIN opr_r_operatorqualification b ON b.codes = a.qualificationCode"
     cursor.execute(query7)
     recordsqualification = cursor.fetchall()
+    print(recordsqualification)
     return recordsqualification
 
 
@@ -167,16 +156,24 @@ def GenerateOperation(idProduk):
     query_insert_operatorneed = "INSERT INTO opr_d_operatorneed(operationid,operatorid)VALUES(%s,%s)"     
     try:
        
-       
-        recordsFetch = fetchProcesstoOperation(idProduk)
-        records_oprqualification = fetchOperatorQualification()
-        schedulledstartWorkDate = fetchSchedulledStart(idProduk)
-        schedulledFinishWorkDate = fetchSchedulledFinish(idProduk)
-       
-        print(recordsFetch)
-       #Requirement Code => punya proses
-       #Qualification => punya operator
+        query3 = "SELECT c.id AS 'IdProses',a.stasiunKerja,c.durasi,i.qualificationCode FROM gen_r_mampuproses a JOIN prd_r_proses c ON c.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = c.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_r_rincianproyek f ON f.jenisProduk = e.id JOIN prd_r_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id JOIN prd_r_operatorrequirement i ON i.processCode = c.id WHERE h.id = '"+idProduk+"'ORDER BY c.id DESC"
+        cursor.execute(query3)
+        print(idProduk)
+        recordsFetch = cursor.fetchall()
+        print("records Fetch : ",recordsFetch)
 
+
+        query7 = "SELECT a.operatorid,a.qualificationCode,b.descriptions FROM opr_d_operatorlevel a JOIN opr_r_operatorqualification b ON b.codes = a.qualificationCode"
+        cursor.execute(query7)
+        records_oprqualification = cursor.fetchall()
+
+        #recordsFetch = fetchProcesstoOperation(idProduk)
+        #records_oprqualification =  fetchOperatorQualification()
+        schedulledstartWorkDate  =   fetchSchedulledStart(idProduk)
+        schedulledFinishWorkDate =  fetchSchedulledFinish(idProduk)
+        print("schedulledStart : ",schedulledstartWorkDate)
+        print(recordsFetch)
+      
         for index in recordsFetch:
             id_operation = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
             proses = index[0]
@@ -210,7 +207,8 @@ def GenerateOperation(idProduk):
                             cursor.execute(query_insert_operatorneed,values_oprneed)
                     cek = True
         counter = counter + 1
-        #conn.commit()
+        conn.commit()
+        conn.close()
         hasil = {"status" : "berhasil"}
         print(hasil)
     except Exception as e:
@@ -245,6 +243,7 @@ def StartOperation(idOperasi):
     values = (dates,idOperasi)
     cursor.execute(query,values)
     conn.commit()
+    conn.close()
     hasil = {"status" : "berhasil"}
     return hasil
 
@@ -265,5 +264,6 @@ def EndOperation(idOperasi):
     values2 = (1,idOperasi)
     cursor.execute(query2,values2)
     conn.commit()
+    conn.close()
     hasil = {"status" : "berhasil"}
     return hasil

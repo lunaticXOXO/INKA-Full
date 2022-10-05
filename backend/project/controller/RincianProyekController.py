@@ -22,6 +22,9 @@ def GetAllRincianProyek():
 
     for data in records:
         data_json.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
     return make_response(jsonify(data_json),200)
 
 
@@ -39,6 +42,8 @@ def ShowRincianProyekByProyek(id_proyek):
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
     
+    cursor.close()
+    conn.close()
     return make_response(jsonify(json_data),200)
 
 
@@ -71,6 +76,8 @@ def AddRincianProyek():
         values = (id,jumlah,dueDate,jenisProduk,proyek)
         cursor.execute(query,values)
         conn.commit()
+        cursor.close()
+        conn.close()
         hasil = {"Status" : "Berhasil"}
 
     except Exception as e:
@@ -126,10 +133,10 @@ def AddRincianProyekByProyek(id_proyek):
         values2 = (idProduct,id_rproyek_new)
         cursor.execute(query3,values2)
         GenerateOperation(idProduct)
-        
-      
-        
         conn.commit()
+        cursor.close()
+        conn.close()
+
         hasil = {"status" : "berhasil"}
         print("Rincian Proyek Baru Ditambahkan!")
 
@@ -146,6 +153,7 @@ def GenerateSNProduct():
     id_product = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
     return id_product
 
+
 def UpdateRProyek(id_rproyek):
     conn = db.connector()
     cursor = conn.cursor()
@@ -159,6 +167,10 @@ def UpdateRProyek(id_rproyek):
 
         cursor.execute(query,values)
         conn.commit()
+
+        cursor.close()
+        conn.close()
+
         hasil = {"status" : "berhasil"}
 
     except Exception as e:
@@ -214,7 +226,12 @@ def HitungDueDateRProyek(id_produk):
     duedateproyek = tanggalDibuat + timedelta(days = newdays)
     print(type(duedateproyek))
     print("Due Date Rincian Proyek :",duedateproyek)
+
+    cursor.close()
+    conn.close()
+
     return duedateproyek
+
     #return make_response(jsonify(duedateproyek),200)
 
 
@@ -226,6 +243,8 @@ def UpdateDueDateRProyek(id_proyek):
         query = "UPDATE prd_r_rincianproyek SET dueDate = '"+str(tanggal)+"' WHERE proyek = '"+id_proyek+"'"
         cursor.execute(query)
         conn.commit()
+        cursor.close()
+        conn.close()
         hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error" + str(e))

@@ -13,6 +13,9 @@ def ShowAllCountry():
 
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
     return make_response(jsonify(json_data),200)
 
 
@@ -27,6 +30,8 @@ def AddNewCountry():
         values = (code,nama)
         cursor.execute(query,values)
         conn.commit()
+        cursor.close()
+        conn.close()
         hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error" + str(e))
@@ -45,6 +50,8 @@ def UpdateCountry(code):
 
         cursor.execute(query,values)
         conn.commit()
+        cursor.close()
+        conn.close()
         hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error" + str(e))

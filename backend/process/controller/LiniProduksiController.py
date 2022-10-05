@@ -17,6 +17,9 @@ def GetAllLiniProduksi():
     json_data.append(dict(zip(row_headers,data)))
 
   conn.commit()
+  cursor.close()
+  conn.close()
+
   return make_response(jsonify(json_data),200)
 
 
@@ -39,6 +42,10 @@ def AddLiniProduksi():
     values = (id,nama,datetime.now())
     cursor.execute(query,values)
     conn.commit()
+
+    cursor.close()
+    conn.close()
+
     hasil = {"status" : "berhasil"}
     print("Lini Produksi Baru Ditambahkan!")
   except Exception as e:
@@ -55,6 +62,9 @@ def StopLiniProduksi(id):
   try:
     cursor.execute(query)
     conn.commit()
+    cursor.close()
+    conn.close()
+    
     hasil = {"status" : "berhasil"}
   except Exception as e:
       print("Error" + str(e))

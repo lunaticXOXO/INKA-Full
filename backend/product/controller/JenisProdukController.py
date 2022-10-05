@@ -75,7 +75,12 @@ def GetJenisProdukbyRincianProyek(id_rproyek):
 
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
+
     conn.commit()
+    cursor.close()
+    conn.close()
+    cursor.close()
+    conn.close()
     return make_response(jsonify(json_data),200)
 
 
@@ -92,6 +97,9 @@ def GetRincianInJenisProduk(id_rincian):
 
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
     return make_response(jsonify(json_data),200)
 
 def GetJenisProductById(id_jproduk):
@@ -110,6 +118,8 @@ def GetJenisProductById(id_jproduk):
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
     conn.commit()
+    cursor.close()
+    conn.close()
     return make_response(jsonify(json_data),200)
    
     
@@ -131,5 +141,6 @@ def ShowJProdukJoinSJProduk():
     for data in records:
        json_data.append(dict(zip(row_headers,data)))
     conn.commit()
-    
+    cursor.close()
+    conn.close()
     return make_response(jsonify(json_data),200)
