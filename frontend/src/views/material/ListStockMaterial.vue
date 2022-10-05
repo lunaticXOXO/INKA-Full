@@ -95,7 +95,8 @@
     
       selectStock(types){
           console.log('ID : ' + types.id)
-      }
+      },
+      
     }
   }
 </script>

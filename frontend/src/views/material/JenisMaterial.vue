@@ -12,7 +12,7 @@
             lazy-validation>
 
             <v-text-field
-            v-model="code"
+            v-model="kode"
             :counter="12"
             :rules="kodeRules"
             label="Code"

@@ -92,10 +92,14 @@ export default {
 
 
   methods: {
-    validate () {
+    validate() {
       if(this.$refs.form.validate()){
         this.InsertClassification()
       }
+    },
+
+    reset () {
+      this.$refs.form.reset()
     },
 
     async InsertClassification(){

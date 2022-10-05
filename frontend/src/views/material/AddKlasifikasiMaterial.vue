@@ -92,6 +92,10 @@ export default {
       }
     },
 
+    reset () {
+      this.$refs.form.reset()
+    },
+
     async InsertClassification(){
       try{
         const response = await axios.post('/material/add_classification',

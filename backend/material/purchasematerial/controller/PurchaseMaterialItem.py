@@ -8,19 +8,21 @@ def PurchaseMaterialItem():
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "INSERT INTO mat_d_purchaseitem(id,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)VALUES(%s,%s,%s,%s,%s,%s,%s)"
+    query = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)VALUES(%s,%s,%s,%s,%s,%s,%s)"
     try:
        data = request.json 
-       id_item = data["id"]
+       id_item = data["id_item"]
        supplierCode = data["supplierCode"]
        materialTypeCode = data["materialTypeCode"]
        quantity = data["quantity"]
        unit = data["unit"]
-       schedulledArrival = datetime.now() + datetime.timedelta(days=7)
+       schedulledArrival = data["schedulledArrival"]
        purchaseId = data["purchaseId"]
        values = (id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)
        cursor.execute(query,values)
        conn.commit()
+       cursor.close()
+       conn.close()
        hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error",str(e))

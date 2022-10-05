@@ -515,6 +515,11 @@ def order_new_material():
     hasil = PurchaseNewMaterial()
     return hasil
 
+@app.route('/material/add_purchase_item',methods = ['POST'])
+def add_purchase_item():
+    hasil = PurchaseMaterialItem()
+    return hasil
+
 #MATERIAL ON WS
 @app.route('/material_ws/get_material_onws',methods = ['GET'])
 def get_material_onws():
