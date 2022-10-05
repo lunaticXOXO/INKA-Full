@@ -61,12 +61,10 @@
               </div>
               <div v-else>
                 <router-link :to="{name : 'List Material Type By Supplier',params:{id : `${item.code}`}}">
-
-                <v-btn class="mx-1" x-small color="blue" @click="selectSupplier(item)">
-                    <v-icon small dark>mdi-check</v-icon>
-                </v-btn>
+                  <v-btn class="mx-1" x-small color="blue">
+                      <v-icon small dark>mdi-check</v-icon>
+                  </v-btn>
                 </router-link>
-                
                 <v-btn class="mx-1" x-small color="green" @click="editSupplier(item)">
                     <v-icon small dark>mdi-pencil</v-icon>
                 </v-btn>
@@ -141,6 +139,7 @@
         this.editedIndex = this.supplier.indexOf(supplier);
         this.editedItem = Object.assign({},supplier);
       },
+
       async fetchCity(){
           try{
               const axios = require('axios')
@@ -155,6 +154,7 @@
               console.log(error)
           }
       },
+
       async fetchSupplier(){
         try{
           const axios = require('axios');
@@ -170,11 +170,6 @@
           alert("Error")
           console.log(error)
         }
-      },
-    
-      selectSupplier(supplier){
-          console.log('ID : ' + supplier.code)
-          //open(`/proyekListbyCustomer/${customers.id}`)
       },
 
       deleteSupplier(supplier){

@@ -13,7 +13,7 @@
         
           <v-text-field
           v-model="id_item"
-          label="Id Order"
+          label="ID Order"
           ></v-text-field>
 
           <v-text-field
@@ -42,7 +42,6 @@
           label="Material Type"
           ></v-autocomplete>
 
-
           <v-autocomplete
           item-text="nama"
           item-value="id"
@@ -50,7 +49,6 @@
           :items="units"
           label="Unit"
           ></v-autocomplete>
-
 
           <v-menu>
             <template v-slot:activator="{ on, attrs }">
@@ -95,14 +93,13 @@
           </v-btn>
 
           <v-btn
-          color="error"
-          class="mr-4"
-          @click="reset"
-          >
-          Reset
+            color="error"
+            class="mr-4"
+            @click="reset"
+            >
+            Reset
           </v-btn>
         </v-form>
-
         <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
             {{snackbar.message}}
         </v-snackbar>

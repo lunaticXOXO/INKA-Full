@@ -12,8 +12,8 @@
           lazy-validation>
         
           <v-autocomplete
-          item-text="id"
-          item-value="id"
+          item-text="idNodal"
+          item-value="idNodal"
           v-model="proses"
           :items="prosesList"
           label="ID Proses"
