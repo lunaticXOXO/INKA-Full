@@ -13,7 +13,7 @@ def GetAllRincianProyek():
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "SELECT * FROM prd_r_rincianproyek"
+    query = "SELECT * FROM prd_d_rincianproyek"
    
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
@@ -29,7 +29,7 @@ def ShowRincianProyekByProyek(id_proyek):
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id,a.jumlah,a.dueDate,a.proyek,c.nama FROM prd_r_rincianproyek a JOIN prd_d_proyek b ON a.proyek = b.id JOIN prd_r_jenisproduk c ON c.id = a.jenisProduk WHERE b.id = '"+id_proyek+"'"
+    query = "SELECT a.id,a.jumlah,a.dueDate,a.proyek,c.nama FROM prd_d_rincianproyek a JOIN prd_d_proyek b ON a.proyek = b.id JOIN prd_r_jenisproduk c ON c.id = a.jenisProduk WHERE b.id = '"+id_proyek+"'"
     cursor.execute(query)
 
     row_headers = [x[0] for x in cursor.description]
@@ -60,7 +60,7 @@ def AddRincianProyek():
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "INSERT INTO prd_r_rincianproyek(id,jumlah,dueDate,jenisProduk,proyek)VALUES(%s,%s,%s,%s,%s)"
+    query = "INSERT INTO prd_d_rincianproyek(id,jumlah,dueDate,jenisProduk,proyek)VALUES(%s,%s,%s,%s,%s)"
     try:
         data = request.json
         id = data["id"]
@@ -95,7 +95,7 @@ def AddRincianProyekByProyek(id_proyek):
     print(temp)
     print(type(temp))
     cursor = conn.cursor()
-    query = "INSERT INTO prd_r_rincianproyek (id, jumlah,dueDate,jenisProduk, proyek) VALUES (%s,%s,%s,%s,'"+temp+"')"
+    query = "INSERT INTO prd_d_rincianproyek (id, jumlah,dueDate,jenisProduk, proyek) VALUES (%s,%s,%s,%s,'"+temp+"')"
     try:
         data = request.json
         id_rproyek = data["id"]
@@ -105,7 +105,7 @@ def AddRincianProyekByProyek(id_proyek):
     
         values = (id_rproyek,jumlah,str(dueDate),jenisProduk)
         cursor.execute(query,values)
-        query2 = "SELECT id FROM prd_r_rincianproyek a WHERE a.id = '"+id_rproyek+"'"
+        query2 = "SELECT id FROM prd_d_rincianproyek a WHERE a.id = '"+id_rproyek+"'"
         
         id_rproyek_new = ""
         cursor.execute(query2)
@@ -146,7 +146,7 @@ def GenerateSNProduct():
 def UpdateRProyek(id_rproyek):
     conn = db.connector()
     cursor = conn.cursor()
-    query = "UPDATE prd_r_rincianproyek SET jumlah = %s,proyek = %s,jenisProduk = %s WHERE id = '"+id_rproyek+"'"
+    query = "UPDATE prd_d_rincianproyek SET jumlah = %s,proyek = %s,jenisProduk = %s WHERE id = '"+id_rproyek+"'"
     try:
         data = request.json
         jumlah = data["jumlah"]
@@ -172,7 +172,7 @@ def HitungDueDateRProyek(id_produk):
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.jumlah, b.tglDibuat, b.dueDate FROM prd_r_rincianproyek a "
+    query = "SELECT a.jumlah, b.tglDibuat, b.dueDate FROM prd_d_rincianproyek a "
     query = query + "JOIN prd_d_proyek b ON "
     query = query + "b.id = a.proyek"
     query = query + "JOIN prd_d_produk c ON"
@@ -220,7 +220,7 @@ def UpdateDueDateRProyek(id_proyek):
     conn = db.connector()
     try:
         cursor = conn.cursor()
-        query = "UPDATE prd_r_rincianproyek SET dueDate = '"+str(tanggal)+"' WHERE proyek = '"+id_proyek+"'"
+        query = "UPDATE prd_d_rincianproyek SET dueDate = '"+str(tanggal)+"' WHERE proyek = '"+id_proyek+"'"
         cursor.execute(query)
         conn.commit()
         hasil = {"status" : "berhasil"}

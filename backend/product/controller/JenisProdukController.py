@@ -66,7 +66,7 @@ def GetJenisProdukbyRincianProyek(id_rproyek):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id,a.nama,a.tglDibuat,b.id AS 'idrincian' FROM prd_r_jenisproduk a JOIN prd_r_rincianproyek b ON b.jenisProduk = a.id WHERE b.id = '"+id_rproyek+"'"
+    query = "SELECT a.id,a.nama,a.tglDibuat,b.id AS 'idrincian' FROM prd_r_jenisproduk a JOIN prd_d_rincianproyek b ON b.jenisProduk = a.id WHERE b.id = '"+id_rproyek+"'"
     cursor.execute(query)
 
     row_headers = [x[0] for x in cursor.description]
@@ -83,7 +83,7 @@ def GetRincianInJenisProduk(id_rincian):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id AS 'IdRincian', a.jumlah AS 'jumlah', a.dueDate, b.id AS 'IdProyek', b.nama AS 'NamaProyek', c.id AS 'IdCustomer',c.nama AS 'NamaCustomer', d.id AS 'IdProduk',d.dueDate AS 'dueDateProduk' FROM prd_r_rincianproyek a JOIN prd_d_proyek b ON b.id = a.proyek JOIN gen_r_customer c ON c.id = b.customerid JOIN prd_d_produk d ON d.rincianProyek = a.id WHERE a.id = '"+id_rincian+"'"
+    query = "SELECT a.id AS 'IdRincian', a.jumlah AS 'jumlah', a.dueDate, b.id AS 'IdProyek', b.nama AS 'NamaProyek', c.id AS 'IdCustomer',c.nama AS 'NamaCustomer', d.id AS 'IdProduk',d.dueDate AS 'dueDateProduk' FROM prd_d_rincianproyek a JOIN prd_d_proyek b ON b.id = a.proyek JOIN gen_r_customer c ON c.id = b.customerid JOIN prd_d_produk d ON d.rincianProyek = a.id WHERE a.id = '"+id_rincian+"'"
     cursor.execute(query)
 
     row_headers = [x[0] for x in cursor.description]

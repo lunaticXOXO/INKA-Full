@@ -154,7 +154,7 @@ def InsertGroupProses():
 def ShowSJProdukInProcess(id_sjproduk):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.idNodal,a.nama,a.indukNodal, c.id AS 'IdJenisProduk', c.nama AS 'NamaJenisProduk', d.id AS 'IdRincian',d.jumlah,d.dueDate AS 'dueDateRincian', e.id AS 'IdProduk',e.dueDate AS 'dueDateProduk', f.id AS 'IdProyek',f.nama AS 'namaProyek', g.id AS 'IdCustomer',g.nama AS 'namaCustomer' FROM prd_r_strukturjnsprd a JOIN prd_r_jenisproduk c ON c.id = a.jnsProduk JOIN prd_r_rincianproyek d ON d.jenisProduk = c.id JOIN prd_d_produk e ON e.rincianProyek = d.id JOIN prd_d_proyek f ON f.id = d.proyek JOIN gen_r_customer g ON g.id = f.customerid WHERE a.idNodal = '"+id_sjproduk+"'"
+    query = "SELECT a.idNodal,a.nama,a.indukNodal, c.id AS 'IdJenisProduk', c.nama AS 'NamaJenisProduk', d.id AS 'IdRincian',d.jumlah,d.dueDate AS 'dueDateRincian', e.id AS 'IdProduk',e.dueDate AS 'dueDateProduk', f.id AS 'IdProyek',f.nama AS 'namaProyek', g.id AS 'IdCustomer',g.nama AS 'namaCustomer' FROM prd_r_strukturjnsprd a JOIN prd_r_jenisproduk c ON c.id = a.jnsProduk JOIN prd_d_rincianproyek d ON d.jenisProduk = c.id JOIN prd_d_produk e ON e.rincianProyek = d.id JOIN prd_d_proyek f ON f.id = d.proyek JOIN gen_r_customer g ON g.id = f.customerid WHERE a.idNodal = '"+id_sjproduk+"'"
 
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
@@ -287,7 +287,7 @@ def HitungDurasiProsesbyProduk(id_produk):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id, a.nama, b.idNodal, b.nama, b.jumlah, c.id, c.nama, c.durasi, c.satuandurasi, d.id, d.jumlah, e.id, e.nama, e.tglDibuat, f.id AS 'ID Produk' FROM prd_r_jenisproduk a JOIN prd_r_strukturjnsprd b ON b.jnsProduk = a.id JOIN prd_r_proses c ON c.nodalOutput = b.idNodal JOIN prd_r_rincianproyek d ON d.jenisProduk = a.id JOIN prd_d_proyek e ON e.id = d.proyek JOIN prd_d_produk f ON f.rincianProyek = d.id WHERE f.id = '"+id_produk+"'"
+    query = "SELECT a.id, a.nama, b.idNodal, b.nama, b.jumlah, c.id, c.nama, c.durasi, c.satuandurasi, d.id, d.jumlah, e.id, e.nama, e.tglDibuat, f.id AS 'ID Produk' FROM prd_r_jenisproduk a JOIN prd_r_strukturjnsprd b ON b.jnsProduk = a.id JOIN prd_r_proses c ON c.nodalOutput = b.idNodal JOIN prd_d_rincianproyek d ON d.jenisProduk = a.id JOIN prd_d_proyek e ON e.id = d.proyek JOIN prd_d_produk f ON f.rincianProyek = d.id WHERE f.id = '"+id_produk+"'"
     cursor.execute(query)
     records = cursor.fetchall()
 
@@ -315,7 +315,7 @@ def HitungDurasiProses(id_proyek):
     query = query + "FROM prd_r_jenisproduk a "
     query = query + "JOIN prd_r_strukturjnsprd b ON b.jnsProduk = a.id "
     query = query + "JOIN prd_r_proses c ON c.nodalOutput = b.idNodal "
-    query = query + "JOIN prd_r_rincianproyek d ON d.jenisProduk = a.id "
+    query = query + "JOIN prd_d_rincianproyek d ON d.jenisProduk = a.id "
     query = query + "JOIN prd_d_proyek e ON e.id = d.proyek "
     query = query + "WHERE e.id =  '"+id_proyek+"'"
 
@@ -366,7 +366,7 @@ def ShowLastProcessofProduct():
     query = query + "d.stasiunkerja, "
     query = query + "e.id, e.namajenisproses "
     query = query + "FROM prd_r_jenisproduk a, prd_r_strukturjnsprd b, prd_r_proses c, "
-    query = query + "gen_r_mampuproses d, prd_r_jenisproses e, prd_r_rincianproyek f, prd_d_produk g "
+    query = query + "gen_r_mampuproses d, prd_r_jenisproses e, prd_d_rincianproyek f, prd_d_produk g "
     query = query + "WHERE a.id = b.jnsProduk AND b.idNodal = c.nodalOutput "
     query = query + "AND c.id = d.proses AND c.jenisProses = e.id AND g.id = '"+idProduk+"'" 
     query = query + "AND f.id = g.rincianProyek ORDER BY c.nodalOutput ASC"
@@ -437,7 +437,7 @@ def ShowLastProcessofProductAPI(idProduk):
     query = query + "d.stasiunkerja, "
     query = query + "e.id AS 'idjenisproses', e.namajenisproses "
     query = query + "FROM prd_r_jenisproduk a, prd_r_strukturjnsprd b, prd_r_proses c, "
-    query = query + "gen_r_mampuproses d, prd_r_jenisproses e, prd_r_rincianproyek f, prd_d_produk g, gen_r_stasiunkerja h "
+    query = query + "gen_r_mampuproses d, prd_r_jenisproses e, prd_d_rincianproyek f, prd_d_produk g, gen_r_stasiunkerja h "
     query = query + "WHERE a.id = b.jnsProduk AND b.idNodal = c.nodalOutput "
     query = query + "AND c.id = d.proses AND d.stasiunKerja = h.id AND c.jenisProses = e.id AND g.id = '"+idProduk+"'" 
     query = query + "AND f.id = g.rincianProyek AND c.nodalOutput = 'A0000' GROUP BY idjenisproses ORDER BY c.nodalOutput ASC"
