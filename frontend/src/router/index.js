@@ -73,6 +73,7 @@ import ListTanggalLibur from '../views/referensi/ListTanggalLibur.vue'
 import ListMaterialTypeBySupplier from '../views/pemasok/ListMaterialByPemasok.vue'
 import TambahMaterialTypeByPemasok from '../views/pemasok/TambahMaterialTypeByPemasok.vue'
 
+
 Vue.use(VueRouter)
 
 const routes = [
