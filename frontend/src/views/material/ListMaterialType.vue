@@ -171,8 +171,8 @@
           console.log('ID : ' + types.code)
           try{
               const axios = require('axios');
-              axios.delete(`/customer/deleteCustomer/${types.code}`);
-              alert("Delete Customer Success!")
+              axios.delete(`/material/deleteMaterialType/${types.code}`);
+              alert("Delete Material Type Success!")
               this.fetchMaterial()
           }
           catch(error){

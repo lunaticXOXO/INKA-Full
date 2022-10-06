@@ -59,6 +59,7 @@
   export default {
     data: () => ({
       valid: true,
+      snackBar: undefined,
       snackbar: {
         show: false,
         message: null,
@@ -88,7 +89,7 @@
       async InsertTanggalLibur() {
         try{
           const axios = require('axios');
-          const response = await axios.post('/holiday',
+          const response = await axios.post('/holiday/add_holiday',
             { tanggal: this.tanggal 
             }
           );
@@ -112,7 +113,7 @@
         catch(error){
           console.log(error)
           this.snackbar = {
-                message : 'Insert Data Operator Error',
+                message : 'Insert Tanggal Libur Error',
                 color : 'red',
                 show : true
           }

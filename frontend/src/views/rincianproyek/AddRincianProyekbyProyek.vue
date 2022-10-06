@@ -134,6 +134,7 @@
         message: null,
         color: null
       },
+      snackBar: undefined,
       jumlah : '',
       datetime: null,
       dueDate : null,
@@ -169,7 +170,7 @@
         console.log(this.id)
         console.log(this.jumlah)
         console.log(this.dueDate)
-        console.log(this.proyek)
+        //console.log(this.proyek)
       },
 
       async addRProyekbyProyek(){

@@ -8,7 +8,7 @@ def GetAllProyek():
   conn = database.connector()
   cursor = conn.cursor()
 
-  query = "SELECT * FROM prd_r_proyek"
+  query = "SELECT * FROM prd_d_proyek"
   cursor.execute(query)
 
   row_headers = [x[0] for x in cursor.description]
@@ -25,7 +25,7 @@ def GetProyekByCustomer(id):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id,a.nama,a.tglDibuat,a.customerid FROM prd_r_proyek a JOIN gen_r_customer b ON b.id = a.customerid WHERE a.customerid = '"+id+"'"
+    query = "SELECT a.id,a.nama,a.tglDibuat,a.customerid FROM prd_d_proyek a JOIN gen_r_customer b ON b.id = a.customerid WHERE a.customerid = '"+id+"'"
     cursor.execute(query)
 
     row_headers = [x[0] for x in cursor.description]
@@ -42,7 +42,7 @@ def AddProyek():
   conn = database.connector()
   cursor = conn.cursor()
   
-  query = "INSERT INTO prd_r_proyek (id, nama,tglDibuat,customerid) VALUES (%s,%s,%s,%s)"
+  query = "INSERT INTO prd_d_proyek (id, nama,tglDibuat,customerid) VALUES (%s,%s,%s,%s)"
   try:
       data = request.json
       id_proyek = data["id"]
@@ -84,7 +84,7 @@ def AddProyekbyCustomer(id_customer):
     for data in records:
         temp = data[0]
    
-    query = "INSERT INTO prd_r_proyek(id,nama,tglDibuat,customerid)VALUES(%s,%s,%s,'"+temp+"')"
+    query = "INSERT INTO prd_d_proyek(id,nama,tglDibuat,customerid)VALUES(%s,%s,%s,'"+temp+"')"
     try:
         data = request.json
         id = data["id"]
@@ -103,7 +103,7 @@ def AddProyekbyCustomer(id_customer):
 
 def UpdateProyek(id):
     conn = database.connector()
-    query = "UPDATE prd_r_proyek SET id = %s,nama = %s,customerid = %s WHERE id = '"+id+"'"
+    query = "UPDATE prd_d_proyek SET id = %s,nama = %s,customerid = %s WHERE id = '"+id+"'"
     try:
         data = request.json
         id = data["id"]
@@ -130,7 +130,7 @@ def AccumulatePercentageProyek(idOperasi):
     conn = database.connector()
     cursor = conn.cursor()
     #meng GET data id proyek dari id operasi yang di klik
-    query_get_idproyek = "SELECT d.id,a.selesai FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_r_rincianproyek c ON b.rincianproyek = c.id JOIN prd_r_proyek d ON c.proyek = d.id WHERE a.id = '"+idOperasi+"'"
+    query_get_idproyek = "SELECT d.id,a.selesai FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_d_rincianproyek c ON b.rincianproyek = c.id JOIN prd_d_proyek d ON c.proyek = d.id WHERE a.id = '"+idOperasi+"'"
     cursor.execute(query_get_idproyek)
     records = cursor.fetchall()
     id_proyek = ''
@@ -143,7 +143,7 @@ def AccumulatePercentageProyek(idOperasi):
     #print("Tanggal Selesai : ",tanggalSelesai)
 
     #Get jumlah pesanan / jumlah item proyek
-    query_count_nrincian = "SELECT a.jumlah FROM prd_r_rincianproyek a JOIN prd_r_proyek b ON b.id = a.proyek WHERE b.id = '"+id_proyek+"'"
+    query_count_nrincian = "SELECT a.jumlah FROM prd_d_rincianproyek a JOIN prd_d_proyek b ON b.id = a.proyek WHERE b.id = '"+id_proyek+"'"
     cursor.execute(query_count_nrincian)
     records_jumlah = cursor.fetchall()
     jumlah_itemproyek_str = ''
@@ -152,7 +152,7 @@ def AccumulatePercentageProyek(idOperasi):
 
     jumlah_itemproyek_int = int(jumlah_itemproyek_str)
     #Menghitung jumlah operasi dari suatu proyek
-    query_count_operasi = "SELECT COUNT(a.id) AS 'jumlahOperasi' FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_r_rincianproyek c ON b.rincianproyek = c.id JOIN prd_r_proyek d ON c.proyek = d.id WHERE d.id = '"+id_proyek+"'"
+    query_count_operasi = "SELECT COUNT(a.id) AS 'jumlahOperasi' FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_d_rincianproyek c ON b.rincianproyek = c.id JOIN prd_d_proyek d ON c.proyek = d.id WHERE d.id = '"+id_proyek+"'"
     cursor.execute(query_count_operasi)
     records2 = cursor.fetchall()
     jml = ''
@@ -163,7 +163,7 @@ def AccumulatePercentageProyek(idOperasi):
 
     nilai_percentage = 0
     counter = 0
-    query_all = "SELECT a.id,a.rencanaMulai,a.rencanaSelesai,a.produk,a.status FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_r_rincianproyek c ON b.rincianproyek = c.id JOIN prd_r_proyek d ON c.proyek = d.id WHERE d.id = '"+id_proyek+"'"
+    query_all = "SELECT a.id,a.rencanaMulai,a.rencanaSelesai,a.produk,a.status FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_d_rincianproyek c ON b.rincianproyek = c.id JOIN prd_d_proyek d ON c.proyek = d.id WHERE d.id = '"+id_proyek+"'"
     cursor.execute(query_all)
     records_operasi = cursor.fetchall()
     nstatus = 0
@@ -178,7 +178,7 @@ def AccumulatePercentageProyek(idOperasi):
     print(nilai_percentage)
     tanggalStr = tanggalSelesai.strftime("%m/%d/%Y, %H:%M")
     print('tangal str : ',tanggalStr)
-    query_update_percentage = "UPDATE prd_r_proyek SET percentage = %s WHERE id = %s"
+    query_update_percentage = "UPDATE prd_d_proyek SET percentage = %s WHERE id = %s"
     query_insert_cpl = "INSERT INTO cpl_progress(proyek,selesai,selesai_str,percentage)VALUES(%s,%s,%s,%s)"
     try:
         
@@ -229,7 +229,7 @@ def showDateProgressProyek():
 def showPercentageAllProyek():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.id,a.nama,a.percentage FROM prd_r_proyek a"
+    query = "SELECT a.id,a.nama,a.percentage FROM prd_d_proyek a"
     cursor.execute(query)
     records = cursor.fetchall()
     row_headers = [x[0] for x in cursor.description]

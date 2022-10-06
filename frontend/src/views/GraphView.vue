@@ -180,7 +180,7 @@
     methods: {
       async fetchProgressProyek(){
         const axios = require('axios')
-        const res = await axios.get('/proyek/show_progress_proyek')
+        const res = await axios.get('/proyek/show_progress_percentage_proyek')
         if(res.data == null){
             console.log("Data kosong")
         }else{
