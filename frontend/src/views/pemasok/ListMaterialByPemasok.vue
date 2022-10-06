@@ -5,12 +5,11 @@
         <br>
         <h1>List Material Type by {{this.$route.params.id}}</h1>
         <br>
-        <router-link :to="{name : 'Tambah Material Type by Pemasok', params : {id : `${this.$route.params.id}`}}">
+        <router-link :to="{name : 'Tambah Material Type By Pemasok', params : {id : `${this.$route.params.id}`}}">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
                 Add Material Type 
             </v-btn>
         </router-link>
-
         <v-data-table 
             :headers = "column"
             :items = "materialbysupplier">
@@ -25,13 +24,10 @@
         return {
           valid : true,
           column : [
-              {text : 'Code',                   value : 'code'},
-              {text : 'Nama Supplier',          value : 'nama'},
-              {text : 'Code Tipe Material',     value : 'materialTypeCode'},
-              {text : 'Nama Tipe Material',     value : 'namaMaterialType'},
-             
+              {text : 'Supplier', value : 'nama'},
+              {text : 'Code',     value : 'materialTypeCode'},
+              {text : 'Nama',     value : 'namaMaterialType'},
           ],
-            
           materialbysupplier : []
         }
       },

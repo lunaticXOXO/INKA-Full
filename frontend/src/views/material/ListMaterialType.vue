@@ -10,7 +10,6 @@
                 Add Material Type
             </v-btn>
         </router-link>
-
         <v-data-table 
             :headers = "column"
             :items = "types">
@@ -24,6 +23,7 @@
                   <span v-else>{{item.code}}</span>
               </div>
             </template>
+
             <template v-slot:[`item.nama`]="{ item }">
                 <v-text-field v-model="editedItem.nama" :hide-details="true" dense single-line v-if="item.code == editedItem.code" ></v-text-field>
                 <span v-else>{{item.nama}}</span>
@@ -73,11 +73,6 @@
                   </v-icon>
               </div>
               <div v-else>
-                <!--<router-link :to="{name : 'Proyek by Customer',params:{id : `${item.code}`}}">-->
-                <v-btn class="mx-1" x-small color="blue" @click="selectMaterial(item)">
-                    <v-icon small dark>mdi-check</v-icon>
-                </v-btn>
-                <!--</router-link>-->
                 <v-btn class="mx-1" x-small color="green" @click="editMaterial(item)">
                     <v-icon small dark>mdi-pencil</v-icon>
                 </v-btn>
@@ -100,12 +95,11 @@
             {text : 'Nama',           value : 'nama'},
             {text : 'Is Available',   value : 'isAvailable'},
             {text : 'Is Assy',        value : 'isAssy'},        
-            {text : 'Classification', value : 'Classification'},
-            {text : 'Group Material', value : 'Group'},
+            {text : 'Classification', value : 'descriptionClassification'},
+            {text : 'Group Material', value : 'descriptionGroup'},
             {text : 'Action',         value : 'aksi'}
         ],
         types : [],
-        
         editedIndex: -1,
         editedItem: {
           code: '',
@@ -114,9 +108,7 @@
           isAssy: '',
           Classification : '',
           Group: '',
-         
         },
-        
         defaultItem: {
           code: '',
           nama: '',
@@ -131,6 +123,7 @@
     mounted(){
         this.fetchMaterial()
     },
+
     methods: {
       close () {
         setTimeout(() => {
@@ -161,12 +154,7 @@
           console.log(error)
         }
       },
-    
-      selectSupplier(types){
-          console.log('ID : ' + types.code)
-          //open(`/proyekListbyCustomer/${customers.id}`)
-      },
-
+  
       deleteMaterial(types){
           console.log('ID : ' + types.code)
           try{

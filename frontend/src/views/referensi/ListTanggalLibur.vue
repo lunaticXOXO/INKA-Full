@@ -11,35 +11,35 @@
             <v-data-table
                 :headers = "headers"
                 :items = "tglLibur">
-                <template v-slot:[`item.code`]="{ item }">
-                    <div v-if="item.code === editedItem.code">
-                        <v-text-field disabled v-model="editedItem.code" :hide-details="true" dense single-line :autofocus="true" v-if="item.code == editedItem.code"></v-text-field>
-                        <span v-else>{{item.code}}</span>
+                <template v-slot:[`item.tanggal`]="{ item }">
+                    <div v-if="item.tanggal === editedItem.tanggal">
+                        <v-text-field disabled v-model="editedItem.tanggal" :hide-details="true" dense single-line :autofocus="true" v-if="item.tanggal == editedItem.tanggal"></v-text-field>
+                        <span v-else>{{item.tanggal}}</span>
                     </div>
                     <div v-else>
-                        <v-text-field v-model="editedItem.code" :hide-details="true" dense single-line :autofocus="true" v-if="item.code == editedItem.code"></v-text-field>
-                        <span v-else>{{item.code}}</span>
+                        <v-text-field v-model="editedItem.tanggal" :hide-details="true" dense single-line :autofocus="true" v-if="item.tanggal == editedItem.tanggal"></v-text-field>
+                        <span v-else>{{item.tanggal}}</span>
                     </div>
                 </template>
-                <template v-slot:[`item.nama`]="{ item }">
-                    <v-text-field v-model="editedItem.nama" :hide-details="true" dense single-line v-if="item.code == editedItem.code" ></v-text-field>
-                    <span v-else>{{item.nama}}</span>
+                <template v-slot:[`item.deskripsi`]="{ item }">
+                    <v-text-field v-model="editedItem.deskripsi" :hide-details="true" dense single-line v-if="item.tanggal == editedItem.tanggal" ></v-text-field>
+                    <span v-else>{{item.deskripsi}}</span>
                 </template>
                
                 <template v-slot:[`item.aksi`]="{ item }">
-                    <div v-if="item.code == editedItem.code">
+                    <div v-if="item.tanggal == editedItem.tanggal">
                         <v-icon color="red" class="mr-3" @click="close">
                         mdi-window-close
                         </v-icon>
-                        <v-icon color="green"  @click="updateData()">
+                        <v-icon color="green" @click="updateData()">
                         mdi-content-save
                         </v-icon>
                     </div>
                     <div v-else>
-                        <v-btn class="mx-1" x-small color="green" @click="editKota(item)">
+                        <v-btn class="mx-1" x-small color="green" @click="editTglLibur(item)">
                             <v-icon small dark>mdi-pencil</v-icon>
                         </v-btn>
-                        <v-btn class="mx-1" x-small color="red" @click="deleteKota(item)">
+                        <v-btn class="mx-1" x-small color="red" @click="deleteTglLibur(item)">
                             <v-icon small dark>mdi-trash-can-outline</v-icon>
                         </v-btn>
                     </div>
@@ -55,32 +55,24 @@ export default {
     data: () => ({
       valid: true,
       headers:[
-        {text : 'Kode', value : 'code'},
-        {text : 'Nama', value : 'nama'},
-        {text : 'Negara', value : 'country'},
-        {text : 'Action', value : 'aksi'}
+        {text : 'Tanggal', value : 'tanggal'},
+        {text : 'Deskripsi', value : 'deskripsi'},
+        {text : 'Action', value : 'aksi'}  
       ],
-      kota:[],
-      negara:[],
-      'code' : '',
-      'nama' : '',
-      'country' : '',
+      tglLibur:[],
       editedIndex: -1,
       editedItem: {
-        code: '',
-        nama: '',
-        country: ''
+        tanggal: '',
+        deskripsi: ''
       },
       defaultItem: {
-        code: '',
-        nama: '',
-        country: ''
+        tanggal: '',
+        deskripsi: ''
       }
     }),
 
     mounted(){
-        this.fetchData(),
-        this.fetchDataNegara()
+        this.fetchData()
     },
 
     methods: {
@@ -91,18 +83,18 @@ export default {
             }, 300)
         },
 
-        editKota(kota){
-            console.log('Kode : ' + kota.code)
-            this.editedIndex = this.kota.indexOf(kota);
-            this.editedItem = Object.assign({}, kota);
+        editTglLibur(tglLibur){
+            console.log('Tanggal Libur : ' + tglLibur.code)
+            this.editedIndex = this.kota.indexOf(tglLibur);
+            this.editedItem = Object.assign({}, tglLibur);
         },
 
-        deleteKota(kota){
-            console.log('Deleted City : ' + kota.code)
+        deleteTglLibur(tglLibur){
+            console.log('Deleted Date : ' + tglLibur.code)
             try{
                 const axios = require('axios');
-                axios.delete(`/kota/deleteKota/${kota.code}`);
-                alert("Delete Kota Success!")
+                axios.delete(`/holiday/delete_holiday/${tglLibur.code}`);
+                alert("Delete Tanggal Libur Success!")
                 this.fetchData()
             }
             catch(error){

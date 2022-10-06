@@ -65,9 +65,6 @@ export default {
       ],
       kota:[],
       negara:[],
-      'code' : '',
-      'nama' : '',
-      'country' : '',
       editedIndex: -1,
       editedItem: {
         code: '',

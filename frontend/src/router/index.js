@@ -69,6 +69,9 @@ import ListOperatorHadir from '../views/operator/ListOperatorHadir.vue'
 import ListRProyekbyProyekDSP from '../views/rincianproyek/ListRProyekbyProyekDSP.vue'
 import ListProdukbyRProyekDSP from '../views/produk/ListProdukbyRProyekDSP.vue'
 import StatusOperasi from '../views/operasi/StatusOperasi.vue'
+import ListTanggalLibur from '../views/referensi/ListTanggalLibur.vue'
+import ListMaterialTypeBySupplier from '../views/pemasok/ListMaterialByPemasok.vue'
+import TambahMaterialTypeByPemasok from '../views/pemasok/TambahMaterialTypeByPemasok.vue'
 
 Vue.use(VueRouter)
 
@@ -696,6 +699,34 @@ const routes = [
       title : "Status Operasi - PT.INKA"
     }
   },
+
+  {
+    path : '/listTanggalLibur',
+    name : 'List Tanggal Libur',
+    component : ListTanggalLibur,
+    meta : {
+      title : "List Tanggal Libur - PT.INKA"
+    }
+  },
+
+  {
+    path : '/listMaterialTypeBySupplier',
+    name : 'List Material Type By Supplier',
+    component : ListMaterialTypeBySupplier,
+    meta : {
+      title : "List Material Type By Supplier - PT.INKA"
+    }
+  },
+
+  {
+    path : '/tambahMaterialTypeByPemasok',
+    name : 'Tambah Material Type By Pemasok',
+    component : TambahMaterialTypeByPemasok,
+    meta : {
+      title : "Tambah Material Type By Pemasok - PT.INKA"
+    }
+  },
+  
 ]
 
 const router = new VueRouter({

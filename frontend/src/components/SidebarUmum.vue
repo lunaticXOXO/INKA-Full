@@ -121,6 +121,7 @@ export default {
                 action: 'mdi-code-brackets',
                 active: false,
                 items: [
+                    { title: 'List Tanggal Libur', icon: 'mdi-playlist-check', route: '/listTanggalLibur'},
                     { title: 'Tanggal Libur', icon: 'mdi-calendar-range', route: '/tambahLibur'},
                 ],
                 title: 'Referensi',

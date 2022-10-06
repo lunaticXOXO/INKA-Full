@@ -91,8 +91,8 @@
       ],
       classificationCode: null,
       groupCode: null,
-      list_klasifikasi: '',
-      list_grup: '',
+      list_klasifikasi: undefined,
+      list_grup: undefined,
       snackbar : {
         show : false,
         color : null,
@@ -159,13 +159,12 @@
               groupCode : this.groupCode
           })
         
-           if(res.data.status == "berhasil"){
+          if(res.data.status == "berhasil"){
             this.snackbar = {
               show : true,
               message : "Tambah Jenis Material Berhasil",
               color : "green"
             }
-
             location.replace('/listMaterialType')
           }
 

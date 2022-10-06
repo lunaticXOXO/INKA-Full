@@ -61,8 +61,6 @@
         {text : 'Action', value : 'aksi'}      
       ],
       negara:[],
-     'code' : '',
-     'nama' : '',
       editedIndex : -1,
       editedItem : {
         code : '',
