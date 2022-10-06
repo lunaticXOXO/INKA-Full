@@ -17,6 +17,7 @@ from material.MaterialType.controller.MaterialTypeController import *
 from material.SupplierMaterial.controller.SupplierMaterialController import *
 from material.purchasematerial.controller.PurchaseMaterialController import *
 from material.purchasematerial.controller.PurchaseMaterialItem import *
+from material.MaterialStock.controller.MaterialStockController import *
 from material.MaterialOnWorkstation.controller.MaterialOnWorkstationController import *
 from material.MaterialConsumable.controller.MaterialConsumableController import *
 from unit.controller.UnitController import *
@@ -495,30 +496,42 @@ def purchase_material():
     hasil = PurchaseMaterial()
     return hasil
 
-@app.route('/material/order_material/<id>',methods = ['POST'])
-def order_material(id):
-    hasil = PurchaseMaterialFromStock(id)
+
+@app.route('/material/get_purchase_material',methods = ['GET'])
+def get_purchase_material():
+    hasil = GetPurchaseMaterial()
     return hasil
 
-@app.route('/material/min_quantity/<id>',methods = ['GET'])
-def min_quantity(id):
-    hasil = MinimalQuantity(id)
-    return hasil
 
-@app.route('/stock/get_stock',methods = ['GET'])
-def get_stock():
-    hasil = GetMaterialFromStock()
-    return hasil
-
-@app.route('/material/order_new_material',methods = ['POST'])
-def order_new_material():
-    hasil = PurchaseNewMaterial()
-    return hasil
-
+# Purchase Material Item
 @app.route('/material/add_purchase_item',methods = ['POST'])
 def add_purchase_item():
     hasil = PurchaseMaterialItem()
     return hasil
+
+
+@app.route('/material/add_purchase_item_by_idpurchase/<idPurchase>',methods = ['POST'])
+def add_purchase_item_by_idpurchase():
+    hasil = PurchaseMaterialItemByIDPurchase()
+    return hasil
+
+
+@app.route('/material/get_material_item_by_idpurchase/<idPurchase>',methods = ['GET'])
+def get_material_item_by_idpurchase(idPurchase):
+    hasil = GetMaterialItemByPurchaseMaterial(idPurchase)
+    return hasil
+
+
+
+#Material Stock
+@app.route('/material/get_material_stock',methods = ['GET'])
+def get_material_stock():
+    hasil = GetMaterialStock()
+    return hasil
+
+
+
+
 
 #MATERIAL ON WS
 @app.route('/material_ws/get_material_onws',methods = ['GET'])

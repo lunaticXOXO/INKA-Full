@@ -79,7 +79,7 @@
       async fetchMaterial(){
         try{
           const axios = require('axios');
-          const res = await axios.get('/stock/get_stock');
+          const res = await axios.get('/material/get_material_stock');
           if (res.data == null){
             alert('Stock Kosong')
           }else{
@@ -88,7 +88,6 @@
           }
         }
         catch(error){
-          alert("Error")
           console.log(error)
         }
       },

@@ -154,7 +154,7 @@ export default {
             try{
                 
                 const axios = require('axios')
-                const res = await axios.get('/product/get_rpoyek_inproduct/' + this.$route.params.id)
+                const res = await axios.get('/product/get_rproyek_inproduct/' + this.$route.params.id)
                 if(res.data == null){
                     console.log("Data kosong")
                 }else{

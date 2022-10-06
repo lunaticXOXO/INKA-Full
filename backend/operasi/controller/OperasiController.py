@@ -81,21 +81,11 @@ def fetchProcesstoOperation(idProduk):
     conn = database.connector()
     cursor = conn.cursor()
     query3 = "SELECT c.id AS 'IdProses',a.stasiunKerja,c.durasi,i.qualificationCode FROM gen_r_mampuproses a JOIN prd_r_proses c ON c.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = c.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_d_rincianproyek f ON f.jenisProduk = e.id JOIN prd_d_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id JOIN prd_r_operatorrequirement i ON i.processCode = c.id WHERE h.id = '"+idProduk+"'ORDER BY c.id DESC"
-    #query3 = "SELECT c.id AS 'IdProses',a.stasiunKerja,c.durasi,i.qualificationCode"
-    #query3 = query3  +   "FROM gen_r_mampuproses a "
-    #query3 = query3  +   "JOIN prd_r_proses c ON c.id = a.proses"
-    #query3 = query3  +   "JOIN prd_r_strukturjnsprd d ON d.idNodal = c.nodalOutput"
-    #query3 = query3  +   "JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk"
-    #query3 = query3  +   "JOIN prd_d_rincianproyek f ON f.jenisProduk = e.id"
-    #query3 = query3  +   "JOIN prd_d_proyek g ON g.id = f.proyek"
-    #query3 = query3  +   "JOIN prd_d_produk h ON h.rincianProyek = f.id"         
-    ##query3 = query3  +   "JOIN prd_r_operatorrequirement i ON i.processCode = c.id"
-    #query3 = query3 +    "WHERE h.id = '"+idProduk+"' ORDER BY c.id DESC"
     cursor.execute(query3)
-    print(idProduk)
+   
     recordsFetch = cursor.fetchall()
-    conn.commit()
-    
+  
+    print("Records Fetch : ",recordsFetch)
     return recordsFetch
 
 

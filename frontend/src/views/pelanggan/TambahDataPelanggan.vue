@@ -205,7 +205,9 @@
               message : "Insert Customer Success",
               color : 'green',
               show : true
-          }}
+          }
+          location.replace('/listPelanggan')
+        }
           else if(response.data.Status == "Gagal"){
               this.snackbar = {
               message : "Insert Customer Gagal, Kode sudah tersedia",
