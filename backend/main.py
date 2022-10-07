@@ -480,8 +480,8 @@ def show_material_supplier():
     return hasil
 
 @app.route('/supplier_material/add_material_supplier',methods = ['POST'])
-def add_material_supplier():
-    hasil = AddSupplierMaterialType()
+def add_material_supplier(code):
+    hasil = AddMaterialTypeSupplierbySupplier(code)
     return hasil
 
 # Material Unit
@@ -530,8 +530,10 @@ def get_material_stock():
     return hasil
 
 
-
-
+@app.route('/material/add_new_materialstock',methods = ['POST'])
+def add_new_materialstock():
+    hasil = AddNewMaterialStock()
+    return hasil
 
 #MATERIAL ON WS
 @app.route('/material_ws/get_material_onws',methods = ['GET'])

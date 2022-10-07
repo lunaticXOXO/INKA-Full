@@ -128,17 +128,31 @@ export default {
                     ],
                     title: 'Jenis Material',
                 },
+
+                {
+                action: 'mdi-svg',
+                active: false,
+                items: [
+                    { title: 'Purchase Material', icon: 'mdi-plus', route: '/pesanMaterial'},
+                    {title : 'List Purchase Material', icon : 'mdi-filter-variant', route : '/listPurchaseMaterial'},
+                    {title : 'Purchase Material Item',icon : 'mdi-plus',route : 'purchaseMaterialItem'},
+                    {title : 'List Purchase Material Item',icon : 'mdi-gavel',route : '/listPurchaseMaterialItem'}
+                    
+                ],
+                title: 'Purchase',
+                },
+
                 {
                 action: 'mdi-blur',
                 active: false,
                 items: [
-                    { title: 'Pemesanan Material', icon: 'mdi-reorder-vertical', route: '/pesanMaterial'},
+
                     { title: 'List Stock Material', icon : 'mdi-filter-variant', route : '/listStockMaterial'},
+                    { title : 'Add Stock Material', icon : 'mdi-plus',route : '/addStockMaterial'},
                     { title: 'Tambah Material Consumable', icon : 'mdi-plus', route : '/tambahMaterialConsumable'},
                 ],
                 title: 'Stock Material',
                 },
-
              
             ],
 

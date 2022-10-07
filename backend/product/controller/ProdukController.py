@@ -3,9 +3,9 @@ from flask import request,make_response,jsonify
 import numpy as np
 from datetime import datetime, timedelta, date
 from math import ceil
+import random
+import string
 from process.controller.ProsesController import *
-
-
 def GetAllProduk():
   conn = database.connector()
   cursor = conn.cursor()

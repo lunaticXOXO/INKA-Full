@@ -3,7 +3,7 @@
         class="mx-auto text-center mt-6"
         max-width="1000">
         <br>
-        <h1>Tambah Material Masuk</h1>
+        <h1>Tambah Purchase Material</h1>
         <v-form
           class="pa-6"
           ref="form"
@@ -12,8 +12,8 @@
           lazy-validation>
         
           <v-text-field
-          v-model="id_item"
-          label="ID Order"
+          v-model="id"
+          label="ID"
           ></v-text-field>
 
           <v-text-field
@@ -26,6 +26,15 @@
           label="Purchaser Name"
           ></v-text-field>
 
+          <v-menu>
+            <template v-slot:activator="{ on, attrs }">
+                <v-text-field :value="tanggalPurchase" v-bind="attrs" v-on="on" label="Purchase Date" prepend-icon="mdi-calendar"></v-text-field>
+            </template>
+            <v-date-picker width="1000" v-model="tanggalPurchase"></v-date-picker>
+          </v-menu>
+
+
+           <!--
           <v-autocomplete
           item-text="nama"
           item-value="code"
@@ -49,21 +58,13 @@
           :items="units"
           label="Unit"
           ></v-autocomplete>
-
-          <v-menu>
-            <template v-slot:activator="{ on, attrs }">
-                <v-text-field :value="tanggalPurchase" v-bind="attrs" v-on="on" label="Purchase Date" prepend-icon="mdi-calendar"></v-text-field>
-            </template>
-            <v-date-picker width="1000" v-model="tanggalPurchase"></v-date-picker>
-          </v-menu>
-
           <v-menu>
             <template v-slot:activator="{ on, attrs }">
                 <v-text-field :value="tanggal" v-bind="attrs" v-on="on" label="Schedulled Arrival Date" prepend-icon="mdi-calendar"></v-text-field>
             </template>
             <v-date-picker width="1000" v-model="tanggal"></v-date-picker>
           </v-menu>
-
+         
           <v-text-field
           v-model="id_stock"
           :counter="11"
@@ -82,7 +83,7 @@
           label="Quantity"
           type="number"
           ></v-text-field>
-
+            -->
           <v-btn
             :disabled="!valid"
             color="success"
@@ -112,22 +113,22 @@
       valid: true,
       nama: '',
       purchaser: '',
-      id_stock: '',
+      //id_stock: '',
       id_stockRules: [
         v => !!v || 'ID Stock is required',
         v => (v && v.length <= 11 && v.length >= 1) || 'ID must be 1-11 characters',
       ],
-      id_item : '',
+      id : '',
       supply: '',
-      supplier: undefined,
-      type: '',
-      materialType: undefined,
-      unit: '',
-      units: undefined,
-      quantity: '',
-      tanggal: null,
+      //supplier: undefined,
+      //type: '',
+      //materialType: undefined,
+      //unit: '',
+      //units: undefined,
+      //quantity: '',
+      //tanggal: null,
       tanggalPurchase : null,
-      merk: '',
+      //merk: '',
       snackbar : {
         show : false,
         color : null,
@@ -215,19 +216,20 @@
       async InsertMaterial(){
         try{
           const axios = require('axios');
-          const response = await axios.post('/material/order_new_material',
+          const response = await axios.post('/material/purchase_material',
             { 
               id_item : this.id_item,
               nama: this.nama,
               purchaserName: this.purchaser,
-              supplierCode: this.supply,
-              materialTypeCode: this.type,
-              quantity: this.quantity,
-              unit: this.unit,
-              id: this.id_stock,
-              merk: this.merk,
-              schedulledArrival: this.tanggal,
               purchaseDate : this.tanggalPurchase
+              //supplierCode: this.supply,
+              //materialTypeCode: this.type,
+              //quantity: this.quantity,
+              //unit: this.unit,
+              //id: this.id_stock,
+              //merk: this.merk,
+              //schedulledArrival: this.tanggal,
+             
             }
           );
           console.log(response,this.data)

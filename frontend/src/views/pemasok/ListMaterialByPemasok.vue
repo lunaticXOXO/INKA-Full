@@ -24,7 +24,8 @@
         return {
           valid : true,
           column : [
-              {text : 'Supplier', value : 'nama'},
+              {text : 'Supplier', value : 'code'},
+              {text : 'Nama Supplier', value : 'namaSupplier'},
               {text : 'Code',     value : 'materialTypeCode'},
               {text : 'Nama',     value : 'namaMaterialType'},
           ],
