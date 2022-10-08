@@ -77,7 +77,6 @@ import PurchaseMaterialItem from '../views/material/PurchaseMaterialItem.vue'
 import ListPurchaseMaterialItem from '../views/material/ListPurchaseMaterialItem.vue'
 import AddStockMaterial from '../views/material/AddStockMaterial.vue'
 
-
 Vue.use(VueRouter)
 
 const routes = [

@@ -87,9 +87,8 @@ export default {
             routeHome: "/",
             drawer: false,
             items: [
-
                 {
-                   action: 'mdi-svg',
+                    action: 'mdi-svg',
                     active: false,
                     items: [
                         {title : 'List Klasifikasi Material',icon : 'mdi-playlist-check',route : '/listKlasifikasiMaterial'},
@@ -98,22 +97,21 @@ export default {
                     title: 'Klasifikasi Material',  
                 },
             
-                 {
-                   action: 'mdi-book',
+                {
+                    action: 'mdi-book',
                     active: false,
                     items: [
-                       {title : 'List Grup Material',icon : 'mdi-playlist-check',route : '/listGrupMaterial'},
-                       {title : 'Add Grup Material',icon : 'mdi-plus',route : '/addGrupMaterial'}
+                       { title : 'List Grup Material',icon : 'mdi-playlist-check',route : '/listGrupMaterial'},
+                       { title : 'Add Grup Material',icon : 'mdi-plus',route : '/addGrupMaterial'}
                     ],
                     title: 'Group Material',  
                 },
-
 
                 {
                     action: 'mdi-account-star',
                     active: false,
                     items: [
-                        {title : 'List Pemasok',icon : 'mdi-playlist-check',route : '/listPemasok'},
+                        { title: 'List Pemasok',icon : 'mdi-playlist-check',route : '/listPemasok'},
                         { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'},
                     ],
                     title: 'Pemasok',
@@ -130,32 +128,30 @@ export default {
                 },
 
                 {
-                action: 'mdi-svg',
-                active: false,
-                items: [
-                    { title: 'Purchase Material', icon: 'mdi-plus', route: '/pesanMaterial'},
-                    {title : 'List Purchase Material', icon : 'mdi-filter-variant', route : '/listPurchaseMaterial'},
-                    {title : 'Purchase Material Item',icon : 'mdi-plus',route : 'purchaseMaterialItem'},
-                    {title : 'List Purchase Material Item',icon : 'mdi-gavel',route : '/listPurchaseMaterialItem'}
-                    
-                ],
-                title: 'Purchase',
+                    action: 'mdi-svg',
+                    active: false,
+                    items: [
+                        { title: 'Purchase Material', icon: 'mdi-plus', route: '/pesanMaterial'},
+                        {title : 'List Purchase Material', icon : 'mdi-filter-variant', route : '/listPurchaseMaterial'},
+                        {title : 'Purchase Material Item',icon : 'mdi-plus',route : 'purchaseMaterialItem'},
+                        {title : 'List Purchase Material Item',icon : 'mdi-gavel',route : '/listPurchaseMaterialItem'}
+                        
+                    ],
+                    title: 'Purchase',
                 },
 
                 {
-                action: 'mdi-blur',
-                active: false,
-                items: [
+                    action: 'mdi-blur',
+                    active: false,
+                    items: [
 
-                    { title: 'List Stock Material', icon : 'mdi-filter-variant', route : '/listStockMaterial'},
-                    { title : 'Add Stock Material', icon : 'mdi-plus',route : '/addStockMaterial'},
-                    { title: 'Tambah Material Consumable', icon : 'mdi-plus', route : '/tambahMaterialConsumable'},
-                ],
-                title: 'Stock Material',
+                        { title: 'List Stock Material', icon : 'mdi-filter-variant', route : '/listStockMaterial'},
+                        { title: 'Add Stock Material', icon : 'mdi-plus',route : '/addStockMaterial'},
+                        { title: 'Tambah Material Consumable', icon : 'mdi-plus', route : '/tambahMaterialConsumable'},
+                    ],
+                    title: 'Stock Material',
                 },
-             
             ],
-
         }
     },
 

@@ -496,14 +496,17 @@ def purchase_material():
     hasil = PurchaseMaterial()
     return hasil
 
-
 @app.route('/material/get_purchase_material',methods = ['GET'])
 def get_purchase_material():
     hasil = GetPurchaseMaterial()
     return hasil
 
-
 # Purchase Material Item
+@app.route('/material/get_purchase_item',methods = ['GET'])
+def get_purchase_item():
+    hasil = GetMaterialItem()
+    return hasil
+
 @app.route('/material/add_purchase_item',methods = ['POST'])
 def add_purchase_item():
     hasil = PurchaseMaterialItem()
@@ -520,7 +523,6 @@ def add_purchase_item_by_idpurchase():
 def get_material_item_by_idpurchase(idPurchase):
     hasil = GetMaterialItemByPurchaseMaterial(idPurchase)
     return hasil
-
 
 
 #Material Stock

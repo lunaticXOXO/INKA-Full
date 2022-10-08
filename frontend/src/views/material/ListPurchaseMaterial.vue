@@ -1,0 +1,162 @@
+<template>
+    <v-card 
+        class="mt-10 text-center mx-10"
+        max-width = "1450">
+        <br>
+        <h1>List Purchase Material</h1>
+        <br>
+        <router-link to="/pesanMaterial">
+            <v-btn color="primary" class="d-flex ml-4 mb-6">
+                Purchase Material
+            </v-btn>
+        </router-link>
+        <v-data-table 
+            :headers = "column"
+            :items = "types">
+            <template v-slot:[`item.id`]="{ item }">
+              <div v-if="item.id === editedItem.id">
+                  <v-text-field disabled v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                  <span v-else>{{item.id}}</span>
+              </div>
+              <div v-else>
+                  <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                  <span v-else>{{item.id}}</span>
+              </div>
+            </template>
+
+            <template v-slot:[`item.nama`]="{ item }">
+                <v-text-field v-model="editedItem.nama" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+                <span v-else>{{item.nama}}</span>
+            </template>
+
+           <template v-slot:[`item.purchaseDate`]="{ item }">
+                <v-text-field v-model="editedItem.purchaseDate" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+                <span v-else>{{item.purchaseDate}}</span>
+          </template>
+
+            <template v-slot:[`item.purchaserName`]="{ item }">
+                <v-text-field v-model="editedItem.purchaserName" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+                <span v-else>{{item.purchaserName}}</span>
+          </template>
+           
+            <template v-slot:[`item.aksi`]="{ item }">
+              <div v-if="item.id == editedItem.id">
+                  <v-icon color="red" class="mr-3" @click="close">
+                    mdi-window-close
+                  </v-icon>
+                  <v-icon color="green" @click="updateData()">
+                    mdi-content-save
+                  </v-icon>
+              </div>
+              <div v-else>
+                <v-btn class="mx-1" x-small color="green" @click="editMaterial(item)">
+                    <v-icon small dark>mdi-pencil</v-icon>
+                </v-btn>
+                <v-btn class="mx-1" x-small color="red" @click="deleteMaterial(item)">
+                    <v-icon small dark>mdi-trash-can-outline</v-icon>
+                </v-btn>
+              </div>
+            </template>
+        </v-data-table>
+    </v-card>
+</template>
+
+<script>
+  export default {
+    data(){
+      return {
+        valid : true,
+        column : [
+            {text : 'ID',               value : 'id'},
+            {text : 'Nama',             value : 'nama'},
+            {text : 'Purchase Date',    value : 'purchaseDate'},
+            {text : 'Purchaser Name',   value : 'purchaserName'},
+            {text : 'Action',           value : 'aksi'}
+        ],
+        types : [],
+        editedIndex: -1,
+        editedItem: {
+          id: '',
+          nama: '',
+          purchaseDate: '',
+          purchaserName: '',
+        },
+        defaultItem: {
+          id: '',
+          nama: '',
+          purchaseDate: '',
+          purchaserName: '',
+        },
+      }
+    },
+  
+    mounted(){
+        this.fetchMaterial()
+    },
+
+    methods: {
+      close () {
+        setTimeout(() => {
+            this.editedItem = Object.assign({}, this.defaultItem);
+            this.editedIndex = -1;
+        }, 300)
+      },
+
+      editMaterial(types){
+        console.log('ID : ' + types.id)
+        this.editedIndex = this.types.indexOf(types);
+        this.editedItem = Object.assign({},types);
+      },
+
+      async fetchMaterial(){
+        try{
+          const axios = require('axios');
+          const res = await axios.get('/material/get_purchase_material');
+          if (res.data == null){
+            alert('Material Kosong')
+          }else{
+            this.types = res.data
+            console.log(res,this.types)
+          }
+        }
+        catch(error){
+          alert("Error")
+          console.log(error)
+        }
+      },
+      
+      deleteMaterial(types){
+          console.log('ID : ' + types.id)
+          try{
+              const axios = require('axios');
+              axios.delete(`/material/delete_purchase_material/${types.id}`);
+              alert("Delete Purchase Material Success!")
+              this.fetchMaterial()
+          }
+          catch(error){
+              console.log(error)
+          }
+      },
+
+      async updateData(){
+        if (this.editedIndex > -1) {
+            Object.assign(this.types[this.editedIndex], this.editedItem)
+            console.log(this.editedItem)
+        }
+        this.close()
+        try{
+            const axios = require('axios')
+            const res = await axios.post('/material/update_purchase_material/'+ this.editedItem.id,
+            { id     : this.editedItem.id,
+              nama     : this.editedItem.nama,
+              purchaseDate    : this.editedItem.purchaseDate,
+              purchaserName : this.editedItem.purchaserName,
+            })
+            console.log(res)
+        }catch(error){
+            console.log(error)
+        }
+      } 
+    }
+  }
+</script>

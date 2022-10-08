@@ -3,8 +3,6 @@ from turtle import pu
 import db.db_handler as database
 from flask import request,make_response,jsonify
 
-
-
 def PurchaseMaterial():
     conn = database.connector()
     cursor = conn.cursor()
@@ -45,4 +43,3 @@ def GetPurchaseMaterial():
     cursor.close()
     conn.close()
     return make_response(jsonify(json_data),200)
-

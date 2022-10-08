@@ -8,13 +8,15 @@ def ShowSupplierWithMaterialType():
     query = "SELECT * FROM mat_r_materialtypesupplier"
     cursor.execute(query)
 
-    records = cursor.fetchall()
     row_headers = [x[0] for x in cursor.description]
-
     json_data = []
+
+    records = cursor.fetchall()
     for data in records:
-        json_data.append(jsonify(dict(zip(row_headers,data))))
+        json_data.append(dict(zip(row_headers,data)))
     
+    cursor.close()
+    conn.close()
     return make_response(jsonify(json_data),200)
 
 

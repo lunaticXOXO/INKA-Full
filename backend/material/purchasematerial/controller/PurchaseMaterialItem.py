@@ -4,6 +4,22 @@ from flask import request,make_response,jsonify
 import random
 import string
 
+def GetMaterialItem():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * from mat_d_purchaseitem"
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
+
 def PurchaseMaterialItem():
     conn = database.connector()
     cursor = conn.cursor()
