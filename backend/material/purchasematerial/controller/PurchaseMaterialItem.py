@@ -20,6 +20,7 @@ def GetMaterialItem():
     conn.close()
     return make_response(jsonify(json_data),200)
 
+
 def PurchaseMaterialItem():
     conn = database.connector()
     cursor = conn.cursor()
@@ -44,6 +45,7 @@ def PurchaseMaterialItem():
         print("Error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
+
 
 def PurchaseMaterialItemByIDPurchase(idPurchase):
     conn = database.connector()
@@ -94,7 +96,3 @@ def GetMaterialItemByPurchaseMaterial(idPurchase):
     cursor.close()
     conn.close()
     return make_response(jsonify(json_data),200)
-
-
-
-

@@ -77,6 +77,7 @@ import PurchaseMaterialItem from '../views/material/PurchaseMaterialItem.vue'
 import ListPurchaseMaterialItem from '../views/material/ListPurchaseMaterialItem.vue'
 import AddStockMaterial from '../views/material/AddStockMaterial.vue'
 import ListPurchaseItemByPurchaseMaterial from '../views/material/ListPurchaseItembyPurchaseMaterial.vue'
+import PurchaseMaterialItemByPurchaseMaterial from '../views/material/PurchaseItemByPurchaseMaterial.vue'
 
 Vue.use(VueRouter)
 
@@ -778,6 +779,15 @@ const routes = [
     component : ListPurchaseItemByPurchaseMaterial,
     meta : {
       title : "List Purchase Item By Purchase Material - PT.INKA"
+    }
+  },
+  
+  {
+    path : '/tambahPurchaseItemByPurchaseMaterial/:id',
+    name : 'Tambah Purchase Item By Purchase Material',
+    component : PurchaseMaterialItemByPurchaseMaterial,
+    meta : {
+      title : "Tambah Purchase Item By Purchase Material - PT.INKA"
     }
   },
   

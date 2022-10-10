@@ -514,8 +514,8 @@ def add_purchase_item():
 
 
 @app.route('/material/add_purchase_item_by_idpurchase/<idPurchase>',methods = ['POST'])
-def add_purchase_item_by_idpurchase():
-    hasil = PurchaseMaterialItemByIDPurchase()
+def add_purchase_item_by_idpurchase(idPurchase):
+    hasil = PurchaseMaterialItemByIDPurchase(idPurchase)
     return hasil
 
 

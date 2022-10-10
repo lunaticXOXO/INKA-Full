@@ -5,13 +5,17 @@
         <br>
         <h1>List Purchase Item by Purchase Material {{this.$route.params.id}}</h1>
         <br>
+        <router-link :to="{name : 'Tambah Purchase Item By Purchase Material', params : {id : `${this.$route.params.id}`}}">
+            <v-btn color="primary" class="d-flex ml-4 mb-6">
+                Add Purchase Item 
+            </v-btn>
+        </router-link>
         <v-data-table 
             :headers = "column"
             :items = "prcItembyprcMat">
         </v-data-table>
     </v-card>
 </template>
-
 
 <script>
     export default {
