@@ -25,8 +25,6 @@
         required
         ></v-text-field>
 
-       
-
         <v-btn
         :disabled="!valid"
         color="success"
@@ -40,7 +38,7 @@
         <v-btn
         color="error"
         class="mr-4"
-        @click="reset"
+        @click="reset()"
         >
         Reset
         </v-btn>
@@ -80,9 +78,7 @@ export default {
       v => !!v || 'ID is required',
       v => (v && v.length <= 3 && v.length >= 3) || 'ID must be 3 characters',
     ],
-    
     snackBar : false,
-   
   }),
 
  
@@ -91,6 +87,10 @@ export default {
       if(this.$refs.form.validate()){
         this.InsertJenisProses()
       }
+    },
+
+    reset () {
+      this.$refs.form.reset()
     },
 
     async InsertJenisProses(){

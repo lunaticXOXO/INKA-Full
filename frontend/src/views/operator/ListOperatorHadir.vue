@@ -13,9 +13,9 @@
                     >
                         <v-card class="mx-auto justify-center text-center" elevation="0" outlined>
                             <v-img
-                                max-height="80"
+                                max-height="150"
                                 max-width="80" 
-                                src="../operator/contoh-profile.jpg"
+                                src="../operator/profile-2.jpg"
                                 class="ma-6 ml-14">
                             </v-img>
                             <p>{{ item.title }}</p>

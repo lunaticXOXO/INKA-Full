@@ -91,7 +91,7 @@ export default {
                 action: 'mdi-blur',
                 active: false,
                 items: [
-                    { title: 'Kebutuhan Material', icon: 'mdi-reorder-vertical', route: '/kebutuhanMaterial'},
+                    //{ title: 'Kebutuhan Material', icon: 'mdi-reorder-vertical', route: '/kebutuhanMaterial'},
                     { title: 'Stok Material', icon : 'mdi-filter-variant', route : '/listStockMaterial'},
                 ],
                 title: 'Material',
@@ -106,14 +106,14 @@ export default {
                 title: 'Proyek',
                 },
 
-                {
-                action: 'mdi-account-star',
-                active: false,
-                items: [
-                    { title: 'Jumlah Jam Kerja Operator', icon: 'mdi-account-plus', route: '/jamKerjaOperator'},
-                ],
-                title: 'Operator',
-                },
+                //{
+                //action: 'mdi-account-star',
+                //active: false,
+                //items: [
+                //    { title: 'Jumlah Jam Kerja Operator', icon: 'mdi-account-plus', route: '/jamKerjaOperator'},
+                //],
+                //title: 'Operator',
+                //},
             ],
         }
     },

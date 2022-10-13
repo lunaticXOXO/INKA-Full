@@ -66,6 +66,7 @@
   export default {
     data: () => ({
       valid: true,
+      snackBar: undefined,
       snackbar: {
         show: false,
         message: null,

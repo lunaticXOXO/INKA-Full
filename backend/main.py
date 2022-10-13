@@ -521,17 +521,11 @@ def get_material_item_by_idpurchase(idPurchase):
     hasil = GetMaterialItemByPurchaseMaterial(idPurchase)
     return hasil
 
-
-
 #Material Stock
 @app.route('/material/get_material_stock',methods = ['GET'])
 def get_material_stock():
     hasil = GetMaterialStock()
     return hasil
-
-
-
-
 
 #MATERIAL ON WS
 @app.route('/material_ws/get_material_onws',methods = ['GET'])
