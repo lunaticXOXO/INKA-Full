@@ -5,9 +5,9 @@
         <br>
         <h1>List Stok Material</h1>
         <br>
-        <router-link to="/pesanMaterial">
+        <router-link to="/addStockMaterial">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
-                Add Stock Material Baru
+                Add Stock Material
             </v-btn>
         </router-link>
         <v-data-table 

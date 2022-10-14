@@ -480,8 +480,8 @@ def show_material_supplier():
     return hasil
 
 @app.route('/supplier_material/add_material_supplier',methods = ['POST'])
-def add_material_supplier():
-    hasil = AddSupplierMaterialType()
+def add_material_supplier(code):
+    hasil = AddMaterialTypeSupplierbySupplier(code)
     return hasil
 
 # Material Unit
@@ -496,14 +496,17 @@ def purchase_material():
     hasil = PurchaseMaterial()
     return hasil
 
-
 @app.route('/material/get_purchase_material',methods = ['GET'])
 def get_purchase_material():
     hasil = GetPurchaseMaterial()
     return hasil
 
-
 # Purchase Material Item
+@app.route('/material/get_purchase_item',methods = ['GET'])
+def get_purchase_item():
+    hasil = GetMaterialItem()
+    return hasil
+
 @app.route('/material/add_purchase_item',methods = ['POST'])
 def add_purchase_item():
     hasil = PurchaseMaterialItem()
@@ -511,8 +514,8 @@ def add_purchase_item():
 
 
 @app.route('/material/add_purchase_item_by_idpurchase/<idPurchase>',methods = ['POST'])
-def add_purchase_item_by_idpurchase():
-    hasil = PurchaseMaterialItemByIDPurchase()
+def add_purchase_item_by_idpurchase(idPurchase):
+    hasil = PurchaseMaterialItemByIDPurchase(idPurchase)
     return hasil
 
 
@@ -525,6 +528,11 @@ def get_material_item_by_idpurchase(idPurchase):
 @app.route('/material/get_material_stock',methods = ['GET'])
 def get_material_stock():
     hasil = GetMaterialStock()
+    return hasil
+
+@app.route('/material/add_new_materialstock',methods = ['POST'])
+def add_new_materialstock():
+    hasil = AddNewMaterialStock()
     return hasil
 
 #MATERIAL ON WS

@@ -72,7 +72,12 @@ import StatusOperasi from '../views/operasi/StatusOperasi.vue'
 import ListTanggalLibur from '../views/referensi/ListTanggalLibur.vue'
 import ListMaterialTypeBySupplier from '../views/pemasok/ListMaterialByPemasok.vue'
 import TambahMaterialTypeByPemasok from '../views/pemasok/TambahMaterialTypeByPemasok.vue'
-
+import ListPurchaseMaterial from '../views/material/ListPurchaseMaterial.vue'
+import PurchaseMaterialItem from '../views/material/PurchaseMaterialItem.vue'
+import ListPurchaseMaterialItem from '../views/material/ListPurchaseMaterialItem.vue'
+import AddStockMaterial from '../views/material/AddStockMaterial.vue'
+import ListPurchaseItemByPurchaseMaterial from '../views/material/ListPurchaseItembyPurchaseMaterial.vue'
+import PurchaseMaterialItemByPurchaseMaterial from '../views/material/PurchaseItemByPurchaseMaterial.vue'
 
 Vue.use(VueRouter)
 
@@ -201,6 +206,37 @@ const routes = [
     meta: {
       title: "Pesan Material - PT.INKA"
     }
+  },
+
+  {
+    path : '/listPurchaseMaterial',
+    name : 'List Purchase Material',
+    component : ListPurchaseMaterial,
+    meta : {
+        title : "List Purchase Material - PT.INKA"
+    }
+  },
+
+  {
+
+    path : '/purchaseMaterialItem',
+    name : 'Purchase Material Item',
+    component : PurchaseMaterialItem,
+    meta : {
+        title : "Purchase Material Item - PT.INKA"
+    }
+
+  },
+
+
+  {
+      path : '/listPurchaseMaterialItem',
+      name : 'List Purchase Material Item',
+      component : ListPurchaseMaterialItem,
+      meta : {
+          title : "List Purchase Material Item - PT.INKA"
+      }
+
   },
 
   {
@@ -571,6 +607,15 @@ const routes = [
   },
 
   {
+    path : '/addStockMaterial',
+    name : 'Add Stock Material',
+    component : AddStockMaterial,
+    meta : {
+      title : "Add Stock Material - PT.INKA"
+    }
+  },
+
+  {
     path : '/tambahMaterialKosong/:id',
     name : 'Tambah Material Kosong',
     component : TambahMaterialKosong,
@@ -711,7 +756,7 @@ const routes = [
   },
 
   {
-    path : '/listMaterialTypeBySupplier',
+    path : '/listMaterialTypeBySupplier/:id',
     name : 'List Material Type By Supplier',
     component : ListMaterialTypeBySupplier,
     meta : {
@@ -720,11 +765,29 @@ const routes = [
   },
 
   {
-    path : '/tambahMaterialTypeByPemasok',
+    path : '/tambahMaterialTypeByPemasok/:id',
     name : 'Tambah Material Type By Pemasok',
     component : TambahMaterialTypeByPemasok,
     meta : {
       title : "Tambah Material Type By Pemasok - PT.INKA"
+    }
+  },
+
+  {
+    path : '/listPurchaseItemByPurchaseMaterial/:id',
+    name : 'List Purchase Item By Purchase Material',
+    component : ListPurchaseItemByPurchaseMaterial,
+    meta : {
+      title : "List Purchase Item By Purchase Material - PT.INKA"
+    }
+  },
+  
+  {
+    path : '/tambahPurchaseItemByPurchaseMaterial/:id',
+    name : 'Tambah Purchase Item By Purchase Material',
+    component : PurchaseMaterialItemByPurchaseMaterial,
+    meta : {
+      title : "Tambah Purchase Item By Purchase Material - PT.INKA"
     }
   },
   

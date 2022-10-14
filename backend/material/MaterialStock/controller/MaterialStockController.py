@@ -18,7 +18,7 @@ def GetMaterialStock():
     return make_response(jsonify(json_data),200)
 
 
-def InsertNewMaterialStock():
+def AddNewMaterialStock():
     conn = database.connector()
     cursor = conn.cursor()
     query = "INSERT INTO mat_d_materialstock(id,purchaseId,orders,materialTypeCode,merk,quantity,unit,arrivalDate,supplierCode)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
@@ -43,3 +43,6 @@ def InsertNewMaterialStock():
         print("Error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
+
+
+

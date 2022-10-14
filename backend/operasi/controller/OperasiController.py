@@ -3,7 +3,6 @@ import db.db_handler as database
 from flask import request,make_response,jsonify
 import random
 import string
-from product.controller.ProdukController import *
 import datetime
 
 def ShowOperasiFromProduct(idProduct):
@@ -77,136 +76,11 @@ def GetProcessofProduct(idProduk):
 
 
 
-def fetchProcesstoOperation(idProduk):
-    conn = database.connector()
-    cursor = conn.cursor()
-    query3 = "SELECT c.id AS 'IdProses',a.stasiunKerja,c.durasi,i.qualificationCode FROM gen_r_mampuproses a JOIN prd_r_proses c ON c.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = c.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_d_rincianproyek f ON f.jenisProduk = e.id JOIN prd_d_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id JOIN prd_r_operatorrequirement i ON i.processCode = c.id WHERE h.id = '"+idProduk+"'ORDER BY c.id DESC"
-    cursor.execute(query3)
-   
-    recordsFetch = cursor.fetchall()
-  
-    print("Records Fetch : ",recordsFetch)
-    return recordsFetch
-
-
-def fetchDateProyektoOperation(idProduk):
-    conn = database.connector()
-    recorddate = []
-    cursor = conn.cursor()
-    query5 = "SELECT a.tglDibuat FROM prd_d_proyek a JOIN prd_d_rincianproyek b ON b.proyek = a.id JOIN prd_d_produk c ON c.rincianProyek = b.id WHERE c.id = '"+idProduk+"'"
-    #query5 = "SELECT a.tglDibuat FROM prd_d_proyek a"
-    #query5 = query5 + "JOIN prd_d_rincianproyek b ON b.proyek = a.id"
-    #query5 = query5 + "JOIN prd_d_produk c ON c.rincianProyek = b.id"
-    #query5 = query5 + "WHERE c.id = '"+idProduk+"'"
-    cursor.execute(query5)
-    recorddate = cursor.fetchall()
-    return recorddate
 
 
 
-def fetchOperatorQualification():
-    conn = database.connector()
-    recordsqualification = []
-    cursor = conn.cursor()
-    query7 = "SELECT a.operatorid,a.qualificationCode,b.descriptions FROM opr_d_operatorlevel a JOIN opr_r_operatorqualification b ON b.codes = a.qualificationCode"
-    cursor.execute(query7)
-    recordsqualification = cursor.fetchall()
-    print(recordsqualification)
-    return recordsqualification
 
 
-def fetchRequirementsCode(idProduk):
-    datafetch = []
-    requirementsCode = ''
-    datafetch = fetchProcesstoOperation(idProduk)
-    for index in datafetch:
-        requirementsCode = index[3]
-    return requirementsCode
-
-
-def fetchSchedulledStart(idProduk):
-    recordDate = []
-    schedulledstartWorkDate = ""
-    recordDate = fetchDateProyektoOperation(idProduk)
-    for data in recordDate:
-        schedulledstartWorkDate = data[0]
-    return schedulledstartWorkDate
-
-
-def fetchSchedulledFinish(idProduk):
-    recordDate = []
-    scehdulledFinishWorkDate = ""
-    recordDate = fetchDateProyektoOperation(idProduk)
-    for data in recordDate:
-       scehdulledFinishWorkDate = data[0]
-    return scehdulledFinishWorkDate
-
-    
-
-def GenerateOperation(idProduk):
-    conn = database.connector()
-    cursor = conn.cursor()
-    
-    N = 9
-    counter=1
-    print("ID Product : ",idProduk)
-    proses = ""   
-    stasiunKerja = ""
-    recordsFetch = []
-    records_oprqualification = []
-
-    query = "INSERT INTO prd_d_operasi(id,rencanaMulai,rencanaSelesai,proses,stasiunKerja,produk)VALUES(%s,%s,%s,%s,%s,%s)"
-    query_insert_operatorneed = "INSERT INTO opr_d_operatorneed(operationid,operatorid)VALUES(%s,%s)"     
-    
-    try:
-        recordsFetch = fetchProcesstoOperation(idProduk)
-        records_oprqualification = fetchOperatorQualification()
-        schedulledstartWorkDate = fetchSchedulledStart(idProduk)
-        schedulledFinishWorkDate = fetchSchedulledFinish(idProduk)
-       
-        print(recordsFetch)
-      
-        for index in recordsFetch:
-            id_operation = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
-            proses = index[0]
-            stasiunKerja = index[1]
-            durasi = index[2]
-            requirementsCode = index[3]
-            cek = False 
-            while cek == False:
-                if counter % 2 != 0 and cek == False:
-                    schedulledFinishWorkDate = schedulledFinishWorkDate + datetime.timedelta(minutes = durasi)
-                    values1 = (id_operation,schedulledstartWorkDate,schedulledFinishWorkDate,proses,stasiunKerja,idProduk)
-                    cursor.execute(query,values1)
-                    schedulledstartWorkDate = schedulledFinishWorkDate
-                    for index2 in records_oprqualification:
-                        operatorid = index2[0]
-                        qualificationCode = index2[1]
-                        if qualificationCode == requirementsCode:
-                            values_oprneed = (id_operation,operatorid)
-                            cursor.execute(query_insert_operatorneed,values_oprneed)
-                   
-                    cek = True
-                elif counter %2 == 0 and cek == False:
-                    schedulledFinishWorkDate = schedulledFinishWorkDate + datetime.timedelta(minutes = durasi)
-                    cursor.execute(query,values1)
-                    schedulledstartWorkDate = schedulledFinishWorkDate
-                    for index2 in records_oprqualification:
-                        operatorid = index2[0]
-                        qualificationCode = index2[1]
-                        if qualificationCode == requirementsCode:
-                            values_oprneed = (id_operation,operatorid)
-                            cursor.execute(query_insert_operatorneed,values_oprneed)
-                    cek = True
-        counter = counter + 1
-        conn.commit()
-        conn.close()
-        hasil = {"status" : "berhasil"}
-        print(hasil)
-    except Exception as e:
-        print("Error",str(e))
-        hasil = {"status" : "gagal"}
-    return hasil
 
 
 def ShowProductInPantauOperasi():
