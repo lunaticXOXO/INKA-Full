@@ -136,6 +136,50 @@ def AddLevelByOperator(code):
     return hasil
 
 
+def AddOperatorRequirementByProcess(id):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query_select = "SELECT id FROM prd_d_process WHERE id = '"+id+"'"
+    id_process = ""
+    cursor.execute(query_select)
+    records = cursor.fetchall()
+    for index in records:
+        id_process = index[0]
+    
+    query_insert = "INSERT INTO operatorrequirement(qualificationCode,processCode)VALUES(%s,%s)"
+    try:
+        data = request.json
+        qualificationCode = data["qualificationCode"]
+        values = (qualificationCode,id_process)
+        cursor.execute(query_insert,values)
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+    except Exception as e:
+        print("Error",str(e))
+    
+
+def GetOperatorRequirementByProcess(idProcess):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id,a.prosesSesudahnya,a.nodalOutput, b.qualificationCode FROM prd_r_proses a JOIN prd_r_operatorrequirement b ON b.processCode = a.id JOIN opr_r_operatorqualification c ON c.codes = b.qualificationCode WHERE a.id = '"+idProcess+"'"
+    records = cursor.fetchall()
+    
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
+
+
+
+
+
 def ShowOperatorLevelbyOperator(code):
     conn = database.connector()
     cursor = conn.cursor()

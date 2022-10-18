@@ -52,12 +52,15 @@
             </div>
             <div class = "ma-6">
                 <h3>Operator</h3>
+                <!--
                 <div class="mx-auto mt-6">
                     <span class="mr-10">Foto</span>
                     <span class="ml-10">Nama</span>
                 </div>
-                <div class="mt-10">
+                -->
+                <div class="mx-auto mt-10">
                     <v-text-field
+                    width="250"
                     v-model="kodeMaterial"
                     @keyup.enter="parseBarcode"
                     autofocus
@@ -72,7 +75,7 @@
                             <v-btn
                                 v-model = "btn1"
                                 class="mx-auto blue white--text" 
-                                width="350" 
+                                width="250" 
                                 :color="btn1.color"
                                 v-bind:disabled="hasClicked"
                                 v-bind="attrs"

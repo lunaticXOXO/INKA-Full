@@ -637,17 +637,6 @@ export default {
         v-model="dialog"
         width="500"
       >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            color="blue lighten-2"
-            dark
-            v-bind="attrs"
-            v-on="on"
-          >
-            Pop Up
-          </v-btn>
-        </template>
-
         <v-card>
           <v-card-title class="text-h5 grey lighten-2">
             Detail Operasi
@@ -684,7 +673,7 @@ export default {
     </div>
     
     <v-card class="mt-10 mx-10">
-      <h2>JSON Manual</h2>
+      <h2>Jadwal Kerja WS</h2>
       <g-gantt-chart
         :chart-start="myChartStartCustom"
         :chart-end="myChartEndCustom"

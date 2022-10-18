@@ -524,13 +524,11 @@ def get_material_item_by_idpurchase(idPurchase):
     hasil = GetMaterialItemByPurchaseMaterial(idPurchase)
     return hasil
 
-
 #Material Stock
 @app.route('/material/get_material_stock',methods = ['GET'])
 def get_material_stock():
     hasil = GetMaterialStock()
     return hasil
-
 
 @app.route('/material/add_new_materialstock',methods = ['POST'])
 def add_new_materialstock():
@@ -642,6 +640,18 @@ def get_operasi_byoperator(username):
 @app.route('/operator/get_material_byoperator/<username>',methods = ['GET'])
 def get_material_byoperator(username):
     hasil = GetMaterialbyOperatorLogin(username)
+    return hasil
+
+
+@app.route('/operator/get_operator_requirement_byprocess/<idProcess>',methods = ['GET'])
+def get_operator_requirement_byprocess(idProcess):
+    hasil = GetOperatorRequirementByProcess(idProcess)
+    return hasil
+
+
+@app.route('/operator/add_operator_requirement_byprocess/<id>',methods = ['POST'])
+def add_operator_requirement_byprocess(id):
+    hasil = AddOperatorRequirementByProcess(id)
     return hasil
 
 # Process Requirement
