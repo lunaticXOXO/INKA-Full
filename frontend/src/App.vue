@@ -90,8 +90,8 @@ export default {
     async fetchData() {
         this.idRole = this.loginService.getCurrentUserType();
         this.username = this.loginService.getCurrentUsername();
-        console.log(this.idRole)
-        console.log(this.username)
+        console.log('Usertype: ' + this.idRole)
+        console.log('Username: ' + this.username)
     },
   },
 };
