@@ -5,10 +5,6 @@
             <v-btn icon :to="routeHome" class="mr-2">
                 <v-icon>mdi-home</v-icon>
             </v-btn>
-            <v-app-bar-title class="text-uppercase">
-                <span class="font-weight-light white--text">Smart</span>
-                <span class="white--text">Works 4.0 | Material</span>
-            </v-app-bar-title>
             <v-img 
                 max-height="50"
                 max-width="50" 
@@ -28,13 +24,6 @@
                 class="mb-1 mr-4">
             </v-img>
             <v-spacer></v-spacer>
-            <v-img
-                id="border" 
-                max-height="40"
-                max-width="40" 
-                src="../assets/contoh-profile.jpg"
-                class="mr-3 ml-6">
-            </v-img>
             <span class="font-weight-light white--text ">Welcome,</span>
             <span class="white--text mr-6">material</span>
             <v-btn @click="logout()" color="grey">

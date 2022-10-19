@@ -2,10 +2,6 @@
     <v-main>
         <nav>
             <v-app-bar app color="#6f6f6f">
-                <v-app-bar-title class="text-uppercase">
-                    <span class="font-weight-light white--text">Smart</span>
-                    <span class="white--text">Works 4.0 | WS</span>
-                </v-app-bar-title>
                 <v-img 
                     max-height="50"
                     max-width="50" 
@@ -26,7 +22,10 @@
                 </v-img>
                 <v-spacer></v-spacer>
                 <span class="font-weight-light white--text ">Workstation:</span>
-                <span class="white--text mr-6"></span>
+                <span class="white--text mr-6">
+                    <v-text-field background-color="#6f6f6f" class="mt-6" v-model="namaOperator" disabled solo dense flat>
+                    </v-text-field>
+                </span>
                 <v-btn @click="logout()" color="grey">
                     <span>Sign Out</span>
                     <v-icon right>mdi-arrow-right</v-icon>
@@ -155,6 +154,8 @@ export default {
     data(){
         return {
             loginService: new Login(),
+            kodeMaterial: undefined,
+            namaOperator: undefined,
             route: "/login",
             routeHome: "/",
             drawer: false,
@@ -206,6 +207,7 @@ export default {
             try{
                 const axios = require('axios')
                 console.log(this.loginService.getCurrentUsername())
+                this.namaOperator = this.loginService.getCurrentUsername()
                 const res =  await axios.get('/operator/get_operasi_byoperator/' + this.loginService.getCurrentUsername());
 
                 if(res.data == null){
