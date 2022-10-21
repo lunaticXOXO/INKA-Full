@@ -15,7 +15,7 @@ def ShowOperasiFromProduct(idProduct):
     records = cursor.fetchall()
     row_headers = [x[0] for x in cursor.description]
     json_data = []
-
+ 
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
     return make_response(jsonify(json_data),200)
