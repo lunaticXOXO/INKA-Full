@@ -76,6 +76,8 @@ import ListPurchaseMaterial from '../views/material/ListPurchaseMaterial.vue'
 import PurchaseMaterialItem from '../views/material/PurchaseMaterialItem.vue'
 import ListPurchaseMaterialItem from '../views/material/ListPurchaseMaterialItem.vue'
 import AddStockMaterial from '../views/material/AddStockMaterial.vue'
+import ListPurchaseItemByPurchaseMaterial from '../views/material/ListPurchaseItembyPurchaseMaterial.vue'
+import PurchaseMaterialItemByPurchaseMaterial from '../views/material/PurchaseItemByPurchaseMaterial.vue'
 
 Vue.use(VueRouter)
 
@@ -206,16 +208,14 @@ const routes = [
     }
   },
 
-
   {
     path : '/listPurchaseMaterial',
     name : 'List Purchase Material',
     component : ListPurchaseMaterial,
     meta : {
-        title : "List Purchase Materia - PT.INKA"
+        title : "List Purchase Material - PT.INKA"
     }
   },
-
 
   {
 
@@ -234,7 +234,7 @@ const routes = [
       name : 'List Purchase Material Item',
       component : ListPurchaseMaterialItem,
       meta : {
-          title : "List Purchase Material Item"
+          title : "List Purchase Material Item - PT.INKA"
       }
 
   },
@@ -607,15 +607,12 @@ const routes = [
   },
 
   {
-
     path : '/addStockMaterial',
     name : 'Add Stock Material',
     component : AddStockMaterial,
     meta : {
       title : "Add Stock Material - PT.INKA"
     }
-    
-
   },
 
   {
@@ -776,7 +773,23 @@ const routes = [
     }
   },
 
+  {
+    path : '/listPurchaseItemByPurchaseMaterial/:id',
+    name : 'List Purchase Item By Purchase Material',
+    component : ListPurchaseItemByPurchaseMaterial,
+    meta : {
+      title : "List Purchase Item By Purchase Material - PT.INKA"
+    }
+  },
   
+  {
+    path : '/tambahPurchaseItemByPurchaseMaterial/:id',
+    name : 'Tambah Purchase Item By Purchase Material',
+    component : PurchaseMaterialItemByPurchaseMaterial,
+    meta : {
+      title : "Tambah Purchase Item By Purchase Material - PT.INKA"
+    }
+  },
   
 ]
 

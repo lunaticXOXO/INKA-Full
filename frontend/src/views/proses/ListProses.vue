@@ -26,7 +26,7 @@
                   <span v-else>{{item.prosesSesudahnya}}</span>
                 </template>
                 <template v-slot:[`item.nama`]="{ item }">
-                  <v-text-field v-model="editedItem.nama" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                    <v-select v-model="editedItem.nama" item-text="nama" item-value="nama" :items="nodal" v-if="item.id == editedItem.id"></v-select>
                   <span v-else>{{item.nama}}</span>
                 </template>
                 <template v-slot:[`item.durasi`]="{ item }">
@@ -34,7 +34,7 @@
                   <span v-else>{{item.durasi}}</span>
                 </template>
                 <template v-slot:[`item.satuanDurasi`]="{ item }">
-                  <v-select v-model="editedItem.satuanDurasi" :items="satuan_durasi" v-if="item.id == editedItem.id"></v-select>
+                    <v-text-field v-model="editedItem.satuanDurasi" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
                   <span v-else>{{item.satuanDurasi}}</span>
                 </template>
                 <template v-slot:[`item.jenisProses`]="{ item }">
@@ -56,9 +56,9 @@
                     </div>
                     <div v-else>
                         <router-link :to="{name : 'List Stasiun Kerja by Process',params : {id : `${item.id}`}}">
-                        <v-btn class="mx-1" x-small color="blue" @click="selectProsestoWorkStation(item)">
-                            <v-icon small dark>mdi-check</v-icon>
-                        </v-btn>
+                            <v-btn class="mx-1" x-small color="blue">
+                                <v-icon small dark>mdi-check</v-icon>
+                            </v-btn>
                         </router-link>
                         <v-btn class="mx-1" x-small color="green" @click="editProses(item)">
                             <v-icon small dark>mdi-pencil</v-icon>
@@ -89,12 +89,8 @@ export default {
                 {text : 'Action', value : 'aksi'}
             ],
             proses : [],
-            prosesData : [],
             nodal: [],
             jenis_proses: [],
-            satuan_durasi: [
-                "Minutes",
-            ],
             editedIndex : -1,
             editedItem : {
                 id: '',
@@ -145,7 +141,6 @@ export default {
                         alert("Proses Kosong")
                     }else{
                         this.proses = res.data
-                        //this.prosesData = res.data
                         console.log(res,this.proses)
                     }
                 }
@@ -208,11 +203,6 @@ export default {
                 console.log(error)
             }
         },
-
-        selectProcesstoWorkStation(proses){
-            console.log(proses.id)
-            //open(`/listStasiunKerjabyProcess/${proses.id}`)
-        }
     }
 }
 

@@ -3,7 +3,7 @@
         class="mx-auto text-center mt-6"
         max-width="1000">
         <br>
-        <h1>Purchase Material Item</h1>
+        <h1>Purchase Material Item For {{this.$route.params.id}}</h1>
         <v-form
           class="pa-6"
           ref="form"
@@ -56,14 +56,6 @@
             <v-date-picker width="1000" v-model="tanggalPurchase"></v-date-picker>
           </v-menu>
 
-          <v-autocomplete
-          item-text="id"
-          item-value="id"
-          v-model="purchaseId"
-          :items="list_purchaseId"
-          label="Purchase Material ID"
-          ></v-autocomplete>
-
           <v-btn
             :disabled="!valid"
             color="success"
@@ -104,8 +96,6 @@
       units: undefined,
       quantity: '',
       tanggalPurchase : null,
-      purchaseId: '',
-      list_purchaseId: undefined,
       snackbar : {
         show : false,
         color : null,
@@ -115,14 +105,13 @@
 
     mounted(){
       this.fetchMaterialTypeSupplier(),
-      this.fetchUnit(),
-      this.fetchPurchaseMaterial()
+      this.fetchUnit()
     },
   
     methods: {
       validate () {
         if(this.$refs.form.validate()){
-          this.InsertMaterialItem()
+          this.InsertMaterialItemByPurchaseMaterial()
         }
       },
 
@@ -137,7 +126,6 @@
         console.log(this.quantity)
         console.log(this.unit)
         console.log(this.tanggalPurchase)
-        console.log(this.purchaseId)
       },  
 
       async fetchMaterialTypeSupplier(){
@@ -174,34 +162,17 @@
         }
       },
 
-      async fetchPurchaseMaterial(){
-        try{
-            const axios = require('axios')
-            const res = await axios.get('/material/get_purchase_material')
-            if (res.data == null){
-                alert("Purchase Material Kosong")
-            }else{
-                this.list_purchaseId = res.data
-                console.log(res,this.list_purchaseId)
-            }
-        }catch(error){
-            alert(error)
-            console.log(error)
-        }
-      },
-
-      async InsertMaterialItem(){
+      async InsertMaterialItemByPurchaseMaterial(){
         try{
           const axios = require('axios');
-          const response = await axios.post('/material/purchase_material',
+          const response = await axios.post('/material/add_purchase_item_by_idpurchase/'  + this.$route.params.id,
             { 
               id_item : this.id_item,
               supplierCode: this.supply,
               materialTypeCode: this.type,
               quantity: this.quantity,
               unit: this.unit,
-              schedulledArrival: this.tanggal,
-              purchaseId : this.purchaseId
+              schedulledArrival: this.tanggal
             }
           );
           console.log(response,this.data)

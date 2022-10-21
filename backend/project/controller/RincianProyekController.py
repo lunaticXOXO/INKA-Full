@@ -127,16 +127,16 @@ def AddRincianProyekByProyek(id_proyek):
         new_jumlah = int(jumlah)
         print("jumlah : ",new_jumlah)
 
-        query3 = "INSERT INTO prd_d_produk(id,rincianProyek)VALUES(%s,%s)"
+        #query3 = "INSERT INTO prd_d_produk(id,rincianProyek)VALUES(%s,%s)"
 
         #for index in range(new_jumlah):
-        idProduk = GenerateSNProduct()
-        values2 = (idProduk,id_rproyek_new)
-        cursor.execute(query3,values2)
+        #idProduk = GenerateSNProduct()
+        #values2 = (idProduk,id_rproyek_new)
+        #cursor.execute(query3,values2)
         conn.commit()
         cursor.close()
         conn.close()
-        GenerateOperation(idProduk)
+        #GenerateOperation(idProduk)
         hasil = {"status" : "berhasil"}
         print("Rincian Proyek Baru Ditambahkan!")
 

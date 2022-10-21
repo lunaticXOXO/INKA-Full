@@ -614,7 +614,7 @@ export default {
         </g-gantt-row>
       </g-gantt-chart>
     </v-card>
-
+    
     <v-card class="mt-10 mx-10">
       <h2>JSON Auto</h2>
       <g-gantt-chart
@@ -637,17 +637,6 @@ export default {
         v-model="dialog"
         width="500"
       >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            color="blue lighten-2"
-            dark
-            v-bind="attrs"
-            v-on="on"
-          >
-            Pop Up
-          </v-btn>
-        </template>
-
         <v-card>
           <v-card-title class="text-h5 grey lighten-2">
             Detail Operasi
@@ -684,15 +673,17 @@ export default {
     </div>
     
     <v-card class="mt-10 mx-10">
-      <h2>JSON Manual</h2>
+      <h2>Jadwal Kerja WS</h2>
       <g-gantt-chart
         :chart-start="myChartStartCustom"
         :chart-end="myChartEndCustom"
+        :row-label-width="`${rowLabelWidth}%`"
+        :row-height="rowHeight"
+        :grid="grid"
+        :theme="selectedTheme"
       >
         <g-gantt-row
-          v-for="row in items2"
-          :key="row.namaStasiunKerja"
-          :label="row.namaStasiunKerja"
+          label="WS8"
           :bars="items2"
           bar-start="rencanaMulai"
           bar-end="rencanaSelesai"
@@ -705,7 +696,8 @@ export default {
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  color="blue lighten-2"
+                  class="font-weight-thin"
+                  color="#222222"
                   dark
                   v-bind="attrs"
                   v-on="on"
@@ -749,6 +741,20 @@ export default {
             </v-dialog>
           </template>
         </g-gantt-row>
+        <g-gantt-row
+          label="WS9"
+          :bars="items"
+          bar-start=""
+          bar-end=""
+        >
+        </g-gantt-row>
+        <g-gantt-row
+          label="WS10"
+          :bars="items"
+          bar-start=""
+          bar-end=""
+        >
+        </g-gantt-row>
       </g-gantt-chart>
     </v-card>
     <!--
@@ -779,13 +785,14 @@ export default {
 <script>
 
 import {GGanttChart, GGanttRow} from 'vue-ganttastic'
-//var today = new Date();
-//var newDate = new Date(Date.now()+1*24*60*60*1000);
-//var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-//var date2 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+ newDate.getDate();
-//var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-//var dateTime = date+' '+time;
-//var dateTime2 = date2+' '+time;
+
+var today = new Date();
+var newDate = new Date(Date.now()+1*24*60*60*1000);
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var date2 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+ newDate.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+' '+time;
+var dateTime2 = date2+' '+time;
 
 export default {
   components:{
@@ -796,15 +803,19 @@ export default {
   data(){
     return {
       items: undefined,
+      rowHeight: 50,
+      rowLabelWidth: 5,
+      grid: true,
+      selectedTheme: "vue",
       dialog: false,
       dialog2: undefined,
       tanggalPencarian: '',
       myChartStart: "2020-03-01 00:00",
       myChartEnd: "2020-03-03 00:00",
-      //myChartStartCustom: dateTime,
-      //myChartEndCustom: dateTime2,
-      myChartStartCustom:'',
-      myChartEndCustom:'',
+      myChartStartCustom: dateTime,
+      myChartEndCustom: dateTime2,
+      //myChartStartCustom:'',
+      //myChartEndCustom:'',
       itemsWS: [
         { name: 'MINOR BUSHING',                flex: 2 },
         { name: 'MINOR AXLE BOX & WHEEL ASSY',  flex: 3 },
@@ -818,32 +829,36 @@ export default {
       ],
       items2:[
         {
-          "idOperasi":"23NGWLRG3",
-          "namaProses":"Setting brake boogie",
-          "namaStasiunKerja":"WS8",
-          "rencanaMulai":"2022-09-04 07:00",
-          "rencanaSelesai":"2022-09-04 10:00"
+          idOperasi:"23NGWLRG3",
+          namaProses:"Setting brake boogie",
+          namaStasiunKerja:"WS8",
+          rencanaMulai:"2022-09-04 07:00",
+          rencanaSelesai:"2022-09-04 12:00",
+          ganttBarConfig: {borderRadius: "0px", backgroundColor: "#222222"}
         },
         {
-          "idOperasi":"NABNJ4PL4",
-          "namaProses":"Bogie Installation",
-          "namaStasiunKerja":"WS8",
-          "rencanaMulai":"2022-09-04 12:00",
-          "rencanaSelesai":"2022-09-04 15:00"
+          idOperasi:"NABNJ4PL4",
+          namaProses:"Bogie Installation",
+          namaStasiunKerja:"WS8",
+          rencanaMulai:"2022-09-04 13:00",
+          rencanaSelesai:"2022-09-04 17:30",
+          ganttBarConfig: {borderRadius: "0px", backgroundColor: "#222222"}
         },
         {
-          "idOperasi":"RKKXZTTQP",
-          "namaProses":"Test beban",
-          "namaStasiunKerja":"WS9",
-          "rencanaMulai":"2022-09-04 17:00",
-          "rencanaSelesai":"2022-09-04 19:00"
+          idOperasi:"RKKXZTTQP",
+          namaProses:"Test beban",
+          namaStasiunKerja:"WS8",
+          rencanaMulai:"2022-09-04 20:00",
+          rencanaSelesai:"2022-09-04 22:30",
+          ganttBarConfig: {borderRadius: "0px", backgroundColor: "#222222"}
         },
         {
-          "idOperasi":"SX7RQUVPP",
-          "namaProses":"Bogie Assy NON Handbrake",
-          "namaStasiunKerja":"WS8",
-          "rencanaMulai":"2022-09-04 20:00",
-          "rencanaSelesai":"2022-09-04 23:00"
+          idOperasi:"SX7RQUVPP",
+          namaProses:"Bogie Assy NON Handbrake",
+          namaStasiunKerja:"WS8",
+          rencanaMulai:"2022-09-05 02:00",
+          rencanaSelesai:"2022-09-05 08:00",
+          ganttBarConfig: {borderRadius: "0px", backgroundColor: "#222222"}
         }
       ],
 
@@ -853,7 +868,7 @@ export default {
           bars: [
             {
               myStart: "2020-03-01 12:10",
-              myEnd: "2020-03-01 16:35"
+              myEnd: "2020-03-01 16:35",
             }
           ]
         },

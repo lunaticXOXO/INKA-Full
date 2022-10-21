@@ -49,6 +49,11 @@
                   </v-icon>
               </div>
               <div v-else>
+                <router-link :to="{name : 'List Purchase Item By Purchase Material',params:{id : `${item.id}`}}">
+                  <v-btn class="mx-1" x-small color="blue">
+                      <v-icon small dark>mdi-check</v-icon>
+                  </v-btn>
+                </router-link>
                 <v-btn class="mx-1" x-small color="green" @click="editMaterial(item)">
                     <v-icon small dark>mdi-pencil</v-icon>
                 </v-btn>
