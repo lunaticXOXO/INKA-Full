@@ -25,32 +25,25 @@
                             <br>
                             <h3>{{ item.namaProses }}</h3>
                             <p>{{ item.idOperasi }}</p>
-                            <v-chip
-                                :color="getColor()"
-                                dark>
-                                <p class="mt-4 black--text">Tidak Ada Operasi</p>
+                            <v-chip :color="getColor()" dark>
+                                
+                                <div v-if="item.status == null">
+                                    <p class="mt-4 white--text" >Tidak Ada Operasi</p>
+
+                                </div>
+                                <div v-else-if="item.status == 0">
+                                    <p class="mt-4 white--text">Sedang Ada Operasi</p>
+                                </div>
+                                <div v-else-if="item.status == 1">
+                                    <p class="mt-4 white--text">Operasi Selesai</p>
+                                </div>
+                               
                             </v-chip>
-                            <!--
-                            <div class="d-flex">
-                                <v-btn
-                                    color="success"
-                                    class="mr-1"
-                                    type="submit"
-                                    @click="startOperation(item)">
-                                    Mulai Operasi
-                                </v-btn>
-                                <v-btn
-                                    color="red"
-                                    type="submit"
-                                    @click="stopOperation(item)">
-                                    Stop Operasi
-                                </v-btn>
-                            </div>
-                            -->
+                            
                             <h3>Operator</h3>
                             <p>{{item.namaOperator}}</p>
                             <h3>Stasiun Kerja</h3>
-                            <p>{{item.keteranganWS}}</p>
+                            <p>{{item.stasiunKerja}}</p>
                             <h3>Rencana Mulai</h3>
                             <p>{{ item.rencanaMulai }}</p>
                             <h3>Rencana Selesai</h3>
@@ -89,6 +82,7 @@ export default {
             message: null,
             color: null
         },
+        index : 0
     }),
 
     mounted(){
@@ -97,7 +91,7 @@ export default {
 
     methods: {
         getColor() {
-            return 'yellow'
+            return ''
         },
 
         async fetchData(idProduk){
@@ -117,8 +111,12 @@ export default {
                         color : 'green',
                         show : true
                     }
+                   
+
                     console.log(res,this.items)
                 }
+
+                
             } 
             catch(error){
                 alert("Error" + error)
@@ -143,63 +141,9 @@ export default {
             }
         },
 
-        async startOperation(item){
-            console.log(item.idOperasi)
-            try{
-                const axios = require('axios');
-                const response = await axios.post('/operasi/start_operasi/' + item.idOperasi);
-                console.log(response,this.data)
-                if(response.data.status == "berhasil"){
-                    this.snackbar = {
-                    message : "Mulai Operasi Success",
-                    color : 'green',
-                    show : true
-                }}
-                else if(response.data.status == "gagal"){
-                    this.snackbar = {
-                    message : "Mulai Operasi Failed",
-                    color : 'red',
-                    show : true
-                }}
-            }
-            catch(error){
-                this.snackbar = {
-                    message : "Mulai Operasi Error",
-                    color : 'error',
-                    show : true
-                }
-                console.log(error)
-            }
-        },
 
-        async stopOperation(item){
-            console.log(item.idOperasi)
-            try{
-                const axios = require('axios');
-                const response = await axios.post('/operasi/end_operasi/' + item.idOperasi);
-                console.log(response,this.data)
-                if(response.data.status == "berhasil"){
-                    this.snackbar = {
-                    message : "Stop Operasi Success",
-                    color : 'green',
-                    show : true
-                }}
-                else if(response.data.status == "gagal"){
-                    this.snackbar = {
-                    message : "Stop Operasi Failed",
-                    color : 'red',
-                    show : true
-                }}
-            }
-            catch(error){
-                this.snackbar = {
-                    message : "Stop Operasi Error",
-                    color : 'error',
-                    show : true
-                }
-                console.log(error)
-            }
-        },
+        
+
 
         submitHandler(item) {
             console.log(item.id)

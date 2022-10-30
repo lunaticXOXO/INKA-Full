@@ -27,7 +27,7 @@ def GetProdukbyRProyekDSP(id_rproyek):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id,c.nama AS 'jenisProduk',a.dueDate,d.percentage FROM prd_d_produk a JOIN prd_d_rincianproyek b ON b.id = a.rincianproyek JOIN prd_r_jenisproduk c ON c.id = b.jenisProduk JOIN prd_d_proyek d ON d.id = b.proyek WHERE b.id = '"+id_rproyek+"'"
+    query = "SELECT a.id,c.nama AS 'jenisProduk',d.percentage FROM prd_d_produk a JOIN prd_d_rincianproyek b ON b.id = a.rincianproyek JOIN prd_r_jenisproduk c ON c.id = b.jenisProduk JOIN prd_d_proyek d ON d.id = b.proyek WHERE b.id = '"+id_rproyek+"'"
     cursor.execute(query)
     records = cursor.fetchall()
     row_headers = [x[0] for x in cursor.description]
