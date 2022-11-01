@@ -247,7 +247,7 @@ export default {
                     if( this.items[this.index].mulai != null && this.items[this.index].selesai != null && this.index == this.items.length-1){
                         this.btn1 = {
                             color : 'red',
-                            text : 'Operasi Selsai Semua',
+                            text : 'Operasi Selesai Semua',
                             disabled : true
                         }
                         this.hasClicked = true
@@ -255,7 +255,6 @@ export default {
                     
                 }
                
-                    
                 if(this.itemKey[0].selesai != null){
                     this.hasClicked = true
                     const res2 =  await axios.post('/proyek/accumulate_percentage_proyek/' +  this.itemKey[0].id );
