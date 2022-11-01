@@ -9,7 +9,7 @@ def ShowOperasiFromProduct(idProduct):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id AS 'idOperasi',a.rencanaMulai,a.rencanaSelesai, b.id AS 'idProses',b.nama AS 'namaProses', a.produk FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_d_produk i ON i.id = a.produk WHERE i.id = '"+idProduct+"' ORDER BY a.rencanaMulai ASC"
+    query = "SELECT a.id AS 'idOperasi',a.rencanaMulai,a.rencanaSelesai, b.id AS 'idProses',b.nama AS 'namaProses', a.produk,a.stasiunKerja,a.status FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_d_produk i ON i.id = a.produk WHERE i.id = '"+idProduct+"' ORDER BY a.rencanaMulai ASC"
     cursor.execute(query)
 
     records = cursor.fetchall()
@@ -105,7 +105,7 @@ def StartOperation(idOperasi):
     cursor = conn.cursor()
     dates = ''
     dates = datetime.datetime.now()
-    query = "UPDATE prd_d_operasi SET mulai = %s WHERE id = %s"
+    query = "UPDATE prd_d_operasi SET mulai = %s,status = 0 WHERE id = %s"
     values = (dates,idOperasi)
     cursor.execute(query,values)
     conn.commit()
