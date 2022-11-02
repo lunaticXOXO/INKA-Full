@@ -25,21 +25,22 @@
                             <br>
                             <h3>{{ item.namaProses }}</h3>
                             <p>{{ item.idOperasi }}</p>
-                            <v-chip :color="getColor()" dark>
-                                
-                                <div v-if="item.status == null">
-                                    <p class="mt-4 white--text" >Tidak Ada Operasi</p>
-
-                                </div>
-                                <div v-else-if="item.status == 0">
-                                    <p class="mt-4 white--text">Sedang Ada Operasi</p>
-                                </div>
-                                <div v-else-if="item.status == 1">
-                                    <p class="mt-4 white--text">Operasi Selesai</p>
-                                </div>
-                               
-                            </v-chip>
-                            
+                            <div v-if="item.status == null">
+                                <v-chip color="yellow" dark>
+                                    <p class="mt-4 black--text" >Tidak Ada Operasi</p>
+                                </v-chip>
+                            </div>
+                            <div v-else-if="item.status == 0">
+                                <v-chip color="blue">
+                                    <p class="mt-4 black--text">Sedang Ada Operasi</p>
+                                </v-chip>
+                            </div>
+                            <div v-else-if="item.status == 1">
+                                <v-chip color="green">
+                                    <p class="mt-4 black--text">Operasi Selesai</p>
+                                </v-chip>
+                            </div>
+                            <br>
                             <h3>Operator</h3>
                             <p>{{item.namaOperator}}</p>
                             <h3>Stasiun Kerja</h3>
@@ -90,10 +91,6 @@ export default {
     },
 
     methods: {
-        getColor() {
-            return ''
-        },
-
         async fetchData(idProduk){
             try{
                 const axios = require('axios');
@@ -140,10 +137,6 @@ export default {
                 console.log(error)
             }
         },
-
-
-        
-
 
         submitHandler(item) {
             console.log(item.id)
