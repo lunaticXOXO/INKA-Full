@@ -741,6 +741,7 @@ export default {
             </v-dialog>
           </template>
         </g-gantt-row>
+        <!--
         <g-gantt-row
           label="WS9"
           :bars="items"
@@ -755,6 +756,7 @@ export default {
           bar-end=""
         >
         </g-gantt-row>
+        -->
       </g-gantt-chart>
     </v-card>
     <!--
