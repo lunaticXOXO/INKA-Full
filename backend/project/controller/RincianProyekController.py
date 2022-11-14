@@ -284,7 +284,7 @@ def GenerateOperation(idProduk):
                             values_oprneed = (id_operation,operatorid)
                             cursor.execute(query_insert_operatorneed,values_oprneed)
                    
-                    cek = True
+                    cek = True 
                 elif counter %2 == 0 and cek == False:
                     schedulledFinishWorkDate = schedulledFinishWorkDate + datetime.timedelta(minutes = durasi)
                     cursor.execute(query,values1)
