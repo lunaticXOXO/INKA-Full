@@ -13,7 +13,7 @@
         >
             <v-text-field
             v-model="id"
-            :counter="5"
+            :counter="20"
             :rules="idRules"
             label="Input ID Produk"
             required
@@ -67,7 +67,7 @@
       id: '',
       idRules: [
         v => !!v || 'ID Proyek is required',
-        v => (v && v.length <= 5 && v.length >= 5) || 'ID Proyek must be 5 characters',
+        v => (v && v.length <= 20 && v.length >= 1) || 'ID Proyek must be 20 characters',
       ],
     }),
 

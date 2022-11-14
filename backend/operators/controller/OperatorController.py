@@ -84,7 +84,7 @@ def GetOperasiByOperatorLogin(username):
         username = data[0]
     
     #if session['username'] == username:
-    query_get_operasi = "SELECT b.id AS 'idOperasi',d.nama AS 'namaProses', b.rencanaMulai,b.rencanaSelesai, b.mulai,b.selesai FROM opr_d_operatorneed a JOIN prd_d_operasi b ON b.id = a.operationid JOIN opd_r_operator c ON c.code = a.operatorid JOIN prd_r_proses d ON d.id = b.proses WHERE c.username = '"+username+"'"
+    query_get_operasi = "SELECT a.id,b.nama,a.rencanaMulai,a.rencanaSelesai,a.mulai,a.selesai FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN gen_r_stasiunkerja c ON c.id = a.stasiunKerja WHERE c.id = '"+username+"' ORDER BY a.rencanaMulai ASC"
     cursor.execute(query_get_operasi)
     records = cursor.fetchall()
     json_data = []
@@ -104,7 +104,7 @@ def GetMaterialbyOperatorLogin(username):
     for data in records:
         username = data[0]
     
-    query_get_material = "SELECT f.code,e.nama,e.jumlah,e.satuan FROM opr_d_operatorneed a JOIN opd_r_operator b ON b.code = a.operatorid JOIN prd_d_operasi c ON c.id = a.operationid JOIN prd_r_proses d ON d.id = c.proses JOIN prd_r_strukturjnsprd e ON e.idNodal = d.nodalOutput JOIN mat_r_materialtype f ON f.code = e.materialTypeCode WHERE b.username = '"+username+"'"
+    query_get_material = "SELECT f.code,f.nama,d.jumlah,d.satuan FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN gen_r_stasiunkerja c ON c.id = a.stasiunKerja JOIN prd_r_strukturjnsprd d ON d.idNodal = b.nodalOutput JOIN mat_r_materialtype f ON f.code = d.materialTypeCode WHERE c.id = '"+username+"' GROUP BY f.code"
     cursor.execute(query_get_material)
     records = cursor.fetchall()
     json_data = []

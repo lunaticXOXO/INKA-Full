@@ -38,14 +38,21 @@
                 <v-card class="mx-auto mb-6 text-center mt-6" width="900">
                     <v-data-table
                         :headers = "headers"
-                        :items = "items">
+                        :items = "items"
+                        :single-select="singleSelect"
+                        itemKey ="id"
+                        show-select
+                        v-model="itemKey"
+                        >
                     </v-data-table>
                 </v-card>
                 <h3>Material yang diperlukan</h3>
                 <v-card class="mx-auto mb-6 text-center mt-6" width="900">
                     <v-data-table
                         :headers = "headers2"
-                        :items = "items2">
+                        :items = "items2"
+                        
+                        >
                     </v-data-table>
                 </v-card>
             </div>
@@ -153,6 +160,8 @@ import Login from "../services/Login.js"
 export default {
     data(){
         return {
+            singleSelect: false,
+            selected: [],
             loginService: new Login(),
             kodeMaterial: undefined,
             namaOperator: undefined,
@@ -162,8 +171,8 @@ export default {
             dialog : false,
             hasClicked: false,
             headers : [
-                {text : 'Code',               value : 'idOperasi'},
-                {text : 'Nama',               value : 'namaProses'},
+                {text : 'Code',               value : 'id'},
+                {text : 'Nama',               value : 'nama'},
                 {text : 'Rencana Mulai',      value : 'rencanaMulai'},
                 {text : 'Rencana Selesai',    value : 'rencanaSelesai'},
                 {text : 'Mulai',              value : 'mulai'},
@@ -177,6 +186,7 @@ export default {
             ],
             items: undefined,
             items2: undefined,
+            index : 0,
             btn1 : {
                 text : 'Operasi Mulai',
                 color : 'green'
@@ -216,17 +226,38 @@ export default {
                     this.items = res.data
                     console.log(res,this.items)
                 }
-
-                if(res.data[0].mulai != null){
-                    this.btn1 = {
-                        color : 'blue',
-                        text : 'Operasi Selesai'
+                
+                console.log('Item : ',this.items)
+                console.log("length : ",this.items.length)
+                for(this.index in this.items){
+                    if( this.items[this.index].mulai == null && this.items[this.index].selesai == null){
+                        this.btn1 = {
+                            color : 'green',
+                            text : 'Operasi Mulai'
+                        }
+                        break
                     }
+                    if( this.items[this.index].mulai != null && this.items[this.index].selesai == null){
+                        this.btn1 = {
+                            color : 'blue',
+                            text : 'Operasi Selesai'
+                        }
+                        break
+                    }
+                    if( this.items[this.index].mulai != null && this.items[this.index].selesai != null && this.index == this.items.length-1){
+                        this.btn1 = {
+                            color : 'red',
+                            text : 'Operasi Selesai Semua',
+                            disabled : true
+                        }
+                        this.hasClicked = true
+                    }   
+                    
                 }
-
-                if(res.data[0].selesai != null){
+               
+                if(this.itemKey[0].selesai != null){
                     this.hasClicked = true
-                    const res2 =  await axios.post('/proyek/accumulate_percentage_proyek/' +  this.items[0].idOperasi );
+                    const res2 =  await axios.post('/proyek/accumulate_percentage_proyek/' +  this.itemKey[0].id );
                     if(res2.data.status == 'berhasil'){
                         console.log(res2)
                     }else{
@@ -255,14 +286,17 @@ export default {
 
         async startOperation(){
             try{
+                
+                this.singleSelect = true
                 const axios = require('axios')
-                const res = await axios.post('/operasi/start_operasi/' + this.items[0].idOperasi)
+                const res = await axios.post('/operasi/start_operasi/' + this.itemKey[0].id)
                 if(res.data.status == 'berhasil'){
-                    //window.location.reload(),
-                    //this.btn = {
-                    //    color : 'red',
-                    //    text : 'Operasi Selsai',
-                    //}
+                    if (this.selected[0].rencanaMulai != null){
+                        this.btn1 = {
+                            color : 'blue',
+                            text : 'Operasi Selesai'
+                        }
+                    }
                     console.log(res)
                 }else{
                     console.log(res)
@@ -271,18 +305,15 @@ export default {
                 console.log(error)
             }
             this.dialog = false
-            //window.location.reload()
-            this.btn1 = {
-                color : 'red',
-                text : 'Operasi Selesai'
-            }
+           
+          
             window.location.reload()
         },
     
         async akhiriOperation(){
             try{
                 const axios = require('axios')
-                const res = await axios.post('/proyek/accumulate_percentage_proyek/' + this.items[0].idOperasi)
+                const res = await axios.post('/proyek/accumulate_percentage_proyek/' + this.itemKey[0].id)
                 if(res.data.status == 'berhasil'){
                     console.log(res)
                 }else{
