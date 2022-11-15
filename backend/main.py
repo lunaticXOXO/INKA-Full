@@ -600,6 +600,17 @@ def show_product_inpantauoperasi():
     hasil = ShowProductInPantauOperasi()
     return hasil
 
+@app.route('/operasi/generate_date_str',methods = ['POST'])
+def generate_date_str():
+    hasil = ConvertDateOperation()
+    return hasil
+
+
+@app.route('/operasi/get_operasi_gantt/<stasiunKerja>',methods = ['GET'])
+def get_operasi_gantt(stasiunKerja):
+    hasil = GetOperasiGanttChart(stasiunKerja)
+    return hasil
+
 #Operator
 @app.route('/operator/add_operator',methods = ['POST'])
 def add_operator():
