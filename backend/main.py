@@ -518,6 +518,10 @@ def add_purchase_item_by_idpurchase(idPurchase):
     hasil = PurchaseMaterialItemByIDPurchase(idPurchase)
     return hasil
 
+@app.route('/material/get_purchasematerial_in_purchaseitem/<idPurchase>',methods = ['GET'])
+def get_purchasematerial_in_purchaseitem(idPurchase):
+    hasil = GetPurchaseMaterialinPurchaseItem(idPurchase)
+    return hasil
 
 @app.route('/material/get_material_item_by_idpurchase/<idPurchase>',methods = ['GET'])
 def get_material_item_by_idpurchase(idPurchase):
@@ -533,6 +537,12 @@ def get_material_stock():
 @app.route('/material/add_new_materialstock',methods = ['POST'])
 def add_new_materialstock():
     hasil = AddNewMaterialStock()
+    return hasil
+
+
+@app.route('/material/get_materialstock_by_order/<order>',methods = ['GET'])
+def get_materialstock_by_order(order):
+    hasil = GetMaterialStockbyOrder(order)
     return hasil
 
 #MATERIAL ON WS

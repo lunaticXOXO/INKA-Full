@@ -67,14 +67,14 @@
     },
   
     mounted(){
-        this.fetchMaterial()
+        this.fetchMaterialByOrder()
     },
 
     methods: {
-      async fetchMaterial(){
+      async fetchMaterialByOrder(){
         try{
           const axios = require('axios');
-          const res = await axios.get('/material/get_material_stock');
+          const res = await axios.get('/material/get_materialstock_by_order/' + this.$route.params.id);
           if (res.data == null){
             alert('Stock Kosong')
           }else{
