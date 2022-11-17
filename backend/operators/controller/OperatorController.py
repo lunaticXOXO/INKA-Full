@@ -104,7 +104,7 @@ def GetMaterialbyOperatorLogin(username):
     for data in records:
         username = data[0]
     
-    query_get_material = "SELECT f.code,f.nama,d.jumlah,d.satuan FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN gen_r_stasiunkerja c ON c.id = a.stasiunKerja JOIN prd_r_strukturjnsprd d ON d.idNodal = b.nodalOutput JOIN mat_r_materialtype f ON f.code = d.materialTypeCode WHERE c.id = '"+username+"' GROUP BY f.code"
+    query_get_material = "SELECT nama, butuh, kurang FROM cpl_matbutuhopr WHERE stasiunKerja = '"+username+"'"
     cursor.execute(query_get_material)
     records = cursor.fetchall()
     json_data = []

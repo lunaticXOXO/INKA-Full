@@ -35,7 +35,7 @@
         <div class="d-flex">
             <div class = "ma-6">
                 <h3>Operasi</h3>
-                <v-card class="mx-auto mb-6 text-center mt-6" width="900">
+                <v-card class="mx-auto mb-6 text-center mt-6" width="1000">
                     <v-data-table
                         :headers = "headers"
                         :items = "items"
@@ -183,10 +183,9 @@ export default {
                 {text : 'Selesai',            value : 'selesai'}
             ],
             headers2 : [
-                {text : 'Code',         value : 'code'},
-                {text : 'Nama',         value : 'nama'},
-                {text : 'Jumlah',       value : 'jumlah'},
-                {text : 'Satuan',       value : 'satuan'}
+                {text : 'Nama',        value : 'nama'},
+                {text : 'Butuh',       value : 'butuh'},
+                {text : 'Kurang',      value : 'kurang'},
             ],
             items: undefined,
             items2: undefined,
