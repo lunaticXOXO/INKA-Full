@@ -160,6 +160,7 @@ import Login from "../services/Login.js"
 export default {
     data(){
         return {
+            itemKey: undefined,
             singleSelect: false,
             selected: [],
             loginService: new Login(),
@@ -244,7 +245,7 @@ export default {
             }
             setTimeout(() => {
                 location.reload()
-            }, 2000)
+            }, 1000)
 
         },
 

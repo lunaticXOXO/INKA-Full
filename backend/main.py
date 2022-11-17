@@ -24,7 +24,7 @@ from unit.controller.UnitController import *
 from users.controller.UserController import *
 from operasi.controller.OperasiController import *
 from operators.controller.OperatorController import *
-from rfid.controller import *
+from rfid.controller.ScanBarcodeRFID import *
 
 from flask import Flask,session
 from flask_cors import CORS
