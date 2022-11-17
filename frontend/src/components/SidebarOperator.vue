@@ -51,7 +51,6 @@
                     <v-data-table
                         :headers = "headers2"
                         :items = "items2"
-                        
                         >
                     </v-data-table>
                 </v-card>
@@ -174,7 +173,6 @@ export default {
             drawer: false,
             dialog : false,
             hasClicked: false,
-            itemKey: undefined,
             headers : [
                 {text : 'Code',               value : 'id'},
                 {text : 'Nama',               value : 'nama'},
