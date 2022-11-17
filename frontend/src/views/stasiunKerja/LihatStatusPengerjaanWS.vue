@@ -1071,7 +1071,6 @@ export default {
             </v-dialog>
           </template>
         </g-gantt-row>
-
         <g-gantt-row
           label="WS08"
           :bars="itemsWS08"
@@ -1129,7 +1128,6 @@ export default {
             </v-dialog>
           </template>
         </g-gantt-row>
-
         <g-gantt-row
           label="WS09"
           :bars="itemsWS09"

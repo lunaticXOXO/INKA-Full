@@ -24,6 +24,7 @@ from unit.controller.UnitController import *
 from users.controller.UserController import *
 from operasi.controller.OperasiController import *
 from operators.controller.OperatorController import *
+from rfid.controller.ScanBarcodeRFID import *
 
 from flask import Flask,session
 from flask_cors import CORS
@@ -545,6 +546,16 @@ def get_materialstock_by_order(order):
     hasil = GetMaterialStockbyOrder(order)
     return hasil
 
+@app.route('/material/add_material_stock_by_order/<orders>',methods = ['POST'])
+def add_material_stock_by_order(orders):
+    hasil = AddMaterialStockbyOrders(orders)
+    return hasil
+
+@app.route('/material/get_purchase_item_in_matstock/<orders>',methods = ['GET'])
+def get_purchase_item_in_matstock(orders):
+    hasil = GetPurchaseItemInMatStock(orders)
+    return hasil
+
 #MATERIAL ON WS
 @app.route('/material_ws/get_material_onws',methods = ['GET'])
 def get_material_onws():
@@ -689,6 +700,12 @@ def get_requirement_allprocess():
 @app.route('/requirement/get_requirement_byprocess/<idProcess>')
 def get_requirement_byprocess(idProcess):
     hasil = ShowRequirmentByIdProcess(idProcess)
+    return hasil
+
+#RFID
+@app.route('/rfid/insert_material',methods = ['POST'])
+def scan_barcode_rfid():
+    hasil = ScanBarcodeRFID()
     return hasil
 
 #USERS 

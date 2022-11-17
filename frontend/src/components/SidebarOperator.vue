@@ -35,7 +35,7 @@
         <div class="d-flex">
             <div class = "ma-6">
                 <h3>Operasi</h3>
-                <v-card class="mx-auto mb-6 text-center mt-6" width="900">
+                <v-card class="mx-auto mb-6 text-center mt-6" width="1000">
                     <v-data-table
                         :headers = "headers"
                         :items = "items"
@@ -152,6 +152,9 @@
                 </div>
             </div>
         </div>
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+            {{snackbar.message}}
+        </v-snackbar>
     </v-main>
 </template>
 
@@ -160,6 +163,7 @@ import Login from "../services/Login.js"
 export default {
     data(){
         return {
+            itemKey: undefined,
             singleSelect: false,
             selected: [],
             loginService: new Login(),
@@ -180,10 +184,9 @@ export default {
                 {text : 'Selesai',            value : 'selesai'}
             ],
             headers2 : [
-                {text : 'Code',         value : 'code'},
-                {text : 'Nama',         value : 'nama'},
-                {text : 'Jumlah',       value : 'jumlah'},
-                {text : 'Satuan',       value : 'satuan'}
+                {text : 'Nama',        value : 'nama'},
+                {text : 'Butuh',       value : 'butuh'},
+                {text : 'Kurang',      value : 'kurang'},
             ],
             items: undefined,
             items2: undefined,
@@ -192,7 +195,12 @@ export default {
                 text : 'Operasi Mulai',
                 color : 'green'
             },
-            btn2 : undefined
+            btn2 : undefined,
+            snackbar : {
+                show : false,
+                color : null,
+                message : null,
+            }
         }
     },
 
@@ -208,26 +216,58 @@ export default {
             this.loginService.removeUserType()
         },
 
-        parseBarcode(){
-            //Kodingan untuk insert material berdasarkan barcode yang di scan
+        async parseBarcode(){
             console.log(this.kodeMaterial)
-
+            console.log(this.namaOperator)
+            try{
+                const axios = require('axios');
+                const response = await axios.post('/rfid/insert_material',
+                    { 
+                        stasiunKerja : this.namaOperator,
+                        idMat : this.kodeMaterial
+                    }
+                );
+                console.log(response,this.data)
+                if(response.data.status == "berhasil"){
+                    this.snackbar = {
+                    show : true,
+                    message : "Insert Material Berhasil",
+                    color : "green"
+                    }
+                }
+                else if(response.data.status == "gagal"){
+                    this.snackbar = {
+                    show : true,
+                    message : "Insert Material Gagal",
+                    color : "red"
+                    }
+                }
+            }
+            catch(error){
+                console.log(error)
+                this.snackbar = {
+                    show : true,
+                    message : "Insert Material Error",
+                    color : "red"
+                }
+            }
+            setTimeout(() => {
+                location.reload()
+            }, 500)
         },
 
-       async fetchOperasi(){
+        async fetchOperasi(){
             try{
                 const axios = require('axios')
                 console.log(this.loginService.getCurrentUsername())
                 this.namaOperator = this.loginService.getCurrentUsername()
                 const res =  await axios.get('/operator/get_operasi_byoperator/' + this.loginService.getCurrentUsername());
-
                 if(res.data == null){
                     console.log("Data kosong")
                 }else{
                     this.items = res.data
                     console.log(res,this.items)
                 }
-                
                 console.log('Item : ',this.items)
                 console.log("length : ",this.items.length)
                 for(this.index in this.items){
@@ -253,7 +293,6 @@ export default {
                         }
                         this.hasClicked = true
                     }   
-                    
                 }
                
                 if(this.itemKey[0].selesai != null){
@@ -287,7 +326,6 @@ export default {
 
         async startOperation(){
             try{
-                
                 this.singleSelect = true
                 const axios = require('axios')
                 const res = await axios.post('/operasi/start_operasi/' + this.itemKey[0].id)
@@ -306,8 +344,6 @@ export default {
                 console.log(error)
             }
             this.dialog = false
-           
-          
             window.location.reload()
         },
     
@@ -323,7 +359,6 @@ export default {
             }catch(error){
                 console.log(error)
             }
-
             window.location.reload()
         }
      
