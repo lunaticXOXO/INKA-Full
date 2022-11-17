@@ -106,12 +106,14 @@ def IfOperasiSiap(username):
     
     query = "SELECT * FROM cpl_oprsiap WHERE stasiunKerja = '"+username+"' "
     cursor.execute(query)
-    records_ws = cursor.fetchall()
-    if records_ws == None:
-        hasil = {"status" : "empty"}
-    else:
-        hasil = {"status" : "filled"}
-    return hasil
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+   
 
 
 def GetMaterialbyOperatorLogin(username):
