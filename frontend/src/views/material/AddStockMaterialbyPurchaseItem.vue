@@ -45,14 +45,6 @@
             <v-date-picker width="1000" v-model="arrivalDate"></v-date-picker>
           </v-menu>
 
-          <v-autocomplete
-          item-text="supplierCode"
-          item-value="supplierCode"
-          v-model="supplierCode"
-          :items="list_supplierCode"
-          label="Supplier Code"
-          ></v-autocomplete>
-
           <v-btn
             :disabled="!valid"
             color="success"
@@ -90,8 +82,6 @@
       unit: '',
       list_unit: undefined,
       arrivalDate: '',
-      supplierCode: '',
-      list_supplierCode: undefined,
       snackbar : {
         show : false,
         color : null,
@@ -120,7 +110,6 @@
         console.log(this.quantity)
         console.log(this.unit)
         console.log(this.arrivalDate)
-        console.log(this.supplierCode)
       },  
 
       async fetchUnit(){
@@ -148,8 +137,7 @@
                 merk : this.merk,
                 quantity : this.quantity,
                 unit : this.unit,
-                arrivalDate : this.arrivalDate,
-                supplierCode : this.supplierCode
+                arrivalDate : this.arrivalDate
             }
           );
           console.log(response,this.data)
