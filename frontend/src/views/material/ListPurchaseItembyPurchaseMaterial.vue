@@ -1,14 +1,11 @@
 <template>
+  <v-app>
     <v-card 
         class="mt-10 text-center mx-10"
         max-width = "1450">
         <br>
         <h1>List Purchase Item by Purchase Material {{this.$route.params.id}}</h1>
         <br>
-        <v-data-table 
-                :headers="column2"
-                :items="purchasematerial">
-            </v-data-table>
         <router-link :to="{name : 'Tambah Purchase Item By Purchase Material', params : {id : `${this.$route.params.id}`}}">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
                 Add Purchase Item 
@@ -34,6 +31,16 @@
 
         </v-data-table>
     </v-card>
+    <v-card
+      class="mt-10 text-center mx-10"
+      max-width = "750">
+      <h2>Detail Purchase Material</h2>
+      <v-data-table 
+          :headers="column2"
+          :items="purchasematerial">
+        </v-data-table>
+    </v-card>
+  </v-app>
 </template>
  
 <script>
