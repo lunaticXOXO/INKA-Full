@@ -325,7 +325,6 @@ export default {
 
         async startOperation(){
             try{
-                
                 this.singleSelect = true
                 const axios = require('axios')
                 const res = await axios.post('/operasi/start_operasi/' + this.itemKey[0].id)
