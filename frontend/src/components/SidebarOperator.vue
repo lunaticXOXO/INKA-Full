@@ -87,6 +87,7 @@
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
                                 v-model = "btn1"
+                                v-if = 'visible'
                                 class="mx-auto blue white--text" 
                                 width="250" 
                                 :color="btn1.color"
@@ -196,10 +197,11 @@ export default {
             ],
             items: undefined,
             items2: undefined,
+            items3 : undefined,
             index : 0,
             btn1 : {
                 text : 'Operasi Mulai',
-                color : 'green'
+                color : 'green',
             },
             btn2 : undefined,
             snackbar : {
@@ -317,7 +319,31 @@ export default {
         },
 
         async fetchOperasiSiap(){
-
+            try{
+                const axios = require('axios')
+                const res = await axios.get('/operasi/get_operasi_siap/' + this.loginService.getCurrentUsername())
+                if(res.data.length == 0){
+                    console.log("Data kosong")
+                    this.btn1 = {
+                        disabled : true,
+                        visible : false,    
+                    }
+                    this.hasClicked = true
+                }
+                
+                else if(res.data.length > 0){
+                    this.btn1 = {
+                        disabled : false,
+                        visible : true, 
+                    }
+                    this.items3 = res.data
+                    console.log(res,this.items3)
+                    this.hasClicked = false
+                }
+            }catch(error){
+                console.log(error)
+            }
+    
         },
 
         async fetchMaterial(){
@@ -374,6 +400,7 @@ export default {
         }
      
     },
+
 }
 </script>
 
