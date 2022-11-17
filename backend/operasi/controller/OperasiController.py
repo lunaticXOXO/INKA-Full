@@ -142,7 +142,6 @@ def ShowProductInPantauOperasi():
 
 
 
-
 def StartOperation(idOperasi):
     conn = database.connector()
     cursor = conn.cursor()

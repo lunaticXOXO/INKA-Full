@@ -92,6 +92,30 @@ def GetOperasiByOperatorLogin(username):
     return make_response(jsonify(json_data),200)
 
 
+
+
+def IfOperasiSiap(username):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query_cek = "SELECT username FROM opd_r_operator WHERE username = '"+username+"'"
+    cursor.execute(query_cek)
+    records_cek = cursor.fetchall()
+
+    for data in records_cek:
+        username = data[0]
+    
+    query = "SELECT * FROM cpl_oprsiap WHERE stasiunKerja = '"+username+"' "
+    cursor.execute(query)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+   
+
+
 def GetMaterialbyOperatorLogin(username):
     conn = database.connector()
     cursor = conn.cursor()
@@ -110,6 +134,8 @@ def GetMaterialbyOperatorLogin(username):
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
     return make_response(jsonify(json_data),200)
+
+
 
 def AddLevelByOperator(code):
     conn = database.connector()

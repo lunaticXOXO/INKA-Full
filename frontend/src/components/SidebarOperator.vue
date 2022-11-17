@@ -62,14 +62,21 @@
                     <span class="mr-10">Foto</span>
                     <span class="ml-10">Nama</span>
                 </div>
+                
+                <v-img
+                    max-height="150"
+                    max-width="100" 
+                    src="../views/operator/foto/651100023.jpg"
+                    class="ma-6 mx-auto">
+                </v-img>
                 -->
                 <div class="mx-auto mt-10">
                     <v-text-field
                     width="250"
+                    dense
                     v-model="kodeMaterial"
                     @keyup.enter="parseBarcode"
-                    autofocus
-                    outlined>
+                    autofocus>
                     </v-text-field>
                    
                     <v-dialog
@@ -79,6 +86,7 @@
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
                                 v-model = "btn1"
+                                v-if = "visible"
                                 class="mx-auto blue white--text" 
                                 width="250" 
                                 :color="btn1.color"
@@ -162,6 +170,7 @@ import Login from "../services/Login.js"
 export default {
     data(){
         return {
+            visible : true,
             itemKey: undefined,
             singleSelect: false,
             selected: [],
@@ -188,10 +197,11 @@ export default {
             ],
             items: undefined,
             items2: undefined,
+            items3 : undefined,
             index : 0,
             btn1 : {
                 text : 'Operasi Mulai',
-                color : 'green'
+                color : 'green',
             },
             btn2 : undefined,
             snackbar : {
@@ -203,8 +213,10 @@ export default {
     },
 
     mounted() {
-        this.fetchOperasi(),
-        this.fetchMaterial()
+        //this.fetchOperasi(),
+        this.fetchMaterial(),
+        this.fetchOperasiSiap(),
+        this.fetchOperasiLayak()
     },
 
     methods: {
@@ -229,15 +241,15 @@ export default {
                 if(response.data.status == "berhasil"){
                     this.snackbar = {
                     show : true,
-                    message : "Insert Material Berhasil",
+                    message : "Material Gagal Login / Operator Login",
                     color : "green"
                     }
                 }
                 else if(response.data.status == "gagal"){
                     this.snackbar = {
                     show : true,
-                    message : "Insert Material Gagal",
-                    color : "red"
+                    message : "",
+                    color : "blue"
                     }
                 }
             }
@@ -251,10 +263,10 @@ export default {
             }
             setTimeout(() => {
                 location.reload()
-            }, 500)
+            }, 2000)
         },
 
-        async fetchOperasi(){
+        /*async fetchOperasi(){
             try{
                 const axios = require('axios')
                 console.log(this.loginService.getCurrentUsername())
@@ -301,6 +313,42 @@ export default {
                     }else{
                     console.log(res2)
                     }   
+                }
+            }catch(error){
+                console.log(error)
+            }
+        },*/
+
+
+        async fetchOperasiLayak(){
+            try{
+                const axios = require('axios')
+                const res = await axios.get('/operasi/get_operasi_siap/' + this.loginService.getCurrentUsername())
+                if(res.data.length == null){
+                    console.log("Data kosong")
+                }
+                else if(res.data.length > 0){
+                    this.items = res.data
+                    console.log(res,this.itemss)
+                }
+            }catch(error){
+                console.log(error)
+            }  
+        },
+
+        async fetchOperasiSiap(){
+            try{
+                const axios = require('axios')
+                console.log(this.loginService.getCurrentUsername())
+                this.namaOperator = this.loginService.getCurrentUsername()
+                const res = await axios.get('/operasi/get_operasi_siap/' + this.loginService.getCurrentUsername())
+                if(res.data.length == 0){
+                    console.log("Data kosong")
+                    this.visible = false
+                }else if(res.data.length > 0){
+                    this.visible = true
+                    this.items3 = res.data
+                    console.log(res,this.items3)
                 }
             }catch(error){
                 console.log(error)
@@ -361,6 +409,7 @@ export default {
         }
      
     },
+
 }
 </script>
 

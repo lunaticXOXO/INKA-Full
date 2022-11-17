@@ -1,16 +1,18 @@
 import db.db_handler as database
+from datetime import datetime
 from flask import request,make_response,jsonify
 
 def ScanBarcodeRFID():
   conn = database.connector()
   cursor = conn.cursor()
   
-  query = "INSERT INTO cpl_matlogin (stasiunKerja, idMat) VALUES (%s,%s)"
+  query = "INSERT INTO cpl_matlogin (stasiunKerja, idMat, waktu) VALUES (%s,%s,%s)"
   try:
       data = request.json
       stasiunKerja = data["stasiunKerja"]
       idMat = data["idMat"]
-      values = (stasiunKerja, idMat)
+      waktu = datetime.now()
+      values = (stasiunKerja, idMat, waktu)
       cursor.execute(query,values)
       conn.commit()
       hasil = {"status" : "berhasil"}
