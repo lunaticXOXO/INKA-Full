@@ -131,7 +131,7 @@
       async InsertStokMaterial(){
         try{
           const axios = require('axios');
-          const response = await axios.post('/material/add_new_materialstock',
+          const response = await axios.post('/material/add_material_stock_by_order/' + this.$route.params.id,
             { 
                 id : this.id,
                 merk : this.merk,
@@ -147,6 +147,8 @@
               message : "Tambah Stok Material Berhasil",
               color : "green"
             }
+
+            location.replace('/listStockMaterial')
           }
           else if(response.data.status == "gagal"){
             this.snackbar = {

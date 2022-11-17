@@ -546,7 +546,7 @@ def get_materialstock_by_order(order):
     hasil = GetMaterialStockbyOrder(order)
     return hasil
 
-@app.route('/material/add_material_stock_by_order/<orders>',methods = ['GET'])
+@app.route('/material/add_material_stock_by_order/<orders>',methods = ['POST'])
 def add_material_stock_by_order(orders):
     hasil = AddMaterialStockbyOrders(orders)
     return hasil
