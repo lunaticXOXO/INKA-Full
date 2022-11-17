@@ -213,9 +213,10 @@ export default {
     },
 
     mounted() {
-        this.fetchOperasi(),
+        //this.fetchOperasi(),
         this.fetchMaterial(),
-        this.fetchOperasiSiap()
+        this.fetchOperasiSiap(),
+        this.fetchOperasiLayak()
     },
 
     methods: {
@@ -265,7 +266,7 @@ export default {
             }, 2000)
         },
 
-        async fetchOperasi(){
+        /*async fetchOperasi(){
             try{
                 const axios = require('axios')
                 console.log(this.loginService.getCurrentUsername())
@@ -316,11 +317,29 @@ export default {
             }catch(error){
                 console.log(error)
             }
+        },*/
+
+
+        async fetchOperasiLayak(){
+            try{
+                const axios = require('axios')
+                const res = await axios.get('/operasi/get_operasi_siap/' + this.loginService.getCurrentUsername())
+                if(res.data.length == null){
+                    console.log("Data kosong")
+                }
+                else if(res.data.length > 0){
+                    this.items = res.data
+                    console.log(res,this.itemss)
+                }
+            }catch(error){
+                console.log(error)
+            }  
         },
 
         async fetchOperasiSiap(){
             try{
                 const axios = require('axios')
+                this.namaOperator = this.loginService.getCurrentUsername()
                 const res = await axios.get('/operasi/get_operasi_siap/' + this.loginService.getCurrentUsername())
                 if(res.data.length == 0){
                     console.log("Data kosong")
@@ -338,7 +357,7 @@ export default {
                     }
                     this.items3 = res.data
                     console.log(res,this.items3)
-                    this.hasClicked = false
+                   
                 }
             }catch(error){
                 console.log(error)
