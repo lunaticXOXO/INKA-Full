@@ -63,14 +63,21 @@
                     <span class="mr-10">Foto</span>
                     <span class="ml-10">Nama</span>
                 </div>
+                
+                <v-img
+                    max-height="150"
+                    max-width="100" 
+                    src="../views/operator/foto/651100023.jpg"
+                    class="ma-6 mx-auto">
+                </v-img>
                 -->
                 <div class="mx-auto mt-10">
                     <v-text-field
                     width="250"
+                    dense
                     v-model="kodeMaterial"
                     @keyup.enter="parseBarcode"
-                    autofocus
-                    outlined>
+                    autofocus>
                     </v-text-field>
                    
                     <v-dialog
@@ -205,7 +212,8 @@ export default {
 
     mounted() {
         this.fetchOperasi(),
-        this.fetchMaterial()
+        this.fetchMaterial(),
+        this.fetchOperasiSiap()
     },
 
     methods: {
@@ -230,15 +238,15 @@ export default {
                 if(response.data.status == "berhasil"){
                     this.snackbar = {
                     show : true,
-                    message : "Insert Material Berhasil",
+                    message : "Material Gagal Login / Operator Login",
                     color : "green"
                     }
                 }
                 else if(response.data.status == "gagal"){
                     this.snackbar = {
                     show : true,
-                    message : "Insert Material Gagal",
-                    color : "red"
+                    message : "",
+                    color : "blue"
                     }
                 }
             }
@@ -252,7 +260,7 @@ export default {
             }
             setTimeout(() => {
                 location.reload()
-            }, 500)
+            }, 2000)
         },
 
         async fetchOperasi(){
@@ -306,6 +314,10 @@ export default {
             }catch(error){
                 console.log(error)
             }
+        },
+
+        async fetchOperasiSiap(){
+
         },
 
         async fetchMaterial(){
