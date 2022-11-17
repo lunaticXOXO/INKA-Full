@@ -1,7 +1,6 @@
 import db.db_handler as database
-from flask import request,make_response,jsonify
 
-def ScanRFID():
+def ScanBarcodeRFID():
   conn = database.connector()
   cursor = conn.cursor()
   

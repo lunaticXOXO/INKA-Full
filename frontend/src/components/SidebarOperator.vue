@@ -242,6 +242,10 @@ export default {
                     color : "red"
                 }
             }
+            setTimeout(() => {
+                location.reload()
+            }, 2000)
+
         },
 
         async fetchOperasi(){
