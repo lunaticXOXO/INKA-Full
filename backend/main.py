@@ -545,6 +545,16 @@ def get_materialstock_by_order(order):
     hasil = GetMaterialStockbyOrder(order)
     return hasil
 
+@app.route('/material/add_material_stock_by_order/<orders>',methods = ['GET'])
+def add_material_stock_by_order(orders):
+    hasil = AddMaterialStockbyOrders(orders)
+    return hasil
+
+@app.route('/material/get_purchase_item_in_matstock/<orders>',methods = ['GET'])
+def get_purchase_item_in_matstock(orders):
+    hasil = GetPurchaseItemInMatStock(orders)
+    return hasil
+
 #MATERIAL ON WS
 @app.route('/material_ws/get_material_onws',methods = ['GET'])
 def get_material_onws():
