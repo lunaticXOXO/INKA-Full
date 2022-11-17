@@ -686,6 +686,12 @@ def add_operator_requirement_byprocess(id):
     hasil = AddOperatorRequirementByProcess(id)
     return hasil
 
+
+@app.route('/operasi/get_operasi_siap/<username>',methods = ['GET'])
+def get_operasi_siap(username):
+    hasil = IfOperasiSiap(username)
+    return hasil
+
 # Process Requirement
 @app.route('/requirement/add_process_requirement/<id>',methods = ['POST'])
 def add_process_requirement(id):
