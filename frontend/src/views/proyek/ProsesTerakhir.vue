@@ -67,7 +67,7 @@
       id: '',
       idRules: [
         v => !!v || 'ID Proyek is required',
-        v => (v && v.length <= 20 && v.length >= 1) || 'ID Proyek must be 20 characters',
+        v => (v && v.length <= 20 && v.length >= 1) || 'ID Proyek must be 1-20 characters',
       ],
     }),
 

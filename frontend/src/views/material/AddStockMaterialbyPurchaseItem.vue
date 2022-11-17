@@ -3,7 +3,7 @@
         class="mx-auto text-center mt-6"
         max-width="1000">
         <br>
-        <h1>Purchase Material Item for {{this.$route.params.id}}</h1>
+        <h1>Add Material Stock for Purchase Item {{this.$route.params.id}}</h1>
         <v-form
           class="pa-6"
           ref="form"
@@ -12,49 +12,46 @@
           lazy-validation>
         
           <v-text-field
-          v-model="id_item"
-          :counter="3"
+          v-model="id"
+          :counter="11"
           :rules="idRules"
-          label="ID Item"
+          label="ID"
           required
           ></v-text-field>
 
-          <v-autocomplete
-          item-text="supplierCode"
-          item-value="supplierCode"
-          v-model="supply"
-          :items="supplier"
-          label="Supplier"
-          ></v-autocomplete>
-
-          <v-autocomplete
-          item-text="materialTypeCode"
-          item-value="materialTypeCode"
-          v-model="type"
-          :items="materialType"
-          label="Material Type Code"
-          ></v-autocomplete>
-      
+          <v-text-field
+          v-model="merk"
+          label="Merk"
+          ></v-text-field>
+          
           <v-text-field
           v-model="quantity"
           label="Quantity"
           type="number"
           ></v-text-field>
-
+         
           <v-autocomplete
           item-text="id"
           item-value="id"
           v-model="unit"
-          :items="units"
+          :items="list_unit"
           label="Unit"
           ></v-autocomplete>
 
           <v-menu>
             <template v-slot:activator="{ on, attrs }">
-                <v-text-field :value="tanggalPurchase" v-bind="attrs" v-on="on" label="Schedulled Arrival" prepend-icon="mdi-calendar"></v-text-field>
+                <v-text-field :value="arrivalDate" v-bind="attrs" v-on="on" label="Arrival Date" prepend-icon="mdi-calendar"></v-text-field>
             </template>
-            <v-date-picker width="1000" v-model="tanggalPurchase"></v-date-picker>
+            <v-date-picker width="1000" v-model="arrivalDate"></v-date-picker>
           </v-menu>
+
+          <v-autocomplete
+          item-text="supplierCode"
+          item-value="supplierCode"
+          v-model="supplierCode"
+          :items="list_supplierCode"
+          label="Supplier Code"
+          ></v-autocomplete>
 
           <v-btn
             :disabled="!valid"
@@ -83,19 +80,18 @@
   export default {
     data: () => ({
       valid: true,
-      id_item : '',
+      id : '',
       idRules: [
         v => !!v || 'ID is required',
         v => (v && v.length <= 11 && v.length >= 1) || 'ID must be 1-11 characters',
       ],
-      supply: '',
-      supplier: undefined,
-      type: '',
-      materialType: undefined,
+      merk: '',
+      quantity: null,
       unit: '',
-      units: undefined,
-      quantity: '',
-      tanggalPurchase : null,
+      list_unit: undefined,
+      arrivalDate: '',
+      supplierCode: '',
+      list_supplierCode: undefined,
       snackbar : {
         show : false,
         color : null,
@@ -104,14 +100,13 @@
     }),
 
     mounted(){
-      this.fetchMaterialTypeSupplier(),
       this.fetchUnit()
     },
   
     methods: {
       validate () {
         if(this.$refs.form.validate()){
-          this.InsertMaterialItemByPurchaseMaterial()
+          this.InsertStokMaterial()
         }
       },
 
@@ -120,31 +115,13 @@
       },
 
       submitHandler() {
-        console.log(this.id_item)
-        console.log(this.supply)
-        console.log(this.type)
+        console.log(this.id)
+        console.log(this.merk)
         console.log(this.quantity)
         console.log(this.unit)
-        console.log(this.tanggalPurchase)
+        console.log(this.arrivalDate)
+        console.log(this.supplierCode)
       },  
-
-      async fetchMaterialTypeSupplier(){
-        try{
-            const axios = require('axios')
-            const res = await axios.get('/supplier_material/show_material_supplier')
-            if (res.data == null){
-                alert("Material Type/Supplier Kosong")
-            }else{
-                this.supplier = res.data
-                this.materialType = res.data
-                console.log(res,this.supplier)
-                console.log(res,this.materialType)
-            }
-        }catch(error){
-            alert(error)
-            console.log(error)
-        }
-      },
 
       async fetchUnit(){
         try{
@@ -153,8 +130,8 @@
             if (res.data == null){
                 alert("Material Unit Kosong")
             }else{
-                this.units = res.data
-                console.log(res,this.units)
+                this.list_unit = res.data
+                console.log(res,this.list_unit)
             }
         }catch(error){
             alert(error)
@@ -162,33 +139,31 @@
         }
       },
 
-      async InsertMaterialItemByPurchaseMaterial(){
+      async InsertStokMaterial(){
         try{
           const axios = require('axios');
-          const response = await axios.post('/material/add_purchase_item_by_idpurchase/'  + this.$route.params.id,
+          const response = await axios.post('/material/add_new_materialstock',
             { 
-              id_item : this.id_item,
-              supplierCode: this.supply,
-              materialTypeCode: this.type,
-              quantity: this.quantity,
-              unit: this.unit,
-              schedulledArrival: this.tanggalPurchase
+                id : this.id,
+                merk : this.merk,
+                quantity : this.quantity,
+                unit : this.unit,
+                arrivalDate : this.arrivalDate,
+                supplierCode : this.supplierCode
             }
           );
           console.log(response,this.data)
           if(response.data.status == "berhasil"){
             this.snackbar = {
               show : true,
-              message : "Pesan Material Item Berhasil",
+              message : "Tambah Stok Material Berhasil",
               color : "green"
             }
-
-            location.replace('/listPurchaseMaterialItem')
           }
           else if(response.data.status == "gagal"){
             this.snackbar = {
               show : true,
-              message : "Pesan Material Item Gagal",
+              message : "Tambah Stok Material Gagal",
               color : "red"
             }
           }
@@ -197,7 +172,7 @@
           console.log(error)
           this.snackbar = {
             show : true,
-            message : "Pesan Material Item Error",
+            message : "Tambah Stok Material Error",
             color : "red"
           }
         }
