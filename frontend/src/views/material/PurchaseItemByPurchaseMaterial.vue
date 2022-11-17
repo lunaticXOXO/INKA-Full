@@ -172,7 +172,7 @@
               materialTypeCode: this.type,
               quantity: this.quantity,
               unit: this.unit,
-              schedulledArrival: this.tanggal
+              schedulledArrival: this.tanggalPurchase
             }
           );
           console.log(response,this.data)
@@ -182,6 +182,8 @@
               message : "Pesan Material Item Berhasil",
               color : "green"
             }
+
+            location.replace('/listPurchaseMaterialItem')
           }
           else if(response.data.status == "gagal"){
             this.snackbar = {
