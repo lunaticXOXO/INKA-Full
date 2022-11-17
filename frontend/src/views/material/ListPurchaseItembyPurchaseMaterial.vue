@@ -16,7 +16,7 @@
             :items = "prcItembyprcMat">
             
           <template v-slot:[`item.aksi`]="{ item }">
-                <router-link :to="{name : 'List Stock Material By Orders',params:{id : `${item.id}`}}">
+                <router-link :to="{name : 'List Stock Material By Orders',params : {id : `${item.id_item}`}}">
                   <v-btn class="mx-1" x-small color="blue">
                       <v-icon small dark>mdi-check</v-icon>
                   </v-btn>
@@ -64,9 +64,7 @@
             {text : 'Nama',             value : 'nama'},
             {text : 'Purchase Date',    value : 'purchaseDate'},
             {text : 'Purchaser Name',   value : 'purchaserName'},
-
           ],
-
           prcItembyprcMat : [],
           purchasematerial : []
         }
