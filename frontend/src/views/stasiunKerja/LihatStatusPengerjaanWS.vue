@@ -556,6 +556,7 @@ export default {
 
 <template>
   <v-app>
+    <!--
     <h3 class="ml-10 mt-6">Pilih Stasiun Kerja</h3>
     <v-card class="mx-auto" max-width="1250" elevation="0">
           <v-container fluid>
@@ -566,7 +567,7 @@ export default {
                       :cols="item.flex">
                       <v-card class="mx-auto justify-center text-center" elevation="0" outlined>
                           <div class="d-flex ml-2 text-center">
-                              <v-checkbox></v-checkbox>
+                              <v-checkbox v-model="pilihan"></v-checkbox>
                               <p class="mt-5">{{ item.name }}</p>  
                           </div>
                       </v-card>
@@ -574,6 +575,7 @@ export default {
               </v-row>
           </v-container>
       </v-card>
+    -->
     <h3 class="ml-10 mt-6">Tanggal Mulai Pencarian</h3>
     <v-card class="ml-2" max-width="400" elevation="0">
       <v-menu class="ml-10 mt-6">
@@ -614,63 +616,7 @@ export default {
         </g-gantt-row>
       </g-gantt-chart>
     </v-card>
-    
-    <v-card class="mt-10 mx-10">
-      <h2>JSON Auto</h2>
-      <g-gantt-chart
-        :chart-start="myChartStartCustom"
-        :chart-end="myChartEndCustom"
-      >
-        <g-gantt-row
-          v-for="row in items"
-          :key="row.namaStasiunKerja"
-          :label="row.namaStasiunKerja"
-          :bars="items"
-          bar-start="rencanaMulai"
-          bar-end="rencanaSelesai"
-        />
-      </g-gantt-chart>
-    </v-card>
     -->
-    <div class="text-center">
-      <v-dialog
-        v-model="dialog"
-        width="500"
-      >
-        <v-card>
-          <v-card-title class="text-h5 grey lighten-2">
-            Detail Operasi
-          </v-card-title>
-
-          <v-card-text>
-            <br>
-            <p>ID Operasi : 0322090600011</p>
-            <p>Proses : Bogie Assy NON Handbrake</p>
-            <p>Lokasi Stasiun Kerja : FITTING BOGIE ACCESORIES 2</p>
-            <p>Material : </p>
-            <p>Operator : </p>
-            <br>
-            <p>Rencana Mulai : 09 September 2022 9.00</p>
-            <p>Rencana Selesai : 09 September 2022 13.00</p>
-            <p>Mulai : </p>
-            <p>Selesai : </p>
-          </v-card-text>
-
-          <v-divider></v-divider>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              color="primary"
-              text
-              @click="dialog = false"
-            >
-              Back
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </div>
     
     <v-card class="mt-10 mx-10">
       <h2>Jadwal Kerja WS</h2>
@@ -683,14 +629,14 @@ export default {
         :theme="selectedTheme"
       >
         <g-gantt-row
-          label="WS8"
-          :bars="items2"
+          label="WS00"
+          :bars="itemsWS00"
           bar-start="rencanaMulai"
           bar-end="rencanaSelesai"
         >
           <template #bar-label="{bar}">
             <v-dialog
-              v-model="dialog2"
+              v-model="dialogWS00"
               width="500"
               :retain-focus="false"
             >
@@ -716,13 +662,10 @@ export default {
                   <p>ID Operasi : {{bar.idOperasi}}</p>
                   <p>Proses : {{bar.namaProses}}</p>
                   <p>Lokasi Stasiun Kerja : {{bar.namaStasiunKerja}}</p>
-                  <p>Material : </p>
                   <p>Operator : </p>
                   <br>
                   <p>Rencana Mulai : {{bar.rencanaMulai}}</p>
                   <p>Rencana Selesai : {{bar.rencanaSelesai}}</p>
-                  <p>Mulai : </p>
-                  <p>Selesai : </p>
                 </v-card-text>
 
                 <v-divider></v-divider>
@@ -732,7 +675,7 @@ export default {
                   <v-btn
                     color="primary"
                     text
-                    @click="dialog2 = false"
+                    @click="dialogWS00 = false"
                   >
                     Back
                   </v-btn>
@@ -741,46 +684,522 @@ export default {
             </v-dialog>
           </template>
         </g-gantt-row>
-        <!--
+
         <g-gantt-row
-          label="WS9"
-          :bars="items"
-          bar-start=""
-          bar-end=""
-        >
-        </g-gantt-row>
-        <g-gantt-row
-          label="WS10"
-          :bars="items"
-          bar-start=""
-          bar-end=""
-        >
-        </g-gantt-row>
-        -->
-      </g-gantt-chart>
-    </v-card>
-    <!--
-    <v-card class="mt-10 mx-10">
-      <h2>JSON Adjust</h2>
-      <g-gantt-chart
-        :chart-start="myChartStartCustom"
-        :chart-end="myChartEndCustom"
-      >
-        <g-gantt-row
-          v-for="row in items3"
-          :key="row.label"
-          :label="row.label"
-          :bars="row.bars"
+          label="WS01"
+          :bars="itemsWS01"
           bar-start="rencanaMulai"
           bar-end="rencanaSelesai"
         >
-          <template #bar-label="{bar}">
-            <span>{{bar.namaProses}}</span>
+        <template #bar-label="{bar}">
+            <v-dialog
+              v-model="dialogWS01"
+              width="500"
+              :retain-focus="false"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  class="font-weight-thin"
+                  color="#222222"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                {{bar.namaProses}}
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="text-h5 grey lighten-2">
+                  Detail Operasi
+                </v-card-title>
+
+                <v-card-text>
+                  <br>
+                  <p>ID Operasi : {{bar.idOperasi}}</p>
+                  <p>Proses : {{bar.namaProses}}</p>
+                  <p>Lokasi Stasiun Kerja : {{bar.namaStasiunKerja}}</p>
+                  <p>Operator : </p>
+                  <br>
+                  <p>Rencana Mulai : {{bar.rencanaMulai}}</p>
+                  <p>Rencana Selesai : {{bar.rencanaSelesai}}</p>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="dialogWS01 = false"
+                  >
+                    Back
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </template>
         </g-gantt-row>
+
+        <g-gantt-row
+          label="WS02"
+          :bars="itemsWS02"
+          bar-start="rencanaMulai"
+          bar-end="rencanaSelesai"
+        >
+        <template #bar-label="{bar}">
+            <v-dialog
+              v-model="dialogWS02"
+              width="500"
+              :retain-focus="false"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  class="font-weight-thin"
+                  color="#222222"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                {{bar.namaProses}}
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="text-h5 grey lighten-2">
+                  Detail Operasi
+                </v-card-title>
+
+                <v-card-text>
+                  <br>
+                  <p>ID Operasi : {{bar.idOperasi}}</p>
+                  <p>Proses : {{bar.namaProses}}</p>
+                  <p>Lokasi Stasiun Kerja : {{bar.namaStasiunKerja}}</p>
+                  <p>Operator : </p>
+                  <br>
+                  <p>Rencana Mulai : {{bar.rencanaMulai}}</p>
+                  <p>Rencana Selesai : {{bar.rencanaSelesai}}</p>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="dialogWS02 = false"
+                  >
+                    Back
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </template>
+        </g-gantt-row>
+
+        <g-gantt-row
+          label="WS03"
+          :bars="itemsWS03"
+          bar-start="rencanaMulai"
+          bar-end="rencanaSelesai"
+        >
+        <template #bar-label="{bar}">
+            <v-dialog
+              v-model="dialogWS03"
+              width="500"
+              :retain-focus="false"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  class="font-weight-thin"
+                  color="#222222"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                {{bar.namaProses}}
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="text-h5 grey lighten-2">
+                  Detail Operasi
+                </v-card-title>
+
+                <v-card-text>
+                  <br>
+                  <p>ID Operasi : {{bar.idOperasi}}</p>
+                  <p>Proses : {{bar.namaProses}}</p>
+                  <p>Lokasi Stasiun Kerja : {{bar.namaStasiunKerja}}</p>
+                  <p>Operator : </p>
+                  <br>
+                  <p>Rencana Mulai : {{bar.rencanaMulai}}</p>
+                  <p>Rencana Selesai : {{bar.rencanaSelesai}}</p>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="dialogWS03 = false"
+                  >
+                    Back
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </template>
+        </g-gantt-row>
+
+        <g-gantt-row
+          label="WS04"
+          :bars="itemsWS04"
+          bar-start="rencanaMulai"
+          bar-end="rencanaSelesai"
+        >
+        <template #bar-label="{bar}">
+            <v-dialog
+              v-model="dialogWS04"
+              width="500"
+              :retain-focus="false"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  class="font-weight-thin"
+                  color="#222222"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                {{bar.namaProses}}
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="text-h5 grey lighten-2">
+                  Detail Operasi
+                </v-card-title>
+
+                <v-card-text>
+                  <br>
+                  <p>ID Operasi : {{bar.idOperasi}}</p>
+                  <p>Proses : {{bar.namaProses}}</p>
+                  <p>Lokasi Stasiun Kerja : {{bar.namaStasiunKerja}}</p>
+                  <p>Operator : </p>
+                  <br>
+                  <p>Rencana Mulai : {{bar.rencanaMulai}}</p>
+                  <p>Rencana Selesai : {{bar.rencanaSelesai}}</p>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="dialogWS04 = false"
+                  >
+                    Back
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </template>
+        </g-gantt-row>
+
+        <g-gantt-row
+          label="WS05"
+          :bars="itemsWS05"
+          bar-start="rencanaMulai"
+          bar-end="rencanaSelesai"
+        >
+        <template #bar-label="{bar}">
+            <v-dialog
+              v-model="dialogWS05"
+              width="500"
+              :retain-focus="false"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  class="font-weight-thin"
+                  color="#222222"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                {{bar.namaProses}}
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="text-h5 grey lighten-2">
+                  Detail Operasi
+                </v-card-title>
+
+                <v-card-text>
+                  <br>
+                  <p>ID Operasi : {{bar.idOperasi}}</p>
+                  <p>Proses : {{bar.namaProses}}</p>
+                  <p>Lokasi Stasiun Kerja : {{bar.namaStasiunKerja}}</p>
+                  <p>Operator : </p>
+                  <br>
+                  <p>Rencana Mulai : {{bar.rencanaMulai}}</p>
+                  <p>Rencana Selesai : {{bar.rencanaSelesai}}</p>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="dialogWS05 = false"
+                  >
+                    Back
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </template>
+        </g-gantt-row>
+
+        <g-gantt-row
+          label="WS06"
+          :bars="itemsWS06"
+          bar-start="rencanaMulai"
+          bar-end="rencanaSelesai"
+        >
+        <template #bar-label="{bar}">
+            <v-dialog
+              v-model="dialogWS06"
+              width="500"
+              :retain-focus="false"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  class="font-weight-thin"
+                  color="#222222"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                {{bar.namaProses}}
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="text-h5 grey lighten-2">
+                  Detail Operasi
+                </v-card-title>
+
+                <v-card-text>
+                  <br>
+                  <p>ID Operasi : {{bar.idOperasi}}</p>
+                  <p>Proses : {{bar.namaProses}}</p>
+                  <p>Lokasi Stasiun Kerja : {{bar.namaStasiunKerja}}</p>
+                  <p>Operator : </p>
+                  <br>
+                  <p>Rencana Mulai : {{bar.rencanaMulai}}</p>
+                  <p>Rencana Selesai : {{bar.rencanaSelesai}}</p>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="dialogWS06 = false"
+                  >
+                    Back
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </template>
+        </g-gantt-row>
+
+        <g-gantt-row
+          label="WS07"
+          :bars="itemsWS07"
+          bar-start="rencanaMulai"
+          bar-end="rencanaSelesai"
+        >
+        <template #bar-label="{bar}">
+            <v-dialog
+              v-model="dialogWS07"
+              width="500"
+              :retain-focus="false"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  class="font-weight-thin"
+                  color="#222222"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                {{bar.namaProses}}
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="text-h5 grey lighten-2">
+                  Detail Operasi
+                </v-card-title>
+
+                <v-card-text>
+                  <br>
+                  <p>ID Operasi : {{bar.idOperasi}}</p>
+                  <p>Proses : {{bar.namaProses}}</p>
+                  <p>Lokasi Stasiun Kerja : {{bar.namaStasiunKerja}}</p>
+                  <p>Operator : </p>
+                  <br>
+                  <p>Rencana Mulai : {{bar.rencanaMulai}}</p>
+                  <p>Rencana Selesai : {{bar.rencanaSelesai}}</p>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="dialogWS07 = false"
+                  >
+                    Back
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </template>
+        </g-gantt-row>
+        <g-gantt-row
+          label="WS08"
+          :bars="itemsWS08"
+          bar-start="rencanaMulai"
+          bar-end="rencanaSelesai"
+        >
+        <template #bar-label="{bar}">
+            <v-dialog
+              v-model="dialogWS08"
+              width="500"
+              :retain-focus="false"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  block
+                  class="font-weight-thin"
+                  color="#222222"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                {{bar.namaProses}}
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="text-h5 grey lighten-2">
+                  Detail Operasi
+                </v-card-title>
+
+                <v-card-text>
+                  <br>
+                  <p>ID Operasi : {{bar.idOperasi}}</p>
+                  <p>Proses : {{bar.namaProses}}</p>
+                  <p>Lokasi Stasiun Kerja : {{bar.namaStasiunKerja}}</p>
+                  <p>Operator : </p>
+                  <br>
+                  <p>Rencana Mulai : {{bar.rencanaMulai}}</p>
+                  <p>Rencana Selesai : {{bar.rencanaSelesai}}</p>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="dialogWS08 = false"
+                  >
+                    Back
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </template>
+        </g-gantt-row>
+        <g-gantt-row
+          label="WS09"
+          :bars="itemsWS09"
+          bar-start="rencanaMulai"
+          bar-end="rencanaSelesai"
+        >
+        <template #bar-label="{bar}">
+            <v-dialog
+              v-model="dialogWS09"
+              width="500"
+              :retain-focus="false"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  class="font-weight-thin"
+                  color="#222222"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                {{bar.namaProses}}
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="text-h5 grey lighten-2">
+                  Detail Operasi
+                </v-card-title>
+
+                <v-card-text>
+                  <br>
+                  <p>ID Operasi : {{bar.idOperasi}}</p>
+                  <p>Proses : {{bar.namaProses}}</p>
+                  <p>Lokasi Stasiun Kerja : {{bar.namaStasiunKerja}}</p>
+                  <p>Operator : </p>
+                  <br>
+                  <p>Rencana Mulai : {{bar.rencanaMulai}}</p>
+                  <p>Rencana Selesai : {{bar.rencanaSelesai}}</p>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="dialogWS09 = false"
+                  >
+                    Back
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </template>
+        </g-gantt-row>
+
       </g-gantt-chart>
     </v-card>
-    -->
+   
   </v-app>
 </template>
 
@@ -804,30 +1223,47 @@ export default {
 
   data(){
     return {
-      items: undefined,
+      itemsWS00: undefined,
+      itemsWS01: undefined,
+      itemsWS02: undefined,
+      itemsWS03: undefined,
+      itemsWS04: undefined,
+      itemsWS05: undefined,
+      itemsWS06: undefined,
+      itemsWS07: undefined,
+      itemsWS08: undefined,
+      itemsWS09: undefined,
+      pilihan: undefined,
       rowHeight: 50,
       rowLabelWidth: 5,
       grid: true,
       selectedTheme: "vue",
-      dialog: false,
-      dialog2: undefined,
+      dialogWS00: undefined,
+      dialogWS01: undefined,
+      dialogWS02: undefined,
+      dialogWS03: undefined,
+      dialogWS04: undefined,
+      dialogWS05: undefined,
+      dialogWS06: undefined,
+      dialogWS07: undefined,
+      dialogWS08: undefined,
+      dialogWS09: undefined,
       tanggalPencarian: '',
       myChartStart: "2020-03-01 00:00",
-      myChartEnd: "2020-03-03 00:00",
+      myChartEnd: "2020-03-01 23:00",
       myChartStartCustom: dateTime,
       myChartEndCustom: dateTime2,
-      //myChartStartCustom:'',
-      //myChartEndCustom:'',
       itemsWS: [
-        { name: 'MINOR BUSHING',                flex: 2 },
-        { name: 'MINOR AXLE BOX & WHEEL ASSY',  flex: 3 },
-        { name: 'MINOR ASSY BOLSTER',           flex: 3 },
-        { name: 'ASSY BRAKE RIGING',            flex: 2 },
-        { name: 'BOGIE FITTING 1',              flex: 2 },
-        { name: 'BOGIE FITTING 2',              flex: 2 },
-        { name: 'FITTING ACCESORIES BOGIE 1',   flex: 3 },
-        { name: 'FITTING ACCESORIES BOGIE 2',   flex: 3 },
-        { name: 'LOAD TEST',                    flex: 2 },
+        { name: 'WORKSTATION00',   flex: 2 },
+        { name: 'WORKSTATION01',   flex: 2 },
+        { name: 'WORKSTATION02',   flex: 2 },
+        { name: 'WORKSTATION03',   flex: 2 },
+        { name: 'WORKSTATION04',   flex: 2 },
+        { name: 'WORKSTATION05',   flex: 2 },
+        { name: 'WORKSTATION06',   flex: 2 },
+        { name: 'WORKSTATION07',   flex: 2 },
+        { name: 'WORKSTATION08',   flex: 2 },
+        { name: 'WORKSTATION09',   flex: 2 },
       ],
       items2:[
         {
@@ -888,54 +1324,141 @@ export default {
           ]
         }
       ],
-      
-      items3:[
-        {
-          label: "",
-          bars: [
-            {
-              rencanaMulai: "",
-              rencanaSelesai: ""
-            }
-          ]
-        }
-      ],
     }
   },
 
   mounted(){
-    this.fetchDataStatusWS()
+    this.fetchDataStatusWS00(),
+    this.fetchDataStatusWS01(),
+    this.fetchDataStatusWS02(),
+    this.fetchDataStatusWS03(),
+    this.fetchDataStatusWS04(),
+    this.fetchDataStatusWS05(),
+    this.fetchDataStatusWS06(),
+    this.fetchDataStatusWS07(),
+    this.fetchDataStatusWS08(),
+    this.fetchDataStatusWS09()
   },
 
   methods:{
-    async fetchDataStatusWS(){
+    async fetchDataStatusWS00(){
       const axios = require('axios')
-      const res = await axios.get('/stasiun_kerja/status_pengerjaan_stasiunkerja')
+      const res = await axios.get('/operasi/get_operasi_gantt/ws00')
       if(res.data == null){
         console.log("Data Pengerjaan Kosong")
       }else{
-        this.items = res.data
-        //var stringify = JSON.stringify(res.data[0].rencanaMulai)
-        //var hasil = JSON.parse(stringify)
-        //console.log(hasil)
-        //this.items3.label = res.data[0].namaStasiunKerja
-        //this.items3.bars.rencanaMulai = res.data[0].rencanaMulai
-        //this.items3.bars.rencanaSelesai = res.data[0].rencanaSelesai
-        //console.log(this.items3.label)
-        //console.log(this.items3.bars[0].rencanaMulai)
-        //console.log(this.items3.bars[0].rencanaSelesai)
-        //console.log(res.data[0].rencanaMulai)
-        console.log(res,this.items)
+        this.itemsWS00 = res.data
+        console.log(res,this.itemsWS00)
+      }
+    },
+
+    async fetchDataStatusWS01(){
+      const axios = require('axios')
+      const res = await axios.get('/operasi/get_operasi_gantt/ws01')
+      if(res.data == null){
+        console.log("Data Pengerjaan Kosong")
+      }else{
+        this.itemsWS01 = res.data
+        console.log(res,this.itemsWS01)
+      }
+    },
+
+    async fetchDataStatusWS02(){
+      const axios = require('axios')
+      const res = await axios.get('/operasi/get_operasi_gantt/ws02')
+      if(res.data == null){
+        console.log("Data Pengerjaan Kosong")
+      }else{
+        this.itemsWS02 = res.data
+        console.log(res,this.itemsWS02)
+      }
+    },
+
+    async fetchDataStatusWS03(){
+      const axios = require('axios')
+      const res = await axios.get('/operasi/get_operasi_gantt/ws03')
+      if(res.data == null){
+        console.log("Data Pengerjaan Kosong")
+      }else{
+        this.itemsWS03 = res.data
+        console.log(res,this.itemsWS03)
+      }
+    },
+
+    async fetchDataStatusWS04(){
+      const axios = require('axios')
+      const res = await axios.get('/operasi/get_operasi_gantt/ws04')
+      if(res.data == null){
+        console.log("Data Pengerjaan Kosong")
+      }else{
+        this.itemsWS04 = res.data
+        console.log(res,this.itemsWS04)
+      }
+    },
+
+    async fetchDataStatusWS05(){
+      const axios = require('axios')
+      const res = await axios.get('/operasi/get_operasi_gantt/ws05')
+      if(res.data == null){
+        console.log("Data Pengerjaan Kosong")
+      }else{
+        this.itemsWS05 = res.data
+        console.log(res,this.itemsWS05)
+      }
+    },
+
+    async fetchDataStatusWS06(){
+      const axios = require('axios')
+      const res = await axios.get('/operasi/get_operasi_gantt/ws06')
+      if(res.data == null){
+        console.log("Data Pengerjaan Kosong")
+      }else{
+        this.itemsWS06 = res.data
+        console.log(res,this.itemsWS06)
+      }
+    },
+
+    async fetchDataStatusWS07(){
+      const axios = require('axios')
+      const res = await axios.get('/operasi/get_operasi_gantt/ws07')
+      if(res.data == null){
+        console.log("Data Pengerjaan Kosong")
+      }else{
+        this.itemsWS07 = res.data
+        console.log(res,this.itemsWS07)
+      }
+    },
+
+    async fetchDataStatusWS08(){
+      const axios = require('axios')
+      const res = await axios.get('/operasi/get_operasi_gantt/ws08')
+      if(res.data == null){
+        console.log("Data Pengerjaan Kosong")
+      }else{
+        this.itemsWS08 = res.data
+        console.log(res,this.itemsWS08)
+      }
+    },
+
+    async fetchDataStatusWS09(){
+      const axios = require('axios')
+      const res = await axios.get('/operasi/get_operasi_gantt/ws09')
+      if(res.data == null){
+        console.log("Data Pengerjaan Kosong")
+      }else{
+        this.itemsWS09 = res.data
+        console.log(res,this.itemsWS09)
       }
     },
 
     validate(){
       const date = new Date(this.tanggalPencarian)
-      date.setDate(date.getDate() + 2);
+      date.setDate(date.getDate() + 1);
       this.myChartStartCustom = this.tanggalPencarian
       this.myChartEndCustom = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
       console.log(this.myChartStartCustom)
       console.log(this.myChartEndCustom)
+      console.log(this.pilihan)
     },
   }
 }

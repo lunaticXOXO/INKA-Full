@@ -45,4 +45,18 @@ def AddNewMaterialStock():
     return hasil
 
 
+def GetMaterialStockbyOrder(order):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id,a.orders,a.merk,a.quantity,a.unit,a.arrivalDate FROM mat_d_materialstock a JOIN mat_d_purchaseitem b ON b.id_item = a.orders WHERE a.orders = '"+order+"'"
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
 
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)

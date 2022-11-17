@@ -518,6 +518,10 @@ def add_purchase_item_by_idpurchase(idPurchase):
     hasil = PurchaseMaterialItemByIDPurchase(idPurchase)
     return hasil
 
+@app.route('/material/get_purchasematerial_in_purchaseitem/<idPurchase>',methods = ['GET'])
+def get_purchasematerial_in_purchaseitem(idPurchase):
+    hasil = GetPurchaseMaterialinPurchaseItem(idPurchase)
+    return hasil
 
 @app.route('/material/get_material_item_by_idpurchase/<idPurchase>',methods = ['GET'])
 def get_material_item_by_idpurchase(idPurchase):
@@ -533,6 +537,12 @@ def get_material_stock():
 @app.route('/material/add_new_materialstock',methods = ['POST'])
 def add_new_materialstock():
     hasil = AddNewMaterialStock()
+    return hasil
+
+
+@app.route('/material/get_materialstock_by_order/<order>',methods = ['GET'])
+def get_materialstock_by_order(order):
+    hasil = GetMaterialStockbyOrder(order)
     return hasil
 
 #MATERIAL ON WS
@@ -598,6 +608,17 @@ def show_product_inoperasi(id_product):
 @app.route('/operasi/show_product_inpantauoperasi',methods = ['GET'])
 def show_product_inpantauoperasi():
     hasil = ShowProductInPantauOperasi()
+    return hasil
+
+@app.route('/operasi/generate_date_str',methods = ['POST'])
+def generate_date_str():
+    hasil = ConvertDateOperation()
+    return hasil
+
+
+@app.route('/operasi/get_operasi_gantt/<stasiunKerja>',methods = ['GET'])
+def get_operasi_gantt(stasiunKerja):
+    hasil = GetOperasiGanttChart(stasiunKerja)
     return hasil
 
 #Operator

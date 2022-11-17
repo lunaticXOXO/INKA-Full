@@ -188,6 +188,8 @@ def AccumulatePercentageProyek(idOperasi):
         print("Idproyek : ",id_proyek,"date : ",tanggalSelesai,"date_str : ",tanggalStr,"percentage : ",nilai_percentage)
         cursor.execute(query_insert_cpl,values4)
         conn.commit()
+        cursor.close()
+        conn.close()
         hasil = {"status" : "berhasil"}
 
     except Exception as e:
@@ -199,7 +201,7 @@ def AccumulatePercentageProyek(idOperasi):
 def showpercentageProgressProyek():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT selesai_str as 'x',percentage as 'y' FROM cpl_progress a GROUP BY selesai_str"
+    query = "SELECT selesai_str as 'x',percentage as 'y',proyek as 'z' FROM cpl_progress a GROUP BY selesai_str"
     cursor.execute(query)
 
     records = cursor.fetchall()

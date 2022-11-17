@@ -99,7 +99,7 @@
         try{
           const axios = require('axios');
           const response = await axios.post('/material/purchase_material',
-            { 
+            {   
               id : this.id,
               nama: this.nama,
               purchaserName: this.purchaser,
@@ -113,6 +113,8 @@
               message : "Pesan Material Berhasil",
               color : "green"
             }
+
+            location.replace('/listPurchaseMaterial')
           }
           else if(response.data.status == "gagal"){
             this.snackbar = {

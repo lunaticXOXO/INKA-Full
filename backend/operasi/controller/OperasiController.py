@@ -75,13 +75,56 @@ def GetProcessofProduct(idProduk):
 
 
 
+def ConvertDateOperation():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT rencanaMulai,rencanaSelesai,rencanaMulai_str,rencanaSelesai_str FROM prd_d_operasi"
+    cursor.execute(query)
+    records = []
+    records = cursor.fetchall()
+    date_tanggal_mulai = ""
+    date_tanggal_selesai = ""
+    date_tanggal_mulai_str = ""
+    date_tanggal_selesai_str = ""
+    print(records)
+    try:
+    #UPDATE `prd_d_operasi` SET `rencanaMulai_str`= NULL ,`rencanaSelesai_str`= NULL  WHERE produk = '221028000'
+        for data in records:
+            date_tanggal_mulai = data[0]
+            date_tanggal_selesai = data[1]
+            query_insert = "UPDATE prd_d_operasi SET rencanaMulai_str = %s, rencanaSelesai_str = %s WHERE rencanaMulai = %s AND rencanaSelesai = %s"
+            temp1 = ""
+            temp2 = ""
+            date_tanggal_mulai_str = date_tanggal_mulai.strftime("%Y-%m-%d %H:%M")
+            date_tanggal_selesai_str = date_tanggal_selesai.strftime("%Y-%m-%d %H:%M")
+            temp1 = date_tanggal_mulai_str
+            temp2 = date_tanggal_selesai_str
+            values = (temp1,temp2,date_tanggal_mulai,date_tanggal_selesai)
+            cursor.execute(query_insert,values)
+            conn.commit()
+        hasil = {"status" : "berhasil"} 
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
 
+    cursor.close()
+    conn.close()     
+    return hasil  
 
+def GetOperasiGanttChart(stasiunKerja):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id AS 'idOperasi', b.nama AS 'namaProses', c.keterangan AS 'namaStasiunKerja' , a.rencanaMulai_str AS 'rencanaMulai',a.rencanaSelesai_str AS 'rencanaSelesai' FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN gen_r_stasiunkerja c ON c.id = a.stasiunKerja WHERE c.id = '"+stasiunKerja+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
 
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
 
-
-
-
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+        
 
 def ShowProductInPantauOperasi():
     conn = database.connector()
