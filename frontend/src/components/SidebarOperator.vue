@@ -87,7 +87,7 @@
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
                                 v-model = "btn1"
-                                v-if = 'visible'
+                                v-if = "visible"
                                 class="mx-auto blue white--text" 
                                 width="250" 
                                 :color="btn1.color"
@@ -171,6 +171,7 @@ import Login from "../services/Login.js"
 export default {
     data(){
         return {
+            visible : true,
             itemKey: undefined,
             singleSelect: false,
             selected: [],
@@ -321,29 +322,20 @@ export default {
         async fetchOperasiSiap(){
             try{
                 const axios = require('axios')
+                console.log(this.loginService.getCurrentUsername())
+                this.namaOperator = this.loginService.getCurrentUsername()
                 const res = await axios.get('/operasi/get_operasi_siap/' + this.loginService.getCurrentUsername())
                 if(res.data.length == 0){
                     console.log("Data kosong")
-                    this.btn1 = {
-                        disabled : true,
-                        visible : false,    
-                    }
-                    this.hasClicked = true
-                }
-                
-                else if(res.data.length > 0){
-                    this.btn1 = {
-                        disabled : false,
-                        visible : true, 
-                    }
+                    this.visible = false
+                }else if(res.data.length > 0){
+                    this.visible = true
                     this.items3 = res.data
                     console.log(res,this.items3)
-                    this.hasClicked = false
                 }
             }catch(error){
                 console.log(error)
             }
-    
         },
 
         async fetchMaterial(){
