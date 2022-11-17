@@ -68,6 +68,7 @@
   
     mounted(){
         this.fetchMaterialByOrder()
+   
     },
 
     methods: {
@@ -75,6 +76,22 @@
         try{
           const axios = require('axios');
           const res = await axios.get('/material/get_materialstock_by_order/' + this.$route.params.id);
+          if (res.data == null){
+            alert('Stock Kosong')
+          }else{
+            this.types = res.data
+            console.log(res,this.types)
+          }
+        }
+        catch(error){
+          console.log(error)
+        }
+      },
+
+      async fetchPurchaseItemInStock(){
+        try{
+          const axios = require('axios');
+          const res = await axios.get('/material/get_purchase_item_in_matstock/' + this.$route.params.id);
           if (res.data == null){
             alert('Stock Kosong')
           }else{
