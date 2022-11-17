@@ -152,6 +152,9 @@
                 </div>
             </div>
         </div>
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+            {{snackbar.message}}
+        </v-snackbar>
     </v-main>
 </template>
 
@@ -192,7 +195,12 @@ export default {
                 text : 'Operasi Mulai',
                 color : 'green'
             },
-            btn2 : undefined
+            btn2 : undefined,
+            snackbar : {
+                show : false,
+                color : null,
+                message : null,
+            }
         }
     },
 
@@ -245,8 +253,7 @@ export default {
             }
             setTimeout(() => {
                 location.reload()
-            }, 1000)
-
+            }, 500)
         },
 
         async fetchOperasi(){

@@ -13,9 +13,9 @@ def ScanBarcodeRFID():
       values = (stasiunKerja, idMat)
       cursor.execute(query,values)
       conn.commit()
-      hasil = {"Status " : "berhasil"}
+      hasil = {"status" : "berhasil"}
   except Exception as e:
       print("Error" + str(e))
-      hasil = {"Status" : "gagal"}
+      hasil = {"status" : "gagal"}
 
   return hasil
