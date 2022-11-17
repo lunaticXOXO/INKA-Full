@@ -207,26 +207,55 @@ export default {
             this.loginService.removeUserType()
         },
 
-        parseBarcode(){
-            //Kodingan untuk insert material berdasarkan barcode yang di scan
+        async parseBarcode(){
             console.log(this.kodeMaterial)
-
+            console.log(this.namaOperator)
+            try{
+                const axios = require('axios');
+                const response = await axios.post('/rfid/insert_material',
+                    { 
+                        stasiunKerja : this.namaOperator,
+                        idMat : this.kodeMaterial
+                    }
+                );
+                console.log(response,this.data)
+                if(response.data.status == "berhasil"){
+                    this.snackbar = {
+                    show : true,
+                    message : "Insert Material Berhasil",
+                    color : "green"
+                    }
+                }
+                else if(response.data.status == "gagal"){
+                    this.snackbar = {
+                    show : true,
+                    message : "Insert Material Gagal",
+                    color : "red"
+                    }
+                }
+            }
+            catch(error){
+                console.log(error)
+                this.snackbar = {
+                    show : true,
+                    message : "Insert Material Error",
+                    color : "red"
+                }
+            }
         },
 
-       async fetchOperasi(){
+        async fetchOperasi(){
             try{
                 const axios = require('axios')
                 console.log(this.loginService.getCurrentUsername())
                 this.namaOperator = this.loginService.getCurrentUsername()
                 const res =  await axios.get('/operator/get_operasi_byoperator/' + this.loginService.getCurrentUsername());
-
                 if(res.data == null){
                     console.log("Data kosong")
                 }else{
                     this.items = res.data
                     console.log(res,this.items)
                 }
-                
                 console.log('Item : ',this.items)
                 console.log("length : ",this.items.length)
                 for(this.index in this.items){
@@ -252,7 +281,6 @@ export default {
                         }
                         this.hasClicked = true
                     }   
-                    
                 }
                
                 if(this.itemKey[0].selesai != null){
@@ -305,8 +333,6 @@ export default {
                 console.log(error)
             }
             this.dialog = false
-           
-          
             window.location.reload()
         },
     
@@ -322,7 +348,6 @@ export default {
             }catch(error){
                 console.log(error)
             }
-
             window.location.reload()
         }
      
