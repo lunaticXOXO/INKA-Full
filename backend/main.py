@@ -24,6 +24,7 @@ from unit.controller.UnitController import *
 from users.controller.UserController import *
 from operasi.controller.OperasiController import *
 from operators.controller.OperatorController import *
+from rfid.controller.ScanBarcodeRFID import *
 
 from flask import Flask,session
 from flask_cors import CORS
@@ -699,6 +700,12 @@ def get_requirement_allprocess():
 @app.route('/requirement/get_requirement_byprocess/<idProcess>')
 def get_requirement_byprocess(idProcess):
     hasil = ShowRequirmentByIdProcess(idProcess)
+    return hasil
+
+#RFID
+@app.route('/rfid/insert_material',methods = ['POST'])
+def scan_barcode_rfid():
+    hasil = ScanBarcodeRFID()
     return hasil
 
 #USERS 
