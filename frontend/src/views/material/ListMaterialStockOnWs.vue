@@ -13,32 +13,26 @@
         <v-data-table 
             :headers = "column"
             :items = "types">
-            <template v-slot:[`item.id`]="{ item }">
-                <span>{{item.id}}</span>
+            <template v-slot:[`item.workstationCode`]="{ item }">
+                <span>{{item.workstationCode}}</span>
             </template>
 
-            <template v-slot:[`item.purchaseItem`]="{ item }">
-                <span>{{item.purchaseItem}}</span>
+            <template v-slot:[`item.materialStock`]="{ item }">
+                <span>{{item.materialStock}}</span>
             </template>
 
-            <template v-slot:[`item.merk`]="{ item }">
-                <span>{{item.merk}}</span>
+            <template v-slot:[`item.login`]="{ item }">
+                <span>{{item.login}}</span>
             </template>
 
-            <template v-slot:[`item.quantity`]="{ item }">
-              <span>{{item.quantity}}</span>
+            <template v-slot:[`item.logout`]="{ item }">
+              <span>{{item.logout}}</span>
             </template>
 
-            <template v-slot:[`item.unit`]="{ item }">
-              <span>{{item.unit}}</span>
-            </template>
-
-            <template v-slot:[`item.arrivalDate`]="{ item }">
-              <span>{{item.arrivalDate}}</span>
-            </template>
+         
            
             <template v-slot:[`item.aksi`]="{ item }">
-                <router-link :to="{name : 'List Stock Material On WS', params:{id : `${item.id}`}}">
+                <router-link :to="{name : 'Tambah Material Kosong', params:{id : `${item.id}`}}">
                     <v-btn class="mx-1" x-small color="blue" @click="selectStock(item)">
                         <v-icon small dark>mdi-check</v-icon>
                     </v-btn>
@@ -54,13 +48,11 @@
       return {
         valid : true,
         column : [
-            {text : 'ID',                   value : 'id'},
-            {text : 'Merk',                 value : 'merk'},        
-            {text : 'Quantity',             value : 'quantity'},
-            {text : 'Unit',                 value : 'unit'},
-            {text : 'Arrival Date',         value : 'arrivalDate'},
-            {text : 'Order',                value : 'purchaseItem'},
-            {text : 'Action',               value : 'aksi'}
+            {text : 'Workstation',          value : 'workstationCode'},
+            {text : 'Material Stock',       value : 'materialStock'},        
+            {text : 'Login',                value : 'login'},
+            {text : 'Logout',               value : 'logout'},
+          
         ],
         types : [],
       }
@@ -74,7 +66,7 @@
       async fetchMaterial(){
         try{
           const axios = require('axios');
-          const res = await axios.get('/material/get_material_stock');
+          const res = await axios.get('/material_ws/get_material_onws_by_idstock/' + this.$route.params.id );
           if (res.data == null){
             alert('Stock Kosong')
           }else{

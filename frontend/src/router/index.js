@@ -82,6 +82,8 @@ import PurchaseMaterialItemByPurchaseMaterial from '../views/material/PurchaseIt
 import AddMaterialStockbyPurchaseItem from '../views/material/AddStockMaterialbyPurchaseItem.vue'
 import ListPurchaseMaterialStock from '../views/material/ListPurchaseMaterialStock.vue'
 import ListPurchaseItemMaterialStock from '../views/material/ListPurchaseItemMaterialStock.vue'
+import ListMaterialStockOnWs from '../views/material/ListMaterialStockOnWs.vue'
+
 
 Vue.use(VueRouter)
 
@@ -829,8 +831,19 @@ const routes = [
     component : ListPurchaseItemMaterialStock,
     meta : {
 
-        title : "List Purchase Item Material Stock"
+        title : "List Purchase Item Material Stock - PT.INKA"
     }
+  },
+
+  {
+      path : '/listStockMaterialOnWS/:id',
+      name : 'List Stock Material On WS',
+      component : ListMaterialStockOnWs,
+      meta : {
+
+          title : "List Stock Material On WS - PT.INKA "
+      }
+
   }
 
   
