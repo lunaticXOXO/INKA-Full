@@ -114,3 +114,40 @@ def GetPurchaseMaterialinPurchaseItem(idPurchase):
     cursor.close()
     conn.close()
     return make_response(jsonify(json_data),200)
+
+
+def GetPurchaseMaterialItemComparedMatStock(idPurchase):
+    conn = database.connector()
+    cursor = conn.cursor()
+    qty_purchaseitem = ""
+    qty_stock = ""
+    query = "SELECT quantity FROM mat_d_purchaseitem WHERE purchaseId = '"+idPurchase+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    for index in records:
+        qty_purchaseitem = index[0]
+    
+    query_matstock = "SELECT a.quantity FROM mat_d_materialstock a JOIN mat_d_purchaseitem b ON b.id_item = a.purchaseItem JOIN mat_d_purchasematerial c ON c.id = b.purchaseId WHERE c.id = '"+idPurchase+"' GROUP BY a.quantity"
+    cursor.execute(query_matstock)
+    records_item = cursor.fetchall()
+    for index2 in records_item:
+        qty_stock = index2[0]
+    
+    records_purch_item = []
+    if qty_stock == qty_purchaseitem:
+        query_show = "SELECT * FROM mat_d_purchaseitem WHERE id_item = NULL"
+    elif qty_purchaseitem < qty_stock:
+        query_show = "SELECT a.id_item,a.materialTypeCode,a.purchaseId,a.quantity,a.schedulledArrival,a.supplierCode,a.unit FROM mat_d_purchaseitem a WHERE a.purchaseId = '"+idPurchase+"'"
+       
+    cursor.execute(query_show)
+    records_purch_item = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    for data in records_purch_item:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
+
+

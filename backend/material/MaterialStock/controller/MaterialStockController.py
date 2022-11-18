@@ -1,4 +1,5 @@
 import db.db_handler as database
+import datetime
 from flask import request,make_response,jsonify
 
 def GetMaterialStock():
@@ -21,12 +22,12 @@ def GetMaterialStock():
 def AddNewMaterialStock():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "INSERT INTO mat_d_materialstock(id,purchaseId,orders,materialTypeCode,merk,quantity,unit,arrivalDate,supplierCode)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    query = "INSERT INTO mat_d_materialstock(id,purchaseId,purchaseItem,materialTypeCode,merk,quantity,unit,arrivalDate,supplierCode)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     try:
         data = request.json
         id = data["id"]
         purchaseId = data["purchaseId"]
-        orders = data["orders"]
+        orders = data["purchaseItem"]
         materialTypeCode = data["materialTypeCode"]
         merk = data["merk"]
         quantity = data["quantity"]
@@ -48,7 +49,7 @@ def AddNewMaterialStock():
 def GetMaterialStockbyOrder(order):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.id,a.orders,a.merk,a.quantity,a.unit,a.arrivalDate FROM mat_d_materialstock a JOIN mat_d_purchaseitem b ON b.id_item = a.orders WHERE a.orders = '"+order+"'"
+    query = "SELECT a.id,a.purchaseItem,a.merk,a.quantity,a.unit,a.arrivalDate FROM mat_d_materialstock a JOIN mat_d_purchaseitem b ON b.id_item = a.purchaseItem WHERE a.purchaseItem = '"+order+"'"
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
     json_data = []
@@ -70,7 +71,7 @@ def AddMaterialStockbyOrders(orders):
     for index in records:
         orders = index[0]
     print("ID Item : ",orders)
-    query_insert = "INSERT INTO mat_d_materialstock(id,orders,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"
+    query_insert = "INSERT INTO mat_d_materialstock(id,purchaseItem,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"
     try:
         data = request.json
         id = data["id"]
@@ -105,3 +106,6 @@ def GetPurchaseItemInMatStock(orders):
     cursor.close()
     conn.close()
     return make_response(jsonify(json_data),200)
+
+
+

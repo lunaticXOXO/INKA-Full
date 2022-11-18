@@ -375,7 +375,7 @@ export default {
             try{
                 this.singleSelect = true
                 const axios = require('axios')
-                const res = await axios.post('/operasi/start_operasi/' + this.itemKey[0].id)
+                const res = await axios.post('/operasi/response_operasi_mulai/' + this.itemKey[0].id)
                 if(res.data.status == 'berhasil'){
                     if (this.selected[0].rencanaMulai != null){
                         this.btn1 = {

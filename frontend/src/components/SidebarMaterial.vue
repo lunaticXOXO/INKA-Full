@@ -134,7 +134,8 @@ export default {
                     active: false,
                     items: [
 
-                        { title: 'List Stock Material', icon : 'mdi-filter-variant', route : '/listStockMaterial'},
+                        { title: 'List Stock Material Purchase Material', icon : 'mdi-filter-variant', route : '/listPurchaseMaterialStock'},
+                        {title : 'List Stock Material',icon : 'mdi-filter-variant',route : '/listStockMaterial'},
                         { title: 'Add Stock Material', icon : 'mdi-plus',route : '/addStockMaterial'},
                         { title: 'Tambah Material Consumable', icon : 'mdi-plus', route : '/tambahMaterialConsumable'},
                     ],

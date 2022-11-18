@@ -175,3 +175,28 @@ def EndOperation(idOperasi):
     conn.close()
     hasil = {"status" : "berhasil"}
     return hasil
+
+
+def StartResponseOperasi(idOperasi):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a WHERE a.id = '"+idOperasi+"'"
+    cursor.execute(query_get_ws)
+    records = cursor.fetchall()
+    ws = ""
+    for index in records:
+        ws = index[0]
+    query_insert = "INSERT INTO cpl_responoperasi(stasiunKerja,jenis,mulai)VALUES(%s,%s,%s)"
+    try:
+        jenis = "on"
+        mulai = datetime.datetime.now()
+        values = (ws,jenis,mulai)
+        cursor.execute(query_insert,values)
+        conn.commit()
+        cursor.close()
+        conn.close()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        hasil = {"status" : "gagal"}
+        print("Error",str(e))
+    return hasil
