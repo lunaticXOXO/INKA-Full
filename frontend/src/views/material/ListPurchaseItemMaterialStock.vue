@@ -73,7 +73,7 @@
     
         mounted(){
           this.fetchPrcItemByPrcMat(),
-          this.fetchPurchaseMaterialInItem()
+          this.fetchComparePurchaseMaterialInItem()
         },
     
         methods: {

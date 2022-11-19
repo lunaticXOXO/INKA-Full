@@ -81,10 +81,10 @@ def ShowMaterialTypeSupplierBySupplier(code):
 
 
 
-def ShowMaterialTypeInPurchaseItem():
+def ShowMaterialTypeInPurchaseItem(code):
     conn = db.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code,a.nama AS 'namaSupplier',b.materialTypeCode,c.nama AS 'namaMaterialType' FROM gen_r_supplier a JOIN mat_r_materialtypesupplier b ON b.supplierCode = a.code JOIN mat_r_materialtype c ON c.code = b.materialTypeCode"
+    query = "SELECT a.code,a.nama AS 'namaSupplier',b.materialTypeCode,c.nama AS 'namaMaterialType' FROM gen_r_supplier a JOIN mat_r_materialtypesupplier b ON b.supplierCode = a.code JOIN mat_r_materialtype c ON c.code = b.materialTypeCode WHERE a.code = '"+code+"'"
     cursor.execute(query)
 
     records = cursor.fetchall()

@@ -33,7 +33,7 @@
           item-value="materialTypeCode"
           v-model="type"
           :items="materialType"
-          label="Material Type Code"
+          label="Material Type"
           ></v-autocomplete>
       
           <v-text-field
@@ -106,7 +106,6 @@
 
     mounted(){
       this.fetchSupplierName(),
-      this.fetchMaterialTypeSupplier(),
       this.fetchUnit()
     },
   
@@ -130,10 +129,22 @@
         console.log(this.tanggalPurchase)
       },  
 
-      updateMaterialType() {
-        this.materialType
+      async updateMaterialType() {
+        try{
+          const axios = require('axios')
+          const res = await axios.get('/supplier_material/show_materialtype_supplier/' + this.supply)
+          if (res.data == null){
+            alert("Material Type Kosong")
+          }else{
+            this.materialType = res.data
+            console.log(res,this.materialType)
+          }
+        }catch(error){
+          alert(error)
+          console.log(error)
+        }
       },
-      
+
       async fetchSupplierName(){
         try{
             const axios = require('axios')
@@ -143,32 +154,12 @@
             }else{
                 this.supplier = res.data
                 console.log(res,this.supplier)
-               
             }
         }catch(error){
             alert(error)
             console.log(error)
         }
       },
-
-      async fetchMaterialTypeSupplier(){
-        try{
-            const axios = require('axios')
-            const res = await axios.get('/supplier_material/show_materialtype_supplier')
-            if (res.data == null){
-                alert("Material Type/Supplier Kosong")
-            }else{
-                //this.supplier = res.data
-                this.materialType = res.data
-                console.log(res,this.supplier)
-                console.log(res,this.materialType)
-            }
-        }catch(error){
-            alert(error)
-            console.log(error)
-        }
-      },
-
 
       async fetchUnit(){
         try{
