@@ -25,6 +25,7 @@
           v-model="supply"
           :items="supplier"
           label="Supplier"
+          @change="updateMaterialType()"
           ></v-autocomplete>
 
           <v-autocomplete
@@ -127,6 +128,10 @@
         console.log(this.unit)
         console.log(this.tanggalPurchase)
       },  
+
+      updateMaterialType() {
+        this.materialType
+      },
 
       async fetchMaterialTypeSupplier(){
         try{
