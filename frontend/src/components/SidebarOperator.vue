@@ -214,9 +214,10 @@ export default {
     },
 
     mounted() {
-        this.fetchOperasi(),
+        //this.fetchOperasi(),
         this.fetchMaterial(),
-        this.fetchOperasiSiap()
+        this.fetchOperasiSiap(),
+        this.fetchOperasiLayak()
     },
 
     methods: {
@@ -266,7 +267,7 @@ export default {
             }, 2000)
         },
 
-        async fetchOperasi(){
+        /*async fetchOperasi(){
             try{
                 const axios = require('axios')
                 console.log(this.loginService.getCurrentUsername())
@@ -317,6 +318,23 @@ export default {
             }catch(error){
                 console.log(error)
             }
+        },*/
+
+
+        async fetchOperasiLayak(){
+            try{
+                const axios = require('axios')
+                const res = await axios.get('/operasi/get_operasi_siap/' + this.loginService.getCurrentUsername())
+                if(res.data.length == null){
+                    console.log("Data kosong")
+                }
+                else if(res.data.length > 0){
+                    this.items = res.data
+                    console.log(res,this.itemss)
+                }
+            }catch(error){
+                console.log(error)
+            }  
         },
 
         async fetchOperasiSiap(){
@@ -357,7 +375,7 @@ export default {
             try{
                 this.singleSelect = true
                 const axios = require('axios')
-                const res = await axios.post('/operasi/start_operasi/' + this.itemKey[0].id)
+                const res = await axios.post('/operasi/response_operasi_mulai/' + this.itemKey[0].id)
                 if(res.data.status == 'berhasil'){
                     if (this.selected[0].rencanaMulai != null){
                         this.btn1 = {

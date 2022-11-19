@@ -31,7 +31,7 @@
           ></v-text-field>
          
           <v-autocomplete
-          item-text="id"
+          item-text="nama"
           item-value="id"
           v-model="unit"
           :items="list_unit"
@@ -115,7 +115,7 @@
       async fetchUnit(){
         try{
             const axios = require('axios')
-            const res = await axios.get('/unit/get_unit')
+            const res = await axios.get('/unit/get_unit_instock')
             if (res.data == null){
                 alert("Material Unit Kosong")
             }else{

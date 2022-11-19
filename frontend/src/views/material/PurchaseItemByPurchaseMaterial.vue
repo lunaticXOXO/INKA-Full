@@ -20,8 +20,8 @@
           ></v-text-field>
 
           <v-autocomplete
-          item-text="supplierCode"
-          item-value="supplierCode"
+          item-text="nama"
+          item-value="code"
           v-model="supply"
           :items="supplier"
           label="Supplier"
@@ -29,7 +29,7 @@
           ></v-autocomplete>
 
           <v-autocomplete
-          item-text="materialTypeCode"
+          item-text="namaMaterialType"
           item-value="materialTypeCode"
           v-model="type"
           :items="materialType"
@@ -43,7 +43,7 @@
           ></v-text-field>
 
           <v-autocomplete
-          item-text="id"
+          item-text="nama"
           item-value="id"
           v-model="unit"
           :items="units"
@@ -105,6 +105,7 @@
     }),
 
     mounted(){
+      this.fetchSupplierName(),
       this.fetchMaterialTypeSupplier(),
       this.fetchUnit()
     },
@@ -132,15 +133,32 @@
       updateMaterialType() {
         this.materialType
       },
+      
+      async fetchSupplierName(){
+        try{
+            const axios = require('axios')
+            const res = await axios.get('/supplier_material/show_supplier_name')
+            if (res.data == null){
+                alert("Supplier Kosong")
+            }else{
+                this.supplier = res.data
+                console.log(res,this.supplier)
+               
+            }
+        }catch(error){
+            alert(error)
+            console.log(error)
+        }
+      },
 
       async fetchMaterialTypeSupplier(){
         try{
             const axios = require('axios')
-            const res = await axios.get('/supplier_material/show_material_supplier')
+            const res = await axios.get('/supplier_material/show_materialtype_supplier')
             if (res.data == null){
                 alert("Material Type/Supplier Kosong")
             }else{
-                this.supplier = res.data
+                //this.supplier = res.data
                 this.materialType = res.data
                 console.log(res,this.supplier)
                 console.log(res,this.materialType)
@@ -150,6 +168,7 @@
             console.log(error)
         }
       },
+
 
       async fetchUnit(){
         try{
