@@ -14,3 +14,18 @@ def GetUnit():
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
     return make_response(jsonify(json_data),200)
+
+
+def GetUnitInMatStock():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM gen_r_materialunit WHERE multiplier = 1"
+    cursor.execute(query)
+
+    records = cursor.fetchall()
+    json_data = []
+
+    row_headers = [x[0] for x in cursor.description]
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)

@@ -72,6 +72,7 @@ def AddMaterialStockbyOrders(orders):
         orders = index[0]
     print("ID Item : ",orders)
     query_insert = "INSERT INTO mat_d_materialstock(id,purchaseItem,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"
+    query_insert2 = "INSERT INTO mat_d_materialonws01(workstationCode,materialStock,login)VALUES(%s,%s,%s)"
     try:
         data = request.json
         id = data["id"]
@@ -79,8 +80,20 @@ def AddMaterialStockbyOrders(orders):
         quantity = data["quantity"]
         unit = data["unit"]
         arrivalDate = data["arrivalDate"]
+        workstationCode = "WSGD"
+        login = datetime.datetime.now()
         values = (id,orders,merk,quantity,unit,arrivalDate)
+    
         cursor.execute(query_insert,values)
+        conn.commit()
+        query_get_idstock = "SELECT id FROM mat_d_materialstock WHERE id = '"+id+"'"
+        cursor.execute(query_get_idstock)
+        record_idstock = cursor.fetchall()
+        for index in record_idstock:
+            new_idstock = index[0]
+        print(new_idstock)
+        values2 = (workstationCode,new_idstock,login)
+        cursor.execute(query_insert2,values2)
         conn.commit()
         cursor.close()
         conn.close()
@@ -89,6 +102,8 @@ def AddMaterialStockbyOrders(orders):
         hasil = {"status" : "gagal"}
         print("Error",str(e))
     return hasil
+
+
 
 
 def GetPurchaseItemInMatStock(orders):

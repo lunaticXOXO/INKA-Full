@@ -475,9 +475,9 @@ def search_type(nama):
     return hasil
 
 # Material Supplier
-@app.route('/supplier_material/show_material_supplier',methods = ['GET'])
+@app.route('/supplier_material/show_material_bysupplier',methods = ['GET'])
 def show_material_supplier():
-    hasil = ShowSupplierWithMaterialType()
+    hasil = ShowMaterialTypeSupplierBySupplier()
     return hasil
 
 @app.route('/supplier_material/add_material_supplier',methods = ['POST'])
@@ -485,10 +485,26 @@ def add_material_supplier(code):
     hasil = AddMaterialTypeSupplierbySupplier(code)
     return hasil
 
+@app.route('/supplier_material/show_supplier_name',methods = ['GET'])
+def show_supplier_name():
+    hasil = ShowSupplierName()
+    return hasil
+
+@app.route('/supplier_material/show_materialtype_supplier',methods = ['GET'])
+def show_materialtype_supplier():
+    hasil = ShowMaterialTypeInPurchaseItem()
+    return hasil
+
 # Material Unit
 @app.route('/unit/get_unit',methods = ['GET'])
 def get_unit():
     hasil = GetUnit()
+    return hasil
+
+
+@app.route('/unit/get_unit_instock',methods = ['GET'])
+def get_unit_instock():
+    hasil = GetUnitInMatStock()
     return hasil
 
 # Purchase Material
