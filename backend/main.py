@@ -492,9 +492,9 @@ def show_supplier_name():
     hasil = ShowSupplierName()
     return hasil
 
-@app.route('/supplier_material/show_materialtype_supplier',methods = ['GET'])
-def show_materialtype_supplier():
-    hasil = ShowMaterialTypeInPurchaseItem()
+@app.route('/supplier_material/show_materialtype_supplier/<code>',methods = ['GET'])
+def show_materialtype_supplier(code):
+    hasil = ShowMaterialTypeInPurchaseItem(code)
     return hasil
 
 # Material Unit
