@@ -25,6 +25,8 @@ from users.controller.UserController import *
 from operasi.controller.OperasiController import *
 from operators.controller.OperatorController import *
 from rfid.controller.ScanBarcodeRFID import *
+from material.StatusBarcode.controller.StatusBarcodeController import *
+
 
 from flask import Flask,session
 from flask_cors import CORS
@@ -583,20 +585,6 @@ def get_material_onws():
     hasil = GetMaterialOnWS()
     return hasil
 
-@app.route('/material_ws/add_material_onws',methods = ['POST'])
-def add_material_onws():
-    hasil = AddMaterialOnWS()
-    return hasil
-
-@app.route('/material_ws/update_material_onws/<id>',methods = ['POST'])
-def update_material_onws(id):
-    hasil = UpdateMaterialOnWS(id)
-    return hasil
-
-@app.route('/material_ws/add_material_onws_by_idstock/<idStock>',methods = ['POST'])
-def add_material_onws_by_idstock(idStock):
-    hasil = AddMaterialStockOnWSByIdStock(idStock)
-    return hasil
 
 @app.route('/material_ws/get_material_onws_by_idstock/<idStock>',methods = ['GET'])
 def get_material_onws_by_idstock(idStock):
@@ -604,6 +592,17 @@ def get_material_onws_by_idstock(idStock):
     return hasil
 
 
+@app.route('/material_ws/get_material_login',methods = ['GET'])
+def get_material_login():
+    hasil = MaterialLogin()
+    return hasil
+
+
+#Status Barcode
+@app.route('/status_barcode/get_status_barcode',methods = ['GET'])
+def get_status_barcode():
+    hasil = ShowStatusBarcode()
+    return hasil
 
 #MATERIAL CONSUMABLE
 @app.route('/material_consumable/get_material_consumable',methods = ['GET'])
@@ -670,6 +669,17 @@ def response_operasi_mulai(idOperasi):
     hasil = StartResponseOperasi(idOperasi)
     return hasil
 
+@app.route('/operasi/show_operasilayak/<username>',methods = ['GET'])
+def show_operasilayak(username):
+    hasil = ShowOperasiLayak(username)
+    return hasil
+
+
+@app.route('/operasi/get_operasi_siap/<username>',methods = ['GET'])
+def get_operasi_siap(username):
+    hasil = IfOperasiSiap(username)
+    return hasil
+
 #Operator
 @app.route('/operator/add_operator',methods = ['POST'])
 def add_operator():
@@ -725,10 +735,6 @@ def add_operator_requirement_byprocess(id):
     return hasil
 
 
-@app.route('/operasi/get_operasi_siap/<username>',methods = ['GET'])
-def get_operasi_siap(username):
-    hasil = IfOperasiSiap(username)
-    return hasil
 
 # Process Requirement
 @app.route('/requirement/add_process_requirement/<id>',methods = ['POST'])

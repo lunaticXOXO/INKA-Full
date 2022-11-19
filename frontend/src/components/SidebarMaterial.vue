@@ -138,6 +138,7 @@ export default {
                         {title : 'List Stock Material',icon : 'mdi-filter-variant',route : '/listStockMaterial'},
                         { title: 'Add Stock Material', icon : 'mdi-plus',route : '/addStockMaterial'},
                         { title: 'Tambah Material Consumable', icon : 'mdi-plus', route : '/tambahMaterialConsumable'},
+                        {title : 'Status Barcode', icon : 'mdi-gavel',route : '/statusBarcode'}
                     ],
                     title: 'Stock Material',
                 },

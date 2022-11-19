@@ -83,7 +83,7 @@ import AddMaterialStockbyPurchaseItem from '../views/material/AddStockMaterialby
 import ListPurchaseMaterialStock from '../views/material/ListPurchaseMaterialStock.vue'
 import ListPurchaseItemMaterialStock from '../views/material/ListPurchaseItemMaterialStock.vue'
 import ListMaterialStockOnWs from '../views/material/ListMaterialStockOnWs.vue'
-
+import StatusBarcode from '../views/material/StatusBarcode.vue'
 
 Vue.use(VueRouter)
 
@@ -842,6 +842,17 @@ const routes = [
       meta : {
 
           title : "List Stock Material On WS - PT.INKA "
+      }
+
+  },
+  {
+
+      path : '/statusBarcode',
+      name : 'Status Barcode',
+      component : StatusBarcode,
+      meta : {
+
+        title : "Status Barcode - PT.INKA"
       }
 
   }

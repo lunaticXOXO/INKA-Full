@@ -73,6 +73,7 @@ def AddMaterialStockbyOrders(orders):
     print("ID Item : ",orders)
     query_insert = "INSERT INTO mat_d_materialstock(id,purchaseItem,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"
     query_insert2 = "INSERT INTO mat_d_materialonws01(workstationCode,materialStock,login)VALUES(%s,%s,%s)"
+    query_insert3 = "INSERT INTO mat_d_statusbarcode(id,workstation)VALUES(%s,%s)"
     try:
         data = request.json
         id = data["id"]
@@ -93,8 +94,11 @@ def AddMaterialStockbyOrders(orders):
             new_idstock = index[0]
         print(new_idstock)
         values2 = (workstationCode,new_idstock,login)
+        values3 = (new_idstock,workstationCode)
         cursor.execute(query_insert2,values2)
+        cursor.execute(query_insert3,values3)
         conn.commit()
+        
         cursor.close()
         conn.close()
         hasil = {"status" : "berhasil"}

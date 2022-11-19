@@ -19,48 +19,6 @@ def GetMaterialOnWS():
 
 
 
-def AddMaterialOnWS():
-    conn = database.connector()
-    cursor = conn.cursor()
-
-    query = "INSERT INTO mat_d_materialonws(id,workstationCode,materialStock,login)VALUES(%s,%s,%s,%s)"
-  
-    try:
-        data = request.json
-        id = data["id"]
-        workstationCode = data["workstationCode"]
-        materialStock = data["materialStock"]
-        login = datetime.datetime.now()
-        values = (id,workstationCode,materialStock,login)
-        cursor.execute(query,values)
-        conn.commit()
-        hasil = {"status" : "berhasil"}
-    except Exception as e:
-        print("Error",str(e))
-        hasil = {"status" : "gagal"}
-    return hasil
-
-def UpdateMaterialOnWS(id):
-    conn = database.connector()
-    cursor = conn.cursor()
-
-    query = "UPDATE mat_d_materialonws SET id = %s, workstationCode = %s, materialStock = %s WHERE id = '"+id+"'"
-
-    try:
-        data = request.json
-        id = data["id"]
-        workstationCode = data["workstationCode"]
-        materialStock = data["materialStock"]
-        values = (id,workstationCode,materialStock)
-        cursor.execute(query,values)
-        conn.commit()
-        hasil = {"status" : "berhasil"}
-    except Exception as e:
-        print("Error",str(e))       
-        hasil = {"status" : "gagal"}
-    return hasil
-
-
 def GetMaterialStockOnWsByIdStock(idStock):
     conn = database.connector()
     cursor = conn.cursor()
@@ -76,30 +34,27 @@ def GetMaterialStockOnWsByIdStock(idStock):
     cursor.close()
     conn.close()
     return make_response(jsonify(json_data),200)
-    
 
-def AddMaterialStockOnWSByIdStock(idStock):
+
+def MaterialLogin():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT id FROM mat_d_materialstock WHERE id = '"+idStock+"'"
-    cursor.execute(query)
-    records = cursor.fetchall()
-    for index in records:
-        idStock = index[0]
-    
-    query_insert = "INSERT INTO mat_d_materialonws(workstationCode,materialStock,login)VALUES(%s,%s,%s)"
+    query = "INSERT INTO cpl_matlogin(stasiunKerja,idMat,waktu,keterangan,status01)VALUES(%s,%s,%s,%s)"
     try:
         data = request.json
-      
-        workstationCode = data["workstationCode"]
-        login = datetime.datetime.now()
-        values = (workstationCode,idStock,login)
-        cursor.execute(query_insert,values)
+        stasiunKerja = data["stasiunKerja"]
+        idMat = data["idMat"]
+        waktu = datetime.datetime.now()
+        keterangan = "material berhasil login"
+        status01 = waktu
+        values = (stasiunKerja,idMat,waktu,keterangan,status01)
+        cursor.execute(query,values)
         conn.commit()
         cursor.close()
         conn.close()
         hasil = {"status" : "berhasil"}
     except Exception as e:
-        print("Error",str(e))
         hasil = {"status" : "gagal"}
+        print("Error",str(e))
+    
     return hasil
