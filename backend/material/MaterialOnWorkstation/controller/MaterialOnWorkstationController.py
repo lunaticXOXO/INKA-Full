@@ -36,13 +36,21 @@ def GetMaterialStockOnWsByIdStock(idStock):
     return make_response(jsonify(json_data),200)
 
 
-def MaterialLogin():
+def AddMaterialLogin(idOperasi):
     conn = database.connector()
     cursor = conn.cursor()
+    stasiunKerja = ""
+    records = []
+    query_select = "SELECT stasiunKerja FROM cpl_oprlayak WHERE id = '"+idOperasi+"'"
+    cursor.execute(query_select)
+    records = cursor.fetchall()
+    for index in records:
+        stasiunKerja = index[0]
+    
+    print("WS : ",stasiunKerja)
     query = "INSERT INTO cpl_matlogin(stasiunKerja,idMat,waktu,keterangan,status01)VALUES(%s,%s,%s,%s)"
     try:
         data = request.json
-        stasiunKerja = data["stasiunKerja"]
         idMat = data["idMat"]
         waktu = datetime.datetime.now()
         keterangan = "material berhasil login"
@@ -58,3 +66,20 @@ def MaterialLogin():
         print("Error",str(e))
     
     return hasil
+
+
+def GetMaterialLogin():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM cpl_matlogin"
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)

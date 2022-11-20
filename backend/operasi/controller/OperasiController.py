@@ -187,11 +187,21 @@ def StartResponseOperasi(idOperasi):
     for index in records:
         ws = index[0]
     query_insert = "INSERT INTO cpl_responoperasi(stasiunKerja,jenis,mulai)VALUES(%s,%s,%s)"
+    query_update = "UPDATE cpl_oprsiap SET mulai = %s WHERE id = %s"
+    query_update2 = "UPDATE cpl_oprlayak SET mulai = %s WHERE id = %s"
     try:
         jenis = "on"
         mulai = datetime.datetime.now()
-        values = (ws,jenis,mulai)
-        cursor.execute(query_insert,values)
+        mulai2 = mulai
+
+        values_insert = (ws,jenis,mulai)
+        values_update = (mulai2,idOperasi)
+        values_update2 = (mulai2,idOperasi)
+
+        cursor.execute(query_insert,values_insert)
+        cursor.execute(query_update,values_update)
+        cursor.execute(query_update2,values_update2)
+
         conn.commit()
         cursor.close()
         conn.close()
@@ -200,6 +210,46 @@ def StartResponseOperasi(idOperasi):
         hasil = {"status" : "gagal"}
         print("Error",str(e))
     return hasil
+
+
+def EndResponseOperasi(idOperasi):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a WHERE a.id = '"+idOperasi+"'"
+    cursor.execute(query_get_ws)
+    records = cursor.fetchall()
+    ws = ""
+    for index in records:
+        ws = index[0]
+    
+    query_insert = "INSERT INTO cpl_responoperasi(stasiunKerja,jenis,mulai)VALUES(%s,%s,%s)"
+    query_update = "UPDATE cpl_oprsiap SET selesai = %s WHERE id = %s"
+    query_update2 = "UPDATE cpl_oprlayak SET selesai = %s WHERE id = %s"
+    try:
+        jenis = "off"
+        finish = datetime.datetime.now()
+        finish2 = finish
+
+        values_insert = (ws,jenis,finish)
+        values_update = (finish2,idOperasi)
+        values_update2 = (finish2,idOperasi)
+
+        cursor.execute(query_insert,values_insert)
+        cursor.execute(query_update,values_update)
+        cursor.execute(query_update2,values_update2)
+
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
+
+
 
 def ShowOperasiLayak(username):
     conn = database.connector()
@@ -211,7 +261,7 @@ def ShowOperasiLayak(username):
     for data in records_cek:
         username = data[0]
     
-    query_opr_layak = "SELECT * FROM cpl_oprlayak WHERE stasiunKerja = '"+username+"' ORDER BY selesai ASC"
+    query_opr_layak = "SELECT * FROM cpl_oprlayak WHERE stasiunKerja = '"+username+"' ORDER BY rencanaMulai ASC"
     cursor.execute(query_opr_layak)
     records = cursor.fetchall()
 

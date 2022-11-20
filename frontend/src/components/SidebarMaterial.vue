@@ -142,6 +142,17 @@ export default {
                     ],
                     title: 'Stock Material',
                 },
+
+                {
+                    action: 'mdi-account',
+                    active: false,
+                    items: [
+
+                        { title: 'List Material Login', icon : 'mdi-filter-variant', route : '/listMatLogin'},
+                      
+                    ],
+                    title: 'Material Login',
+                },
             ],
         }
     },

@@ -592,11 +592,16 @@ def get_material_onws_by_idstock(idStock):
     return hasil
 
 
-@app.route('/material_ws/get_material_login',methods = ['GET'])
-def get_material_login():
-    hasil = MaterialLogin()
+@app.route('/material_ws/add_material_login/<idOperasi>',methods = ['POST'])
+def add_material_login(idOperasi):
+    hasil = AddMaterialLogin(idOperasi)
     return hasil
 
+
+@app.route('/material/get_material_login',methods = ['GET'])
+def get_material_login():
+    hasil = GetMaterialLogin()
+    return hasil
 
 #Status Barcode
 @app.route('/status_barcode/get_status_barcode',methods = ['GET'])
@@ -667,6 +672,12 @@ def get_operasi_gantt(stasiunKerja):
 @app.route('/operasi/response_operasi_mulai/<idOperasi>',methods = ['POST'])
 def response_operasi_mulai(idOperasi):
     hasil = StartResponseOperasi(idOperasi)
+    return hasil
+
+
+@app.route('/operasi/response_operasi_selsai/<idOperasi>',methods = ['POST'])
+def response_operasi_selsai(idOperasi):
+    hasil = EndResponseOperasi(idOperasi)
     return hasil
 
 @app.route('/operasi/show_operasilayak/<username>',methods = ['GET'])

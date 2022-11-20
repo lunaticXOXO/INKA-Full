@@ -332,6 +332,31 @@ export default {
                     this.items = res.data
                     console.log(res,this.itemss)
                 }
+
+                for(this.index in this.items){
+                    if( this.items[this.index].mulai == null && this.items[this.index].selesai == null){
+                        this.btn1 = {
+                            color : 'green',
+                            text : 'Operasi Mulai'
+                        }
+                        break
+                    }
+                    if( this.items[this.index].mulai != null && this.items[this.index].selesai == null){
+                        this.btn1 = {
+                            color : 'blue',
+                            text : 'Operasi Selesai'
+                        }
+                        break
+                    }
+                    if( this.items[this.index].mulai != null && this.items[this.index].selesai != null && this.index == this.items.length-1){
+                        this.btn1 = {
+                            color : 'red',
+                            text : 'Operasi Selesai Semua',
+                            disabled : true
+                        }
+                        this.hasClicked = true
+                    }   
+                }
             }catch(error){
                 console.log(error)
             }  
@@ -382,6 +407,7 @@ export default {
                             color : 'blue',
                             text : 'Operasi Selesai'
                         }
+                        console.log("test")
                     }
                     console.log(res)
                 }else{
