@@ -333,30 +333,6 @@ export default {
                     console.log(res,this.itemss)
                 }
 
-                for(this.index in this.items){
-                    if( this.items[this.index].mulai == null && this.items[this.index].selesai == null){
-                        this.btn1 = {
-                            color : 'green',
-                            text : 'Operasi Mulai'
-                        }
-                        break
-                    }
-                    if( this.items[this.index].mulai != null && this.items[this.index].selesai == null){
-                        this.btn1 = {
-                            color : 'blue',
-                            text : 'Operasi Selesai'
-                        }
-                        break
-                    }
-                    if( this.items[this.index].mulai != null && this.items[this.index].selesai != null && this.index == this.items.length-1){
-                        this.btn1 = {
-                            color : 'red',
-                            text : 'Operasi Selesai Semua',
-                            disabled : true
-                        }
-                        this.hasClicked = true
-                    }   
-                }
             }catch(error){
                 console.log(error)
             }  
@@ -376,6 +352,34 @@ export default {
                     this.items3 = res.data
                     console.log(res,this.items3)
                 }
+
+                for(this.index in this.items3){
+                    if( this.items3[this.index].mulai == null && this.items3[this.index].selesai == null){
+                        this.btn1 = {
+                            color : 'green',
+                            text : 'Operasi Mulai'
+                        }
+                        break
+                    }
+                    if( this.items3[this.index].mulai != null && this.items3[this.index].selesai == null){
+                        this.btn1 = {
+                            color : 'blue',
+                            text : 'Operasi Selesai'
+                        }
+                        break
+                    }
+                    if( this.items3[this.index].mulai != null && this.items3[this.index].selesai != null && this.index == this.items3.length-1){
+                        this.btn1 = {
+                            color : 'red',
+                            text : 'Operasi Selesai Semua',
+                            disabled : true
+                        }
+                        this.hasClicked = true
+                        this.visible = false
+                    }   
+                }
+
+
             }catch(error){
                 console.log(error)
             }
@@ -423,7 +427,7 @@ export default {
         async akhiriOperation(){
             try{
                 const axios = require('axios')
-                const res = await axios.post('/proyek/accumulate_percentage_proyek/' + this.itemKey[0].id)
+                const res = await axios.post('/operasi/response_operasi_selsai/' + this.itemKey[0].id)
                 if(res.data.status == 'berhasil'){
                     console.log(res)
                 }else{
