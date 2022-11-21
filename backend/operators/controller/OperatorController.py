@@ -182,9 +182,6 @@ def GetOperatorRequirementByProcess(idProcess):
     return make_response(jsonify(json_data),200)
 
 
-
-
-
 def ShowOperatorLevelbyOperator(code):
     conn = database.connector()
     cursor = conn.cursor()

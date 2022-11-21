@@ -1,9 +1,9 @@
 <template>
     <v-card 
-        class="mt-10 text-center mx-10"
-        max-width = "1450">
+        class="mx-auto text-center mt-10"
+        max-width="1000">
         <br>
-        <h1>List Klasifikasi</h1>
+        <h1>List Barcode Material</h1>
         <br>
         <v-data-table 
             :headers = "column"
@@ -18,9 +18,9 @@
         data(){
             return{
                 column : [
-                    {text : 'ID Stock Material',         value : 'id'},
-                    {text : 'Workstation',  value : 'workstation'},
-                    {text : 'Status',value : 'status'}
+                    {text : 'ID Stock Material',    value : 'id'},
+                    {text : 'Workstation',          value : 'workstation'},
+                    {text : 'Status',               value : 'status'}
                 ],
                 statusbarcode : [],
                 editedIndex: -1,

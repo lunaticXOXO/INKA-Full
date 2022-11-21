@@ -592,31 +592,19 @@ export default {
       width="200"
       type="submit"
       @click="validate()">
-      Submit
+      Submit (1 Day)
     </v-btn>
     <br>
-    <!--
-    <v-card class="mt-10 mx-10">
-      <h2>Default</h2>
-      <g-gantt-chart
-        :chart-start="myChartStart"
-        :chart-end="myChartEnd"
-      >
-        <g-gantt-row
-          v-for="row in rows"
-          :key="row.label"
-          :label="row.label"
-          :bars="row.bars"
-          bar-start="myStart"
-          bar-end="myEnd"
-          >
-          <template #bar-label="{bar}">
-            <span>{{bar.label}}</span>
-          </template>
-        </g-gantt-row>
-      </g-gantt-chart>
-    </v-card>
-    -->
+    <v-btn
+      color="success"
+      class="mx-auto text-center" 
+      max-width="1200"
+      width="200"
+      type="submit"
+      @click="validate2()">
+      Submit (2 Days)
+    </v-btn>
+    <br>
     
     <v-card class="mt-10 mx-10">
       <h2>Jadwal Kerja WS</h2>
@@ -637,12 +625,12 @@ export default {
           <template #bar-label="{bar}">
             <v-dialog
               v-model="dialogWS00"
-              width="500"
+              width="750"
               :retain-focus="false"
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  class="font-weight-thin"
+                  class="font-weight-bold"
                   color="#222222"
                   dark
                   v-bind="attrs"
@@ -653,11 +641,11 @@ export default {
               </template>
 
               <v-card>
-                <v-card-title class="text-h5 grey lighten-2">
+                <v-card-title class="text-h4 grey lighten-2">
                   Detail Operasi
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="text-h5 black--text darken-2 font-weight-bold">
                   <br>
                   <p>ID Operasi : {{bar.idOperasi}}</p>
                   <p>Proses : {{bar.namaProses}}</p>
@@ -699,7 +687,7 @@ export default {
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  class="font-weight-thin"
+                  class="font-weight-bold"
                   color="#222222"
                   dark
                   v-bind="attrs"
@@ -710,11 +698,11 @@ export default {
               </template>
 
               <v-card>
-                <v-card-title class="text-h5 grey lighten-2">
+                <v-card-title class="text-h4 grey lighten-2">
                   Detail Operasi
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="text-h5 black--text darken-2 font-weight-bold">
                   <br>
                   <p>ID Operasi : {{bar.idOperasi}}</p>
                   <p>Proses : {{bar.namaProses}}</p>
@@ -756,7 +744,7 @@ export default {
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  class="font-weight-thin"
+                  class="font-weight-bold"
                   color="#222222"
                   dark
                   v-bind="attrs"
@@ -767,11 +755,11 @@ export default {
               </template>
 
               <v-card>
-                <v-card-title class="text-h5 grey lighten-2">
+                <v-card-title class="text-h4 grey lighten-2">
                   Detail Operasi
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="text-h5 black--text darken-2 font-weight-bold">
                   <br>
                   <p>ID Operasi : {{bar.idOperasi}}</p>
                   <p>Proses : {{bar.namaProses}}</p>
@@ -813,7 +801,7 @@ export default {
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  class="font-weight-thin"
+                  class="font-weight-bold"
                   color="#222222"
                   dark
                   v-bind="attrs"
@@ -824,11 +812,11 @@ export default {
               </template>
 
               <v-card>
-                <v-card-title class="text-h5 grey lighten-2">
+                <v-card-title class="text-h4 grey lighten-2">
                   Detail Operasi
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="text-h5 black--text darken-2 font-weight-bold">
                   <br>
                   <p>ID Operasi : {{bar.idOperasi}}</p>
                   <p>Proses : {{bar.namaProses}}</p>
@@ -870,7 +858,7 @@ export default {
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  class="font-weight-thin"
+                  class="font-weight-bold"
                   color="#222222"
                   dark
                   v-bind="attrs"
@@ -881,11 +869,11 @@ export default {
               </template>
 
               <v-card>
-                <v-card-title class="text-h5 grey lighten-2">
+                <v-card-title class="text-h4 grey lighten-2">
                   Detail Operasi
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="text-h5 black--text darken-2 font-weight-bold">
                   <br>
                   <p>ID Operasi : {{bar.idOperasi}}</p>
                   <p>Proses : {{bar.namaProses}}</p>
@@ -927,7 +915,7 @@ export default {
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  class="font-weight-thin"
+                  class="font-weight-bold"
                   color="#222222"
                   dark
                   v-bind="attrs"
@@ -938,11 +926,11 @@ export default {
               </template>
 
               <v-card>
-                <v-card-title class="text-h5 grey lighten-2">
+                <v-card-title class="text-h4 grey lighten-2">
                   Detail Operasi
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="text-h5 black--text darken-2 font-weight-bold">
                   <br>
                   <p>ID Operasi : {{bar.idOperasi}}</p>
                   <p>Proses : {{bar.namaProses}}</p>
@@ -984,7 +972,7 @@ export default {
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  class="font-weight-thin"
+                  class="font-weight-bold"
                   color="#222222"
                   dark
                   v-bind="attrs"
@@ -995,11 +983,11 @@ export default {
               </template>
 
               <v-card>
-                <v-card-title class="text-h5 grey lighten-2">
+                <v-card-title class="text-h4 grey lighten-2">
                   Detail Operasi
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="text-h5 black--text darken-2 font-weight-bold">
                   <br>
                   <p>ID Operasi : {{bar.idOperasi}}</p>
                   <p>Proses : {{bar.namaProses}}</p>
@@ -1041,7 +1029,7 @@ export default {
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  class="font-weight-thin"
+                  class="font-weight-bold"
                   color="#222222"
                   dark
                   v-bind="attrs"
@@ -1052,11 +1040,11 @@ export default {
               </template>
 
               <v-card>
-                <v-card-title class="text-h5 grey lighten-2">
+                <v-card-title class="text-h4 grey lighten-2">
                   Detail Operasi
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="text-h5 black--text darken-2 font-weight-bold">
                   <br>
                   <p>ID Operasi : {{bar.idOperasi}}</p>
                   <p>Proses : {{bar.namaProses}}</p>
@@ -1098,7 +1086,7 @@ export default {
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   block
-                  class="font-weight-thin"
+                  class="font-weight-bold"
                   color="#222222"
                   dark
                   v-bind="attrs"
@@ -1109,11 +1097,11 @@ export default {
               </template>
 
               <v-card>
-                <v-card-title class="text-h5 grey lighten-2">
+                <v-card-title class="text-h4 grey lighten-2">
                   Detail Operasi
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="text-h5 black--text darken-2 font-weight-bold">
                   <br>
                   <p>ID Operasi : {{bar.idOperasi}}</p>
                   <p>Proses : {{bar.namaProses}}</p>
@@ -1154,7 +1142,7 @@ export default {
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  class="font-weight-thin"
+                  class="font-weight-bold"
                   color="#222222"
                   dark
                   v-bind="attrs"
@@ -1165,11 +1153,11 @@ export default {
               </template>
 
               <v-card>
-                <v-card-title class="text-h5 grey lighten-2">
+                <v-card-title class="text-h4 grey lighten-2">
                   Detail Operasi
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="text-h5 black--text darken-2 font-weight-bold">
                   <br>
                   <p>ID Operasi : {{bar.idOperasi}}</p>
                   <p>Proses : {{bar.namaProses}}</p>
@@ -1454,6 +1442,16 @@ export default {
     validate(){
       const date = new Date(this.tanggalPencarian)
       date.setDate(date.getDate() + 1);
+      this.myChartStartCustom = this.tanggalPencarian
+      this.myChartEndCustom = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+      console.log(this.myChartStartCustom)
+      console.log(this.myChartEndCustom)
+      console.log(this.pilihan)
+    },
+
+    validate2(){
+      const date = new Date(this.tanggalPencarian)
+      date.setDate(date.getDate() + 2);
       this.myChartStartCustom = this.tanggalPencarian
       this.myChartEndCustom = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
       console.log(this.myChartStartCustom)

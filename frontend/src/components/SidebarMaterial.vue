@@ -122,7 +122,6 @@ export default {
                     items: [
                         { title: 'Purchase Material', icon: 'mdi-plus', route: '/pesanMaterial'},
                         {title : 'List Purchase Material', icon : 'mdi-filter-variant', route : '/listPurchaseMaterial'},
-                        {title : 'Purchase Material Item',icon : 'mdi-plus',route : 'purchaseMaterialItem'},
                         {title : 'List Purchase Material Item',icon : 'mdi-gavel',route : '/listPurchaseMaterialItem'}
                         
                     ],
@@ -138,7 +137,7 @@ export default {
                         {title : 'List Stock Material',icon : 'mdi-filter-variant',route : '/listStockMaterial'},
                         { title: 'Add Stock Material', icon : 'mdi-plus',route : '/addStockMaterial'},
                         { title: 'Tambah Material Consumable', icon : 'mdi-plus', route : '/tambahMaterialConsumable'},
-                        {title : 'Status Barcode', icon : 'mdi-gavel',route : '/statusBarcode'}
+                        {title : 'Status Barcode Material', icon : 'mdi-gavel',route : '/statusBarcode'}
                     ],
                     title: 'Stock Material',
                 },
