@@ -1,4 +1,5 @@
 import db.db_handler as database
+import datetime
 from flask import request,make_response,jsonify
 
 def GetMaterialStock():
@@ -21,12 +22,12 @@ def GetMaterialStock():
 def AddNewMaterialStock():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "INSERT INTO mat_d_materialstock(id,purchaseId,orders,materialTypeCode,merk,quantity,unit,arrivalDate,supplierCode)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    query = "INSERT INTO mat_d_materialstock(id,purchaseId,purchaseItem,materialTypeCode,merk,quantity,unit,arrivalDate,supplierCode)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     try:
         data = request.json
         id = data["id"]
         purchaseId = data["purchaseId"]
-        orders = data["orders"]
+        orders = data["purchaseItem"]
         materialTypeCode = data["materialTypeCode"]
         merk = data["merk"]
         quantity = data["quantity"]
@@ -48,7 +49,7 @@ def AddNewMaterialStock():
 def GetMaterialStockbyOrder(order):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.id,a.orders,a.merk,a.quantity,a.unit,a.arrivalDate FROM mat_d_materialstock a JOIN mat_d_purchaseitem b ON b.id_item = a.orders WHERE a.orders = '"+order+"'"
+    query = "SELECT a.id,a.purchaseItem,a.merk,a.quantity,a.unit,a.arrivalDate FROM mat_d_materialstock a JOIN mat_d_purchaseitem b ON b.id_item = a.purchaseItem WHERE a.purchaseItem = '"+order+"'"
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
     json_data = []
@@ -70,7 +71,9 @@ def AddMaterialStockbyOrders(orders):
     for index in records:
         orders = index[0]
     print("ID Item : ",orders)
-    query_insert = "INSERT INTO mat_d_materialstock(id,orders,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"
+    query_insert = "INSERT INTO mat_d_materialstock(id,purchaseItem,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"
+    query_insert2 = "INSERT INTO mat_d_materialonws01(workstationCode,materialStock,login)VALUES(%s,%s,%s)"
+    query_insert3 = "INSERT INTO mat_d_statusbarcode(id,workstation)VALUES(%s,%s)"
     try:
         data = request.json
         id = data["id"]
@@ -78,9 +81,24 @@ def AddMaterialStockbyOrders(orders):
         quantity = data["quantity"]
         unit = data["unit"]
         arrivalDate = data["arrivalDate"]
+        workstationCode = "WSGD"
+        login = datetime.datetime.now()
         values = (id,orders,merk,quantity,unit,arrivalDate)
+    
         cursor.execute(query_insert,values)
         conn.commit()
+        query_get_idstock = "SELECT id FROM mat_d_materialstock WHERE id = '"+id+"'"
+        cursor.execute(query_get_idstock)
+        record_idstock = cursor.fetchall()
+        for index in record_idstock:
+            new_idstock = index[0]
+        print(new_idstock)
+        values2 = (workstationCode,new_idstock,login)
+        values3 = (new_idstock,workstationCode)
+        cursor.execute(query_insert2,values2)
+        cursor.execute(query_insert3,values3)
+        conn.commit()
+        
         cursor.close()
         conn.close()
         hasil = {"status" : "berhasil"}
@@ -88,6 +106,8 @@ def AddMaterialStockbyOrders(orders):
         hasil = {"status" : "gagal"}
         print("Error",str(e))
     return hasil
+
+
 
 
 def GetPurchaseItemInMatStock(orders):
@@ -105,3 +125,6 @@ def GetPurchaseItemInMatStock(orders):
     cursor.close()
     conn.close()
     return make_response(jsonify(json_data),200)
+
+
+

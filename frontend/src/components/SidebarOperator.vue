@@ -323,7 +323,7 @@ export default {
         async fetchOperasiLayak(){
             try{
                 const axios = require('axios')
-                const res = await axios.get('/operasi/get_operasi_siap/' + this.loginService.getCurrentUsername())
+                const res = await axios.get('/operasi/show_operasilayak/' + this.loginService.getCurrentUsername())
                 if(res.data.length == null){
                     console.log("Data kosong")
                 }
@@ -331,6 +331,7 @@ export default {
                     this.items = res.data
                     console.log(res,this.itemss)
                 }
+
             }catch(error){
                 console.log(error)
             }  
@@ -350,6 +351,34 @@ export default {
                     this.items3 = res.data
                     console.log(res,this.items3)
                 }
+
+                for(this.index in this.items3){
+                    if( this.items3[this.index].mulai == null && this.items3[this.index].selesai == null){
+                        this.btn1 = {
+                            color : 'green',
+                            text : 'Operasi Mulai'
+                        }
+                        break
+                    }
+                    if( this.items3[this.index].mulai != null && this.items3[this.index].selesai == null){
+                        this.btn1 = {
+                            color : 'blue',
+                            text : 'Operasi Selesai'
+                        }
+                        break
+                    }
+                    if( this.items3[this.index].mulai != null && this.items3[this.index].selesai != null && this.index == this.items3.length-1){
+                        this.btn1 = {
+                            color : 'red',
+                            text : 'Operasi Selesai Semua',
+                            disabled : true
+                        }
+                        this.hasClicked = true
+                        this.visible = false
+                    }   
+                }
+
+
             }catch(error){
                 console.log(error)
             }
@@ -374,13 +403,14 @@ export default {
             try{
                 this.singleSelect = true
                 const axios = require('axios')
-                const res = await axios.post('/operasi/start_operasi/' + this.itemKey[0].id)
+                const res = await axios.post('/operasi/response_operasi_mulai/' + this.itemKey[0].id)
                 if(res.data.status == 'berhasil'){
                     if (this.selected[0].rencanaMulai != null){
                         this.btn1 = {
                             color : 'blue',
                             text : 'Operasi Selesai'
                         }
+                        console.log("test")
                     }
                     console.log(res)
                 }else{
@@ -396,7 +426,7 @@ export default {
         async akhiriOperation(){
             try{
                 const axios = require('axios')
-                const res = await axios.post('/proyek/accumulate_percentage_proyek/' + this.itemKey[0].id)
+                const res = await axios.post('/operasi/response_operasi_selsai/' + this.itemKey[0].id)
                 if(res.data.status == 'berhasil'){
                     console.log(res)
                 }else{

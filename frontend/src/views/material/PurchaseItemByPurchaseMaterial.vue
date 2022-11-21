@@ -20,19 +20,20 @@
           ></v-text-field>
 
           <v-autocomplete
-          item-text="supplierCode"
-          item-value="supplierCode"
+          item-text="nama"
+          item-value="code"
           v-model="supply"
           :items="supplier"
           label="Supplier"
+          @change="updateMaterialType()"
           ></v-autocomplete>
 
           <v-autocomplete
-          item-text="materialTypeCode"
+          item-text="namaMaterialType"
           item-value="materialTypeCode"
           v-model="type"
           :items="materialType"
-          label="Material Type Code"
+          label="Material Type"
           ></v-autocomplete>
       
           <v-text-field
@@ -42,7 +43,7 @@
           ></v-text-field>
 
           <v-autocomplete
-          item-text="id"
+          item-text="nama"
           item-value="id"
           v-model="unit"
           :items="units"
@@ -104,7 +105,7 @@
     }),
 
     mounted(){
-      this.fetchMaterialTypeSupplier(),
+      this.fetchSupplierName(),
       this.fetchUnit()
     },
   
@@ -128,17 +129,31 @@
         console.log(this.tanggalPurchase)
       },  
 
-      async fetchMaterialTypeSupplier(){
+      async updateMaterialType() {
+        try{
+          const axios = require('axios')
+          const res = await axios.get('/supplier_material/show_materialtype_supplier/' + this.supply)
+          if (res.data == null){
+            alert("Material Type Kosong")
+          }else{
+            this.materialType = res.data
+            console.log(res,this.materialType)
+          }
+        }catch(error){
+          alert(error)
+          console.log(error)
+        }
+      },
+
+      async fetchSupplierName(){
         try{
             const axios = require('axios')
-            const res = await axios.get('/supplier_material/show_material_supplier')
+            const res = await axios.get('/supplier_material/show_supplier_name')
             if (res.data == null){
-                alert("Material Type/Supplier Kosong")
+                alert("Supplier Kosong")
             }else{
                 this.supplier = res.data
-                this.materialType = res.data
                 console.log(res,this.supplier)
-                console.log(res,this.materialType)
             }
         }catch(error){
             alert(error)

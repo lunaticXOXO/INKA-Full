@@ -19,29 +19,16 @@
           required
           ></v-text-field>
 
-          <v-autocomplete
-          item-text="purchaseId"
-          item-value="purchaseId"
-          v-model="purchaseId"
-          :items="list_purchaseId"
-          label="Purchase ID"
-          ></v-autocomplete>
+       
 
           <v-autocomplete
           item-text="id_item"
           item-value="id_item"
           v-model="orders"
           :items="list_orders"
-          label="Orders"
+          label="Purchase Item"
           ></v-autocomplete>
 
-          <v-autocomplete
-          item-text="materialTypeCode"
-          item-value="materialTypeCode"
-          v-model="materialTypeCode"
-          :items="list_materialTypeCode"
-          label="Material Type Code"
-          ></v-autocomplete>
 
           <v-text-field
           v-model="merk"
@@ -55,7 +42,7 @@
           ></v-text-field>
          
           <v-autocomplete
-          item-text="id"
+          item-text="nama"
           item-value="id"
           v-model="unit"
           :items="list_unit"
@@ -69,13 +56,7 @@
             <v-date-picker width="1000" v-model="arrivalDate"></v-date-picker>
           </v-menu>
 
-          <v-autocomplete
-          item-text="supplierCode"
-          item-value="supplierCode"
-          v-model="supplierCode"
-          :items="list_supplierCode"
-          label="Supplier Code"
-          ></v-autocomplete>
+        
 
           <v-btn
             :disabled="!valid"
@@ -110,18 +91,14 @@
         v => (v && v.length <= 11 && v.length >= 1) || 'ID must be 1-11 characters',
       ],
       purchaseId: '',
-      list_purchaseId: undefined,
+     
       orders: '',
       list_orders: undefined,
-      materialTypeCode: '',
-      list_materialTypeCode: undefined,
       merk: '',
       quantity: null,
       unit: '',
       list_unit: undefined,
       arrivalDate: '',
-      supplierCode: '',
-      list_supplierCode: undefined,
       snackbar : {
         show : false,
         color : null,
@@ -197,7 +174,7 @@
       async fetchUnit(){
         try{
             const axios = require('axios')
-            const res = await axios.get('/unit/get_unit')
+            const res = await axios.get('/unit/get_unit_instock')
             if (res.data == null){
                 alert("Material Unit Kosong")
             }else{
@@ -216,14 +193,12 @@
           const response = await axios.post('/material/add_new_materialstock',
             { 
                 id : this.id,
-                purchaseId : this.purchaseId,
                 orders : this.orders,
-                materialTypeCode : this.materialTypeCode,
                 merk : this.merk,
                 quantity : this.quantity,
                 unit : this.unit,
                 arrivalDate : this.arrivalDate,
-                supplierCode : this.supplierCode
+                
             }
           );
           console.log(response,this.data)

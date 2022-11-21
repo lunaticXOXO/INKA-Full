@@ -46,8 +46,42 @@ def AddMaterialTypeSupplierbySupplier(code):
     return hasil
 
 
+def ShowSupplierName():
+    conn = db.connector()
+    cursor = conn.cursor()
+    query = "SELECT code,nama FROM gen_r_supplier"
+    cursor.execute(query)
+
+    records = cursor.fetchall()
+    
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)    
+
 
 def ShowMaterialTypeSupplierBySupplier(code):
+    conn = db.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.nama AS 'namaSupplier',b.materialTypeCode,c.nama AS 'namaMaterialType' FROM gen_r_supplier a JOIN mat_r_materialtypesupplier b ON b.supplierCode = a.code JOIN mat_r_materialtype c ON c.code = b.materialTypeCode WHERE a.code = '"+code+"'"
+    cursor.execute(query)
+
+    records = cursor.fetchall()
+    
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
+
+
+
+def ShowMaterialTypeInPurchaseItem(code):
     conn = db.connector()
     cursor = conn.cursor()
     query = "SELECT a.code,a.nama AS 'namaSupplier',b.materialTypeCode,c.nama AS 'namaMaterialType' FROM gen_r_supplier a JOIN mat_r_materialtypesupplier b ON b.supplierCode = a.code JOIN mat_r_materialtype c ON c.code = b.materialTypeCode WHERE a.code = '"+code+"'"

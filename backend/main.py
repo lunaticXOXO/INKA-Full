@@ -25,6 +25,8 @@ from users.controller.UserController import *
 from operasi.controller.OperasiController import *
 from operators.controller.OperatorController import *
 from rfid.controller.ScanBarcodeRFID import *
+from material.StatusBarcode.controller.StatusBarcodeController import *
+
 
 from flask import Flask,session
 from flask_cors import CORS
@@ -475,9 +477,9 @@ def search_type(nama):
     return hasil
 
 # Material Supplier
-@app.route('/supplier_material/show_material_supplier',methods = ['GET'])
+@app.route('/supplier_material/show_material_bysupplier',methods = ['GET'])
 def show_material_supplier():
-    hasil = ShowSupplierWithMaterialType()
+    hasil = ShowMaterialTypeSupplierBySupplier()
     return hasil
 
 @app.route('/supplier_material/add_material_supplier',methods = ['POST'])
@@ -485,10 +487,26 @@ def add_material_supplier(code):
     hasil = AddMaterialTypeSupplierbySupplier(code)
     return hasil
 
+@app.route('/supplier_material/show_supplier_name',methods = ['GET'])
+def show_supplier_name():
+    hasil = ShowSupplierName()
+    return hasil
+
+@app.route('/supplier_material/show_materialtype_supplier/<code>',methods = ['GET'])
+def show_materialtype_supplier(code):
+    hasil = ShowMaterialTypeInPurchaseItem(code)
+    return hasil
+
 # Material Unit
 @app.route('/unit/get_unit',methods = ['GET'])
 def get_unit():
     hasil = GetUnit()
+    return hasil
+
+
+@app.route('/unit/get_unit_instock',methods = ['GET'])
+def get_unit_instock():
+    hasil = GetUnitInMatStock()
     return hasil
 
 # Purchase Material
@@ -529,6 +547,11 @@ def get_material_item_by_idpurchase(idPurchase):
     hasil = GetMaterialItemByPurchaseMaterial(idPurchase)
     return hasil
 
+@app.route('/material/get_purchase_item_compare/<idPurchase>',methods = ['GET'])
+def get_purchase_item_compare(idPurchase):
+    hasil = GetPurchaseMaterialItemComparedMatStock(idPurchase)
+    return hasil
+
 #Material Stock
 @app.route('/material/get_material_stock',methods = ['GET'])
 def get_material_stock():
@@ -562,14 +585,28 @@ def get_material_onws():
     hasil = GetMaterialOnWS()
     return hasil
 
-@app.route('/material_ws/add_material_onws',methods = ['POST'])
-def add_material_onws():
-    hasil = AddMaterialOnWS()
+
+@app.route('/material_ws/get_material_onws_by_idstock/<idStock>',methods = ['GET'])
+def get_material_onws_by_idstock(idStock):
+    hasil = GetMaterialStockOnWsByIdStock(idStock)
     return hasil
 
-@app.route('/material_ws/update_material_onws/<id>',methods = ['POST'])
-def update_material_onws(id):
-    hasil = UpdateMaterialOnWS(id)
+
+@app.route('/material_ws/add_material_login/<idOperasi>',methods = ['POST'])
+def add_material_login(idOperasi):
+    hasil = AddMaterialLogin(idOperasi)
+    return hasil
+
+
+@app.route('/material/get_material_login',methods = ['GET'])
+def get_material_login():
+    hasil = GetMaterialLogin()
+    return hasil
+
+#Status Barcode
+@app.route('/status_barcode/get_status_barcode',methods = ['GET'])
+def get_status_barcode():
+    hasil = ShowStatusBarcode()
     return hasil
 
 #MATERIAL CONSUMABLE
@@ -632,6 +669,28 @@ def get_operasi_gantt(stasiunKerja):
     hasil = GetOperasiGanttChart(stasiunKerja)
     return hasil
 
+@app.route('/operasi/response_operasi_mulai/<idOperasi>',methods = ['POST'])
+def response_operasi_mulai(idOperasi):
+    hasil = StartResponseOperasi(idOperasi)
+    return hasil
+
+
+@app.route('/operasi/response_operasi_selsai/<idOperasi>',methods = ['POST'])
+def response_operasi_selsai(idOperasi):
+    hasil = EndResponseOperasi(idOperasi)
+    return hasil
+
+@app.route('/operasi/show_operasilayak/<username>',methods = ['GET'])
+def show_operasilayak(username):
+    hasil = ShowOperasiLayak(username)
+    return hasil
+
+
+@app.route('/operasi/get_operasi_siap/<username>',methods = ['GET'])
+def get_operasi_siap(username):
+    hasil = IfOperasiSiap(username)
+    return hasil
+
 #Operator
 @app.route('/operator/add_operator',methods = ['POST'])
 def add_operator():
@@ -687,10 +746,6 @@ def add_operator_requirement_byprocess(id):
     return hasil
 
 
-@app.route('/operasi/get_operasi_siap/<username>',methods = ['GET'])
-def get_operasi_siap(username):
-    hasil = IfOperasiSiap(username)
-    return hasil
 
 # Process Requirement
 @app.route('/requirement/add_process_requirement/<id>',methods = ['POST'])
