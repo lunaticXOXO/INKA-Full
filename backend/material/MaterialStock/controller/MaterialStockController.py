@@ -68,13 +68,29 @@ def AddMaterialStockbyOrders(orders):
     query = "SELECT id_item FROM mat_d_purchaseitem WHERE id_item = '"+orders+"'"
     cursor.execute(query)
     records = cursor.fetchall()
+
+    materialTypeCode = ""
+    quantity = ""
+    unit = ""
+
     for index in records:
         orders = index[0]
     print("ID Item : ",orders)
+
+    query_select_mattype = "SELECT a.materialTypeCode,a.quantity,a.unit FROM mat_d_purchaseitem a WHERE a.id_item = '"+orders+"'"
+    cursor.execute(query_select_mattype)
+    records2 = cursor.fetchall()
+
+    for index in records2:
+        materialTypeCode = index[0]
+        quantity = index[1]
+        unit = index[2]
+    
+
     query_insert =  "INSERT INTO mat_d_materialstock(id,purchaseItem,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"
     query_insert2 = "INSERT INTO mat_d_materialonws01(workstationCode,materialStock,login)VALUES(%s,%s,%s)"
     query_insert3 = "INSERT INTO mat_d_statusbarcode(id,workstation)VALUES(%s,%s)"
-    query_insert4 = "INSERT INTO mat_d_materialstock01(id,purchaseID)VALUES(%s,%s)"
+    query_insert4 = "INSERT INTO mat_d_materialstock01(id,purchaseID,materialTypeCode,quantity,unit)VALUES(%s,%s,%s,%s,%s)"
     query_insert5 = "INSERT INTO mat_d_statusbarcode01(id,workstation)VALUES(%s,%s)"
     try:
         data = request.json
@@ -99,7 +115,7 @@ def AddMaterialStockbyOrders(orders):
 
         values2 = (workstationCode,new_idstock,login)
         values3 = (new_idstock,workstationCode)
-        values4 = (new_idstock,orders)
+        values4 = (new_idstock,orders,materialTypeCode,quantity,unit)
 
         cursor.execute(query_insert2,values2)
         cursor.execute(query_insert3,values3)
