@@ -13,7 +13,7 @@ Vue.use(VueAxios, Axios, DatetimePicker,VueApexCharts);
 
 Vue.prototype.$axios = Axios;
 //Vue.axios.defaults.baseURL = `https://backend-inka-deploy.herokuapp.com/`;
-Vue.axios.defaults.baseURL = `http://172.16.0.101:8181`;
+Vue.axios.defaults.baseURL = `http://172.16.0.102:8181`;
 
 new Vue({
   router,
