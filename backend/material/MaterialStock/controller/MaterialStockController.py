@@ -71,10 +71,11 @@ def AddMaterialStockbyOrders(orders):
     for index in records:
         orders = index[0]
     print("ID Item : ",orders)
-    query_insert = "INSERT INTO mat_d_materialstock(id,purchaseItem,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"
+    query_insert =  "INSERT INTO mat_d_materialstock(id,purchaseItem,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"
     query_insert2 = "INSERT INTO mat_d_materialonws01(workstationCode,materialStock,login)VALUES(%s,%s,%s)"
     query_insert3 = "INSERT INTO mat_d_statusbarcode(id,workstation)VALUES(%s,%s)"
     query_insert4 = "INSERT INTO mat_d_materialstock01(id,purchaseID)VALUES(%s,%s)"
+    query_insert5 = "INSERT INTO mat_d_statusbarcode01(id,workstation)VALUES(%s,%s)"
     try:
         data = request.json
         id = data["id"]
@@ -103,6 +104,7 @@ def AddMaterialStockbyOrders(orders):
         cursor.execute(query_insert2,values2)
         cursor.execute(query_insert3,values3)
         cursor.execute(query_insert4,values4)
+        cursor.execute(query_insert5,values3)
         
         conn.commit()
         
