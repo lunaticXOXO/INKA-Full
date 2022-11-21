@@ -108,7 +108,6 @@
 
     mounted(){
       this.fetchPurchaseIdOrders(),
-      this.fetchMaterialTypeSupplier(),
       this.fetchUnit()
     },
   
@@ -146,24 +145,6 @@
                 this.list_orders = res.data
                 console.log(res,this.list_purchaseId)
                 console.log(res,this.list_orders)
-            }
-        }catch(error){
-            alert(error)
-            console.log(error)
-        }
-      },
-
-      async fetchMaterialTypeSupplier(){
-        try{
-            const axios = require('axios')
-            const res = await axios.get('/supplier_material/show_material_supplier')
-            if (res.data == null){
-                alert("Material Type Kosong")
-            }else{
-                this.list_materialTypeCode = res.data
-                this.list_supplierCode = res.data
-                console.log(res,this.list_materialTypeCode)
-                console.log(res,this.list_supplierCode)
             }
         }catch(error){
             alert(error)

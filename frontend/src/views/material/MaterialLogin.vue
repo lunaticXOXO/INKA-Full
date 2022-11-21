@@ -2,8 +2,9 @@
     <v-card  
         class="mx-auto text-center mt-10"
         max-width="1000">
-
-        <h2>Material Login</h2>
+        <br>
+        <h1>List Material Login</h1>
+        <br>
         <v-data-table
           :headers = "column"
           :items = "matlogin"
