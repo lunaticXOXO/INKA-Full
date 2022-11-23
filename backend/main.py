@@ -680,6 +680,18 @@ def response_operasi_selsai(idOperasi):
     hasil = EndResponseOperasi(idOperasi)
     return hasil
 
+
+@app.route('/operasi/get_response_operasi_mulai/<idOperasi>',methods = ['GET'])
+def get_response_operasi_mulai(idOperasi):
+    hasil = GetResponseStartOperasi(idOperasi)
+    return hasil
+
+
+@app.route('/operasi/get_response_operasi_selesai/<idOperasi>',methods = ['GET'])
+def get_response_operasi_selesai(idOperasi):
+    hasil = GetResponseEndOperasi(idOperasi)
+    return hasil
+
 @app.route('/operasi/show_operasilayak/<username>',methods = ['GET'])
 def show_operasilayak(username):
     hasil = ShowOperasiLayak(username)
