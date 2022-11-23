@@ -3,7 +3,7 @@
         <v-app-bar app color="#6f6f6f">
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
             <v-btn icon :to="routeHome" class="mr-2">
-                <v-icon>mdi-home</v-icon>
+                <v-icon src="../assets/logo/home.png"></v-icon>
             </v-btn>
             <v-img 
                 max-height="50"
@@ -28,7 +28,7 @@
             <span class="white--text mr-6">admin</span>
             <v-btn @click="logout()" color="grey">
                 <span>Sign Out</span>
-                <v-icon right>mdi-arrow-right</v-icon>
+                <v-img src="../assets/logo/arrow-right.png"></v-img>
             </v-btn>
         </v-app-bar>
     
