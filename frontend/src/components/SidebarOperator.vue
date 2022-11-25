@@ -82,6 +82,7 @@
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
                                 v-model = "btn1"
+                                :loading="loading"
                                 v-if = "visible"
                                 class="mx-auto white--text" 
                                 elevation = "0"
@@ -209,6 +210,7 @@ export default {
             },
             timer: '',
             timer2 : '',
+            loading : false
         }
     },
 
@@ -221,12 +223,10 @@ export default {
 
     methods: {
         refresh() {
-            this.timer.setInterval(location.replace("/"),10000)
-            this.timer2.setTimeout(this.stopRefresh(),15000)       
-        },
-
-        stopRefresh() {
-            clearInterval(this.timer);
+            setTimeout(() => {
+                this.timer.setInterval(location.replace("/"), 2000)
+                this.$forceUpdate();  
+            }, 2000)
         },
 
         logout() {
@@ -385,7 +385,6 @@ export default {
                             color : 'green',
                             text : 'Operasi Mulai'
                         }
-                        //location.replace('/')
                         break
                     }
                     if( this.items3[this.index].mulai != null && this.items3[this.index].selesai == null){
@@ -393,7 +392,6 @@ export default {
                             color : 'blue',
                             text : 'Operasi Selesai'
                         }
-                        //location.replace('/')
                         break
                     }
                     if( this.items3[this.index].mulai != null && this.items3[this.index].selesai != null && this.index == this.items3.length-1){
@@ -406,10 +404,7 @@ export default {
                         this.visible = false
                     }   
                 }
-                //location.reload()
             }
-            
-           
             catch(error){
                 console.log(error) 
             }
@@ -431,40 +426,38 @@ export default {
         },
 
         startOperation(){
-            try{
-                //this.singleSelect = true
-                const axios = require('axios')
-                const res = axios.post('/operasi/response_operasi_mulai')
-                if(res.data.status == 'berhasil'){
-                    console.log(res)
-                    location.replace("/")
+            this.loading = true
+            setTimeout(() => {
+                try{
+                    //this.singleSelect = true
+                    const axios = require('axios')
+                    const res = axios.post('/operasi/response_operasi_mulai')
+                    if(res.data.status == 'berhasil'){
+                        console.log(res)
+                    }
                 }
-                
-             
-            }
-            catch(error){
-                console.log(error)
-                location.replace("/")
-            }
-            this.dialog = false
-            location.replace("/")
-            this.refresh()
+                catch(error){
+                    console.log(error)
+                }
+                this.dialog = false
+                this.refresh()
+            }, 2000)
         },
     
         akhiriOperation(){
-            try{
-                const axios = require('axios')
-                const res = axios.post('/operasi/response_operasi_selsai')
-                if(res.data.status == 'berhasil'){
-                    console.log(res)
-                    location.replace("/")
+            this.loading = true
+            setTimeout(() => {
+                try{
+                    const axios = require('axios')
+                    const res = axios.post('/operasi/response_operasi_selsai')
+                    if(res.data.status == 'berhasil'){
+                        console.log(res)
+                    }
+                }catch(error){
+                    console.log(error)
                 }
-            }catch(error){
-                console.log(error)
-                location.replace("/")
-            }
-            location.replace("/")
-            this.refresh()
+                this.refresh()
+            }, 2000)
         }
     },
 }
