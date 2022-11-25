@@ -208,7 +208,9 @@ export default {
                 show : false,
                 color : null,
                 message : null,
-            }
+            },
+            timer: '',
+            timer2 : '',
         }
     },
 
@@ -220,6 +222,15 @@ export default {
     },
 
     methods: {
+        refresh() {
+            this.timer.setInterval(location.replace("/"),10000)
+            this.timer2.setTimeout(this.stopRefresh(),15000)       
+        },
+
+        stopRefresh() {
+            clearInterval(this.timer);
+        },
+
         logout() {
             this.route = "/login"
             location.replace("/login")
@@ -238,32 +249,50 @@ export default {
                     }
                 );
                 console.log(response,this.data)
-                if(response.data.status == "berhasil"){
-                    this.snackbar = {
-                    show : true,
-                    message : "Material Gagal Login / Operator Login",
-                    color : "green"
-                    }
-                }
-                else if(response.data.status == "gagal"){
-                    this.snackbar = {
-                    show : true,
-                    message : "",
-                    color : "blue"
-                    }
-                }
             }
             catch(error){
                 console.log(error)
-                this.snackbar = {
-                    show : true,
-                    message : "Insert Material Error",
-                    color : "red"
-                }
             }
+            
             setTimeout(() => {
-                location.reload()
-            }, 2000)
+                try{
+                    const axios = require('axios')
+                    const res =  axios.get('/material/message_material_login/' + this.kodeMaterial)
+                    if(res.data.length == null){
+                        console.log("Data kosong")
+                    }
+                    else if(res.data[0].keterangan == "material berhasil login"){
+                        this.items = res.data
+                        console.log(res,this.items)
+                        this.snackbar = {
+                            show : true,
+                            message : res.data[0].keterangan,
+                            color : "green"
+                        }
+                    }
+                    else if(res.data[0].keterangan == "material gagal login"){
+                        this.items = res.data
+                        console.log(res,this.items)
+                        this.snackbar = {
+                            show : true,
+                            message : res.data[0].keterangan,
+                            color : "red"
+                        }
+                    }
+                }
+                catch(error){
+                    console.log(error)
+                    this.snackbar = {
+                        show : true,
+                        message : "material berhasil login",
+                        color : "green"
+                    }
+                }
+            }, 3000)
+
+            setTimeout(() => {
+                location.reload("/")
+            }, 3000)
         },
 
         /*async fetchOperasi(){
@@ -329,7 +358,7 @@ export default {
                 }
                 else if(res.data.length > 0){
                     this.items = res.data
-                    console.log(res,this.itemss)
+                    console.log(res,this.items)
                 }
 
             }catch(error){
@@ -377,10 +406,12 @@ export default {
                         this.visible = false
                     }   
                 }
-
-
-            }catch(error){
-                console.log(error)
+                //location.reload()
+            }
+            
+           
+            catch(error){
+                console.log(error) 
             }
         },
 
@@ -399,47 +430,55 @@ export default {
             }
         },
 
-        async startOperation(){
+        startOperation(){
             try{
                 this.singleSelect = true
                 const axios = require('axios')
-                const res = await axios.post('/operasi/response_operasi_mulai/' + this.itemKey[0].id)
+                const res = axios.post('/operasi/response_operasi_mulai/' + this.itemKey[0].id)
                 if(res.data.status == 'berhasil'){
                     if (this.selected[0].rencanaMulai != null){
                         this.btn1 = {
                             color : 'blue',
                             text : 'Operasi Selesai'
                         }
-                        console.log("test")
+                        location.replace("/")
                     }
                     console.log(res)
+                    location.replace("/")
                 }else{
                     console.log(res)
+                    location.replace("/")
                 }
+                location.replace("/")
             }catch(error){
                 console.log(error)
+                location.replace("/")
             }
             this.dialog = false
-            window.location.reload()
+            location.replace("/")
+            this.refresh()
         },
     
-        async akhiriOperation(){
+        akhiriOperation(){
             try{
                 const axios = require('axios')
-                const res = await axios.post('/operasi/response_operasi_selsai/' + this.itemKey[0].id)
+                const res = axios.post('/operasi/response_operasi_selsai/' + this.itemKey[0].id)
                 if(res.data.status == 'berhasil'){
                     console.log(res)
+                    location.replace("/")
                 }else{
                     console.log(res)
+                    location.replace("/")
                 }
+                location.replace("/")
             }catch(error){
                 console.log(error)
+                location.replace("/")
             }
-            window.location.reload()
+            location.replace("/")
+            this.refresh()
         }
-     
     },
-
 }
 </script>
 

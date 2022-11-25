@@ -579,6 +579,12 @@ def get_purchase_item_in_matstock(orders):
     hasil = GetPurchaseItemInMatStock(orders)
     return hasil
 
+
+@app.route('/material/message_material_login/<id>',methods = ['GET'])
+def message_material_login(id):
+    hasil = GetMaterialBerhasilLogin(id)
+    return hasil
+
 #MATERIAL ON WS
 @app.route('/material_ws/get_material_onws',methods = ['GET'])
 def get_material_onws():
