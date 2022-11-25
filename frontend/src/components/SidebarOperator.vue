@@ -38,11 +38,7 @@
                 <v-card class="mx-auto mb-6 text-center mt-6" width="1000">
                     <v-data-table
                         :headers = "headers"
-                        :items = "items"
-                        :single-select="singleSelect"
-                        itemKey ="id"
-                        show-select
-                        v-model="itemKey"
+                        :items = "items"                
                         >
                     </v-data-table>
                 </v-card>
@@ -87,7 +83,8 @@
                             <v-btn
                                 v-model = "btn1"
                                 v-if = "visible"
-                                class="mx-auto blue white--text" 
+                                class="mx-auto white--text" 
+                                elevation = "0"
                                 width="250" 
                                 :color="btn1.color"
                                 v-bind:disabled="hasClicked"
@@ -200,8 +197,9 @@ export default {
             items3 : undefined,
             index : 0,
             btn1 : {
-                text : 'Operasi Mulai',
-                color : 'green',
+                text : '',
+                color: '#FFFFFF',
+                
             },
             btn2 : undefined,
             snackbar : {
@@ -387,6 +385,7 @@ export default {
                             color : 'green',
                             text : 'Operasi Mulai'
                         }
+                        //location.replace('/')
                         break
                     }
                     if( this.items3[this.index].mulai != null && this.items3[this.index].selesai == null){
@@ -394,6 +393,7 @@ export default {
                             color : 'blue',
                             text : 'Operasi Selesai'
                         }
+                        //location.replace('/')
                         break
                     }
                     if( this.items3[this.index].mulai != null && this.items3[this.index].selesai != null && this.index == this.items3.length-1){
@@ -432,25 +432,17 @@ export default {
 
         startOperation(){
             try{
-                this.singleSelect = true
+                //this.singleSelect = true
                 const axios = require('axios')
-                const res = axios.post('/operasi/response_operasi_mulai/' + this.itemKey[0].id)
+                const res = axios.post('/operasi/response_operasi_mulai')
                 if(res.data.status == 'berhasil'){
-                    if (this.selected[0].rencanaMulai != null){
-                        this.btn1 = {
-                            color : 'blue',
-                            text : 'Operasi Selesai'
-                        }
-                        location.replace("/")
-                    }
-                    console.log(res)
-                    location.replace("/")
-                }else{
                     console.log(res)
                     location.replace("/")
                 }
-                location.replace("/")
-            }catch(error){
+                
+             
+            }
+            catch(error){
                 console.log(error)
                 location.replace("/")
             }
@@ -462,15 +454,11 @@ export default {
         akhiriOperation(){
             try{
                 const axios = require('axios')
-                const res = axios.post('/operasi/response_operasi_selsai/' + this.itemKey[0].id)
+                const res = axios.post('/operasi/response_operasi_selsai')
                 if(res.data.status == 'berhasil'){
                     console.log(res)
                     location.replace("/")
-                }else{
-                    console.log(res)
-                    location.replace("/")
                 }
-                location.replace("/")
             }catch(error){
                 console.log(error)
                 location.replace("/")
