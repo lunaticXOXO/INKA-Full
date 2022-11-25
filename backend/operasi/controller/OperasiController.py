@@ -177,10 +177,10 @@ def EndOperation(idOperasi):
     return hasil
 
 
-def StartResponseOperasi(idOperasi):
+def StartResponseOperasi():
     conn = database.connector()
     cursor = conn.cursor()
-    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a WHERE a.id = '"+idOperasi+"'"
+    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a"
     cursor.execute(query_get_ws)
     records = cursor.fetchall()
     ws = ""
@@ -218,10 +218,10 @@ def GetResponseStartOperasi(idOperasi):
     conn.close()
     return make_response(jsonify(json_data),200)
 
-def EndResponseOperasi(idOperasi):
+def EndResponseOperasi():
     conn = database.connector()
     cursor = conn.cursor()
-    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a WHERE a.id = '"+idOperasi+"'"
+    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a"
     cursor.execute(query_get_ws)
     records = cursor.fetchall()
     ws = ""
