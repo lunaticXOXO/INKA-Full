@@ -709,6 +709,12 @@ def get_operasi_siap(username):
     hasil = IfOperasiSiap(username)
     return hasil
 
+
+@app.route('/operasi/get_operasi_by_product/<idProduct>', methods = ['GET'])
+def get_operasi_by_product(idProduct):
+    hasil = ShowOperasiByProduct(idProduct)
+    return hasil
+
 #Operator
 @app.route('/operator/add_operator',methods = ['POST'])
 def add_operator():
@@ -763,6 +769,16 @@ def add_operator_requirement_byprocess(id):
     hasil = AddOperatorRequirementByProcess(id)
     return hasil
 
+
+@app.route('/operator/get_scan_operator/<code>',methods = ['GET'])
+def get_scan_operator(code):
+    hasil = ScanOperator(code)
+    return hasil
+
+@app.route('/operator/get_link_operator/<code>',methods = ['GET'])
+def get_link_operator(code):
+    hasil = GetLinkOperator(code)
+    return hasil
 
 
 # Process Requirement

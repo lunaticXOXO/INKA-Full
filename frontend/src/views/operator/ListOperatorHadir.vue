@@ -32,7 +32,7 @@
                                 <v-img
                                     max-height="150"
                                     max-width="100" 
-                                    src="../operator/foto/651400111.jpg"
+                                    src="../operator/foto/budicahyono.jpg"
                                     class="ma-6 mx-auto">
                                 </v-img>
                                 <p>651400111</p>

@@ -55,11 +55,11 @@
                         </v-icon>
                     </div>
                     <div v-else>
-                        <!--<router-link :to="{name:'Operasi by Produk',params:{'id': `${item.id}`}}">
+                        <router-link :to="{name:'List Operasi By Produk Tabel',params:{'id': `${item.id}`}}">
                             <v-btn class="mx-1" x-small color="blue" @click="selectOperasitoProduct(item)">
                                 <v-icon small dark>mdi-check</v-icon>
                             </v-btn>
-                        </router-link>-->
+                        </router-link>
                         <v-btn class="mx-1" x-small color="green" @click="editProduct(item)">
                             <v-icon small dark>mdi-pencil</v-icon>
                         </v-btn>

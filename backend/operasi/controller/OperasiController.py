@@ -305,3 +305,20 @@ def IfOperasiSiap(username):
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
     return make_response(jsonify(json_data),200)
+
+
+
+
+def ShowOperasiByProduct(idProduct):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM prd_d_operasi WHERE produk = '"+idProduct+"' ORDER BY rencanaMulai ASC"
+    cursor.execute(query)
+
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)

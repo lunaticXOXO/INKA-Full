@@ -53,32 +53,47 @@
             </div>
             <div class = "ma-6">
                 <h3>Operator</h3>
-                <!--
-                <div class="mx-auto mt-6">
-                    <span class="mr-10">Foto</span>
-                    <span class="ml-10">Nama</span>
+                <div class = "mx-auto mt-4">
+                    <v-container class="grey lighten-5">
+                        <v-row no-gutters>
+                            <v-col
+                            
+                                
+
+                            v-for=" index in listOperator"
+                            :key="index"
+                            cols="12"
+                            sm="4"
+                            >
+                            <span class="ml-6">index.nama</span>
+                                <v-card
+                                class="pa-2"
+                                outlined
+                                tile
+                                >
+                                <v-img
+                                    max-height="250"
+                                    max-width="200" 
+                                    src="../assets/ario.jpg" 
+                                    class="ma-6 mx-auto">
+                                </v-img>
+                                
+                                </v-card>
+                            </v-col>
+                        </v-row>
+                    </v-container>
                 </div>
-                
-                <v-img
-                    max-height="150"
-                    max-width="100" 
-                    src="../views/operator/foto/651100023.jpg"
-                    class="ma-6 mx-auto">
-                </v-img>
-                -->
                 <div class="mx-auto mt-10">
                     <v-text-field
                     width="250"
                     dense
-                    v-model="kodeMaterial"
+                    v-model="inputKode"
                     @keyup.enter="parseBarcode"
                     autofocus>
                     </v-text-field>
-                   
                     <v-dialog
                         v-model="dialog"
                         width="500">
-                        
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
                                 v-model = "btn1"
@@ -173,7 +188,7 @@ export default {
             singleSelect: false,
             selected: [],
             loginService: new Login(),
-            kodeMaterial: undefined,
+            inputKode: undefined,
             namaOperator: undefined,
             route: "/login",
             routeHome: "/",
@@ -210,7 +225,8 @@ export default {
             },
             timer: '',
             timer2 : '',
-            loading : false
+            loading : false,
+            listOperator : []
         }
     },
 
@@ -218,7 +234,8 @@ export default {
         //this.fetchOperasi(),
         this.fetchMaterial(),
         this.fetchOperasiSiap(),
-        this.fetchOperasiLayak()
+        this.fetchOperasiLayak(),
+        this.getLinkOperator()
     },
 
     methods: {
@@ -236,17 +253,27 @@ export default {
         },
 
         async parseBarcode(){
-            console.log(this.kodeMaterial)
+            console.log(this.inputKode)
             console.log(this.namaOperator)
+
             try{
                 const axios = require('axios');
+
                 const response = await axios.post('/rfid/insert_material',
                     { 
                         stasiunKerja : this.namaOperator,
-                        idMat : this.kodeMaterial
+                        idMat : this.inputKode
                     }
                 );
-                console.log(response,this.data)
+                console.log(response)
+
+                const res = axios.get('/operator/get_scan_operator/<code>' + this.inputKode)
+                if(res.data == null){
+                    console.log("Bukan Operator")
+                }else{
+                    this.listOperator = res.data
+                    console.log(res,this.listOperator)
+                }
             }
             catch(error){
                 console.log(error)
@@ -256,6 +283,7 @@ export default {
                 try{
                     const axios = require('axios')
                     const res =  axios.get('/material/message_material_login/' + this.kodeMaterial)
+                    console.log(res.data[0].keterangan)
                     if(res.data.length == null){
                         console.log("Data kosong")
                     }
@@ -458,8 +486,29 @@ export default {
                 }
                 this.refresh()
             }, 2000)
+        },
+        
+
+        getLinkOperator(){
+        try{
+
+            const axios = require('axios')
+            const res = axios.get('/operator/get_link_operator/' + this.loginService.getCurrentUsername())
+            if (res.data == null){
+                console.log("data kosong")
+            }else{
+                this.listOperator = res.data
+                console.log(res,this.listOperator)
+            }
+
+        }catch(error){
+            console.log(error)
         }
+    }
     },
+
+
+   
 }
 </script>
 

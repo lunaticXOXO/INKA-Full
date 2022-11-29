@@ -109,7 +109,7 @@
                 alert('Purchase Item Kosong')
               }else{
                 this.purchasematerial = res.data
-                console.log(res,this.prcItembyprcMat)
+                console.log(res,this.purchasematerial)
               }
             }
             catch(error){
