@@ -12,7 +12,7 @@
                                 <v-img
                                     max-height="150"
                                     max-width="100" 
-                                    src="../operator/foto/651100028.jpg"
+                                    src="../operator/foto/saepudin.jpg"
                                     class="ma-6 mx-auto">
                                 </v-img>
                                 <p>651100028</p>
@@ -22,7 +22,7 @@
                                 <v-img
                                     max-height="150"
                                     max-width="100" 
-                                    src="../operator/foto/999900105.jpg"
+                                    src="../operator/foto/puryadi.jpg"
                                     class="ma-6 mx-auto">
                                 </v-img>
                                 <p>999900105</p>
@@ -42,7 +42,7 @@
                                 <v-img
                                     max-height="150"
                                     max-width="100" 
-                                    src="../operator/foto/651100023.jpg"
+                                    src="../operator/foto/aziz.jpg"
                                     class="ma-6 mx-auto">
                                 </v-img>
                                 <p>651100023</p>
@@ -52,7 +52,7 @@
                                 <v-img
                                     max-height="150"
                                     max-width="100" 
-                                    src="../operator/foto/651600506.jpg"
+                                    src="../operator/foto/jemyherdian.jpg"
                                     class="ma-6 mx-auto">
                                 </v-img>
                                 <p>651600506</p>
@@ -64,7 +64,7 @@
                                 <v-img
                                     max-height="150"
                                     max-width="100" 
-                                    src="../operator/foto/651400110.jpg"
+                                    src="../operator/foto/kusantok.jpg"
                                     class="ma-6 mx-auto">
                                 </v-img>
                                 <p>651400110</p>

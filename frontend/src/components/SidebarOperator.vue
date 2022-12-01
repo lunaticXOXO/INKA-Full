@@ -53,39 +53,29 @@
             </div>
             <div class = "ma-6">
                 <h3>Operator</h3>
-                <div class = "mx-auto mt-4">
-                    <v-container class="grey lighten-5">
-                        <v-row no-gutters>
+                <div class = "mt-4">
+                    <v-container class="white">
+                        <v-row>
                             <v-col
-                            
-                                
-
-                            v-for=" index in listOperator"
+                            v-for=" index in listOperatorPhoto"
                             :key="index"
-                            cols="12"
-                            sm="4"
+                            cols="8"
+                            sm="auto"
                             >
-                            <span class="ml-6">index.nama</span>
-                                <v-card
-                                class="pa-2"
-                                outlined
-                                tile
-                                >
+                            <span class="mx-auto"><b>{{index.nama}}</b></span>
                                 <v-img
-                                    max-height="250"
-                                    max-width="200" 
-                                    src="../assets/ario.jpg" 
-                                    class="ma-6 mx-auto">
+                                    height="200"
+                                    width="150" 
+                                    :src="require(`@/views/operator/foto/${index.link}`)" 
+                                >
                                 </v-img>
-                                
-                                </v-card>
                             </v-col>
                         </v-row>
                     </v-container>
                 </div>
                 <div class="mx-auto mt-10">
                     <v-text-field
-                    width="250"
+                    width="300"
                     dense
                     v-model="inputKode"
                     @keyup.enter="parseBarcode"
@@ -109,7 +99,6 @@
                                 {{btn1.text}}
                             </v-btn>
                         </template>
-                        
                         <v-card>
                             <div v-if = "btn1.color == 'green'">
                                 <v-card-title class="text-h5 grey lighten-2">
@@ -226,7 +215,8 @@ export default {
             timer: '',
             timer2 : '',
             loading : false,
-            listOperator : []
+            listOperator : [],
+            listOperatorPhoto : [],
         }
     },
 
@@ -267,7 +257,7 @@ export default {
                 );
                 console.log(response)
 
-                const res = axios.get('/operator/get_scan_operator/<code>' + this.inputKode)
+                const res = axios.get('/operator/get_link_operator/<code>' + this.inputKode)
                 if(res.data == null){
                     console.log("Bukan Operator")
                 }else{
@@ -489,16 +479,17 @@ export default {
         },
         
 
-        getLinkOperator(){
+        async getLinkOperator(){
         try{
 
             const axios = require('axios')
-            const res = axios.get('/operator/get_link_operator/' + this.loginService.getCurrentUsername())
+            const res = await axios.get('/operator/get_link_operator/' + this.loginService.getCurrentUsername())
             if (res.data == null){
                 console.log("data kosong")
             }else{
-                this.listOperator = res.data
-                console.log(res,this.listOperator)
+                this.listOperatorPhoto = res.data
+                console.log("data terisi")
+                console.log(res,this.listOperatorPhoto)
             }
 
         }catch(error){

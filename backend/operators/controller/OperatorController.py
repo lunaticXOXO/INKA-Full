@@ -96,7 +96,7 @@ def ScanOperator(code):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT login, logout FROM opd_d_operatoronws WHERE code = '"+code+"'"
+    query = "SELECT login, logout FROM opr_d_operatoronws WHERE code = '"+code+"'"
     cursor.execute(query)
     records = cursor.fetchall()
 
@@ -230,15 +230,46 @@ def ShowOperator():
 def GetLinkOperator(code):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code, a.nama, a.link FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = '"+code+"'"
+    #query = "SELECT a.code, a.nama, a.link FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code JOIN gen_r_stasiunkerja c ON c.id = b.workstationCode WHERE c.username = '"+code+"' AND  b.logout IS NULL AND b.login IS NOT NULL"
+    query = "SELECT a.code, a.nama, a.link,b.login,b.logout FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code JOIN gen_r_stasiunkerja c ON c.id = b.workstationCode WHERE c.username = '"+code+"'"
     cursor.execute(query)
+    records = []
+    records_new = []
+    records = cursor.fetchall()
+
+    for index in records:
+        if index[3] != None and index[4] == None:
+            GetShowLinkOperator(code)
+            records_new = GetShowLinkOperator(code)
+
+        if index[4] == None:
+            GetShowLinkOperator(code)
+            records_new = GetShowLinkOperator(code) 
+            break
+            
+        elif index[3] != None and index[4] != None:
+            GetRemoveLinkOperator()
+            records_new = GetRemoveLinkOperator()
+            
+    return records_new
 
 
+def GetShowLinkOperator(code):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query2 = "SELECT a.code, a.nama, a.link FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code JOIN gen_r_stasiunkerja c ON c.id = b.workstationCode WHERE c.username = '"+code+"' AND  b.logout IS NULL"
+    cursor.execute(query2)
     row_headers = [x[0] for x in cursor.description]
     json_data = []
+
     records = cursor.fetchall()
 
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
     
     return make_response(jsonify(json_data),200)
+
+
+def GetRemoveLinkOperator():
+    records = []
+    return records
