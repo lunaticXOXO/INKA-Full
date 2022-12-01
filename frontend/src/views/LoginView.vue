@@ -1,54 +1,56 @@
 <template>
-    <div class="background">
-        <v-main class="d-flex justify-center align-center">
-            <v-col cols="10" lg="4" class="mx-auto">
-                <v-card class="pa-4">
-                    <div class="text-center">
-                        <v-avatar size="60" color="grey lighten-2">
-                            <v-img size="20" color="#555555" src="../assets/logo/lock.png"></v-img>
-                        </v-avatar>
-                        <h2 class="#555555--text mt-4">Login Page</h2>
-                    </div>
-                    <v-form @submit.prevent="submitHandler" ref="form">
-                        <v-card-text>
-                            <v-text-field
-                                v-model="username"
-                                type="text"
-                                label="Username"
-                                placeholder="Username"
-                                prepend-inner-icon="mdi-account"/>
-                            <v-text-field
-                                v-model="passwords"
-                                :rules="passwordRules"
-                                :type="passwordShow?'text':'password'"
-                                label="Password"
-                                placeholder="Password"
-                                prepend-inner-icon="mdi-key"
-                                :append-icon="passwordShow ? 'mdi-eye':'mdi-eye-off'"
-                                @click:append="passwordShow = !passwordShow">
-                            </v-text-field>
-                        </v-card-text>
-                        <v-card-actions class="justify-center">
-                            <v-btn :loading="loading" type="submit" color="#555555">
-                                <span class="white--text px-8">Login</span>
-                            </v-btn>
-                        </v-card-actions>
-                    </v-form>
-                </v-card>
-            </v-col>
-        </v-main>
-        <div v-if="snackBar == true">
-        <v-snackbar top color="green" v-model="snackBar">
-            Login Success!
-        </v-snackbar>
-        </div>
+    <v-container fluid class="all">
+        <div class="background">
+            <v-main class="d-flex justify-center align-center">
+                <v-col cols="10" lg="4" class="mx-auto">
+                    <v-card class="pa-10" id="kotak">
+                        <div class="text-center">
+                            <v-avatar size="60" color="grey lighten-2">
+                                <v-img size="20" color="#555555" src="../assets/logo/lock.png"></v-img>
+                            </v-avatar>
+                            <h2 class="#555555--text mt-4">Login Page</h2>
+                        </div>
+                        <v-form @submit.prevent="submitHandler" ref="form">
+                            <v-card-text>
+                                <v-text-field
+                                    v-model="username"
+                                    type="text"
+                                    label="Username"
+                                    placeholder="Username"
+                                    prepend-inner-icon="mdi-account"/>
+                                <v-text-field
+                                    v-model="passwords"
+                                    :rules="passwordRules"
+                                    :type="passwordShow?'text':'password'"
+                                    label="Password"
+                                    placeholder="Password"
+                                    prepend-inner-icon="mdi-key"
+                                    :append-icon="passwordShow ? 'mdi-eye':'mdi-eye-off'"
+                                    @click:append="passwordShow = !passwordShow">
+                                </v-text-field>
+                            </v-card-text>
+                            <v-card-actions class="justify-center">
+                                <v-btn :loading="loading" type="submit" color="#555555">
+                                    <span class="white--text px-8">Login</span>
+                                </v-btn>
+                            </v-card-actions>
+                        </v-form>
+                    </v-card>
+                </v-col>
+            </v-main>
+            <div v-if="snackBar == true">
+            <v-snackbar top color="green" v-model="snackBar">
+                Login Success!
+            </v-snackbar>
+            </div>
 
-        <div v-if="snackBar2 == true">
-        <v-snackbar top color="red" v-model="snackBar2">
-            Username or Password Incorrect!
-        </v-snackbar>
+            <div v-if="snackBar2 == true">
+            <v-snackbar top color="red" v-model="snackBar2">
+                Username or Password Incorrect!
+            </v-snackbar>
+            </div>
         </div>
-    </div>
+    </v-container>
 </template>
 
 <script>
@@ -106,3 +108,16 @@ export default {
     }
 }
 </script>
+
+<style>
+    .all {
+        background: url('../assets/kereta.jpg');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        height: 100vh;
+    }
+
+    #kotak{
+        margin-top: 30%;
+    }
+</style>
