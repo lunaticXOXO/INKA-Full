@@ -4,8 +4,8 @@
             <v-col cols="10" lg="4" class="mx-auto">
                 <v-card class="pa-4">
                     <div class="text-center">
-                        <v-avatar size="100" color="grey lighten-2">
-                            <v-icon size="40" color="#555555">mdi-lock</v-icon>
+                        <v-avatar size="60" color="grey lighten-2">
+                            <v-img size="20" color="#555555" src="../assets/logo/lock.png"></v-img>
                         </v-avatar>
                         <h2 class="#555555--text mt-4">Login Page</h2>
                     </div>

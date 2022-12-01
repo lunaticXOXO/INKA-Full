@@ -28,7 +28,7 @@
             <span class="white--text mr-6">user umum</span>
             <v-btn @click="logout()" color="grey">
                 <span>Sign Out</span>
-                <v-icon right>mdi-arrow-right</v-icon>
+                <v-img src="../assets/logo/arrow-right.png"></v-img>
             </v-btn>
         </v-app-bar>
 

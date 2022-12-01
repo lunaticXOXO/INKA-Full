@@ -177,31 +177,22 @@ def EndOperation(idOperasi):
     return hasil
 
 
-def StartResponseOperasi(idOperasi):
+def StartResponseOperasi():
     conn = database.connector()
     cursor = conn.cursor()
-    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a WHERE a.id = '"+idOperasi+"'"
+    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a"
     cursor.execute(query_get_ws)
     records = cursor.fetchall()
     ws = ""
     for index in records:
         ws = index[0]
     query_insert = "INSERT INTO cpl_responoperasi(stasiunKerja,jenis,mulai)VALUES(%s,%s,%s)"
-    query_update = "UPDATE cpl_oprsiap SET mulai = %s WHERE id = %s"
-    query_update2 = "UPDATE cpl_oprlayak SET mulai = %s WHERE id = %s"
+    
     try:
         jenis = "on"
         mulai = datetime.datetime.now()
-        mulai2 = mulai
-
         values_insert = (ws,jenis,mulai)
-        values_update = (mulai2,idOperasi)
-        values_update2 = (mulai2,idOperasi)
-
         cursor.execute(query_insert,values_insert)
-        cursor.execute(query_update,values_update)
-        cursor.execute(query_update2,values_update2)
-
         conn.commit()
         cursor.close()
         conn.close()
@@ -212,10 +203,25 @@ def StartResponseOperasi(idOperasi):
     return hasil
 
 
-def EndResponseOperasi(idOperasi):
+def GetResponseStartOperasi(idOperasi):
     conn = database.connector()
     cursor = conn.cursor()
-    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a WHERE a.id = '"+idOperasi+"'"
+    query_select = "SELECT a.mulai FROM cpl_oprsiap a WHERE a.id = '"+idOperasi+"'"
+    cursor.execute(query_select)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
+
+def EndResponseOperasi():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a"
     cursor.execute(query_get_ws)
     records = cursor.fetchall()
     ws = ""
@@ -223,25 +229,15 @@ def EndResponseOperasi(idOperasi):
         ws = index[0]
     
     query_insert = "INSERT INTO cpl_responoperasi(stasiunKerja,jenis,mulai)VALUES(%s,%s,%s)"
-    query_update = "UPDATE cpl_oprsiap SET selesai = %s WHERE id = %s"
-    query_update2 = "UPDATE cpl_oprlayak SET selesai = %s WHERE id = %s"
+   
     try:
         jenis = "off"
         finish = datetime.datetime.now()
-        finish2 = finish
-
         values_insert = (ws,jenis,finish)
-        values_update = (finish2,idOperasi)
-        values_update2 = (finish2,idOperasi)
-
         cursor.execute(query_insert,values_insert)
-        cursor.execute(query_update,values_update)
-        cursor.execute(query_update2,values_update2)
-
         conn.commit()
         cursor.close()
         conn.close()
-
         hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error",str(e))
@@ -249,6 +245,20 @@ def EndResponseOperasi(idOperasi):
     return hasil
 
 
+def GetResponseEndOperasi(idOperasi):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query_select = "SELECT a.selesai FROM cpl_oprsiap a WHERE a.id = '"+idOperasi+"'"
+    cursor.execute(query_select)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
 
 
 def ShowOperasiLayak(username):
@@ -288,6 +298,23 @@ def IfOperasiSiap(username):
     
     query = "SELECT * FROM cpl_oprsiap WHERE stasiunKerja = '"+username+"' "
     cursor.execute(query)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
+
+
+
+def ShowOperasiByProduct(idProduct):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM prd_d_operasi WHERE produk = '"+idProduct+"' ORDER BY rencanaMulai ASC"
+    cursor.execute(query)
+
     records = cursor.fetchall()
     json_data = []
     row_headers = [x[0] for x in cursor.description]

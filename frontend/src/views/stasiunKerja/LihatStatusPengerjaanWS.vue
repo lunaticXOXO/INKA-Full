@@ -1221,7 +1221,7 @@ export default {
       itemsWS07: undefined,
       itemsWS08: undefined,
       itemsWS09: undefined,
-      pilihan: undefined,
+      //pilihan: undefined,
       rowHeight: 50,
       rowLabelWidth: 5,
       grid: true,
@@ -1252,65 +1252,6 @@ export default {
         { name: 'WORKSTATION07',   flex: 2 },
         { name: 'WORKSTATION08',   flex: 2 },
         { name: 'WORKSTATION09',   flex: 2 },
-      ],
-      items2:[
-        {
-          idOperasi:"23NGWLRG3",
-          namaProses:"Setting brake boogie",
-          namaStasiunKerja:"WS8",
-          rencanaMulai:"2022-09-04 07:00",
-          rencanaSelesai:"2022-09-04 12:00",
-          ganttBarConfig: {borderRadius: "0px", backgroundColor: "#222222"}
-        },
-        {
-          idOperasi:"NABNJ4PL4",
-          namaProses:"Bogie Installation",
-          namaStasiunKerja:"WS8",
-          rencanaMulai:"2022-09-04 13:00",
-          rencanaSelesai:"2022-09-04 17:30",
-          ganttBarConfig: {borderRadius: "0px", backgroundColor: "#222222"}
-        },
-        {
-          idOperasi:"RKKXZTTQP",
-          namaProses:"Test beban",
-          namaStasiunKerja:"WS8",
-          rencanaMulai:"2022-09-04 20:00",
-          rencanaSelesai:"2022-09-04 22:30",
-          ganttBarConfig: {borderRadius: "0px", backgroundColor: "#222222"}
-        },
-        {
-          idOperasi:"SX7RQUVPP",
-          namaProses:"Bogie Assy NON Handbrake",
-          namaStasiunKerja:"WS8",
-          rencanaMulai:"2022-09-05 02:00",
-          rencanaSelesai:"2022-09-05 08:00",
-          ganttBarConfig: {borderRadius: "0px", backgroundColor: "#222222"}
-        }
-      ],
-
-      rows: [
-        {
-          label: "My row #1",
-          bars: [
-            {
-              myStart: "2020-03-01 12:10",
-              myEnd: "2020-03-01 16:35",
-            }
-          ]
-        },
-        {
-          label: "My row #2",
-          bars: [
-            {
-              myStart: "2020-03-02 01:00",
-              myEnd: "2020-03-02 12:00"
-            },
-            {
-              myStart: "2020-03-02 13:00",
-              myEnd: "2020-03-02 22:00"
-            }
-          ]
-        }
       ],
     }
   },
@@ -1446,7 +1387,7 @@ export default {
       this.myChartEndCustom = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
       console.log(this.myChartStartCustom)
       console.log(this.myChartEndCustom)
-      console.log(this.pilihan)
+      //console.log(this.pilihan)
     },
 
     validate2(){
@@ -1456,7 +1397,7 @@ export default {
       this.myChartEndCustom = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
       console.log(this.myChartStartCustom)
       console.log(this.myChartEndCustom)
-      console.log(this.pilihan)
+      //console.log(this.pilihan)
     },
   }
 }

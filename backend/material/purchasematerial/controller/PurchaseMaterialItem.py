@@ -141,12 +141,14 @@ def GetPurchaseMaterialItemComparedMatStock(idPurchase):
     #qty_stock_int = int(qty_stock)
     
     records_purch_item = []
-    if qty_stock == qty_purchaseitem:
-        query_show = "SELECT * FROM mat_d_purchaseitem WHERE id_item = NULL"
-    elif qty_stock == '':
-        query_show = "SELECT a.id_item,a.materialTypeCode,a.purchaseId,a.quantity,a.schedulledArrival,a.supplierCode,a.unit FROM mat_d_purchaseitem a WHERE a.purchaseId = '"+idPurchase+"'"
-    elif qty_purchaseitem < qty_stock:
-        query_show = "SELECT a.id_item,a.materialTypeCode,a.purchaseId,a.quantity,a.schedulledArrival,a.supplierCode,a.unit FROM mat_d_purchaseitem a WHERE a.purchaseId = '"+idPurchase+"'"
+    #if qty_stock == qty_purchaseitem:
+    #    query_show = "SELECT * FROM mat_d_purchaseitem WHERE id_item = NULL"
+    #elif qty_stock == '':
+    #    query_show = "SELECT a.id_item,a.materialTypeCode,a.purchaseId,a.quantity,a.schedulledArrival,a.supplierCode,a.unit FROM mat_d_purchaseitem a WHERE a.purchaseId = '"+idPurchase+"'"
+   # elif qty_purchaseitem < qty_stock:
+    #    query_show = "SELECT a.id_item,a.materialTypeCode,a.purchaseId,a.quantity,a.schedulledArrival,a.supplierCode,a.unit FROM mat_d_purchaseitem a WHERE a.purchaseId = '"+idPurchase+"'"
+    #else:
+    query_show = "SELECT * FROM mat_d_purchaseitem WHERE purchaseId = '"+idPurchase+"'"
        
     cursor.execute(query_show)
     records_purch_item = cursor.fetchall()

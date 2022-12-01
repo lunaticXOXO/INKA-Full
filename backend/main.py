@@ -579,6 +579,12 @@ def get_purchase_item_in_matstock(orders):
     hasil = GetPurchaseItemInMatStock(orders)
     return hasil
 
+
+@app.route('/material/message_material_login/<id>',methods = ['GET'])
+def message_material_login(id):
+    hasil = GetMaterialBerhasilLogin(id)
+    return hasil
+
 #MATERIAL ON WS
 @app.route('/material_ws/get_material_onws',methods = ['GET'])
 def get_material_onws():
@@ -669,15 +675,27 @@ def get_operasi_gantt(stasiunKerja):
     hasil = GetOperasiGanttChart(stasiunKerja)
     return hasil
 
-@app.route('/operasi/response_operasi_mulai/<idOperasi>',methods = ['POST'])
-def response_operasi_mulai(idOperasi):
-    hasil = StartResponseOperasi(idOperasi)
+@app.route('/operasi/response_operasi_mulai',methods = ['POST'])
+def response_operasi_mulai():
+    hasil = StartResponseOperasi()
     return hasil
 
 
-@app.route('/operasi/response_operasi_selsai/<idOperasi>',methods = ['POST'])
-def response_operasi_selsai(idOperasi):
-    hasil = EndResponseOperasi(idOperasi)
+@app.route('/operasi/response_operasi_selsai',methods = ['POST'])
+def response_operasi_selsai():
+    hasil = EndResponseOperasi()
+    return hasil
+
+
+@app.route('/operasi/get_response_operasi_mulai/<idOperasi>',methods = ['GET'])
+def get_response_operasi_mulai(idOperasi):
+    hasil = GetResponseStartOperasi(idOperasi)
+    return hasil
+
+
+@app.route('/operasi/get_response_operasi_selesai/<idOperasi>',methods = ['GET'])
+def get_response_operasi_selesai(idOperasi):
+    hasil = GetResponseEndOperasi(idOperasi)
     return hasil
 
 @app.route('/operasi/show_operasilayak/<username>',methods = ['GET'])
@@ -689,6 +707,12 @@ def show_operasilayak(username):
 @app.route('/operasi/get_operasi_siap/<username>',methods = ['GET'])
 def get_operasi_siap(username):
     hasil = IfOperasiSiap(username)
+    return hasil
+
+
+@app.route('/operasi/get_operasi_by_product/<idProduct>', methods = ['GET'])
+def get_operasi_by_product(idProduct):
+    hasil = ShowOperasiByProduct(idProduct)
     return hasil
 
 #Operator
@@ -745,6 +769,16 @@ def add_operator_requirement_byprocess(id):
     hasil = AddOperatorRequirementByProcess(id)
     return hasil
 
+
+@app.route('/operator/get_scan_operator/<code>',methods = ['GET'])
+def get_scan_operator(code):
+    hasil = ScanOperator(code)
+    return hasil
+
+@app.route('/operator/get_link_operator/<code>',methods = ['GET'])
+def get_link_operator(code):
+    hasil = GetLinkOperator(code)
+    return hasil
 
 
 # Process Requirement

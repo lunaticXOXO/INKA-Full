@@ -92,9 +92,19 @@ def GetOperasiByOperatorLogin(username):
     return make_response(jsonify(json_data),200)
 
 
+def ScanOperator(code):
+    conn = database.connector()
+    cursor = conn.cursor()
 
+    query = "SELECT login, logout FROM opd_d_operatoronws WHERE code = '"+code+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
 
-   
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
 
 
 def GetMaterialbyOperatorLogin(username):
@@ -204,6 +214,25 @@ def ShowOperator():
     cursor = conn.cursor()
     query = "SELECT * FROM opd_r_operator"
     cursor.execute(query)
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
+
+
+
+
+def GetLinkOperator(code):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code, a.nama, a.link FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = '"+code+"'"
+    cursor.execute(query)
+
 
     row_headers = [x[0] for x in cursor.description]
     json_data = []
