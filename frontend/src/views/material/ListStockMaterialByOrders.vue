@@ -60,7 +60,7 @@
             {text : 'Unit',                 value : 'unit'},
             {text : 'Arrival Date',         value : 'arrivalDate'},
             {text : 'Order',                value : 'purchaseItem'},
-            {text : 'Action',               value : 'aksi'}
+           
         ],
         types : [],
       }

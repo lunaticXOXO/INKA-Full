@@ -9,7 +9,7 @@ def ShowOperasiFromProduct(idProduct):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id AS 'idOperasi',a.rencanaMulai,a.rencanaSelesai, b.id AS 'idProses',b.nama AS 'namaProses', a.produk,a.stasiunKerja,a.status FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_d_produk i ON i.id = a.produk WHERE i.id = '"+idProduct+"' ORDER BY a.rencanaMulai ASC"
+    query = "SELECT a.id AS 'idOperasi',a.rencanaMulai,a.rencanaSelesai, b.id AS 'idProses',b.nama AS 'namaProses', a.produk,a.stasiunKerja,a.output,a.mulai,a.selesai FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_d_produk i ON i.id = a.produk WHERE i.id = '"+idProduct+"' ORDER BY a.rencanaMulai ASC"
     cursor.execute(query)
 
     records = cursor.fetchall()
@@ -229,20 +229,86 @@ def EndResponseOperasi():
         ws = index[0]
     
     query_insert = "INSERT INTO cpl_responoperasi(stasiunKerja,jenis,mulai)VALUES(%s,%s,%s)"
+    query_update_percentage = "UPDATE prd_d_proyek SET percentage = %s WHERE id = %s"
+    query_insert_cplprogress = "INSERT INTO cpl_progress(proyek,selesai,selesai_str,percentage)VALUES(%s,%s,%s,%s)"
    
+
     try:
         jenis = "off"
         finish = datetime.datetime.now()
         values_insert = (ws,jenis,finish)
+
+        #Execute Query Insert responseOperasi #
         cursor.execute(query_insert,values_insert)
+        conn.commit()
+        
+        #Meng GET id produk dari operasi yang di klik tombol selesai
+        id_produk = ""
+
+        #Meng GET id proyek dari id produk yang didapat.
+        id_proyek = ""
+        
+        selesai = ""
+
+        #Counter untuk menghitung jumlah yang memiliki output
+        counter = 0
+
+        #Untuk menghitung jumlah total operasi sautu produk
+        total = 0
+
+        hasil_percentage = 0
+       
+        query_select_operasiproduk = "SELECT id,mulai,selesai,produk FROM prd_d_operasi WHERE selesai is not null and mulai is not null ORDER BY selesai DESC LIMIT 1" 
+        cursor.execute(query_select_operasiproduk)
+        records_produk = cursor.fetchall()
+
+        for index in records_produk:
+            selesai - index[2]
+            id_produk = index[3]
+        
+        selesaiSTR = selesai.strftime("%m/%d/%Y, %H:%M")
+        print("Selesai : ",selesai, "Selesai STR : ", selesaiSTR)
+        print("ID Produk : ",id_produk)
+
+        query_operation = "SELECT a.id,a.output,a.produk FROM prd_d_operasi a WHERE a.produk = '"+id_produk+"'"
+        cursor.execute(query_operation)
+        records_operation = cursor.fetchall()
+
+        for index in records_operation:
+            if index[1] != None:
+                counter = counter + 1
+            total = total + 1
+        
+        hasil_percentage = (counter / total ) * 100
+
+        query_get_proyek = "SELECT a.id AS 'idProduk',c.id AS 'idProyek' FROM prd_d_produk a JOIN prd_d_rincianproyek b ON b.id = a.rincianproyek JOIN prd_d_proyek c ON c.id = b.proyek WHERE a.id = '"+id_produk+"'"
+        cursor.execute(query_get_proyek)
+
+        records_proyek = cursor.fetchall()
+        for index in records_proyek:
+            id_proyek = index[1]
+        
+
+        values_update = (hasil_percentage,id_proyek)      
+        values_insert2 = (id_proyek,selesai,selesaiSTR,hasil_percentage)
+        cursor.execute(query_update_percentage,values_update)
+        cursor.execute(query_insert_cplprogress,values_insert2)
         conn.commit()
         cursor.close()
         conn.close()
+
+        
+
+
         hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
+
+
+
+
 
 
 def GetResponseEndOperasi(idOperasi):

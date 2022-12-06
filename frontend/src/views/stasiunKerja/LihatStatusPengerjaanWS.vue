@@ -576,13 +576,19 @@ export default {
           </v-container>
       </v-card>
     -->
-    <h3 class="ml-10 mt-6">Tanggal Mulai Pencarian</h3>
+    <h3 class="ml-10 mt-6">Pencarian Tanggal</h3>
     <v-card class="ml-2" max-width="400" elevation="0">
       <v-menu class="ml-10 mt-6">
         <template v-slot:activator="{ on, attrs }">
-          <v-text-field class="ml-10" :value="tanggalPencarian" v-bind="attrs" v-on="on" label="Tanggal Pencarian" prepend-icon="mdi-calendar"></v-text-field>
+          <v-text-field class="ml-10" :value="tanggalPencarian" v-bind="attrs" v-on="on" label="Tanggal Mulai" prepend-icon="mdi-calendar"></v-text-field>
         </template>
         <v-date-picker width="1000" v-model="tanggalPencarian"></v-date-picker>
+      </v-menu>
+      <v-menu class="ml-10 mt-6">
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field class="ml-10" :value="tanggalPencarian2" v-bind="attrs" v-on="on" label="Tanggal Selesai" prepend-icon="mdi-calendar"></v-text-field>
+        </template>
+        <v-date-picker width="1000" v-model="tanggalPencarian2"></v-date-picker>
       </v-menu>
     </v-card>
     <v-btn
@@ -592,18 +598,9 @@ export default {
       width="200"
       type="submit"
       @click="validate()">
-      Submit (1 Day)
+      Submit
     </v-btn>
-    <br>
-    <v-btn
-      color="success"
-      class="mx-auto text-center" 
-      max-width="1200"
-      width="200"
-      type="submit"
-      @click="validate2()">
-      Submit (2 Days)
-    </v-btn>
+
     <br>
     
     <v-card class="mt-10 mx-10">
@@ -1237,8 +1234,9 @@ export default {
       dialogWS08: undefined,
       dialogWS09: undefined,
       tanggalPencarian: '',
-      myChartStart: "2020-03-01 00:00",
-      myChartEnd: "2020-03-01 23:00",
+      tanggalPencarian2: '',
+      //myChartStart: "2020-03-01 00:00",
+      //myChartEnd: "2020-03-01 23:00",
       myChartStartCustom: dateTime,
       myChartEndCustom: dateTime2,
       itemsWS: [
@@ -1254,19 +1252,6 @@ export default {
         { name: 'WORKSTATION09',   flex: 2 },
       ],
     }
-  },
-
-  mounted(){
-    this.fetchDataStatusWS00(),
-    this.fetchDataStatusWS01(),
-    this.fetchDataStatusWS02(),
-    this.fetchDataStatusWS03(),
-    this.fetchDataStatusWS04(),
-    this.fetchDataStatusWS05(),
-    this.fetchDataStatusWS06(),
-    this.fetchDataStatusWS07(),
-    this.fetchDataStatusWS08(),
-    this.fetchDataStatusWS09()
   },
 
   methods:{
@@ -1384,19 +1369,24 @@ export default {
       const date = new Date(this.tanggalPencarian)
       date.setDate(date.getDate() + 1);
       this.myChartStartCustom = this.tanggalPencarian
-      this.myChartEndCustom = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
-      console.log(this.myChartStartCustom)
-      console.log(this.myChartEndCustom)
-      //console.log(this.pilihan)
-    },
 
-    validate2(){
-      const date = new Date(this.tanggalPencarian)
-      date.setDate(date.getDate() + 2);
-      this.myChartStartCustom = this.tanggalPencarian
-      this.myChartEndCustom = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+      const date2 = new Date(this.tanggalPencarian2)
+      date2.setDate(date2.getDate() + 1);
+      this.myChartEndCustom = this.tanggalPencarian2
+      
       console.log(this.myChartStartCustom)
       console.log(this.myChartEndCustom)
+
+      this.fetchDataStatusWS00()
+      this.fetchDataStatusWS01()
+      this.fetchDataStatusWS02()
+      this.fetchDataStatusWS03()
+      this.fetchDataStatusWS04()
+      this.fetchDataStatusWS05()
+      this.fetchDataStatusWS06()
+      this.fetchDataStatusWS07()
+      this.fetchDataStatusWS08()
+      this.fetchDataStatusWS09()
       //console.log(this.pilihan)
     },
   }

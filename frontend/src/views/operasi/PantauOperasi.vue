@@ -25,17 +25,17 @@
                             <br>
                             <h3>{{ item.namaProses }}</h3>
                             <p>{{ item.idOperasi }}</p>
-                            <div v-if="item.status == null">
+                            <div v-if="(item.mulai == null && item.selesai == null)">
                                 <v-chip color="yellow" dark>
                                     <p class="mt-4 black--text" >Tidak Ada Operasi</p>
                                 </v-chip>
                             </div>
-                            <div v-else-if="item.status == 0">
-                                <v-chip color="blue">
+                            <div v-else-if="(item.mulai != null && item.selesai == null)">
+                                <v-chip color="blue light">
                                     <p class="mt-4 black--text">Sedang Ada Operasi</p>
                                 </v-chip>
                             </div>
-                            <div v-else-if="item.status == 1">
+                            <div v-else-if="(item.mulai != null && item.selesai != null)">
                                 <v-chip color="green">
                                     <p class="mt-4 black--text">Operasi Selesai</p>
                                 </v-chip>
