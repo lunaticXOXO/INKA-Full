@@ -127,9 +127,10 @@ def AddRincianProyekByProyek(id_proyek):
         new_jumlah = int(jumlah)
         print("jumlah : ",new_jumlah)
         conn.commit()
-        
+
         cursor.close()
         conn.close()
+        
         hasil = {"status" : "berhasil"}
         print("Rincian Proyek Baru Ditambahkan!")
 
