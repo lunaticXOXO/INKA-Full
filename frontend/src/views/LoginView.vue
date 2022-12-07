@@ -43,7 +43,7 @@
                 Login Success!
             </v-snackbar>
             </div>
-
+ 
             <div v-if="snackBar2 == true">
             <v-snackbar top color="red" v-model="snackBar2">
                 Username or Password Incorrect!
@@ -52,11 +52,11 @@
         </div>
     </v-container>
 </template>
-
+ 
 <script>
 import axios from "axios";
 import Login from "../services/Login.js"
-
+ 
 export default {
     name: 'LoginPage',
     data: () => ({
@@ -71,14 +71,14 @@ export default {
         ],
         loginService: new Login(),
     }),
-
+ 
     methods: {
         submitHandler() {
             console.log(this.username)
             if(this.$refs.form.validate()){
                 this.loading = true
                 setTimeout(() => {
-                    axios.post("/login", 
+                    axios.post("/login",
                     { username: this.username,
                       passwords: this.passwords
                     })
@@ -108,7 +108,7 @@ export default {
     }
 }
 </script>
-
+ 
 <style>
     .all {
         background: url('../assets/kereta.jpg');
@@ -116,8 +116,9 @@ export default {
         background-size: 100% 100%;
         height: 100vh;
     }
-
+ 
     #kotak{
         margin-top: 30%;
     }
 </style>
+
