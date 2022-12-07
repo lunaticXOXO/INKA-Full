@@ -1,4 +1,5 @@
 <template>
+  <v-app>
     <v-card 
         class="mx-auto text-center mt-10"
         max-width = "1450">
@@ -63,8 +64,44 @@
               </div>
             </template>
         </v-data-table>
+
+        
     </v-card>
+
+    <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
+
+        <v-menu>
+        <template v-slot:activator="{ on, attrs }">
+            <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
+        </template>
+        </v-menu>
+
+        <v-time-picker width="300" v-model="datetime"></v-time-picker>
+
+        <v-menu>
+        <template v-slot:activator="{ on, attrs }">
+            <v-text-field :value="datetime" v-bind="attrs" v-on="on" label="Due Time" prepend-icon="mdi-clock"></v-text-field>
+        </template>
+        </v-menu>
+         
+
+          <v-btn color="primary" class="d-flex ml-4 mb-6" @click="showRequirementsPurchaseMaterial()">
+                Search
+            </v-btn>
+    <v-card>
+      
+      <v-data-table  :headers = "column2"
+            :items = "requirmentMaterial">
+
+      </v-data-table>
+
+    </v-card>
+    
+
+  </v-app>
 </template>
+
+
 
 <script>
   export default {
@@ -78,7 +115,9 @@
             {text : 'Purchaser Name',   value : 'purchaserName'},
             {text : 'Action',           value : 'aksi'}
         ],
+        
         types : [],
+        requirmentMaterial : [],
         editedIndex: -1,
         editedItem: {
           id: '',
@@ -92,11 +131,14 @@
           purchaseDate: '',
           purchaserName: '',
         },
+
+        rencanaMulai : ''
       }
     },
   
     mounted(){
-        this.fetchMaterial()
+        this.fetchMaterial(),
+        this.showRequirementPurchaseMaterial()
     },
 
     methods: {
@@ -161,7 +203,9 @@
         }catch(error){
             console.log(error)
         }
-      } 
+      },
+      
+      
     }
   }
 </script>

@@ -43,3 +43,21 @@ def GetPurchaseMaterial():
     cursor.close()
     conn.close()
     return make_response(jsonify(json_data),200)
+
+
+def ShowRequirementPurchaseMaterial(rencanaMulai):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT f.code AS 'codeMaterial',f.nama AS 'namaMaterial' ,SUM(e.jumlah) AS 'jumlah' FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_d_rincianproyek c ON c.id = b.rincianproyek JOIN prd_r_jenisproduk d ON d.id = c.jenisProduk JOIN prd_r_strukturjnsprd e ON e.jnsProduk = d.id JOIN mat_r_materialtype f ON f.code = e.materialTypeCode WHERE a.mulai IS NULL AND e.idNodal != e.materialTypeCode AND rencanaMulai < '"+rencanaMulai+"' GROUP BY f.nama,f.code"
+
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)

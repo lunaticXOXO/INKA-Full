@@ -209,10 +209,10 @@ def NewAccumulatePercentageProyek(idProyek):
     
     
 
-def showpercentageProgressProyek():
+def showpercentageProgressProyek(proyek):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT selesai_str as 'x',percentage as 'y',proyek as 'z' FROM cpl_progress a GROUP BY selesai_str"
+    query = "SELECT selesai_str as 'x',percentage as 'y',proyek as 'z' FROM cpl_progress a GROUP BY selesai_str WHERE a.proyek = '"+proyek+"'"
     cursor.execute(query)
 
     records = cursor.fetchall()
