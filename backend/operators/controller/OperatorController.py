@@ -117,7 +117,7 @@ def GetMaterialbyOperatorLogin(username):
     for data in records:
         username = data[0]
     
-    query_get_material = "SELECT nama, butuh, kurang FROM cpl_matbutuhopr WHERE stasiunKerja = '"+username+"'"
+    query_get_material = "SELECT a.nama, a.butuh, a.kurang FROM cpl_matbutuhopr a WHERE stasiunKerja = '"+username+"' ORDER BY a.kurang DESC"
     cursor.execute(query_get_material)
     records = cursor.fetchall()
     json_data = []

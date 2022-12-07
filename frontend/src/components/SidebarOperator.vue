@@ -59,7 +59,7 @@
                             <v-col
                             v-for=" index in listOperatorPhoto"
                             :key="index"
-                            cols="8"
+                            cols="4"
                             sm="auto"
                             >
                             <span class="mx-auto"><b>{{index.nama}}</b></span>

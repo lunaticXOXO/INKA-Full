@@ -36,8 +36,8 @@
     </v-card>
     
     <v-card
-      class="mt-10 text-center mx-10"
-      max-width = "750">
+      class="mx-auto text-center mt-10"
+        max-width = "1000">
       <h2>Detail Purchase Material</h2>
       <v-data-table 
           :headers="column2"
@@ -45,35 +45,35 @@
         </v-data-table>
     </v-card>
 
-
-    
-    <v-date-picker width="500" v-model="dueDate"></v-date-picker>
-
-        <v-menu>
-        <template v-slot:activator="{ on, attrs }">
-            <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
-        </template>
-        </v-menu>
-
-        <v-time-picker width="300" v-model="datetime"></v-time-picker>
-
-        <v-menu>
-        <template v-slot:activator="{ on, attrs }">
-            <v-text-field :value="datetime" v-bind="attrs" v-on="on" label="Due Time" prepend-icon="mdi-clock"></v-text-field>
-        </template>
-        </v-menu>
-         
-
-        <v-btn color="primary" class="d-flex ml-4 mb-6" @click="showRequirementsPurchaseMaterial()">
-                Search
+    <v-card 
+        class="mx-auto text-center mt-10"
+        max-width = "1000">
+        <div class="d-flex">
+            <v-menu class="ml-4 mt-6">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field class="ml-10" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal Mulai" prepend-icon="mdi-calendar"></v-text-field>
+            </template>
+            <v-date-picker width="300" v-model="dueDate"></v-date-picker>
+          </v-menu>
+          <v-menu class="mr-4 mt-6">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field class="mr-10" :value="datetime" v-bind="attrs" v-on="on" label="Jam Mulai" prepend-icon="mdi-clock"></v-text-field>
+            </template>
+            <v-time-picker width="300" v-model="datetime"></v-time-picker>
+          </v-menu>
+        </div>
+        <br>
+        <v-btn
+          color="primary"
+          class="d-flex mx-auto"
+          @click="showRequirementPurchaseMaterial()">
+          Search
         </v-btn>
-
-    <v-card>
-      <v-data-table  :headers = "column2"
-            :items = "requirmentMaterial">
-
+        <br><br>
+        <v-data-table
+          :headers = "column3"
+          :items = "requirmentMaterial">
       </v-data-table>
-
     </v-card>
   </v-app>
 </template>
@@ -92,7 +92,6 @@
               {text : 'Supplier',           value : 'supplierCode'},
               {text : 'Unit',               value : 'unit'},
               {text : 'Action',           value : 'aksi'}
-
           ],
           column2 : [
             {text : 'ID',               value : 'id'},
@@ -101,21 +100,21 @@
             {text : 'Purchaser Name',   value : 'purchaserName'},
           ],
           column3 : [
-            {text : 'Code Material', value : 'codeMaterial'},
-            {text : 'Nama', value : 'namaMaterial'},
-            {text : 'Jumlah', value : 'jumlah'}
+            {text : 'Material Code',    value : 'codeMaterial'},
+            {text : 'Nama Material',    value : 'namaMaterial'},
+            {text : 'Jumlah',           value : 'jumlah'}
         ],
-
           prcItembyprcMat : [],
           requirmentMaterial : [],
           purchasematerial : [],
+          dueDate: undefined,
+          datetime: undefined,
         }
       },
   
       mounted(){
         this.fetchPrcItemByPrcMat(),
-        this.fetchPurchaseMaterialInItem(),
-        this.showRequirementsPurchaseMaterial()
+        this.fetchPurchaseMaterialInItem()
       },
   
       methods: {
@@ -158,28 +157,25 @@
             alert("Error")
             console.log(error)
           }
-
         },
+        
         async showRequirementPurchaseMaterial(){
           try{
-
-              const axios = require('axios')
-              const res = await axios.get('/material/get_requirement_purchase_material/' + this.rencanaMulai)
-
-              if(res.data == null){
-                  console.log("Data Kosong")
-              }else{
-                   this.requirmentMaterial = res.data
-                   console.log(res,this.requirmentMaterial)
-              }
-          }catch(error){
-              console.log(error)
+            console.log(this.dueDate + " " + this.datetime)
+            const axios = require('axios');
+            const res = await axios.get('/material/get_requirement_purchase_material/' + this.dueDate + " " + this.datetime);
+            if (res.data == null){
+              alert('Data Kosong')
+            }else{
+              this.requirmentMaterial = res.data
+              console.log(res,this.requirmentMaterial)
+            }
           }
-      }
-  
+          catch(error){
+            alert("Error")
+            console.log(error)
+          }
+        }
       }
     }
-
-
-
   </script>
