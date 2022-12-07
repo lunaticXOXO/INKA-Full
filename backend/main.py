@@ -780,6 +780,10 @@ def get_link_operator(code):
     hasil = GetLinkOperator(code)
     return hasil
 
+@app.route('/operator/get_operator_hadir',methods = ['GET'])
+def get_operator_hadir():
+    hasil = GetOperatorHadir()
+    return hasil
 
 # Process Requirement
 @app.route('/requirement/add_process_requirement/<id>',methods = ['POST'])

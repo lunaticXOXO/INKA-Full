@@ -273,3 +273,26 @@ def GetShowLinkOperator(code):
 def GetRemoveLinkOperator():
     records = []
     return records
+
+
+def GetOperatorHadir():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT c.uuid,a.nama,a.link,b.login,b.logout FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code JOIN opr_d_dictoperator c ON c.operatorid = a.code WHERE b.logout IS NULL AND B.login is not null"
+    cursor.execute(query)
+    records = []
+   
+    records = cursor.fetchall()
+   
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
+    
+
+
+
