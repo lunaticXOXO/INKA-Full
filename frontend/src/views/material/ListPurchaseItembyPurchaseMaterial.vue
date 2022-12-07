@@ -34,6 +34,7 @@
 
         </v-data-table>
     </v-card>
+    
     <v-card
       class="mt-10 text-center mx-10"
       max-width = "750">
@@ -42,6 +43,37 @@
           :headers="column2"
           :items="purchasematerial">
         </v-data-table>
+    </v-card>
+
+
+    
+    <v-date-picker width="500" v-model="dueDate"></v-date-picker>
+
+        <v-menu>
+        <template v-slot:activator="{ on, attrs }">
+            <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
+        </template>
+        </v-menu>
+
+        <v-time-picker width="300" v-model="datetime"></v-time-picker>
+
+        <v-menu>
+        <template v-slot:activator="{ on, attrs }">
+            <v-text-field :value="datetime" v-bind="attrs" v-on="on" label="Due Time" prepend-icon="mdi-clock"></v-text-field>
+        </template>
+        </v-menu>
+         
+
+        <v-btn color="primary" class="d-flex ml-4 mb-6" @click="showRequirementsPurchaseMaterial()">
+                Search
+        </v-btn>
+
+    <v-card>
+      <v-data-table  :headers = "column2"
+            :items = "requirmentMaterial">
+
+      </v-data-table>
+
     </v-card>
   </v-app>
 </template>
@@ -68,14 +100,22 @@
             {text : 'Purchase Date',    value : 'purchaseDate'},
             {text : 'Purchaser Name',   value : 'purchaserName'},
           ],
+          column3 : [
+            {text : 'Code Material', value : 'codeMaterial'},
+            {text : 'Nama', value : 'namaMaterial'},
+            {text : 'Jumlah', value : 'jumlah'}
+        ],
+
           prcItembyprcMat : [],
-          purchasematerial : []
+          requirmentMaterial : [],
+          purchasematerial : [],
         }
       },
   
       mounted(){
         this.fetchPrcItemByPrcMat(),
-        this.fetchPurchaseMaterialInItem()
+        this.fetchPurchaseMaterialInItem(),
+        this.showRequirementsPurchaseMaterial()
       },
   
       methods: {
@@ -119,7 +159,23 @@
             console.log(error)
           }
 
-        }
+        },
+        async showRequirementPurchaseMaterial(){
+          try{
+
+              const axios = require('axios')
+              const res = await axios.get('/material/get_requirement_purchase_material/' + this.rencanaMulai)
+
+              if(res.data == null){
+                  console.log("Data Kosong")
+              }else{
+                   this.requirmentMaterial = res.data
+                   console.log(res,this.requirmentMaterial)
+              }
+          }catch(error){
+              console.log(error)
+          }
+      }
   
       }
     }

@@ -166,9 +166,9 @@ def show_percentage_proyek():
     return hasil
 
 
-@app.route('/proyek/show_progress_percentage_proyek',methods = ['GET'])
-def show_progress_proyek():
-    hasil = showpercentageProgressProyek()
+@app.route('/proyek/show_progress_percentage_proyek/<proyek>',methods = ['GET'])
+def show_progress_proyek(proyek):
+    hasil = showpercentageProgressProyek(proyek)
     return hasil
 
 @app.route('/proyek/show_progress_date_proyek',methods = ['GET'])
@@ -550,6 +550,12 @@ def get_material_item_by_idpurchase(idPurchase):
 @app.route('/material/get_purchase_item_compare/<idPurchase>',methods = ['GET'])
 def get_purchase_item_compare(idPurchase):
     hasil = GetPurchaseMaterialItemComparedMatStock(idPurchase)
+    return hasil
+
+
+@app.route('/material/get_requirement_purchase_material/<rencanaMulai>',methods = ['GET'])
+def get_requirement_purchase_material(rencanaMulai):
+    hasil = ShowRequirementPurchaseMaterial(rencanaMulai)
     return hasil
 
 #Material Stock
