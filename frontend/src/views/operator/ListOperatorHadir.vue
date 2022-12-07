@@ -8,6 +8,26 @@
                 <v-row dense>
                     <v-col>
                         <div class="d-flex">
+                            <v-container class="white">
+                        <v-row>
+                            <v-col
+                            v-for=" index in listOperator"
+                            :key="index"
+                            cols="8"
+                            sm="auto"
+                            >
+                            <span class="mx-auto"><b>{{index.nama}}</b></span>
+                                <v-img
+                                    height="200"
+                                    width="150" 
+                                    :src="require(`@/views/operator/foto/${index.link}`)" 
+                                >
+                                </v-img>
+                                <span class="mx-auto"><b>{{index.uuid}}</b></span>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                            <!--
                             <v-card width="200" class="mx-8 justify-center text-center" elevation="0" outlined>
                                 <v-img
                                     max-height="150"
@@ -110,6 +130,7 @@
                                 <p>651500190</p>
                                 <p>PUPUT ABDUL SAPUTRA</p>  
                             </v-card>
+                            -->
                         </div>
                     </v-col>
                 </v-row>
@@ -134,7 +155,33 @@ export default {
                 { title: '651600475', name: 'BAGAS LIDAKDHO', flex: 2},
                 { title: '651500190', name: 'PUPUT ABDUL SAPUTRA', flex: 2},
             ],
+
+            listOperator : undefined
+        }
+    },
+
+    mounted(){
+        this.getLinkOperator()
+    },
+    methods : {
+
+        async getLinkOperator(){
+        try{
+
+            const axios = require('axios')
+            const res = await axios.get('/operator/get_operator_hadir')
+            if (res.data == null){
+                console.log("data kosong")
+            }else{
+                this.listOperator = res.data
+                console.log("data terisi")
+                console.log(res,this.listOperator)
+            }
+
+        }catch(error){
+            console.log(error)
         }
     }
+    },
 }
 </script>
