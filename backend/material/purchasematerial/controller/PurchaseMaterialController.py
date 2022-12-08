@@ -48,7 +48,7 @@ def GetPurchaseMaterial():
 def ShowRequirementPurchaseMaterial(rencanaMulai):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT f.code AS 'codeMaterial',f.nama AS 'namaMaterial' ,SUM(e.jumlah) AS 'jumlah' FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_d_rincianproyek c ON c.id = b.rincianproyek JOIN prd_r_jenisproduk d ON d.id = c.jenisProduk JOIN prd_r_strukturjnsprd e ON e.jnsProduk = d.id JOIN mat_r_materialtype f ON f.code = e.materialTypeCode WHERE a.mulai IS NULL AND e.idNodal != e.materialTypeCode AND rencanaMulai < '"+rencanaMulai+"' GROUP BY f.nama,f.code"
+    query = "SELECT f.code AS 'codeMaterial',f.nama AS 'namaMaterial' ,SUM(e.jumlah) AS 'jumlah' FROM prd_d_operasi a JOIN prd_d_produk b ON a.produk = b.id JOIN prd_d_rincianproyek c ON c.id = b.rincianproyek JOIN prd_r_jenisproduk d ON d.id = c.jenisProduk JOIN prd_r_strukturjnsprd e ON e.jnsProduk = d.id JOIN mat_r_materialtype f ON f.code = e.materialTypeCode WHERE a.mulai IS NULL AND e.idNodal != e.materialTypeCode AND rencanaMulai < '"+rencanaMulai+"' GROUP BY f.nama,f.code ORDER BY f.code ASC"
 
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]

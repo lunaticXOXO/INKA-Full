@@ -14,8 +14,7 @@
         <v-data-table 
             :headers = "column"
             :items = "prcItembyprcMat">
-            
-          <template v-slot:[`item.aksi`]="{ item }">
+            <template v-slot:[`item.aksi`]="{ item }">
                 <!--
                 <router-link :to="{name : 'List Stock Material By Orders',params : {id : `${item.id_item}`}}">
                   <v-btn class="mx-1" x-small color="blue">
@@ -29,9 +28,7 @@
                 <v-btn class="mx-1" x-small color="red" @click="deleteMaterial(item)">
                     <v-icon small dark>mdi-trash-can-outline</v-icon>
                 </v-btn>
-
             </template>
-
         </v-data-table>
     </v-card>
     

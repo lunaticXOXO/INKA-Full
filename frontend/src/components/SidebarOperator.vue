@@ -475,7 +475,7 @@ export default {
                     console.log(error)
                 }
                 this.refresh()
-            }, 2000)
+            }, 5000)
         },
         
 

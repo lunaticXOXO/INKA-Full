@@ -3,7 +3,8 @@ import db.db_handler as database
 from flask import request,make_response,jsonify
 import random
 import string
-import datetime
+from datetime import datetime
+import time
 
 def ShowOperasiFromProduct(idProduct):
     conn = database.connector()
@@ -190,7 +191,7 @@ def StartResponseOperasi():
     
     try:
         jenis = "on"
-        mulai = datetime.datetime.now()
+        mulai = datetime.now()
         values_insert = (ws,jenis,mulai)
         cursor.execute(query_insert,values_insert)
         conn.commit()
@@ -229,26 +230,44 @@ def EndResponseOperasi():
         ws = index[0]
     
     query_insert = "INSERT INTO cpl_responoperasi(stasiunKerja,jenis,mulai)VALUES(%s,%s,%s)"
-    query_update_percentage = "UPDATE prd_d_proyek SET percentage = %s WHERE id = %s"
-    query_insert_cplprogress = "INSERT INTO cpl_progress(proyek,selesai,selesai_str,percentage)VALUES(%s,%s,%s,%s)"
-   
-
+    
     try:
         jenis = "off"
-        finish = datetime.datetime.now()
+        finish = datetime.now()
         values_insert = (ws,jenis,finish)
 
         #Execute Query Insert responseOperasi #
         cursor.execute(query_insert,values_insert)
+        
+        #program pak rahmat
+        
         conn.commit()
         
+        #BacaProgramPakRahmat()
+
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
+
+def BacaProgramPakRahmat():
+    time.sleep(20)
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query_update_percentage = "UPDATE prd_d_proyek SET percentage = %s WHERE id = %s"
+    query_insert_cplprogress = "INSERT INTO cpl_progress(proyek,selesai,selesai_str,percentage)VALUES(%s,%s,%s,%s)"
+
+    try:
         #Meng GET id produk dari operasi yang di klik tombol selesai
         id_produk = ""
 
         #Meng GET id proyek dari id produk yang didapat.
         id_proyek = ""
         
-        selesai = ""
+        selesai = "0000-00-00 00:00:00"
 
         #Counter untuk menghitung jumlah yang memiliki output
         counter = 0
@@ -257,7 +276,7 @@ def EndResponseOperasi():
         total = 0
 
         hasil_percentage = 0
-       
+
         query_select_operasiproduk = "SELECT id,mulai,selesai,produk FROM prd_d_operasi WHERE selesai is not null and mulai is not null ORDER BY selesai DESC LIMIT 1" 
         cursor.execute(query_select_operasiproduk)
         records_produk = cursor.fetchall()
@@ -265,11 +284,13 @@ def EndResponseOperasi():
         for index in records_produk:
             selesai - index[2]
             id_produk = index[3]
-        
-        selesaiSTR = selesai.strftime("%m/%d/%Y, %H:%M")
+
+        print("selesai : ",selesai)
+        selesaiSTR = selesai.strftime("%m/%D/%Y, %H:%M")
         print("Selesai : ",selesai, "Selesai STR : ", selesaiSTR)
         print("ID Produk : ",id_produk)
 
+        
         query_operation = "SELECT a.id,a.output,a.produk FROM prd_d_operasi a WHERE a.produk = '"+id_produk+"'"
         cursor.execute(query_operation)
         records_operation = cursor.fetchall()
@@ -297,17 +318,11 @@ def EndResponseOperasi():
         cursor.close()
         conn.close()
 
-        
-
-
         hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
-
-
-
 
 
 
