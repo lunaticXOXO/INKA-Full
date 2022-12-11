@@ -369,7 +369,7 @@ export default {
         auto_refresh(){
             setTimeout(() => {
                 location.reload()
-            }, 10000)
+            }, 20000)
         },
 
         async fetchOperasiLayak(){
