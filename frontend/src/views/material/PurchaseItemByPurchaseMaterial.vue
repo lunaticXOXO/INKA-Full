@@ -87,15 +87,9 @@
         <div class="d-flex">
             <v-menu class="ml-4 mt-6">
             <template v-slot:activator="{ on, attrs }">
-              <v-text-field class="ml-10" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal Mulai" prepend-icon="mdi-calendar"></v-text-field>
+              <v-text-field class="ml-10" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal" prepend-icon="mdi-calendar"></v-text-field>
             </template>
             <v-date-picker width="300" v-model="dueDate"></v-date-picker>
-          </v-menu>
-          <v-menu class="mr-4 mt-6">
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field class="mr-10" :value="datetime" v-bind="attrs" v-on="on" label="Jam Mulai" prepend-icon="mdi-clock"></v-text-field>
-            </template>
-            <v-time-picker width="300" v-model="datetime"></v-time-picker>
           </v-menu>
         </div>
         <br>
@@ -263,7 +257,7 @@
           try{
             console.log(this.dueDate + " " + this.datetime)
             const axios = require('axios');
-            const res = await axios.get('/material/get_requirement_purchase_material/' + this.dueDate + " " + this.datetime);
+            const res = await axios.get('/material/get_requirement_purchase_material/' + this.dueDate);
             if (res.data == null){
               alert('Data Kosong')
             }else{

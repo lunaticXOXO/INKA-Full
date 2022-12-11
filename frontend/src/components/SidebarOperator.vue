@@ -35,7 +35,7 @@
         <div class="d-flex">
             <div class = "ma-6">
                 <h3>Operasi</h3>
-                <v-card class="mx-auto mb-6 text-center mt-6" width="1000">
+                <v-card class="mx-auto mb-6 text-center mt-6" width="800">
                     <v-data-table
                         :headers = "headers"
                         :items = "items"                
@@ -43,7 +43,7 @@
                     </v-data-table>
                 </v-card>
                 <h3>Material yang diperlukan</h3>
-                <v-card class="mx-auto mb-6 text-center mt-6" width="900">
+                <v-card class="mx-auto mb-6 text-center mt-6" width="700">
                     <v-data-table
                         :headers = "headers2"
                         :items = "items2"
@@ -64,8 +64,8 @@
                             >
                             <span class="mx-auto"><b>{{index.nama}}</b></span>
                                 <v-img
-                                    height="200"
-                                    width="150" 
+                                    height="100"
+                                    width="75" 
                                     :src="require(`@/views/operator/foto/${index.link}`)" 
                                 >
                                 </v-img>
