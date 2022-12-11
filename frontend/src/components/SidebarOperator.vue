@@ -225,7 +225,8 @@ export default {
         this.fetchMaterial(),
         this.fetchOperasiSiap(),
         this.fetchOperasiLayak(),
-        this.getLinkOperator()
+        this.getLinkOperator(),
+        this.auto_refresh()
     },
 
     methods: {
@@ -364,6 +365,12 @@ export default {
             }
         },*/
 
+
+        auto_refresh(){
+            setTimeout(() => {
+                location.reload()
+            }, 10000)
+        },
 
         async fetchOperasiLayak(){
             try{
