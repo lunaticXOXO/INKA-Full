@@ -87,7 +87,7 @@
         <div class="d-flex">
             <v-menu class="ml-4 mt-6">
             <template v-slot:activator="{ on, attrs }">
-              <v-text-field class="ml-10" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal" prepend-icon="mdi-calendar"></v-text-field>
+              <v-text-field class="mx-10" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal" prepend-icon="mdi-calendar"></v-text-field>
             </template>
             <v-date-picker width="300" v-model="dueDate"></v-date-picker>
           </v-menu>

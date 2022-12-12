@@ -158,6 +158,16 @@
                             </div>
                         </v-card>
                     </v-dialog>
+                    <br><br>
+                    <v-btn
+                        v-model = "btn2"
+                        class = "mx-auto white--text"
+                        elevation = "0"
+                        width = "250"
+                        color="blue"
+                        @click="refresh()">
+                        Refresh
+                    </v-btn>
                 </div>
             </div>
         </div>
@@ -193,9 +203,9 @@ export default {
                 {text : 'Selesai',            value : 'selesai'}
             ],
             headers2 : [
-                {text : 'Nama',        value : 'nama'},
-                {text : 'Butuh',       value : 'butuh'},
-                {text : 'Kurang',      value : 'kurang'},
+                {text : 'Nama Material',    value : 'nama'},
+                {text : 'Butuh',            value : 'butuh'},
+                {text : 'Kurang',           value : 'kurang'},
             ],
             items: undefined,
             items2: undefined,
@@ -225,16 +235,12 @@ export default {
         this.fetchMaterial(),
         this.fetchOperasiSiap(),
         this.fetchOperasiLayak(),
-        this.getLinkOperator(),
-        this.auto_refresh()
+        this.getLinkOperator()
     },
 
     methods: {
         refresh() {
-            setTimeout(() => {
-                this.timer.setInterval(location.replace("/"), 2000)
-                this.$forceUpdate();  
-            }, 2000)
+            location.reload()
         },
 
         logout() {
@@ -487,25 +493,23 @@ export default {
         
 
         async getLinkOperator(){
-        try{
+            try{
 
-            const axios = require('axios')
-            const res = await axios.get('/operator/get_link_operator/' + this.loginService.getCurrentUsername())
-            if (res.data == null){
-                console.log("data kosong")
-            }else{
-                this.listOperatorPhoto = res.data
-                console.log("data terisi")
-                console.log(res,this.listOperatorPhoto)
+                const axios = require('axios')
+                const res = await axios.get('/operator/get_link_operator/' + this.loginService.getCurrentUsername())
+                if (res.data == null){
+                    console.log("data kosong")
+                }else{
+                    this.listOperatorPhoto = res.data
+                    console.log("data terisi")
+                    console.log(res,this.listOperatorPhoto)
+                }
+
+            }catch(error){
+                console.log(error)
             }
-
-        }catch(error){
-            console.log(error)
         }
-    }
     },
-
-
    
 }
 </script>

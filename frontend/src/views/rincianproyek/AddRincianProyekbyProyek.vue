@@ -15,7 +15,7 @@
         
         <v-text-field
         v-model="id"
-        :counter="4"
+        :counter="20"
         :rules="idRules"
         label="ID"
         required
@@ -146,7 +146,7 @@
       customer : [],
       idRules: [
         v => !!v || 'ID is required',
-        v => (v && v.length <= 10 && v.length >= 1) || 'ID must be 1-10 characters',
+        v => (v && v.length <= 20 && v.length >= 1) || 'ID must be 1-20 characters',
       ],
     }),
 
