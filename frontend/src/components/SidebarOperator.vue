@@ -165,7 +165,7 @@
                         elevation = "0"
                         width = "250"
                         color="blue"
-                        @click="refresh()">
+                        @click="refresh2()">
                         Refresh
                     </v-btn>
                 </div>
@@ -240,6 +240,14 @@ export default {
 
     methods: {
         refresh() {
+            setTimeout(() => {
+                this.timer.setInterval(location.replace("/"), 2000)
+                this.$forceUpdate();  
+            }, 2000)
+            location.reload()
+        },
+
+        refresh2() {
             location.reload()
         },
 
@@ -370,13 +378,6 @@ export default {
                 console.log(error)
             }
         },*/
-
-
-        auto_refresh(){
-            setTimeout(() => {
-                location.reload()
-            }, 20000)
-        },
 
         async fetchOperasiLayak(){
             try{
