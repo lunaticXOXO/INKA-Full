@@ -45,6 +45,12 @@
     <div v-else-if="idRole == 7">
       <SidebarOperator />
     </div>
+    <div v-else-if="idRole == 8">
+      <SidebarOperatorWS00 />
+    </div>
+    <div v-else-if="idRole == 9">
+      <SidebarOperatorWS06 />
+    </div>
   </v-app>
 </template>
 
@@ -58,6 +64,8 @@ import Login from "./services/Login.js"
 import SidebarUmum from './components/SidebarUmum.vue'
 import SidebarDisplay from './components/SidebarDisplay.vue'
 import SidebarOperator from './components/SidebarOperator.vue'
+import SidebarOperatorWS00 from './components/SidebarOperatorWS00.vue'
+import SidebarOperatorWS06 from './components/SidebarOperatorWS06.vue'
 
 export default {
   name: 'App',
@@ -69,7 +77,9 @@ export default {
     SidebarMaterial,
     SidebarUmum,
     SidebarDisplay,
-    SidebarOperator
+    SidebarOperator,
+    SidebarOperatorWS00,
+    SidebarOperatorWS06
 },
 
   mounted() {

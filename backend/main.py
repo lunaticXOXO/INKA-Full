@@ -681,15 +681,15 @@ def get_operasi_gantt(stasiunKerja):
     hasil = GetOperasiGanttChart(stasiunKerja)
     return hasil
 
-@app.route('/operasi/response_operasi_mulai',methods = ['POST'])
-def response_operasi_mulai():
-    hasil = StartResponseOperasi()
+@app.route('/operasi/response_operasi_mulai/<nomorWS>',methods = ['POST'])
+def response_operasi_mulai(nomorWS):
+    hasil = StartResponseOperasi(nomorWS)
     return hasil
 
 
-@app.route('/operasi/response_operasi_selsai',methods = ['POST'])
-def response_operasi_selsai():
-    hasil = EndResponseOperasi()
+@app.route('/operasi/response_operasi_selesai/<nomorWS>',methods = ['POST'])
+def response_operasi_selsai(nomorWS):
+    hasil = EndResponseOperasi(nomorWS)
     return hasil
 
 

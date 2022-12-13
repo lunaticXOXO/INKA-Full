@@ -382,7 +382,7 @@ export default {
         async fetchOperasiLayak(){
             try{
                 const axios = require('axios')
-                const res = await axios.get('/operasi/show_operasilayak/' + this.loginService.getCurrentUsername())
+                const res = await axios.get('/operasi/show_operasilayak/' + 'ws06')
                 if(res.data.length == null){
                     console.log("Data kosong")
                 }
@@ -399,9 +399,8 @@ export default {
         async fetchOperasiSiap(){
             try{
                 const axios = require('axios')
-                console.log(this.loginService.getCurrentUsername())
-                this.namaOperator = this.loginService.getCurrentUsername()
-                const res = await axios.get('/operasi/get_operasi_siap/' + this.loginService.getCurrentUsername())
+                this.namaOperator = 'ws06'
+                const res = await axios.get('/operasi/get_operasi_siap/' + 'ws06')
                 if(res.data.length == 0){
                     console.log("Data kosong")
                     this.visible = false
@@ -445,7 +444,7 @@ export default {
         async fetchMaterial(){
             try{
                 const axios = require('axios')
-                const res = await axios.get('/operator/get_material_byoperator/' + this.loginService.getCurrentUsername())
+                const res = await axios.get('/operator/get_material_byoperator/' + 'ws06')
                 if(res.data == null){
                     console.log("Data kosong")
                 }else{
@@ -463,7 +462,7 @@ export default {
                 try{
                     //this.singleSelect = true
                     const axios = require('axios')
-                    const res = axios.post('/operasi/response_operasi_mulai/' + this.loginService.getCurrentUsername())
+                    const res = axios.post('/operasi/response_operasi_mulai/' + 'ws06')
                     if(res.data.status == 'berhasil'){
                         console.log(res)
                     }
@@ -481,7 +480,7 @@ export default {
             setTimeout(() => {
                 try{
                     const axios = require('axios')
-                    const res = axios.post('/operasi/response_operasi_selesai/' + this.loginService.getCurrentUsername())
+                    const res = axios.post('/operasi/response_operasi_selesai/' + 'ws06')
                     if(res.data.status == 'berhasil'){
                         console.log(res)
                     }
@@ -497,7 +496,7 @@ export default {
             try{
 
                 const axios = require('axios')
-                const res = await axios.get('/operator/get_link_operator/' + this.loginService.getCurrentUsername())
+                const res = await axios.get('/operator/get_link_operator/' + 'ws06')
                 if (res.data == null){
                     console.log("data kosong")
                 }else{

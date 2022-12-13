@@ -178,10 +178,10 @@ def EndOperation(idOperasi):
     return hasil
 
 
-def StartResponseOperasi():
+def StartResponseOperasi(nomorWS):
     conn = database.connector()
     cursor = conn.cursor()
-    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a"
+    query_get_ws = "SELECT stasiunKerja FROM cpl_oprsiap WHERE stasiunKerja = '"+nomorWS+"'"
     cursor.execute(query_get_ws)
     records = cursor.fetchall()
     ws = ""
@@ -219,10 +219,10 @@ def GetResponseStartOperasi(idOperasi):
     conn.close()
     return make_response(jsonify(json_data),200)
 
-def EndResponseOperasi():
+def EndResponseOperasi(nomorWS):
     conn = database.connector()
     cursor = conn.cursor()
-    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a"
+    query_get_ws = "SELECT stasiunKerja FROM cpl_oprsiap WHERE stasiunKerja = '"+nomorWS+"'"
     cursor.execute(query_get_ws)
     records = cursor.fetchall()
     ws = ""
@@ -352,7 +352,7 @@ def ShowOperasiLayak(username):
     for data in records_cek:
         username = data[0]
     
-    query_opr_layak = "SELECT * FROM cpl_oprlayak WHERE stasiunKerja = '"+username+"' ORDER BY rencanaMulai ASC"
+    query_opr_layak = "SELECT * FROM cpl_oprlayak WHERE stasiunKerja = '"+username+"' ORDER BY selesai DESC, rencanaMulai ASC"
     cursor.execute(query_opr_layak)
     records = cursor.fetchall()
 
