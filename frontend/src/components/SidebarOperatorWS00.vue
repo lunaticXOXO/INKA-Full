@@ -415,7 +415,6 @@ export default {
                     this.items3 = res.data
                     console.log(res,this.items3)
                 }
-
                 for(this.index in this.items3){
                     if( this.items3[this.index].mulai == null && this.items3[this.index].selesai == null){
                         this.btn1 = {
