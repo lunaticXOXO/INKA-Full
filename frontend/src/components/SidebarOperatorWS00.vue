@@ -492,8 +492,9 @@ export default {
                 }catch(error){
                     console.log(error)
                 }
+                this.dialog = false
                 this.refresh()
-            }, 5000)
+            }, 3000)
         },
         
 
