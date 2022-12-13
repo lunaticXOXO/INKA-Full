@@ -232,10 +232,16 @@ export default {
 
     mounted() {
         //this.fetchOperasi(),
-        this.fetchMaterial(),
-        this.fetchOperasiSiap(),
-        this.fetchOperasiLayak(),
-        this.getLinkOperator()
+        this.getLinkOperator(),
+        window.setInterval(() => {
+            this.fetchMaterial()
+        }, 1000),
+        window.setInterval(() => {
+            this.fetchOperasiLayak()
+        }, 1000),
+        window.setInterval(() => {
+            this.fetchOperasiSiap()
+        }, 1000)
     },
 
     methods: {
