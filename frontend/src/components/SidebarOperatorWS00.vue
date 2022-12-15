@@ -502,7 +502,7 @@ export default {
             try{
 
                 const axios = require('axios')
-                const res = await axios.get('/operator/get_link_operator/' + 'ws00')
+                const res = await axios.get('/operator/get_link_operator/' + 'wsgd')
                 if (res.data == null){
                     console.log("data kosong")
                 }else{

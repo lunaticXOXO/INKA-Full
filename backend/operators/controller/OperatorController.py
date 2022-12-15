@@ -110,13 +110,6 @@ def ScanOperator(code):
 def GetMaterialbyOperatorLogin(username):
     conn = database.connector()
     cursor = conn.cursor()
-    query_cek = "SELECT username FROM opd_r_operator WHERE username = '"+username+"'"
-    cursor.execute(query_cek)
-    records = cursor.fetchall()
-    username = ""
-    for data in records:
-        username = data[0]
-    
     query_get_material = "SELECT a.nama, a.butuh, a.kurang FROM cpl_matbutuhopr a WHERE stasiunKerja = '"+username+"' ORDER BY a.kurang DESC"
     cursor.execute(query_get_material)
     records = cursor.fetchall()
