@@ -12,7 +12,8 @@
         @submit.prevent="submitHandler"
         v-model="valid"
         lazy-validation>
-        
+       
+        <!--
         <v-text-field
         v-model="id"
         :counter="20"
@@ -20,6 +21,7 @@
         label="ID"
         required
         ></v-text-field>
+        -->
 
         <v-text-field
         v-model="jumlah"
