@@ -5,7 +5,11 @@
                 <h3>Proyek {{this.$route.params.id}}</h3>
                 <v-data-table
                     :headers = "headers2"
-                    :items = "proyekinrincian">
+                    :items = "proyekinrincian"
+                    :items-per-page="5"
+                    
+                    
+                    >
                 </v-data-table>
             </v-card>
       
@@ -14,6 +18,7 @@
                 <v-data-table
                     :headers = "headers3"
                     :items = "customer"
+                    :items-per-page="5"
                 >
                 </v-data-table>
             </v-card>
@@ -30,7 +35,9 @@
             <v-card class="mx-auto text-center" max-width="1000">
                 <v-data-table
                     :headers = "headers"
-                    :items = "rincianbyproyek">
+                    :items = "rincianbyproyek"
+                    :items-per-page="5"
+                    >
                     <template v-slot:[`item.id`]="{ item }">
                         <div v-if="item.id === editedItem.id">
                             <v-text-field disabled v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>

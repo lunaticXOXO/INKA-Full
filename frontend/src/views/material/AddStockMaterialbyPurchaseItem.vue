@@ -11,6 +11,7 @@
           v-model="valid"
           lazy-validation>
         
+          <!--
           <v-text-field
           v-model="id"
           :counter="11"
@@ -18,6 +19,7 @@
           label="ID"
           required
           ></v-text-field>
+          -->
 
           <v-text-field
           v-model="merk"
@@ -148,7 +150,7 @@
               color : "green"
             }
 
-            location.replace('/listStockMaterial')
+            location.replace('/listStockMaterialbyOrder/' + this.$route.params.id)
           }
           else if(response.data.status == "gagal"){
             this.snackbar = {

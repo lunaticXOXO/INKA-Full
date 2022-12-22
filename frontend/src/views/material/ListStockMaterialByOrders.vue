@@ -12,7 +12,9 @@
         </router-link>
         <v-data-table 
             :headers = "column"
-            :items = "types">
+            :items = "types"
+            :items-per-page="5"
+            >
             <template v-slot:[`item.id`]="{ item }">
                 <span>{{item.id}}</span>
             </template>

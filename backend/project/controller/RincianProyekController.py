@@ -32,7 +32,7 @@ def ShowRincianProyekByProyek(id_proyek):
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id,a.jumlah,a.dueDate,a.proyek,c.nama FROM prd_d_rincianproyek a JOIN prd_d_proyek b ON a.proyek = b.id JOIN prd_r_jenisproduk c ON c.id = a.jenisProduk WHERE b.id = '"+id_proyek+"'"
+    query = "SELECT a.id,a.jumlah,a.dueDate,a.proyek,c.nama FROM prd_d_rincianproyek a JOIN prd_d_proyek b ON a.proyek = b.id JOIN prd_r_jenisproduk c ON c.id = a.jenisProduk WHERE b.id = '"+id_proyek+"' ORDER BY a.id DESC"
     cursor.execute(query)
 
     row_headers = [x[0] for x in cursor.description]
@@ -105,15 +105,12 @@ def AddRincianProyekByProyek(id_proyek):
     angka_awal = '00'
     
     id_rproyek_new = ""
-    query_get_maxRproyek = "SELECT MAX(a.id) AS 'idRProyek' FROM prd_d_rincianproyek a JOIN prd_d_proyek b ON b.id = a.proyek WHERE b.id = '"+id_proyek+"'"
-    cursor.execute(query_get_maxRproyek)
-    records_max = cursor.fetchone()
-
-    #Query untuk mengecek jumlah data yang ada pada rinci proyek
+    
     query_get_rproyekbyproyek = "SELECT a.id FROM prd_d_rincianproyek a JOIN prd_d_proyek b ON b.id = a.proyek WHERE b.id = '"+id_proyek+"'"
     cursor.execute(query_get_rproyekbyproyek)
     records_rinci = cursor.fetchall()
     angka_akhir = 0
+
     temp2 = ""
     for index2 in records_rinci:
         temp2 = index2[0]
@@ -126,20 +123,19 @@ def AddRincianProyekByProyek(id_proyek):
         angka_akhir_str = ""
         for index in records_rinci:
             print("Angka : ",angka_akhir)
-            if angka_akhir >= 10:
+
+            if angka_akhir >= 9:
                 angka_awal = '0'
                 angka_akhir = angka_akhir + 1
                 angka_akhir_str = str(angka_akhir)
-            
+                id_rproyek_new = temp + angka_awal + angka_akhir_str
+                print("test")
+
             else:
                 angka_akhir = angka_akhir + 1
                 angka_akhir_str = str(angka_akhir)
-        id_rproyek_new = temp + angka_awal + angka_akhir_str
-
-
-            
-                
-        
+                id_rproyek_new = temp + angka_awal + angka_akhir_str
+       
 
     cursor = conn.cursor()
     query = "INSERT INTO prd_d_rincianproyek (id, jumlah,dueDate,jenisProduk, proyek) VALUES (%s,%s,%s,%s,'"+temp+"')"

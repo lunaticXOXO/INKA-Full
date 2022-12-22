@@ -57,17 +57,50 @@ def PurchaseMaterialItemByIDPurchase(idPurchase):
     for index in records:
         idPurchase = index[0]
 
+    #GET Id Purchase yang di klik
     print("ID Purchase : ",idPurchase)
+
+    #Angka awal dan angka akhir di set 00 & 0
+    angka_awal = '00'
+    angka_akhir = 0
+    temp = ""
+    id_item_new = ""
+
+
+    query_get_purchaseItem = "SELECT a.id_item FROM mat_d_purchaseitem a JOIN mat_d_purchasematerial b ON b.id = a.purchaseId WHERE b.id = '"+idPurchase+"'"
+    cursor.execute(query_get_purchaseItem)
+    records_matitem = cursor.fetchall()
+
+    for index in records_matitem:
+        temp = index[0]
+    print("temp : ",temp)
+    if temp == '':
+        print("test")
+        id_item_new = idPurchase + "000"
+    else:
+        angka_akhir_str = ""
+        for index in records_matitem:
+            if angka_akhir >= 9:
+                angka_awal = '0'
+                angka_akhir = angka_akhir + 1
+                angka_akhir_str = str(angka_akhir)
+                id_item_new = idPurchase + angka_awal + angka_akhir_str
+            else:
+                angka_akhir = angka_akhir + 1
+                angka_akhir_str = str(angka_akhir)
+                id_item_new = idPurchase + angka_awal + angka_akhir_str
+
+
     query_insert = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)VALUES(%s,%s,%s,%s,%s,%s,%s)"
     try:
         data = request.json
-        id_item = data["id_item"]
+        #id_item = data["id_item"]
         supplierCode = data["supplierCode"]
         materialTypeCode = data["materialTypeCode"]
         quantity = data["quantity"]
         unit = data["unit"]
         schedulledArrival = data["schedulledArrival"]
-        values = (id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,idPurchase)
+        values = (id_item_new,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,idPurchase)
         cursor.execute(query_insert,values)
         conn.commit()
         cursor.close()
@@ -84,7 +117,7 @@ def GetMaterialItemByPurchaseMaterial(idPurchase):
     cursor = conn.cursor()
     query = "SELECT a.id_item,a.supplierCode,a.materialTypeCode,a.quantity,a.unit,a.schedulledArrival,a.purchaseId FROM mat_d_purchaseitem a "
     query += "JOIN mat_d_purchasematerial b ON b.id = a.purchaseId "
-    query += "WHERE a.purchaseId = '"+idPurchase+"'"
+    query += "WHERE a.purchaseId = '"+idPurchase+"' ORDER BY a.id_item DESC"
 
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
@@ -148,7 +181,7 @@ def GetPurchaseMaterialItemComparedMatStock(idPurchase):
    # elif qty_purchaseitem < qty_stock:
     #    query_show = "SELECT a.id_item,a.materialTypeCode,a.purchaseId,a.quantity,a.schedulledArrival,a.supplierCode,a.unit FROM mat_d_purchaseitem a WHERE a.purchaseId = '"+idPurchase+"'"
     #else:
-    query_show = "SELECT * FROM mat_d_purchaseitem WHERE purchaseId = '"+idPurchase+"'"
+    query_show = "SELECT * FROM mat_d_purchaseitem a WHERE a.purchaseId = '"+idPurchase+"' ORDER BY a.id_item DESC "
        
     cursor.execute(query_show)
     records_purch_item = cursor.fetchall()

@@ -242,6 +242,9 @@ export default {
         window.setInterval(() => {
             this.fetchOperasiSiap()
         }, 1000)
+
+        
+       
     },
 
     methods: {

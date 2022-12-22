@@ -1,5 +1,6 @@
 import db.db_handler as database
 import datetime
+from datetime import date
 from flask import request,make_response,jsonify
 
 def GetMaterialStock():
@@ -83,6 +84,41 @@ def AddMaterialStockbyOrders(orders):
         quantity = index[1]
         unit = index[2]
     
+    angka_awal = "00"
+    angka_akhir = 0
+    temp = ""
+    today = date.today()
+
+    year = today.year
+    month = today.month
+    day = today.day
+
+    today_str = str(year) + str(month) + str(day)
+    print(today_str)
+
+    query_get_matstock = "SELECT COUNT(*) FROM mat_d_materialstock WHERE id LIKE '"+today_str+"%'"
+    cursor.execute(query_get_matstock)
+    records_stock = cursor.fetchall()
+
+    for index in records_stock:
+        temp = index[0]
+
+    jumlah = int(temp)
+    print("Jumlah : ",jumlah)
+    if jumlah == 0:
+        id_stock = today_str + "000"
+    else:
+        angka_akhir_str = ""
+        for index in records_stock:
+            if jumlah >= 9:
+                angka_awal = '0'
+                angka_akhir = jumlah + angka_akhir
+                angka_akhir_str = str(angka_akhir)
+                id_stock = today_str  +  angka_awal + angka_akhir_str
+            else:
+                angka_akhir =  jumlah + angka_akhir
+                angka_akhir_str = str(angka_akhir)
+                id_stock = today_str + angka_awal + angka_akhir_str
 
     query_insert =  "INSERT INTO mat_d_materialstock(id,purchaseItem,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"
     query_insert2 = "INSERT INTO mat_d_materialonws01(workstationCode,materialStock,login)VALUES(%s,%s,%s)"
@@ -90,18 +126,18 @@ def AddMaterialStockbyOrders(orders):
    
     try:
         data = request.json
-        id = data["id"]
+        #id = data["id"]
         merk = data["merk"]
         quantity = data["quantity"]
         unit = data["unit"]
         arrivalDate = data["arrivalDate"]
         workstationCode = "WSGD"
         login = datetime.datetime.now()
-        values = (id,orders,merk,quantity,unit,arrivalDate)
+        values = (id_stock,orders,merk,quantity,unit,arrivalDate)
     
         cursor.execute(query_insert,values)
         conn.commit()
-        query_get_idstock = "SELECT id FROM mat_d_materialstock WHERE id = '"+id+"'"
+        query_get_idstock = "SELECT id FROM mat_d_materialstock WHERE id = '"+id_stock+"'"
         cursor.execute(query_get_idstock)
 
         record_idstock = cursor.fetchall()
@@ -113,12 +149,8 @@ def AddMaterialStockbyOrders(orders):
         values3 = (new_idstock,workstationCode)
       
         cursor.execute(query_insert2,values2)
-        cursor.execute(query_insert3,values3)
-        
-    
-        
+        cursor.execute(query_insert3,values3)    
         conn.commit()
-        
         cursor.close()
         conn.close()
         hasil = {"status" : "berhasil"}

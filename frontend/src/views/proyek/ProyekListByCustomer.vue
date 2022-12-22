@@ -20,7 +20,9 @@
             </router-link>
             <v-data-table 
                 :headers="column"
-                :items="project">
+                :items="project"
+                :items-per-page="5"
+                >
                 <template v-slot:[`item.id`]="{ item }">
                     <div v-if="item.id == editedItem.id">
                     <v-text-field disabled v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
