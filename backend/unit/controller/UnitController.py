@@ -19,7 +19,7 @@ def GetUnit():
 def GetUnitInMatStock():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT * FROM gen_r_materialunit WHERE multiplier = 1"
+    query = "SELECT * FROM gen_r_materialunit"
     cursor.execute(query)
 
     records = cursor.fetchall()
