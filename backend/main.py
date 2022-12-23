@@ -166,9 +166,9 @@ def show_percentage_proyek():
     return hasil
 
 
-@app.route('/proyek/show_progress_percentage_proyek',methods = ['GET'])
-def show_progress_proyek():
-    hasil = showpercentageProgressProyek()
+@app.route('/proyek/show_progress_percentage_proyek/<proyek>',methods = ['GET'])
+def show_progress_proyek(proyek):
+    hasil = showpercentageProgressProyek(proyek)
     return hasil
 
 @app.route('/proyek/show_progress_date_proyek',methods = ['GET'])
@@ -552,6 +552,12 @@ def get_purchase_item_compare(idPurchase):
     hasil = GetPurchaseMaterialItemComparedMatStock(idPurchase)
     return hasil
 
+
+@app.route('/material/get_requirement_purchase_material/<rencanaMulai>',methods = ['GET'])
+def get_requirement_purchase_material(rencanaMulai):
+    hasil = ShowRequirementPurchaseMaterial(rencanaMulai)
+    return hasil
+
 #Material Stock
 @app.route('/material/get_material_stock',methods = ['GET'])
 def get_material_stock():
@@ -577,6 +583,12 @@ def add_material_stock_by_order(orders):
 @app.route('/material/get_purchase_item_in_matstock/<orders>',methods = ['GET'])
 def get_purchase_item_in_matstock(orders):
     hasil = GetPurchaseItemInMatStock(orders)
+    return hasil
+
+
+@app.route('/material/message_material_login/<id>',methods = ['GET'])
+def message_material_login(id):
+    hasil = GetMaterialBerhasilLogin(id)
     return hasil
 
 #MATERIAL ON WS
@@ -669,15 +681,15 @@ def get_operasi_gantt(stasiunKerja):
     hasil = GetOperasiGanttChart(stasiunKerja)
     return hasil
 
-@app.route('/operasi/response_operasi_mulai/<idOperasi>',methods = ['POST'])
-def response_operasi_mulai(idOperasi):
-    hasil = StartResponseOperasi(idOperasi)
+@app.route('/operasi/response_operasi_mulai/<nomorWS>',methods = ['POST'])
+def response_operasi_mulai(nomorWS):
+    hasil = StartResponseOperasi(nomorWS)
     return hasil
 
 
-@app.route('/operasi/response_operasi_selsai/<idOperasi>',methods = ['POST'])
-def response_operasi_selsai(idOperasi):
-    hasil = EndResponseOperasi(idOperasi)
+@app.route('/operasi/response_operasi_selesai/<nomorWS>',methods = ['POST'])
+def response_operasi_selsai(nomorWS):
+    hasil = EndResponseOperasi(nomorWS)
     return hasil
 
 
@@ -701,6 +713,12 @@ def show_operasilayak(username):
 @app.route('/operasi/get_operasi_siap/<username>',methods = ['GET'])
 def get_operasi_siap(username):
     hasil = IfOperasiSiap(username)
+    return hasil
+
+
+@app.route('/operasi/get_operasi_by_product/<idProduct>', methods = ['GET'])
+def get_operasi_by_product(idProduct):
+    hasil = ShowOperasiByProduct(idProduct)
     return hasil
 
 #Operator
@@ -758,6 +776,20 @@ def add_operator_requirement_byprocess(id):
     return hasil
 
 
+@app.route('/operator/get_scan_operator/<code>',methods = ['GET'])
+def get_scan_operator(code):
+    hasil = ScanOperator(code)
+    return hasil
+
+@app.route('/operator/get_link_operator/<code>',methods = ['GET'])
+def get_link_operator(code):
+    hasil = GetLinkOperator(code)
+    return hasil
+
+@app.route('/operator/get_operator_hadir',methods = ['GET'])
+def get_operator_hadir():
+    hasil = GetOperatorHadir()
+    return hasil
 
 # Process Requirement
 @app.route('/requirement/add_process_requirement/<id>',methods = ['POST'])

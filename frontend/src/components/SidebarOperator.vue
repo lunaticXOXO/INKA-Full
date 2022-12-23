@@ -28,26 +28,22 @@
                 </span>
                 <v-btn @click="logout()" color="grey">
                     <span>Sign Out</span>
-                    <v-icon right>mdi-arrow-right</v-icon>
+                    <v-img src="../assets/logo/arrow-right.png"></v-img>
                 </v-btn>
             </v-app-bar>
         </nav>
         <div class="d-flex">
             <div class = "ma-6">
                 <h3>Operasi</h3>
-                <v-card class="mx-auto mb-6 text-center mt-6" width="1000">
+                <v-card class="mx-auto mb-6 text-center mt-6" width="800">
                     <v-data-table
                         :headers = "headers"
-                        :items = "items"
-                        :single-select="singleSelect"
-                        itemKey ="id"
-                        show-select
-                        v-model="itemKey"
+                        :items = "items"                
                         >
                     </v-data-table>
                 </v-card>
                 <h3>Material yang diperlukan</h3>
-                <v-card class="mx-auto mb-6 text-center mt-6" width="900">
+                <v-card class="mx-auto mb-6 text-center mt-6" width="700">
                     <v-data-table
                         :headers = "headers2"
                         :items = "items2"
@@ -57,37 +53,44 @@
             </div>
             <div class = "ma-6">
                 <h3>Operator</h3>
-                <!--
-                <div class="mx-auto mt-6">
-                    <span class="mr-10">Foto</span>
-                    <span class="ml-10">Nama</span>
+                <div class = "mt-4">
+                    <v-container class="white">
+                        <v-row>
+                            <v-col
+                            v-for=" index in listOperatorPhoto"
+                            :key="index"
+                            cols="4"
+                            sm="auto"
+                            >
+                            <span class="mx-auto"><b>{{index.nama}}</b></span>
+                                <v-img
+                                    height="100"
+                                    width="75" 
+                                    :src="require(`@/views/operator/foto/${index.link}`)" 
+                                >
+                                </v-img>
+                            </v-col>
+                        </v-row>
+                    </v-container>
                 </div>
-                
-                <v-img
-                    max-height="150"
-                    max-width="100" 
-                    src="../views/operator/foto/651100023.jpg"
-                    class="ma-6 mx-auto">
-                </v-img>
-                -->
                 <div class="mx-auto mt-10">
                     <v-text-field
-                    width="250"
+                    width="300"
                     dense
-                    v-model="kodeMaterial"
+                    v-model="inputKode"
                     @keyup.enter="parseBarcode"
                     autofocus>
                     </v-text-field>
-                   
                     <v-dialog
                         v-model="dialog"
                         width="500">
-                        
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
                                 v-model = "btn1"
+                                :loading="loading"
                                 v-if = "visible"
-                                class="mx-auto blue white--text" 
+                                class="mx-auto white--text" 
+                                elevation = "0"
                                 width="250" 
                                 :color="btn1.color"
                                 v-bind:disabled="hasClicked"
@@ -96,7 +99,6 @@
                                 {{btn1.text}}
                             </v-btn>
                         </template>
-                        
                         <v-card>
                             <div v-if = "btn1.color == 'green'">
                                 <v-card-title class="text-h5 grey lighten-2">
@@ -156,6 +158,16 @@
                             </div>
                         </v-card>
                     </v-dialog>
+                    <br><br>
+                    <v-btn
+                        v-model = "btn2"
+                        class = "mx-auto white--text"
+                        elevation = "0"
+                        width = "250"
+                        color="blue"
+                        @click="refresh2()">
+                        Refresh
+                    </v-btn>
                 </div>
             </div>
         </div>
@@ -175,7 +187,7 @@ export default {
             singleSelect: false,
             selected: [],
             loginService: new Login(),
-            kodeMaterial: undefined,
+            inputKode: undefined,
             namaOperator: undefined,
             route: "/login",
             routeHome: "/",
@@ -191,35 +203,60 @@ export default {
                 {text : 'Selesai',            value : 'selesai'}
             ],
             headers2 : [
-                {text : 'Nama',        value : 'nama'},
-                {text : 'Butuh',       value : 'butuh'},
-                {text : 'Kurang',      value : 'kurang'},
+                {text : 'Nama Material',    value : 'nama'},
+                {text : 'Butuh',            value : 'butuh'},
+                {text : 'Kurang',           value : 'kurang'},
             ],
             items: undefined,
             items2: undefined,
             items3 : undefined,
             index : 0,
             btn1 : {
-                text : 'Operasi Mulai',
-                color : 'green',
+                text : '',
+                color: '#FFFFFF',
+                
             },
             btn2 : undefined,
             snackbar : {
                 show : false,
                 color : null,
                 message : null,
-            }
+            },
+            timer: '',
+            timer2 : '',
+            loading : false,
+            listOperator : [],
+            listOperatorPhoto : [],
         }
     },
 
     mounted() {
         //this.fetchOperasi(),
-        this.fetchMaterial(),
-        this.fetchOperasiSiap(),
-        this.fetchOperasiLayak()
+        this.getLinkOperator(),
+        window.setInterval(() => {
+            this.fetchMaterial()
+        }, 1000),
+        window.setInterval(() => {
+            this.fetchOperasiLayak()
+        }, 1000),
+        window.setInterval(() => {
+            this.fetchOperasiSiap()
+        }, 1000)
     },
 
     methods: {
+        refresh() {
+            setTimeout(() => {
+                this.timer.setInterval(location.replace("/"), 2000)
+                this.$forceUpdate();  
+            }, 2000)
+            location.reload()
+        },
+
+        refresh2() {
+            location.reload()
+        },
+
         logout() {
             this.route = "/login"
             location.replace("/login")
@@ -227,43 +264,72 @@ export default {
         },
 
         async parseBarcode(){
-            console.log(this.kodeMaterial)
+            console.log(this.inputKode)
             console.log(this.namaOperator)
+
             try{
                 const axios = require('axios');
+
                 const response = await axios.post('/rfid/insert_material',
                     { 
                         stasiunKerja : this.namaOperator,
-                        idMat : this.kodeMaterial
+                        idMat : this.inputKode
                     }
                 );
-                console.log(response,this.data)
-                if(response.data.status == "berhasil"){
-                    this.snackbar = {
-                    show : true,
-                    message : "Material Gagal Login / Operator Login",
-                    color : "green"
-                    }
-                }
-                else if(response.data.status == "gagal"){
-                    this.snackbar = {
-                    show : true,
-                    message : "",
-                    color : "blue"
-                    }
+                console.log(response)
+
+                const res = axios.get('/operator/get_link_operator/<code>' + this.inputKode)
+                if(res.data == null){
+                    console.log("Bukan Operator")
+                }else{
+                    this.listOperator = res.data
+                    console.log(res,this.listOperator)
                 }
             }
             catch(error){
                 console.log(error)
-                this.snackbar = {
-                    show : true,
-                    message : "Insert Material Error",
-                    color : "red"
-                }
             }
+            
             setTimeout(() => {
-                location.reload()
-            }, 2000)
+                try{
+                    const axios = require('axios')
+                    const res =  axios.get('/material/message_material_login/' + this.kodeMaterial)
+                    console.log(res.data[0].keterangan)
+                    if(res.data.length == null){
+                        console.log("Data kosong")
+                    }
+                    else if(res.data[0].keterangan == "material berhasil login"){
+                        this.items = res.data
+                        console.log(res,this.items)
+                        this.snackbar = {
+                            show : true,
+                            message : res.data[0].keterangan,
+                            color : "green"
+                        }
+                    }
+                    else if(res.data[0].keterangan == "material gagal login"){
+                        this.items = res.data
+                        console.log(res,this.items)
+                        this.snackbar = {
+                            show : true,
+                            message : res.data[0].keterangan,
+                            color : "red"
+                        }
+                    }
+                }
+                catch(error){
+                    console.log(error)
+                    this.snackbar = {
+                        show : true,
+                        message : "material berhasil login",
+                        color : "green"
+                    }
+                }
+            }, 3000)
+
+            setTimeout(() => {
+                location.reload("/")
+            }, 3000)
         },
 
         /*async fetchOperasi(){
@@ -319,7 +385,6 @@ export default {
             }
         },*/
 
-
         async fetchOperasiLayak(){
             try{
                 const axios = require('axios')
@@ -329,7 +394,7 @@ export default {
                 }
                 else if(res.data.length > 0){
                     this.items = res.data
-                    console.log(res,this.itemss)
+                    console.log(res,this.items)
                 }
 
             }catch(error){
@@ -377,10 +442,9 @@ export default {
                         this.visible = false
                     }   
                 }
-
-
-            }catch(error){
-                console.log(error)
+            }
+            catch(error){
+                console.log(error) 
             }
         },
 
@@ -399,47 +463,61 @@ export default {
             }
         },
 
-        async startOperation(){
-            try{
-                this.singleSelect = true
-                const axios = require('axios')
-                const res = await axios.post('/operasi/response_operasi_mulai/' + this.itemKey[0].id)
-                if(res.data.status == 'berhasil'){
-                    if (this.selected[0].rencanaMulai != null){
-                        this.btn1 = {
-                            color : 'blue',
-                            text : 'Operasi Selesai'
-                        }
-                        console.log("test")
+        startOperation(){
+            this.loading = true
+            setTimeout(() => {
+                try{
+                    //this.singleSelect = true
+                    const axios = require('axios')
+                    const res = axios.post('/operasi/response_operasi_mulai/' + this.loginService.getCurrentUsername())
+                    if(res.data.status == 'berhasil'){
+                        console.log(res)
                     }
-                    console.log(res)
-                }else{
-                    console.log(res)
                 }
-            }catch(error){
-                console.log(error)
-            }
-            this.dialog = false
-            window.location.reload()
+                catch(error){
+                    console.log(error)
+                }
+                this.dialog = false
+                this.refresh()
+            }, 2000)
         },
     
-        async akhiriOperation(){
-            try{
-                const axios = require('axios')
-                const res = await axios.post('/operasi/response_operasi_selsai/' + this.itemKey[0].id)
-                if(res.data.status == 'berhasil'){
-                    console.log(res)
-                }else{
-                    console.log(res)
+        akhiriOperation(){
+            this.loading = true
+            setTimeout(() => {
+                try{
+                    const axios = require('axios')
+                    const res = axios.post('/operasi/response_operasi_selesai/' + this.loginService.getCurrentUsername())
+                    if(res.data.status == 'berhasil'){
+                        console.log(res)
+                    }
+                }catch(error){
+                    console.log(error)
                 }
+                this.refresh()
+            }, 5000)
+        },
+        
+
+        async getLinkOperator(){
+            try{
+
+                const axios = require('axios')
+                const res = await axios.get('/operator/get_link_operator/' + this.loginService.getCurrentUsername())
+                if (res.data == null){
+                    console.log("data kosong")
+                }else{
+                    this.listOperatorPhoto = res.data
+                    console.log("data terisi")
+                    console.log(res,this.listOperatorPhoto)
+                }
+
             }catch(error){
                 console.log(error)
             }
-            window.location.reload()
         }
-     
     },
-
+   
 }
 </script>
 

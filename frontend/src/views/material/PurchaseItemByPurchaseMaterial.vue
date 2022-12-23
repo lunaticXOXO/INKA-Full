@@ -1,7 +1,8 @@
 <template>
+  <v-app>
     <v-card
-        class="mx-auto text-center mt-6"
-        max-width="1000">
+      class="mx-auto text-center mt-10"
+      width = "1450">
         <br>
         <h1>Purchase Material Item for {{this.$route.params.id}}</h1>
         <v-form
@@ -54,7 +55,7 @@
             <template v-slot:activator="{ on, attrs }">
                 <v-text-field :value="tanggalPurchase" v-bind="attrs" v-on="on" label="Schedulled Arrival" prepend-icon="mdi-calendar"></v-text-field>
             </template>
-            <v-date-picker width="1000" v-model="tanggalPurchase"></v-date-picker>
+            <v-date-picker width="500" v-model="tanggalPurchase"></v-date-picker>
           </v-menu>
 
           <v-btn
@@ -78,6 +79,33 @@
             {{snackbar.message}}
         </v-snackbar>
     </v-card>
+      
+    <v-card 
+        class="mx-auto text-center mt-10"
+        max-width = "1450">
+        <br>
+        <div class="d-flex">
+            <v-menu class="ml-4 mt-6">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field class="mx-10" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal" prepend-icon="mdi-calendar"></v-text-field>
+            </template>
+            <v-date-picker width="300" v-model="dueDate"></v-date-picker>
+          </v-menu>
+        </div>
+        <br>
+        <v-btn
+          color="primary"
+          class="d-flex mx-auto"
+          @click="showRequirementPurchaseMaterial()">
+          Search
+        </v-btn>
+        <br><br>
+        <v-data-table
+          :headers = "column3"
+          :items = "requirmentMaterial">
+      </v-data-table>
+    </v-card>
+  </v-app>
 </template>
 
 <script>
@@ -101,12 +129,19 @@
         show : false,
         color : null,
         message : null,
-      }
+      },
+      requirmentMaterial : [],
+      column3 : [
+        {text : 'Material Code',    value : 'codeMaterial'},
+        {text : 'Nama Material',    value : 'namaMaterial'},
+        {text : 'Jumlah',           value : 'jumlah'}
+      ],
     }),
 
     mounted(){
       this.fetchSupplierName(),
-      this.fetchUnit()
+      this.fetchUnit(),
+      this.showRequirementPurchaseMaterial()
     },
   
     methods: {
@@ -217,6 +252,25 @@
           }
         }
       },
+
+      async showRequirementPurchaseMaterial(){
+          try{
+            console.log(this.dueDate + " " + this.datetime)
+            const axios = require('axios');
+            const res = await axios.get('/material/get_requirement_purchase_material/' + this.dueDate);
+            if (res.data == null){
+              alert('Data Kosong')
+            }else{
+              this.requirmentMaterial = res.data
+              console.log(res,this.requirmentMaterial)
+            }
+          }
+          catch(error){
+            alert("Error")
+            console.log(error)
+          }
+        }
+
     },
   }
 </script>

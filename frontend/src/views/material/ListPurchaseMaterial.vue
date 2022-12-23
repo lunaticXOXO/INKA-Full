@@ -1,4 +1,5 @@
 <template>
+  <v-app>
     <v-card 
         class="mx-auto text-center mt-10"
         max-width = "1450">
@@ -64,6 +65,7 @@
             </template>
         </v-data-table>
     </v-card>
+  </v-app>
 </template>
 
 <script>
@@ -79,6 +81,7 @@
             {text : 'Action',           value : 'aksi'}
         ],
         types : [],
+        requirmentMaterial : [],
         editedIndex: -1,
         editedItem: {
           id: '',
@@ -92,6 +95,8 @@
           purchaseDate: '',
           purchaserName: '',
         },
+        dueDate: undefined,
+        datetime: undefined
       }
     },
   
@@ -161,7 +166,9 @@
         }catch(error){
             console.log(error)
         }
-      } 
+      },
+      
+      
     }
   }
 </script>

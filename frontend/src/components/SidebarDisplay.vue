@@ -28,7 +28,7 @@
             <span class="white--text mr-6">dsp01</span>
             <v-btn @click="logout()" color="grey">
                 <span>Sign Out</span>
-                <v-icon right>mdi-arrow-right</v-icon>
+                <v-img src="../assets/logo/arrow-right.png"></v-img>
             </v-btn>
         </v-app-bar>
 
@@ -81,7 +81,7 @@ export default {
                 active: false,
                 items: [
                     { title: 'Pantau Operasi WS', icon: 'mdi-eye', route: '/pantauOperasi'},
-                    { title: 'Grafik Proyek dan Operator', icon: 'mdi-chart-line-variant', route: '/graph'},
+                    //{ title: 'Grafik Proyek dan Operator', icon: 'mdi-chart-line-variant', route: '/graph'},
                 ],
                 title: 'Stasiun',
                 },
@@ -113,14 +113,14 @@ export default {
                 title: 'Jadwal',
                 },
 
-                {
-                action: 'mdi-progress-helper',
-                active: false,
-                items: [
-                    { title: 'Status Pengerjaan Proyek', icon: 'mdi-book', route: '/statusPengerjaanProyek'},
-                ],
-                title: 'Progress',
-                },
+                //{
+                //action: 'mdi-progress-helper',
+                //active: false,
+                //items: [
+                    //{ title: 'Status Pengerjaan Proyek', icon: 'mdi-book', route: '/statusPengerjaanProyek'},
+                //],
+                //title: 'Progress',
+                //},
             ],
         }
     },

@@ -26,7 +26,7 @@
             <v-spacer></v-spacer>
             <v-btn :to="route" color="grey">
                 <span>Login</span>
-                <v-icon right>mdi-key</v-icon>
+                <v-img src="../assets/logo/key.png"></v-img>
             </v-btn>
         </v-app-bar>
     </nav>

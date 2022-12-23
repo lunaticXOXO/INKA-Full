@@ -85,6 +85,8 @@ import ListPurchaseItemMaterialStock from '../views/material/ListPurchaseItemMat
 import ListMaterialStockOnWs from '../views/material/ListMaterialStockOnWs.vue'
 import StatusBarcode from '../views/material/StatusBarcode.vue'
 import MaterialLogin from '../views/material/MaterialLogin.vue'
+import ListOperasibyProduct from '../views/operasi/listOperasiByProduk.vue'
+
 
 Vue.use(VueRouter)
 
@@ -865,6 +867,18 @@ const routes = [
     meta : {
       title : "List Material Loin - PT.INKA"
     }
+  },
+
+  {
+
+     path : '/listOperasiByProduk/:id',
+     name : 'List Operasi By Produk Tabel',
+     component : ListOperasibyProduct,
+     meta : {
+
+        title : "List Operasi By Produk - PT. INKA"
+     }
+
   }
 
   

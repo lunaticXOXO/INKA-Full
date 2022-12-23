@@ -3,13 +3,14 @@ import db.db_handler as database
 from flask import request,make_response,jsonify
 import random
 import string
-import datetime
+from datetime import datetime
+import time
 
 def ShowOperasiFromProduct(idProduct):
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id AS 'idOperasi',a.rencanaMulai,a.rencanaSelesai, b.id AS 'idProses',b.nama AS 'namaProses', a.produk,a.stasiunKerja,a.status FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_d_produk i ON i.id = a.produk WHERE i.id = '"+idProduct+"' ORDER BY a.rencanaMulai ASC"
+    query = "SELECT a.id AS 'idOperasi',a.rencanaMulai,a.rencanaSelesai, b.id AS 'idProses',b.nama AS 'namaProses', a.produk,a.stasiunKerja,a.output,a.mulai,a.selesai FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN prd_d_produk i ON i.id = a.produk WHERE i.id = '"+idProduct+"' ORDER BY a.rencanaMulai ASC"
     cursor.execute(query)
 
     records = cursor.fetchall()
@@ -177,10 +178,10 @@ def EndOperation(idOperasi):
     return hasil
 
 
-def StartResponseOperasi(idOperasi):
+def StartResponseOperasi(nomorWS):
     conn = database.connector()
     cursor = conn.cursor()
-    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a WHERE a.id = '"+idOperasi+"'"
+    query_get_ws = "SELECT stasiunKerja FROM cpl_oprsiap WHERE stasiunKerja = '"+nomorWS+"'"
     cursor.execute(query_get_ws)
     records = cursor.fetchall()
     ws = ""
@@ -190,7 +191,7 @@ def StartResponseOperasi(idOperasi):
     
     try:
         jenis = "on"
-        mulai = datetime.datetime.now()
+        mulai = datetime.now()
         values_insert = (ws,jenis,mulai)
         cursor.execute(query_insert,values_insert)
         conn.commit()
@@ -226,10 +227,10 @@ def GetResponseStartOperasi(username):
     conn.close()
     return make_response(jsonify(json_data),200)
 
-def EndResponseOperasi(idOperasi):
+def EndResponseOperasi(nomorWS):
     conn = database.connector()
     cursor = conn.cursor()
-    query_get_ws = "SELECT a.stasiunKerja FROM cpl_oprsiap a WHERE a.id = '"+idOperasi+"'"
+    query_get_ws = "SELECT stasiunKerja FROM cpl_oprsiap WHERE stasiunKerja = '"+nomorWS+"'"
     cursor.execute(query_get_ws)
     records = cursor.fetchall()
     ws = ""
@@ -237,15 +238,21 @@ def EndResponseOperasi(idOperasi):
         ws = index[0]
     
     query_insert = "INSERT INTO cpl_responoperasi(stasiunKerja,jenis,mulai)VALUES(%s,%s,%s)"
-   
+    
     try:
         jenis = "off"
-        finish = datetime.datetime.now()
+        finish = datetime.now()
         values_insert = (ws,jenis,finish)
+
+        #Execute Query Insert responseOperasi #
         cursor.execute(query_insert,values_insert)
+        
+        #program pak rahmat
+        
         conn.commit()
-        cursor.close()
-        conn.close()
+        
+        #BacaProgramPakRahmat()
+
         hasil = {"status" : "berhasil"}
     except Exception as e:
         print("Error",str(e))
@@ -253,7 +260,81 @@ def EndResponseOperasi(idOperasi):
     return hasil
 
 
-def GetResponseEndOperasi(username):
+def BacaProgramPakRahmat():
+    time.sleep(20)
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query_update_percentage = "UPDATE prd_d_proyek SET percentage = %s WHERE id = %s"
+    query_insert_cplprogress = "INSERT INTO cpl_progress(proyek,selesai,selesai_str,percentage)VALUES(%s,%s,%s,%s)"
+
+    try:
+        #Meng GET id produk dari operasi yang di klik tombol selesai
+        id_produk = ""
+
+        #Meng GET id proyek dari id produk yang didapat.
+        id_proyek = ""
+        
+        selesai = "0000-00-00 00:00:00"
+
+        #Counter untuk menghitung jumlah yang memiliki output
+        counter = 0
+
+        #Untuk menghitung jumlah total operasi sautu produk
+        total = 0
+
+        hasil_percentage = 0
+
+        query_select_operasiproduk = "SELECT id,mulai,selesai,produk FROM prd_d_operasi WHERE selesai is not null and mulai is not null ORDER BY selesai DESC LIMIT 1" 
+        cursor.execute(query_select_operasiproduk)
+        records_produk = cursor.fetchall()
+
+        for index in records_produk:
+            selesai - index[2]
+            id_produk = index[3]
+
+        print("selesai : ",selesai)
+        selesaiSTR = selesai.strftime("%m/%D/%Y, %H:%M")
+        print("Selesai : ",selesai, "Selesai STR : ", selesaiSTR)
+        print("ID Produk : ",id_produk)
+
+        
+        query_operation = "SELECT a.id,a.output,a.produk FROM prd_d_operasi a WHERE a.produk = '"+id_produk+"'"
+        cursor.execute(query_operation)
+        records_operation = cursor.fetchall()
+
+        for index in records_operation:
+            if index[1] != None:
+                counter = counter + 1
+            total = total + 1
+        
+        hasil_percentage = (counter / total ) * 100
+
+        query_get_proyek = "SELECT a.id AS 'idProduk',c.id AS 'idProyek' FROM prd_d_produk a JOIN prd_d_rincianproyek b ON b.id = a.rincianproyek JOIN prd_d_proyek c ON c.id = b.proyek WHERE a.id = '"+id_produk+"'"
+        cursor.execute(query_get_proyek)
+
+        records_proyek = cursor.fetchall()
+        for index in records_proyek:
+            id_proyek = index[1]
+        
+
+        values_update = (hasil_percentage,id_proyek)      
+        values_insert2 = (id_proyek,selesai,selesaiSTR,hasil_percentage)
+        cursor.execute(query_update_percentage,values_update)
+        cursor.execute(query_insert_cplprogress,values_insert2)
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
+
+
+def GetResponseEndOperasi(idOperasi):
     conn = database.connector()
     cursor = conn.cursor()
   
@@ -287,7 +368,7 @@ def ShowOperasiLayak(username):
     for data in records_cek:
         username = data[0]
     
-    query_opr_layak = "SELECT * FROM cpl_oprlayak WHERE stasiunKerja = '"+username+"' ORDER BY rencanaMulai ASC"
+    query_opr_layak = "SELECT * FROM cpl_oprlayak WHERE stasiunKerja = '"+username+"' ORDER BY selesai DESC, rencanaMulai ASC"
     cursor.execute(query_opr_layak)
     records = cursor.fetchall()
 
@@ -314,6 +395,23 @@ def IfOperasiSiap(username):
     
     query = "SELECT * FROM cpl_oprsiap WHERE stasiunKerja = '"+username+"' "
     cursor.execute(query)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
+
+
+
+def ShowOperasiByProduct(idProduct):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM prd_d_operasi WHERE produk = '"+idProduct+"' ORDER BY rencanaMulai ASC"
+    cursor.execute(query)
+
     records = cursor.fetchall()
     json_data = []
     row_headers = [x[0] for x in cursor.description]

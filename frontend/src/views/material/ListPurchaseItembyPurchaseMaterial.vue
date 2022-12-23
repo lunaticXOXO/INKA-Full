@@ -14,8 +14,7 @@
         <v-data-table 
             :headers = "column"
             :items = "prcItembyprcMat">
-            
-          <template v-slot:[`item.aksi`]="{ item }">
+            <template v-slot:[`item.aksi`]="{ item }">
                 <!--
                 <router-link :to="{name : 'List Stock Material By Orders',params : {id : `${item.id_item}`}}">
                   <v-btn class="mx-1" x-small color="blue">
@@ -29,19 +28,43 @@
                 <v-btn class="mx-1" x-small color="red" @click="deleteMaterial(item)">
                     <v-icon small dark>mdi-trash-can-outline</v-icon>
                 </v-btn>
-
             </template>
-
         </v-data-table>
     </v-card>
+    
     <v-card
-      class="mt-10 text-center mx-10"
-      max-width = "750">
+      class="mx-auto text-center mt-10"
+        max-width = "1000">
       <h2>Detail Purchase Material</h2>
       <v-data-table 
           :headers="column2"
           :items="purchasematerial">
         </v-data-table>
+    </v-card>
+
+    <v-card 
+        class="mx-auto text-center mt-10"
+        max-width = "1000">
+        <div class="d-flex">
+            <v-menu class="ml-4 mt-6">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field class="mx-10 mt-8" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal" prepend-icon="mdi-calendar"></v-text-field>
+            </template>
+            <v-date-picker width="200" v-model="dueDate"></v-date-picker>
+          </v-menu>
+        </div>
+        <br>
+        <v-btn
+          color="primary"
+          class="d-flex mx-auto"
+          @click="showRequirementPurchaseMaterial()">
+          Search
+        </v-btn>
+        <br><br>
+        <v-data-table
+          :headers = "column3"
+          :items = "requirmentMaterial">
+      </v-data-table>
     </v-card>
   </v-app>
 </template>
@@ -60,7 +83,6 @@
               {text : 'Supplier',           value : 'supplierCode'},
               {text : 'Unit',               value : 'unit'},
               {text : 'Action',           value : 'aksi'}
-
           ],
           column2 : [
             {text : 'ID',               value : 'id'},
@@ -68,8 +90,15 @@
             {text : 'Purchase Date',    value : 'purchaseDate'},
             {text : 'Purchaser Name',   value : 'purchaserName'},
           ],
+          column3 : [
+            {text : 'Material Code',    value : 'codeMaterial'},
+            {text : 'Nama Material',    value : 'namaMaterial'},
+            {text : 'Jumlah',           value : 'jumlah'}
+        ],
           prcItembyprcMat : [],
-          purchasematerial : []
+          requirmentMaterial : [],
+          purchasematerial : [],
+          dueDate: undefined
         }
       },
   
@@ -118,12 +147,25 @@
             alert("Error")
             console.log(error)
           }
-
+        },
+        
+        async showRequirementPurchaseMaterial(){
+          try{
+            console.log(this.dueDate + " " + this.datetime)
+            const axios = require('axios');
+            const res = await axios.get('/material/get_requirement_purchase_material/' + this.dueDate);
+            if (res.data == null){
+              alert('Data Kosong')
+            }else{
+              this.requirmentMaterial = res.data
+              console.log(res,this.requirmentMaterial)
+            }
+          }
+          catch(error){
+            alert("Error")
+            console.log(error)
+          }
         }
-  
       }
     }
-
-
-
   </script>
