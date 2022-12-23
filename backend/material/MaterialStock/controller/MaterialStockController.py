@@ -131,11 +131,12 @@ def AddMaterialStockbyOrders(orders):
             query_get_matstock = "SELECT COUNT(*) FROM mat_d_materialstock WHERE id LIKE '"+today_str+"%'"
             cursor.execute(query_get_matstock)
             records_stock = cursor.fetchall()
-            for index in records_stock:
-                temp = index[0]
+            for index2 in records_stock:
+                temp = index2[0]
                 jumlah = int(temp)
                 #print("Jumlah : ",jumlah)
-            print("jumlah : ",jumlah)
+            print("jumlah data : ",jumlah)
+
             if jumlah == 0:
                 id_stock = today_str + "000"
                 values = (id_stock,orders,merk,quantity,unit,arrivalDate)
@@ -144,13 +145,7 @@ def AddMaterialStockbyOrders(orders):
                 cursor.execute(query_insert,values)
                 cursor.execute(query_insert2,values2)
                 cursor.execute(query_insert3,values3)
-                
             else:
-                angka_akhir_str = ""
-                for index2 in records_stock:
-                    temp2 = index2[0]
-                    jumlah = int(temp2)
-                
                 print("jumlah data : ", jumlah)
                 if jumlah >= 9:
                     angka_awal = '0'
