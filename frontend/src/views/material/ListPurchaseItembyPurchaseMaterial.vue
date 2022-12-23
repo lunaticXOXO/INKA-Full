@@ -13,7 +13,8 @@
         </router-link>
         <v-data-table 
             :headers = "column"
-            :items = "prcItembyprcMat">
+            :items = "prcItembyprcMat"
+            :items-per-page="5">
             <template v-slot:[`item.aksi`]="{ item }">
                 <!--
                 <router-link :to="{name : 'List Stock Material By Orders',params : {id : `${item.id_item}`}}">

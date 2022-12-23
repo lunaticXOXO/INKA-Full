@@ -32,7 +32,7 @@ def ShowRincianProyekByProyek(id_proyek):
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.id,a.jumlah,a.dueDate,a.proyek,c.nama FROM prd_d_rincianproyek a JOIN prd_d_proyek b ON a.proyek = b.id JOIN prd_r_jenisproduk c ON c.id = a.jenisProduk WHERE b.id = '"+id_proyek+"'"
+    query = "SELECT a.id,a.jumlah,a.dueDate,a.proyek,c.nama FROM prd_d_rincianproyek a JOIN prd_d_proyek b ON a.proyek = b.id JOIN prd_r_jenisproduk c ON c.id = a.jenisProduk WHERE b.id = '"+id_proyek+"' ORDER BY a.id DESC"
     cursor.execute(query)
 
     row_headers = [x[0] for x in cursor.description]
@@ -99,33 +99,56 @@ def AddRincianProyekByProyek(id_proyek):
     for index in records:
         temp = index[0]
     
-    print(temp)
+    print("ID Proyek : ",temp)
     print(type(temp))
+    #P00000
+    angka_awal = '00'
+    
+    id_rproyek_new = ""
+    
+    query_get_rproyekbyproyek = "SELECT a.id FROM prd_d_rincianproyek a JOIN prd_d_proyek b ON b.id = a.proyek WHERE b.id = '"+id_proyek+"'"
+    cursor.execute(query_get_rproyekbyproyek)
+    records_rinci = cursor.fetchall()
+    angka_akhir = 0
+
+    temp2 = ""
+    for index2 in records_rinci:
+        temp2 = index2[0]
+
+    print(temp2)
+    if temp2 == '':
+        print("test")
+        id_rproyek_new = temp + "000"
+    else:
+        angka_akhir_str = ""
+        for index in records_rinci:
+            print("Angka : ",angka_akhir)
+
+            if angka_akhir >= 9:
+                angka_awal = '0'
+                angka_akhir = angka_akhir + 1
+                angka_akhir_str = str(angka_akhir)
+                id_rproyek_new = temp + angka_awal + angka_akhir_str
+                print("test")
+
+            else:
+                angka_akhir = angka_akhir + 1
+                angka_akhir_str = str(angka_akhir)
+                id_rproyek_new = temp + angka_awal + angka_akhir_str
+       
+
     cursor = conn.cursor()
     query = "INSERT INTO prd_d_rincianproyek (id, jumlah,dueDate,jenisProduk, proyek) VALUES (%s,%s,%s,%s,'"+temp+"')"
     try:
         data = request.json
-        id_rproyek = data["id"]
+        #id_rproyek = data["id"]
         jumlah = data["jumlah"]
         dueDate = data["gabunganTanggal"]
         jenisProduk = data["jenisProduk"]
     
-        values = (id_rproyek,jumlah,str(dueDate),jenisProduk)
+        values = (id_rproyek_new,jumlah,str(dueDate),jenisProduk)
         cursor.execute(query,values)
-        query2 = "SELECT id FROM prd_d_rincianproyek a WHERE a.id = '"+id_rproyek+"'"
-        
-        id_rproyek_new = ""
-        cursor.execute(query2)
-        records = cursor.fetchall()
-        for data in records:
-            id_rproyek_new = data[0]
-
-        print(id_rproyek_new)
-        print(jumlah)
-        print("Type jumlah : ",type(jumlah))
-        
-        new_jumlah = int(jumlah)
-        print("jumlah : ",new_jumlah)
+       
         conn.commit()
 
         cursor.close()

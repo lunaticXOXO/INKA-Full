@@ -12,6 +12,7 @@
           v-model="valid"
           lazy-validation>
         
+          <!--
           <v-text-field
           v-model="id_item"
           :counter="3"
@@ -19,6 +20,7 @@
           label="ID Item"
           required
           ></v-text-field>
+          -->
 
           <v-autocomplete
           item-text="nama"
@@ -233,7 +235,7 @@
               color : "green"
             }
 
-            location.replace('/listPurchaseMaterialItem')
+            location.replace('/listPurchaseItemByPurchaseMaterial/' + this.$route.params.id)
           }
           else if(response.data.status == "gagal"){
             this.snackbar = {

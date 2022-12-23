@@ -31,7 +31,7 @@ def PurchaseMaterial():
 def GetPurchaseMaterial():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT * FROM mat_d_purchasematerial"
+    query = "SELECT * FROM mat_d_purchasematerial ORDER BY purchaseDate DESC"
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
     json_data = []
@@ -61,3 +61,4 @@ def ShowRequirementPurchaseMaterial(rencanaMulai):
     cursor.close()
     conn.close()
     return make_response(jsonify(json_data),200)
+
