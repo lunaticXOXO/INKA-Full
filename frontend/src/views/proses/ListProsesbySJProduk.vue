@@ -4,13 +4,17 @@
             <v-card class="ml-6 text-center mt-6" width="700">
                 <v-data-table
                     :headers="column2"
-                    :items = "sjproduk">
+                    :items = "sjproduk"
+                    :items-per-page="1"
+                    >
                 </v-data-table>
             </v-card>
             <v-card class="ml-12 text-center mt-6" width="700">
                 <v-data-table
                     :headers="column3"
-                    :items = "sjproduk">
+                    :items = "sjproduk"
+                    :items-per-page="1"
+                    >
                 </v-data-table>
             </v-card>
         </div>

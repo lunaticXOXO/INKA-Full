@@ -6,7 +6,9 @@
         <v-card class="mx-auto text-center" width="600">
             <v-data-table
                 :headers = "headers"
-                :items = "items2">
+                :items = "items2"
+                :items-per-page="5"
+                >
                 <template v-slot:[`item.id`]="{ item }">
                     <span>{{item.id}}</span>
                 </template>
