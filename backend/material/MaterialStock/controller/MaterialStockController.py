@@ -145,11 +145,12 @@ def AddMaterialStockbyOrders(orders):
                 cursor.execute(query_insert,values)
                 cursor.execute(query_insert2,values2)
                 cursor.execute(query_insert3,values3)
+                conn.commit()
             else:
                 print("jumlah data : ", jumlah)
                 if jumlah >= 9:
                     angka_awal = '0'
-                    angka_akhir = angka_akhir + 1
+                    #angka_akhir = angka_akhir + 1
                     angka_akhir = jumlah + angka_akhir
                     angka_akhir_str = str(angka_akhir)
 
@@ -160,8 +161,9 @@ def AddMaterialStockbyOrders(orders):
                     cursor.execute(query_insert,values)
                     cursor.execute(query_insert2,values2)
                     cursor.execute(query_insert3,values3)
+                    conn.commit()
                 else:
-                    angka_akhir = angka_akhir + 1
+                    #angka_akhir = angka_akhir + 1
                     angka_akhir =  jumlah + angka_akhir
                     angka_akhir_str = str(angka_akhir)
                     id_stock = today_str + angka_awal + angka_akhir_str
@@ -171,7 +173,9 @@ def AddMaterialStockbyOrders(orders):
                     cursor.execute(query_insert,values)
                     cursor.execute(query_insert2,values2)
                     cursor.execute(query_insert3,values3)
+                    conn.commit()
             #angka_akhir = angka_akhir + 1
+            print(records_stock)
             print("index : ", x)
             print("multiplier : ",multiplier)
     
@@ -180,7 +184,7 @@ def AddMaterialStockbyOrders(orders):
         query_getquantitystock = "SELECT a.quantity,b.multiplier FROM mat_d_materialstock a JOIN gen_r_materialunit b ON b.id = a.unit WHERE a.id = '"+id_stock+"'"
         cursor.execute(query_getquantitystock)
         records_qtystock = cursor.fetchall()
-
+        print("Records QTY stock",records_qtystock)
         for index in records_qtystock:
             jumlah_str = index[0]
             mult_str = index[1]
@@ -196,8 +200,9 @@ def AddMaterialStockbyOrders(orders):
 
         for index in records_qtyitem:
             jumlah_str2 = index[0]
-            mult_str2 = index[2]
+            mult_str2 = index[1]
         
+
         jumlah_int2 =   int(jumlah_str2)
         mult_int2   =   int(mult_str2)
 
