@@ -59,7 +59,6 @@
             {text : 'ID',                   value : 'id'},
             {text : 'Merk',                 value : 'merk'},        
             {text : 'Quantity',             value : 'quantity'},
-            {text : 'Unit',                 value : 'unit'},
             {text : 'Arrival Date',         value : 'arrivalDate'},
             {text : 'Order',                value : 'purchaseItem'},
            

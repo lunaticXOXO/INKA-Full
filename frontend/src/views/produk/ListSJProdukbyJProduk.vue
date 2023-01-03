@@ -5,7 +5,9 @@
                 <h3>Jenis Produk {{this.$route.params.id}}</h3>
                 <v-data-table
                     :headers = "column2"
-                    :items = "jproduk">
+                    :items = "jproduk"
+                    :items-per-page="1"
+                    >
                 </v-data-table>
             </v-card>
         </div>
@@ -24,7 +26,9 @@
             max-width="1000">
                 <v-data-table
                     :headers = "column"
-                    :items = "sjproduk">
+                    :items = "sjproduk"
+                    :items-per-page="5"
+                    >
                     <template v-slot:[`item.idNodal`]="{ item }">
                     <div v-if="item.idNodal == editedItem.idNodal">
                         <v-text-field disabled v-model="editedItem.idNodal" :hide-details="true" dense single-line :autofocus="true" v-if="item.idNodal == editedItem.idNodal"></v-text-field>
