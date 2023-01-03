@@ -90,11 +90,10 @@ def PurchaseMaterialItemByIDPurchase(idPurchase):
                 angka_akhir_str = str(angka_akhir)
                 id_item_new = idPurchase + angka_awal + angka_akhir_str
 
-
+    print("ID Item : ",id_item_new)
     query_insert = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)VALUES(%s,%s,%s,%s,%s,%s,%s)"
     try:
         data = request.json
-        #id_item = data["id_item"]
         supplierCode = data["supplierCode"]
         materialTypeCode = data["materialTypeCode"]
         quantity = data["quantity"]
@@ -154,7 +153,7 @@ def GetPurchaseMaterialinPurchaseItem(idPurchase):
 def GetPurchaseMaterialItemComparedMatStock(idPurchase):
     conn = database.connector()
     cursor = conn.cursor()
-    query_show = "SELECT * FROM mat_d_purchaseitem a WHERE a.purchaseId = '"+idPurchase+"' AND a.quantity != 0 ORDER BY a.id_item DESC "
+    query_show = "SELECT a.id_item,a.materialTypeCode,a.purchaseId,a.quantity,a.schedulledArrival,a.supplierCode,b.nama AS 'unit' FROM mat_d_purchaseitem a JOIN gen_r_materialunit b ON b.id = a.unit WHERE a.purchaseId = '"+idPurchase+"' AND a.quantity != 0 ORDER BY a.id_item DESC "
        
     cursor.execute(query_show)
     records_purch_item = cursor.fetchall()

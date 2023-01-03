@@ -67,7 +67,7 @@ def AddMaterialStockbyOrders(orders):
     cursor.execute(query)
     records = cursor.fetchall()
 
-    materialTypeCode = ""
+    
     quantity = ""
     unit = ""
 
@@ -75,14 +75,14 @@ def AddMaterialStockbyOrders(orders):
         orders = index[0]
     print("ID Item : ",orders)
 
-    query_select_mattype = "SELECT a.materialTypeCode,a.quantity,a.unit FROM mat_d_purchaseitem a WHERE a.id_item = '"+orders+"'"
+    query_select_mattype = "SELECT a.quantity,a.unit FROM mat_d_purchaseitem a WHERE a.id_item = '"+orders+"'"
     cursor.execute(query_select_mattype)
     records2 = cursor.fetchall()
 
     for index in records2:
-        materialTypeCode = index[0]
-        quantity = index[1]
-        unit = index[2]
+       
+        quantity = index[0]
+        unit = index[1]
     
     angka_awal = "00"
     angka_akhir = 0
@@ -139,6 +139,7 @@ def AddMaterialStockbyOrders(orders):
 
             if jumlah == 0:
                 id_stock = today_str + "000"
+                #print("ID Stock : ",id_stock)
                 values = (id_stock,orders,merk,quantity,unit,arrivalDate)
                 values2 = (workstationCode,id_stock,login)
                 values3 = (id_stock,workstationCode)
@@ -148,13 +149,13 @@ def AddMaterialStockbyOrders(orders):
                 conn.commit()
             else:
                 print("jumlah data : ", jumlah)
-                if jumlah >= 9:
+                if jumlah >= 10:
                     angka_awal = '0'
                     #angka_akhir = angka_akhir + 1
-                    angka_akhir = jumlah + angka_akhir
+                    angka_akhir = jumlah
                     angka_akhir_str = str(angka_akhir)
-
                     id_stock = today_str  +  angka_awal + angka_akhir_str
+                    print("ID Stock : ",id_stock)
                     values = (id_stock,orders,merk,quantity,unit,arrivalDate)
                     values2 = (workstationCode,id_stock,login)
                     values3 = (id_stock,workstationCode)
@@ -164,9 +165,11 @@ def AddMaterialStockbyOrders(orders):
                     conn.commit()
                 else:
                     #angka_akhir = angka_akhir + 1
-                    angka_akhir =  jumlah + angka_akhir
+                    print("jumlah data : ",jumlah)
+                    angka_akhir =  jumlah 
                     angka_akhir_str = str(angka_akhir)
                     id_stock = today_str + angka_awal + angka_akhir_str
+                    #print("ID Stock : ",id_stock)
                     values = (id_stock,orders,merk,quantity,unit,arrivalDate)
                     values2 = (workstationCode,id_stock,login)
                     values3 = (id_stock,workstationCode)
@@ -175,7 +178,8 @@ def AddMaterialStockbyOrders(orders):
                     cursor.execute(query_insert3,values3)
                     conn.commit()
             #angka_akhir = angka_akhir + 1
-            print(records_stock)
+
+            print("ID Stock : ",id_stock)
             print("index : ", x)
             print("multiplier : ",multiplier)
     
@@ -191,10 +195,14 @@ def AddMaterialStockbyOrders(orders):
 
         jumlah_int =   int(jumlah_str)
         mult_int   =   int(mult_str)
+
         jumlah_stock = jumlah_int * mult_int
+        print("jumlah_stock_int : ",jumlah_int)
+        print("multiplier_stock : ",mult_int)
+        print("jumlah_stock_akhir : ",jumlah_stock)
 
         #Query untuk GET quantity purchase item dari stock yang telah di tambahkan
-        query_getpurchItem = "SELECT b.quantity,c.multiplier FROM mat_d_materialstock a JOIN mat_d_purchaseitem b ON b.id_item = a.purchaseItem JOIN gen_r_materialunit c ON c.id = a.unit WHERE a.id = '"+id_stock+"'"
+        query_getpurchItem = "SELECT a.quantity,b.multiplier FROM mat_d_purchaseitem a JOIN gen_r_materialunit b ON b.id = a.unit WHERE a.id_item = '"+orders+"'"
         cursor.execute(query_getpurchItem)
         records_qtyitem = cursor.fetchall()
 
@@ -205,13 +213,18 @@ def AddMaterialStockbyOrders(orders):
 
         jumlah_int2 =   int(jumlah_str2)
         mult_int2   =   int(mult_str2)
-
         jumlah_purchase = jumlah_int2 * mult_int2
+
+        print("jumlah_purchase_item : ",jumlah_int2)
+        print("jumlah_multiplier_purchase :",mult_int2)
+        print("jumlah_purchase_akhir : ",jumlah_purchase)
         
-        jumlah_now = jumlah_purchase - jumlah_stock
+        jumlah_now = (jumlah_purchase - jumlah_stock) / mult_int2
+       
         if jumlah_now < 0:
             jumlah_now = 0
 
+        print(jumlah_now)
         query_update_jumlah = "UPDATE mat_d_purchaseitem SET quantity = %s WHERE id_item = %s"
         values4 = (jumlah_now,orders)
         cursor.execute(query_update_jumlah,values4)

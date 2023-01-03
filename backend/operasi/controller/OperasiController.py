@@ -204,10 +204,18 @@ def StartResponseOperasi(nomorWS):
     return hasil
 
 
-def GetResponseStartOperasi(idOperasi):
+def GetResponseStartOperasi(username):
     conn = database.connector()
     cursor = conn.cursor()
-    query_select = "SELECT a.mulai FROM cpl_oprsiap a WHERE a.id = '"+idOperasi+"'"
+  
+    query_cek = "SELECT username FROM opd_r_operator WHERE username = '"+username+"'"
+    cursor.execute(query_cek)
+    records_cek = cursor.fetchall()
+
+    for data in records_cek:
+        username = data[0]
+
+    query_select = "SELECT a.mulai FROM cpl_oprsiap a WHERE a.stasiunKerja = '"+username+"'"
     cursor.execute(query_select)
     records = cursor.fetchall()
     json_data = []
@@ -329,7 +337,15 @@ def BacaProgramPakRahmat():
 def GetResponseEndOperasi(idOperasi):
     conn = database.connector()
     cursor = conn.cursor()
-    query_select = "SELECT a.selesai FROM cpl_oprsiap a WHERE a.id = '"+idOperasi+"'"
+  
+    query_cek = "SELECT username FROM opd_r_operator WHERE username = '"+username+"'"
+    cursor.execute(query_cek)
+    records_cek = cursor.fetchall()
+
+    for data in records_cek:
+        username = data[0]
+
+    query_select = "SELECT a.selesai FROM cpl_oprsiap a WHERE a.stasiunKerja = '"+username+"'"
     cursor.execute(query_select)
     records = cursor.fetchall()
     json_data = []
