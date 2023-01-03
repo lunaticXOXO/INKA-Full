@@ -82,7 +82,7 @@
               {text : 'Quantity',           value : 'quantity'},
               {text : 'Schedulled Arrival', value : 'schedulledArrival'},
               {text : 'Supplier',           value : 'supplierCode'},
-              {text : 'Unit',               value : 'unit'},
+              {text : 'Unit',               value : 'namaUnit'},
               {text : 'Action',           value : 'aksi'}
           ],
           column2 : [

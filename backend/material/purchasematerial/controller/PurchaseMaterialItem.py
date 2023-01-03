@@ -102,6 +102,27 @@ def PurchaseMaterialItemByIDPurchase(idPurchase):
         values = (id_item_new,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,idPurchase)
         cursor.execute(query_insert,values)
         conn.commit()
+        #Query untuk menampilkan hasil multiplier dan quantity
+        query_get_multiplie = "SELECT a.quantity,b.multiplier FROM mat_d_purchaseitem a JOIN gen_r_materialunit b ON b.id = a.unit WHERE a.id_item = '"+id_item_new+"'"
+        cursor.execute(query_get_multiplie)
+        records_unit = cursor.fetchall()
+        mul_str = ""
+        qty_str = ""
+        for index in records_unit:
+            qty_str = index[0]
+            mul_str = index[1]
+        
+        
+        qty_int = int(qty_str)
+        mul_int = int(mul_str)
+        
+        #total kan qty int dengan multiplier
+        total = qty_int * mul_int
+        unit = "U01"
+        query_update = "UPDATE mat_d_purchaseitem SET quantity = %s, unit = %s WHERE id_item = %s"
+        values = (total,unit,id_item_new)
+        cursor.execute(query_update,values)
+        conn.commit()
         cursor.close()
         conn.close()
         hasil = {"status" : "berhasil"}
@@ -114,8 +135,8 @@ def PurchaseMaterialItemByIDPurchase(idPurchase):
 def GetMaterialItemByPurchaseMaterial(idPurchase):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.id_item,a.supplierCode,a.materialTypeCode,a.quantity,a.unit,a.schedulledArrival,a.purchaseId FROM mat_d_purchaseitem a "
-    query += "JOIN mat_d_purchasematerial b ON b.id = a.purchaseId "
+    query = "SELECT a.id_item,a.supplierCode,a.materialTypeCode,a.quantity,c.nama AS 'namaUnit',a.schedulledArrival,a.purchaseId FROM mat_d_purchaseitem a "
+    query += "JOIN mat_d_purchasematerial b ON b.id = a.purchaseId JOIN gen_r_materialunit c ON c.id = a.unit "
     query += "WHERE a.purchaseId = '"+idPurchase+"' ORDER BY a.id_item DESC"
 
     cursor.execute(query)

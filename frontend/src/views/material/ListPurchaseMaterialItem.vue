@@ -39,9 +39,9 @@
                 <span v-else>{{item.quantity}}</span>
             </template>
 
-            <template v-slot:[`item.unit`]="{ item }">
-                <v-text-field v-model="editedItem.unit" :hide-details="true" dense single-line v-if="item.id_item === editedItem.id_item" ></v-text-field>
-                <span v-else>{{item.unit}}</span>
+            <template v-slot:[`item.namaUnit`]="{ item }">
+                <v-text-field v-model="editedItem.namaUnit" :hide-details="true" dense single-line v-if="item.id_item === editedItem.id_item" ></v-text-field>
+                <span v-else>{{item.namaUnit}}</span>
             </template>
            
             <template v-slot:[`item.schedulledArrival`]="{ item }">
@@ -86,7 +86,7 @@
             {text : 'Supplier',             value : 'supplierCode'},
             {text : 'Material Type',        value : 'materialTypeCode'},
             {text : 'Quantity',             value : 'quantity'},
-            {text : 'Unit',                 value : 'unit'},
+            {text : 'Unit',                 value : 'namaUnit'},
             {text : 'Schedulled Arrival',   value : 'schedulledArrival'},
             {text : 'Purchase ID',          value : 'purchaseId'},
             {text : 'Action',               value : 'aksi'}
