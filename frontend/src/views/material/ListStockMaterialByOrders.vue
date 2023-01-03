@@ -60,6 +60,7 @@
             {text : 'Merk',                 value : 'merk'},        
             {text : 'Quantity',             value : 'quantity'},
             {text : 'Arrival Date',         value : 'arrivalDate'},
+            {text : 'Unit',                 value : 'namaUnit'},
             {text : 'Order',                value : 'purchaseItem'},
            
         ],
