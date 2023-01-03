@@ -31,7 +31,7 @@ def PurchaseMaterial():
 def GetPurchaseMaterial():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT * FROM mat_d_purchasematerial ORDER BY purchaseDate DESC"
+    query = "SELECT * FROM mat_d_purchasematerial ORDER BY id DESC"
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
     json_data = []
