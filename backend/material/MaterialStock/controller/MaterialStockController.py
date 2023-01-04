@@ -47,7 +47,7 @@ def AddNewMaterialStock():
 def GetMaterialStockbyOrder(order):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.id,a.purchaseItem,a.merk,a.quantity,a.arrivalDate FROM mat_d_materialstock a JOIN mat_d_purchaseitem b ON b.id_item = a.purchaseItem WHERE a.purchaseItem = '"+order+"'"
+    query = "SELECT a.id,a.purchaseItem,a.merk,a.quantity,c.nama AS 'namaUnit',a.arrivalDate FROM mat_d_materialstock a JOIN mat_d_purchaseitem b ON b.id_item = a.purchaseItem JOIN gen_r_materialunit c ON c.id = a.unit WHERE a.purchaseItem = '"+order+"'"
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
     json_data = []
@@ -100,6 +100,8 @@ def AddMaterialStockbyOrders(orders):
         #id = data["id"]
         merk = data["merk"]
         quantity = data["quantity"]
+
+        quantity_int = int(quantity)
         unit = data["unit"]
         arrivalDate = data["arrivalDate"]
         workstationCode = "WSGD"
@@ -114,8 +116,8 @@ def AddMaterialStockbyOrders(orders):
         #Untuk mengecek apakah records kosong atau tidak
        
         x = 0
-        for x in range(qty_int):
-           
+        #quantity yang diinput akan dilooping 
+        for x in range(quantity_int):
             query_get_matstock = "SELECT COUNT(*) FROM mat_d_materialstock WHERE id LIKE '"+today_str+"%'"
             cursor.execute(query_get_matstock)
             records_stock = cursor.fetchall()
@@ -124,13 +126,12 @@ def AddMaterialStockbyOrders(orders):
             for index2 in records_stock:
                 temp = index2[0]
                 jumlah = int(temp)
-                #print("Jumlah : ",jumlah)
+                
             print("jumlah data : ",jumlah)
-
+            quantity_unit = ""
             if jumlah == 0:
                 id_stock = today_str + "000"
-                #print("ID Stock : ",id_stock)
-                values = (id_stock,orders,merk,quantity,unit,arrivalDate)
+                values = (id_stock,orders,merk,quantity_unit,unit,arrivalDate)
                 values2 = (workstationCode,id_stock,login)
                 values3 = (id_stock,workstationCode)
                 cursor.execute(query_insert,values)
@@ -146,8 +147,7 @@ def AddMaterialStockbyOrders(orders):
                    
                     angka_akhir_str = str(angka_akhir)
                     id_stock = today_str  +  angka_awal + angka_akhir_str
-                    print("ID Stock : ",id_stock)
-                    values = (id_stock,orders,merk,quantity,unit,arrivalDate)
+                    values = (id_stock,orders,merk,quantity_unit,unit,arrivalDate)
                     values2 = (workstationCode,id_stock,login)
                     values3 = (id_stock,workstationCode)
                     cursor.execute(query_insert,values)
@@ -162,19 +162,26 @@ def AddMaterialStockbyOrders(orders):
                     angka_akhir_str = str(angka_akhir)
                     print("angka_akhir : ", angka_akhir)
                     id_stock = today_str + angka_awal + angka_akhir_str
-                    #print("ID Stock : ",id_stock)
-                    values = (id_stock,orders,merk,quantity,unit,arrivalDate)
+                    values = (id_stock,orders,merk,quantity_unit,unit,arrivalDate)
                     values2 = (workstationCode,id_stock,login)
                     values3 = (id_stock,workstationCode)
                     cursor.execute(query_insert,values)
                     cursor.execute(query_insert2,values2)
                     cursor.execute(query_insert3,values3)
-                    #conn.commit()
-            #angka_akhir = angka_akhir + 1
-            #Query utk get unit dari material stock yang baru saja diinput
-            query_unit_stock = "SELECT a.unit,b.multiplier FROM mat_d_materialstock a JOIN gen_r_materialunit b ON b.id = a.unit WHERE a.id = '"+id_stock+"'"
-            cursor.execute(query_unit_stock)
-            records_unit_stock = cursor.fetchall()
+                    conn.commit()
+            
+            #Query untuk mendapatkan multiplier , multiplier sebagai output quantity nya
+            query_get_unit_by_stock = "SELECT b.multiplier FROM mat_d_materialstock a JOIN gen_r_materialunit b ON b.id = a.unit WHERE a.id = '"+id_stock+"'"
+            cursor.execute(query_get_unit_by_stock)
+            records_unit_by_stock = cursor.fetchall()
+            for index in records_unit_by_stock:
+                quantity_unit = index[0]
+            
+
+            unit_stock = "U01"
+            query_update_unit_stock = "UPDATE mat_d_materialstock SET unit = %s, quantity = %s WHERE id = %s"
+            values_update_unit_stock = (unit_stock,quantity_unit,id_stock)
+            cursor.execute(query_update_unit_stock,values_update_unit_stock)
 
             for index in records_unit_stock:
                 quantity_unit = index[1]
@@ -184,31 +191,27 @@ def AddMaterialStockbyOrders(orders):
             cursor.execute(query_update_unit)
             print("ID Stock : ",id_stock)
             print("index : ", x)
-            print("quantity unit : ",quantity_unit)
-           
-
-
+            print("multiplier : ",multiplier)
+            print("Quantity : ",quantity_unit)
+    
+        
         #Query untuk select quantity material stock yang baru saja di insert!
-        query_getquantitystock = "SELECT a.quantity,b.multiplier FROM mat_d_materialstock a JOIN gen_r_materialunit b ON b.id = a.unit WHERE a.id = '"+id_stock+"'"
+        query_getquantitystock = "SELECT a.quantity FROM mat_d_materialstock a JOIN mat_d_purchaseitem b ON b.id_item = a.purchaseItem WHERE b.id_item = '"+orders+"'"
         cursor.execute(query_getquantitystock)
         records_qtystock = cursor.fetchall()
-        print("Records QTY stock",records_qtystock)
-        counter = 0
+    
+        counter_multiplier = 0
         for index in records_qtystock:
             jumlah_str = index[0]
             jumlah_int = int(jumlah_str)
-            counter = counter + jumlah_int
-          
+            counter_multiplier = counter_multiplier + jumlah_int
+            
 
-        print("Jumlah stock : ",counter)
-
-        #jumlah_stock = jumlah_int * mult_int
-       # print("jumlah_stock_int : ",jumlah_int)
-        #print("multiplier_stock : ",mult_int)
-       # print("jumlah_stock_akhir : ",jumlah_stock)
+        jumlah_stock = counter_multiplier
+        print("jumlah_stock_akhir : ",jumlah_stock)
 
         #Query untuk GET quantity purchase item dari stock yang telah di tambahkan
-        query_getpurchItem = "SELECT a.quantity FROM mat_d_purchaseitem a JOIN gen_r_materialunit b ON b.id = a.unit WHERE a.id_item = '"+orders+"'"
+        query_getpurchItem = "SELECT a.quantity FROM mat_d_purchaseitem a WHERE a.id_item = '"+orders+"'"
         cursor.execute(query_getpurchItem)
         records_qtyitem = cursor.fetchall()
 
@@ -216,31 +219,26 @@ def AddMaterialStockbyOrders(orders):
             jumlah_str2 = index[0]
             
         
-
         jumlah_int2 =   int(jumlah_str2)
-        print("jumlah int 2 : ", jumlah_int2)
-        jumlah_purchase = jumlah_int2
+        jumlah_purchase = jumlah_int2 
 
-        print("jumlah_purchase_item : ",jumlah_int2)
-        #print("jumlah_multiplier_purchase :",mult_int2)
-        #print("jumlah_purchase_akhir : ",jumlah_purchase)
+       
+        print("jumlah_purchase_akhir : ",jumlah_purchase)
         
         #pengurangan jumlah purchase dari jumlah stock yang sudah dimiliki.
-        jumlah_now = jumlah_purchase - counter
+        jumlah_now = jumlah_purchase - jumlah_stock
         if jumlah_now < 0:
             jumlah_now = 0
 
-       
            
         
         #Query untuk mengupdate jumlah dan unit yang baru berdasarkan jumlah nya.
-        query_update_jumlah = "UPDATE mat_d_purchaseitem SET quantity = %s, unit = %s WHERE id_item = %s"
-        values4 = (jumlah_now,"U01",orders)
+        query_update_jumlah = "UPDATE mat_d_purchaseitem SET quantity = %s WHERE id_item = %s"
+        values4 = (jumlah_now,orders)
         cursor.execute(query_update_jumlah,values4)
         print("Jumlah Sekarang : ",jumlah_now)
-      
-       
-        #conn.commit()
+        
+        conn.commit()
         cursor.close()
         conn.close()
         hasil = {"status" : "berhasil"}
