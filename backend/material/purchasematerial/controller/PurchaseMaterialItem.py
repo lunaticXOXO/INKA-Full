@@ -75,12 +75,12 @@ def PurchaseMaterialItemByIDPurchase(idPurchase):
         temp = index[0]
     print("temp : ",temp)
     if temp == '':
-        print("test")
+        print("test2")
         id_item_new = idPurchase + "000"
     else:
         angka_akhir_str = ""
         for index in records_matitem:
-            if angka_akhir >= 9:
+            if angka_akhir >= 10:
                 angka_awal = '0'
                 angka_akhir = angka_akhir + 1
                 angka_akhir_str = str(angka_akhir)
@@ -101,6 +101,7 @@ def PurchaseMaterialItemByIDPurchase(idPurchase):
         schedulledArrival = data["schedulledArrival"]
         values = (id_item_new,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,idPurchase)
         cursor.execute(query_insert,values)
+        print("ID Item : ",id_item_new)
         conn.commit()
         #Query untuk menampilkan hasil multiplier dan quantity
         query_get_multiplie = "SELECT a.quantity,b.multiplier FROM mat_d_purchaseitem a JOIN gen_r_materialunit b ON b.id = a.unit WHERE a.id_item = '"+id_item_new+"'"
@@ -112,9 +113,10 @@ def PurchaseMaterialItemByIDPurchase(idPurchase):
             qty_str = index[0]
             mul_str = index[1]
         
-        
+        print("qty_str : ",qty_str)
         qty_int = int(qty_str)
         mul_int = int(mul_str)
+        
         
         #total kan qty int dengan multiplier
         total = qty_int * mul_int

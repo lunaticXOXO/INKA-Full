@@ -90,8 +90,11 @@
             <v-menu class="ml-4 mt-6">
             <template v-slot:activator="{ on, attrs }">
               <v-text-field class="mx-10" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal" prepend-icon="mdi-calendar"></v-text-field>
+              <v-text-field :value="datetime" v-bind="attrs" v-on="on" label="Due Time" prepend-icon="mdi-clock"></v-text-field>
             </template>
-            <v-date-picker width="300" v-model="dueDate"></v-date-picker>
+            <v-date-picker width="250" v-model="dueDate"></v-date-picker>
+            <v-time-picker width="250" v-model="datetime"></v-time-picker>
+            
           </v-menu>
         </div>
         <br>
@@ -127,6 +130,9 @@
       units: undefined,
       quantity: '',
       tanggalPurchase : null,
+      dueDate : '',
+      datetime : '',
+      fullDate : '',
       snackbar : {
         show : false,
         color : null,
@@ -134,16 +140,16 @@
       },
       requirmentMaterial : [],
       column3 : [
-        {text : 'Material Code',    value : 'codeMaterial'},
-        {text : 'Nama Material',    value : 'namaMaterial'},
+        {text : 'Material Code',    value : 'code'},
+        {text : 'Nama Material',    value : 'nama'},
         {text : 'Jumlah',           value : 'jumlah'}
       ],
     }),
 
     mounted(){
       this.fetchSupplierName(),
-      this.fetchUnit(),
-      this.showRequirementPurchaseMaterial()
+      this.fetchUnit()
+      //this.showRequirementPurchaseMaterial()
     },
   
     methods: {
@@ -259,20 +265,43 @@
           try{
             console.log(this.dueDate + " " + this.datetime)
             const axios = require('axios');
-            const res = await axios.get('/material/get_requirement_purchase_material/' + this.dueDate);
-            if (res.data == null){
-              alert('Data Kosong')
-            }else{
-              this.requirmentMaterial = res.data
-              console.log(res,this.requirmentMaterial)
+            this.fullDate = this.dueDate + " " + this.datetime
+            console.log("Full Date : ",this.fullDate)
+            const res = await axios.post('/material/add_batas_material_requirement',{fullDate : this.fullDate})
+            if (res.data.status == "berhasil"){
+                this.snackbar = {
+                show : true,
+                message : "Pencarian Kebutuhan Material Berhasil",
+                color : "green"
+                
+              }
+                const res2 = await axios.get('/material/show_material_requirement')
+                if(res2.data == null){
+                  console.log("material kosong")
+                }
+                else{
+                    this.requirmentMaterial = res2.data
+                    console.log(res2,this.requirmentMaterial)
+                }
+            
+            }else if(res.data.status == "gagal"){
+                this.snackbar = {
+                show : true,
+                message : "Pencarian Kebutuhan Material Gagal",
+                color : "red"
+              }
             }
           }
           catch(error){
             alert("Error")
             console.log(error)
           }
-        }
+        },
+
+        
 
     },
   }
+
+
 </script>

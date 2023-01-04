@@ -585,6 +585,16 @@ def get_purchase_item_in_matstock(orders):
     hasil = GetPurchaseItemInMatStock(orders)
     return hasil
 
+@app.route('/material/add_batas_material_requirement',methods = ['POST'])
+def add_batas_material_requirement():
+    hasil = InsertBatasMaterialRequirement()
+    return hasil
+
+@app.route('/material/show_material_requirement',methods = ['GET'])
+def show_material_requirement():
+    hasil = ShowBatasMaterialRequirement()
+    return hasil
+
 
 @app.route('/material/message_material_login/<id>',methods = ['GET'])
 def message_material_login(id):

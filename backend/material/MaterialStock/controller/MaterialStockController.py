@@ -59,11 +59,9 @@ def GetMaterialStockbyOrder(order):
     cursor.close()
     conn.close()
     return make_response(jsonify(json_data),200)
-
 def AddMaterialStockbyOrders(orders):
     conn = database.connector()
     cursor = conn.cursor()
-
     #Query untuk select id_item berdasarkan paramter input
     query = "SELECT id_item FROM mat_d_purchaseitem WHERE id_item = '"+orders+"'"
     cursor.execute(query)
@@ -72,10 +70,19 @@ def AddMaterialStockbyOrders(orders):
     
     quantity = ""
     unit = ""
-    quantity_unit = ""
-    angka_multiplier_str = ""
 
-    
+    for index in records:
+        orders = index[0]
+    print("ID Item : ",orders)
+
+    query_select_mattype = "SELECT a.quantity,a.unit FROM mat_d_purchaseitem a WHERE a.id_item = '"+orders+"'"
+    cursor.execute(query_select_mattype)
+    records2 = cursor.fetchall()
+
+    for index in records2:
+       
+        quantity = index[0]
+        unit = index[1]
     
     angka_awal = "00"
     angka_akhir = 0
@@ -108,11 +115,18 @@ def AddMaterialStockbyOrders(orders):
         login = datetime.datetime.now()
         print("angka unit : ",unit)
 
-        qty_int = int(quantity)
-        #print("Angka STR : ",angka_multiplier_str)
-        #multiplier = int(angka_multiplier_str)
-        
-        #print("multiplier : ",multiplier)
+        #Query untuk mendapatkan multiplier dari unit yang dipilih
+        query_getunit = "SELECT a.multiplier,a.id FROM gen_r_materialunit a WHERE a.id = '"+unit+"'"
+        cursor.execute(query_getunit)
+        records_unit = cursor.fetchall()
+        angka_multiplier_str = ""
+        for index in records_unit:
+            angka_multiplier_str = index[0]
+            unit = index[1]
+
+        print("Angka STR : ",angka_multiplier_str)
+        multiplier = int(angka_multiplier_str)
+        print("multiplier : ",multiplier)
         #Untuk mengecek apakah records kosong atau tidak
        
         x = 0
@@ -121,8 +135,6 @@ def AddMaterialStockbyOrders(orders):
             query_get_matstock = "SELECT COUNT(*) FROM mat_d_materialstock WHERE id LIKE '"+today_str+"%'"
             cursor.execute(query_get_matstock)
             records_stock = cursor.fetchall()
-            
-
             for index2 in records_stock:
                 temp = index2[0]
                 jumlah = int(temp)
@@ -137,14 +149,13 @@ def AddMaterialStockbyOrders(orders):
                 cursor.execute(query_insert,values)
                 cursor.execute(query_insert2,values2)
                 cursor.execute(query_insert3,values3)
-                #conn.commit()
+                conn.commit()
             else:
                 print("jumlah data : ", jumlah)
                 if jumlah >= 10:
                     angka_awal = '0'
                     #angka_akhir = angka_akhir + 1
                     angka_akhir = jumlah
-                   
                     angka_akhir_str = str(angka_akhir)
                     id_stock = today_str  +  angka_awal + angka_akhir_str
                     values = (id_stock,orders,merk,quantity_unit,unit,arrivalDate)
@@ -153,14 +164,12 @@ def AddMaterialStockbyOrders(orders):
                     cursor.execute(query_insert,values)
                     cursor.execute(query_insert2,values2)
                     cursor.execute(query_insert3,values3)
-                    #conn.commit()
+                    conn.commit()
                 else:
                     #angka_akhir = angka_akhir + 1
                     print("jumlah data : ",jumlah)
                     angka_akhir =  jumlah 
-                   
                     angka_akhir_str = str(angka_akhir)
-                    print("angka_akhir : ", angka_akhir)
                     id_stock = today_str + angka_awal + angka_akhir_str
                     values = (id_stock,orders,merk,quantity_unit,unit,arrivalDate)
                     values2 = (workstationCode,id_stock,login)
@@ -183,12 +192,6 @@ def AddMaterialStockbyOrders(orders):
             values_update_unit_stock = (unit_stock,quantity_unit,id_stock)
             cursor.execute(query_update_unit_stock,values_update_unit_stock)
 
-            for index in records_unit_stock:
-                quantity_unit = index[1]
-
-            #Query utk update unit satuan nya selalu menjadi U01 dan QTY berdasarkan multiplier
-            query_update_unit = "UPDATE mat_d_materialstock SET unit = 'U01',SET quantity = '"+quantity_unit+"' WHERE purchaseItem = '"+orders+"'"
-            cursor.execute(query_update_unit)
             print("ID Stock : ",id_stock)
             print("index : ", x)
             print("multiplier : ",multiplier)
@@ -231,11 +234,11 @@ def AddMaterialStockbyOrders(orders):
             jumlah_now = 0
 
            
-        
         #Query untuk mengupdate jumlah dan unit yang baru berdasarkan jumlah nya.
         query_update_jumlah = "UPDATE mat_d_purchaseitem SET quantity = %s WHERE id_item = %s"
         values4 = (jumlah_now,orders)
         cursor.execute(query_update_jumlah,values4)
+
         print("Jumlah Sekarang : ",jumlah_now)
         
         conn.commit()
@@ -286,16 +289,39 @@ def GetMaterialBerhasilLogin(id):
     return make_response(jsonify(json_data),200)
 
 
-def GetPurchaseItemCompareWithMatStock(id_item):
+def InsertBatasMaterialRequirement():
     conn = database.connector()
     cursor = conn.cursor()
+    query_insert_time = "INSERT INTO cpl_haruspesan00 (batas,waktu) VALUES (%s,%s)"
+    try:
+        data = request.json
+        batas = data["fullDate"]
+        waktu = None
+        values = (batas,waktu)
+        cursor.execute(query_insert_time,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"} 
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
 
-    #Query untuk melihat stock yang ada dengan jumlah .
-    query = "SELECT a.id_item AS 'Iditem',b.id AS 'IdStock',b.quantity FROM mat_d_purchaseitem a JOIN mat_d_materialstock b ON b.purchaseItem = a.id_item WHERE a.id_item = '"+id_item+"'"
+
+def ShowBatasMaterialRequirement():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM cpl_haruspesan01 ORDER BY jumlah DESC"
     cursor.execute(query)
-    records_stock = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
 
-
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
 
 
 
