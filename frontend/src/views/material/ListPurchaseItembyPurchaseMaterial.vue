@@ -43,30 +43,7 @@
         </v-data-table>
     </v-card>
 
-    <v-card 
-        class="mx-auto text-center mt-10"
-        max-width = "1000">
-        <div class="d-flex">
-            <v-menu class="ml-4 mt-6">
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field class="mx-10 mt-8" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal" prepend-icon="mdi-calendar"></v-text-field>
-            </template>
-            <v-date-picker width="200" v-model="dueDate"></v-date-picker>
-          </v-menu>
-        </div>
-        <br>
-        <v-btn
-          color="primary"
-          class="d-flex mx-auto"
-          @click="showRequirementPurchaseMaterial()">
-          Search
-        </v-btn>
-        <br><br>
-        <v-data-table
-          :headers = "column3"
-          :items = "requirmentMaterial">
-      </v-data-table>
-    </v-card>
+    
   </v-app>
 </template>
  

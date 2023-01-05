@@ -101,7 +101,8 @@
         <v-btn
           color="primary"
           class="d-flex mx-auto"
-          @click="showRequirementPurchaseMaterial()">
+          @click="showRequirementPurchaseMaterial()"
+          >
           Search
         </v-btn>
         <br><br>
@@ -139,6 +140,7 @@
         message : null,
       },
       requirmentMaterial : [],
+      
       column3 : [
         {text : 'Material Code',    value : 'code'},
         {text : 'Nama Material',    value : 'nama'},
@@ -148,7 +150,8 @@
 
     mounted(){
       this.fetchSupplierName(),
-      this.fetchUnit()
+      this.fetchUnit(),
+      this.showMaterialBatas()
       //this.showRequirementPurchaseMaterial()
     },
   
@@ -262,6 +265,7 @@
       },
 
       async showRequirementPurchaseMaterial(){
+        
           try{
             console.log(this.dueDate + " " + this.datetime)
             const axios = require('axios');
@@ -273,7 +277,6 @@
                 show : true,
                 message : "Pencarian Kebutuhan Material Berhasil",
                 color : "green"
-                
               }
                 const res2 = await axios.get('/material/show_material_requirement')
                 if(res2.data == null){
@@ -290,7 +293,9 @@
                 message : "Pencarian Kebutuhan Material Gagal",
                 color : "red"
               }
+               console.log("gagal")
             }
+            
           }
           catch(error){
             alert("Error")
@@ -298,7 +303,21 @@
           }
         },
 
-        
+        async showMaterialBatas(){
+            try{
+              const axios = require('axios');
+              const res3 = await axios.get('/material/show_material_requirement')
+              if(res3.data == null){
+                  console.log("material kosong")
+                }
+                else{
+                    this.requirmentMaterial = res3.data
+                    console.log(res3,this.requirmentMaterial)
+                }
+            }catch(error){
+              console.log("error")
+            }
+        }
 
     },
   }

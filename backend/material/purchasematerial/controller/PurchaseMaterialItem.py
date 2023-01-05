@@ -139,7 +139,7 @@ def GetMaterialItemByPurchaseMaterial(idPurchase):
     cursor = conn.cursor()
     query = "SELECT a.id_item,a.supplierCode,a.materialTypeCode,a.quantity,c.nama AS 'namaUnit',a.schedulledArrival,a.purchaseId FROM mat_d_purchaseitem a "
     query += "JOIN mat_d_purchasematerial b ON b.id = a.purchaseId JOIN gen_r_materialunit c ON c.id = a.unit "
-    query += "WHERE a.purchaseId = '"+idPurchase+"' ORDER BY a.id_item DESC"
+    query += "WHERE a.purchaseId = '"+idPurchase+"' AND a.quantity != 0 ORDER BY a.id_item DESC"
 
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
