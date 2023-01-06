@@ -1,10 +1,10 @@
 <template>
-  <v-app>
+<v-app>
     <v-card
       class="mx-auto text-center mt-6"
-      max-width="1000">
+      max-width="1500">
       <br>
-      <h1>Tambah Jenis Produk Eksternal</h1>
+      <h1>Tambah Jenis Produk Internal</h1>
       <v-form
         class="pa-6"
         ref="form"
@@ -61,10 +61,11 @@
       </v-snackbar>
     </v-card>
 
+
     <v-card
       class="mx-auto text-center mt-10"
         max-width = "1000">
-      <h2>Kode Jenis Produk EKstermal Yang Sudah Tersedia</h2>
+      <h2>Kode Jenis Produk Internal Yang Sudah Tersedia</h2>
       <v-data-table 
           :headers="column2"
           :items="jenisProduk"
@@ -73,7 +74,9 @@
         </v-data-table>
     </v-card>
 
-    </v-app>
+
+
+</v-app>
 </template>
 
 <script>
@@ -101,14 +104,10 @@
                
      
             ],
-    
-
     }),
 
     mounted(){
-
-      this.fetchJenisProdukEksternal()
-
+        this.fetchJenisProdukInteral()
     },
 
     methods: {
@@ -129,7 +128,7 @@
 
       async InsertJenisProduk(){
         try{
-          const response = await axios.post('/jproduct/post_jproduct',
+          const response = await axios.post('/jproduct/post_jproduct_internal',
             { id: this.id,
               nama: this.nama
             }
@@ -161,9 +160,9 @@
         }
       },
 
-      async fetchJenisProdukEksternal(){
+      async fetchJenisProdukInteral(){
             try{
-                const response = await axios.get('/jproduct/show_jproduct_eksternal')
+                const response = await axios.get('/jproduct/show_jproduct_internal')
                 if(response.data == null){
                     console.log("data kosong")
                 }else{
@@ -175,7 +174,6 @@
                 console.log("error")
             }
       },
-
     },
   }
 </script>

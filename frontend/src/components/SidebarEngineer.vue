@@ -82,7 +82,8 @@ export default {
                 items: [
                     { title: 'Lihat Jenis Produk',icon : 'mdi-eye',route : '/listJenisProduk'},
                     { title: 'Lihat Struktur Tipe Produk',icon : 'mdi-eye',route : '/listStrukturJenisProduk'},
-                    { title: 'Tambah Jenis Produk',icon : 'mdi-plus',route : '/tambahJenisProduk'},
+                    { title: 'Tambah Jenis Produk Eksternal',icon : 'mdi-plus',route : '/tambahJenisProduk'},
+                    {title : 'Tambah Jenis Produk Internal',icon : 'mdi-plus',route : 'tambahJenisProdukInternal'}
                 ],
                 title: 'Produk',
                 },

@@ -150,6 +150,45 @@ def AddStrukturJenisProduk():
     return hasil
 
 
+def AddStrukturJenisProdukByParent(id_strproduk_parent):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    #Query untuk menselect jenis produk dari str jenis produk yang dipilih
+    query_select = "SELECT b.id FROM prd_r_strukturjnsprd a JOIN prd_r_jenisproduk b ON b.id = a.jnsProduk WHERE a.idNodal = '"+id_strproduk_parent+"'"
+    cursor.execute(query_select)
+    records_jproduk = cursor.fetchall()
+    id_jproduk = ""
+    for index in records_jproduk:
+        id_jproduk = index[0]
+
+   
+
+    #Query menginsert kan str jenis produk berdasarkan parent 
+    query_insert = "INSERT INTO prd_r_strukturjnsprd (idNodal, indukNodal, jnsProduk,materialTypeCode,nama,jumlah, satuan) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+    try:
+        data = request.json
+        idNodal = id_jproduk + data["idNodal"]
+        materialTypeCode = data["materialTypeCode"]
+        nama = data["nama"]
+        jumlah = data["jumlah"]
+        satuan = data["satuan"]
+        values = (idNodal,id_strproduk_parent,id_jproduk,materialTypeCode,nama,jumlah,satuan)
+        cursor.execute(query_insert,values)
+
+        print("ID JProduk : ",id_jproduk)
+        print("ID Node : ",idNodal)
+        print("ID Parent : ", id_strproduk_parent)
+
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    
+    return hasil
+
 def UpdateStrukturJenisProduk(idNodal):
     conn = database.connector()
     cursor = conn.cursor()
@@ -175,18 +214,21 @@ def UpdateStrukturJenisProduk(idNodal):
     return hasil
 
 
-
-
-def ShowSJProdJoinProses():
+def GetNodeParentStrJenisProduk(idNodal):
     conn = database.connector()
     cursor = conn.cursor()
-    
-    query = "SELECT a.idNodal,a.nama,a.jumlah,a.satuan,"
-    query = query + "b.id,b.nama,b.durasi,b.satuanDurasi,b.jenisProses "
-    query = query + "FROM prd_r_strukturjnsprd a "
-    query = query + "JOIN prd_r_proses b ON b.nodalOutput = a.idNodal"
-
+    query = "SELECT idNodal, nama FROM prd_r_strukturjnsprd WHERE idNodal = '"+idNodal+"'"
     cursor.execute(query)
+
+    row_headers = [x[0] for x in cursor.description]
     records = cursor.fetchall()
 
-    return records
+    json_data = []
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+
+    return make_response(jsonify(json_data),200)
+

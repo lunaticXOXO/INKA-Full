@@ -16,11 +16,13 @@
             <br>
             <h2>List Struktur Jenis Produk by Jenis Produk</h2><h2>{{this.$route.params.id}}</h2>
             <br>
+            <!--
             <router-link :to="{name : 'Tambah Struktur Jenis Produk by Jenis Produk',params : {id : `${this.$route.params.id}`}}">
                 <v-btn color="primary" class="d-flex ml-4 mb-6">
                     Add Sturktur Jenis Produk by Jenis Produk
                 </v-btn>
             </router-link>
+            -->
             <v-card
             class="mx-auto text-center"
             max-width="1000">
@@ -77,10 +79,17 @@
 
                             <v-btn class="mx-1" x-small color="green" @click="editSJProduct(item)">
                                 <v-icon small dark>mdi-pencil</v-icon>
-                            </v-btn>
+                            </v-btn> 
                             <v-btn class="mx-1" x-small color="red" @click="deleteSJProduct(item)">
                                 <v-icon small dark>mdi-trash-can-outline</v-icon>
                             </v-btn>
+
+                        <router-link :to="{name : 'Tambah Struktur Jenis Produk By Parent',params : {id : `${item.idNodal}`}}" >
+                            <v-btn class="mx-1" x-small color="yellow" @click="selectSJProduct(item)" >
+                                <v-icon small dark>mdi-plus</v-icon>
+                            </v-btn>
+                        </router-link>
+
                         </div>
                     </template>
                 </v-data-table>

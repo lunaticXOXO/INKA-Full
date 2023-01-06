@@ -252,7 +252,13 @@ def get_rproyek_inproduct(id_rproyek):
 #JENIS PRODUCT
 @app.route('/jproduct/post_jproduct',methods =['POST'])
 def post_jproduct():
-    hasil = AddJenisProduct()
+    hasil = AddJenisProductEksternal()
+    return hasil
+
+
+@app.route('/jproduct/post_jproduct_internal',methods = ['POST'])
+def post_jproduct_internal():
+    hasil = AddJenisProductInternal()
     return hasil
 
 @app.route('/jproduct/get_jproduct',methods = ['GET'])
@@ -278,6 +284,16 @@ def get_rincian_injproduct(id_rincian):
 @app.route('/jproduct/update_jproduct/<id>',methods = ['POST'])
 def update_jproduct(id):
     hasil = UpdateJenisProduk(id)
+    return hasil
+
+@app.route('/jproduct/show_jproduct_internal',methods = ['GET'])
+def show_jproduct_internal():
+    hasil = ShowJProdukInternal()
+    return hasil
+
+@app.route('/jproduct/show_jproduct_eksternal',methods = ['GET'])
+def show_jproduct_eksternal():
+    hasil = ShowJProdukEksternal()
     return hasil
 
 #STUKTUR JENIS PRODUCT
@@ -311,9 +327,21 @@ def insert_sjproduct_by_jproduct(id_jproduk):
     hasil = AddSJProdukByJenisProduk(id_jproduk)
     return hasil
 
+
+@app.route('/sjproduct/insert_sjproduct_by_parent/<id_strproduk_parent>',methods = ['POST'])
+def insert_sjproduct_by_parent(id_strproduk_parent):
+    hasil = AddStrukturJenisProdukByParent(id_strproduk_parent)
+    return hasil
+
 @app.route('/sjproduct/update_sjproduct/<idNodal>',methods = ['POST'])
 def update_sjproduct(idNodal):
     hasil = UpdateStrukturJenisProduk(idNodal)
+    return hasil
+
+
+@app.route('/sjproduct/get_parent_sjproduct/<idNodal>',methods = ['GET'])
+def get_parent_sjproduct(idNodal):
+    hasil =  GetNodeParentStrJenisProduk(idNodal)
     return hasil
 
 #PROSES
@@ -389,7 +417,7 @@ def stop_liniproduksi(id):
 @app.route('/stasiun_kerja/show_stasiun_kerja',methods = ['GET'])
 def show_stasiun_kerja():
     hasil = GetAllWorkstation()
-    return hasil
+    return hasi
 
 @app.route('/stasiun_kerja/show_stasiun_kerja_by_process/<id_process>',methods = ['GET'])
 def show_stasiun_kerja_by_process(id_process):

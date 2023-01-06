@@ -6,11 +6,17 @@
         <h1>List Jenis Produk</h1>
         <br>
         <v-card
+
         class="mx-auto text-center"
         max-width="1000">
+
+        
+
             <v-data-table
                 :headers = "column"
-                :items = "jenisproduk">
+                :items = "jenisproduk"
+                :items-per-page="2"
+                >
             <template v-slot:[`item.id`]="{ item }">
                 <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
                 <span v-else>{{item.id}}</span>
@@ -46,6 +52,23 @@
             </div>
             </template>
             </v-data-table>
+        
+        <!--
+        <div class="d-flex">
+            <router-link to="/tambahJenisProduk">
+                <v-btn color="primary" class="d-flex ml-4 mb-6">
+                    Add Jenis Produk Eksternal
+                </v-btn>
+            </router-link>
+
+            <router-link to="/tambahJenisProdukInternal">
+                <v-btn color="primary" class="d-flex ml-4 mb-6">
+                    Add Jenis Produk Internal
+                </v-btn>
+            </router-link>
+        </div>
+        -->
+
         </v-card>
     </v-card>
 </template>

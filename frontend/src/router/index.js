@@ -86,7 +86,8 @@ import ListMaterialStockOnWs from '../views/material/ListMaterialStockOnWs.vue'
 import StatusBarcode from '../views/material/StatusBarcode.vue'
 import MaterialLogin from '../views/material/MaterialLogin.vue'
 import ListOperasibyProduct from '../views/operasi/listOperasiByProduk.vue'
-
+import TambahJenisProdukInternal from '../views/produk/TambahJenisProdukInternal.vue'
+import TambahStrukturJenisProdukByParent from '../views/produk/TambahStrukturJenisProdukByParent.vue'
 
 Vue.use(VueRouter)
 
@@ -879,7 +880,28 @@ const routes = [
         title : "List Operasi By Produk - PT. INKA"
      }
 
-  }
+  },
+  {
+    path : '/tambahJenisProdukInternal',
+    name : 'Tambah Jenis Produk Internal',
+    component : TambahJenisProdukInternal,
+    meta : {
+        title : "Tambah Jenis Produk Internal - PT.INKA"
+    }
+  },
+
+  {
+  
+     path : '/tambahStrukturJenisProdukByParent/:id',
+     name : 'Tambah Struktur Jenis Produk By Parent',
+     component : TambahStrukturJenisProdukByParent,
+     meta : {
+
+      title : "Tambah Node Sturktur Jenis Produk - PT.INKA"
+
+     }
+  
+  },
 
   
 ]
