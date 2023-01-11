@@ -57,7 +57,7 @@
                     <v-container class="white">
                         <v-row>
                             <v-col
-                            v-for=" index in listOperatorPhoto"
+                            v-for="index in listOperatorPhoto"
                             :key="index"
                             cols="4"
                             sm="auto"
@@ -159,6 +159,7 @@
                         </v-card>
                     </v-dialog>
                     <br><br>
+                    <!--
                     <v-btn
                         v-model = "btn2"
                         class = "mx-auto white--text"
@@ -168,6 +169,7 @@
                         @click="refresh2()">
                         Refresh
                     </v-btn>
+                    -->
                 </div>
             </div>
         </div>
@@ -184,7 +186,6 @@ export default {
         return {
             visible : true,
             itemKey: undefined,
-            singleSelect: false,
             selected: [],
             loginService: new Login(),
             inputKode: undefined,
@@ -213,14 +214,13 @@ export default {
             index : 0,
             btn1 : {
                 text : '',
-                color: '#FFFFFF',
-                
+                color: '#FFFFFF'
             },
             btn2 : undefined,
             snackbar : {
                 show : false,
                 color : null,
-                message : null,
+                message : null
             },
             timer: '',
             timer2 : '',
@@ -242,9 +242,6 @@ export default {
         window.setInterval(() => {
             this.fetchOperasiSiap()
         }, 1000)
-
-        
-       
     },
 
     methods: {
@@ -260,6 +257,10 @@ export default {
             location.reload()
         },
 
+        refresh3() {
+            location.replace("/")  
+        },
+
         logout() {
             this.route = "/login"
             location.replace("/login")
@@ -269,10 +270,8 @@ export default {
         async parseBarcode(){
             console.log(this.inputKode)
             console.log(this.namaOperator)
-
             try{
                 const axios = require('axios');
-
                 const response = await axios.post('/rfid/insert_material',
                     { 
                         stasiunKerja : this.namaOperator,
@@ -280,7 +279,6 @@ export default {
                     }
                 );
                 console.log(response)
-
                 const res = axios.get('/operator/get_link_operator/<code>' + this.inputKode)
                 if(res.data == null){
                     console.log("Bukan Operator")
@@ -399,7 +397,6 @@ export default {
                     this.items = res.data
                     console.log(res,this.items)
                 }
-
             }catch(error){
                 console.log(error)
             }  
@@ -408,7 +405,6 @@ export default {
         async fetchOperasiSiap(){
             try{
                 const axios = require('axios')
-                console.log(this.loginService.getCurrentUsername())
                 this.namaOperator = this.loginService.getCurrentUsername()
                 const res = await axios.get('/operasi/get_operasi_siap/' + this.loginService.getCurrentUsername())
                 if(res.data.length == 0){
@@ -419,7 +415,6 @@ export default {
                     this.items3 = res.data
                     console.log(res,this.items3)
                 }
-
                 for(this.index in this.items3){
                     if( this.items3[this.index].mulai == null && this.items3[this.index].selesai == null){
                         this.btn1 = {
@@ -447,7 +442,7 @@ export default {
                 }
             }
             catch(error){
-                console.log(error) 
+                console.log(error)
             }
         },
 
@@ -455,9 +450,9 @@ export default {
             try{
                 const axios = require('axios')
                 const res = await axios.get('/operator/get_material_byoperator/' + this.loginService.getCurrentUsername())
-                if(res.data == null){
+                if(res.data.length == 0){
                     console.log("Data kosong")
-                }else{
+                }else if(res.data.length > 0){
                     this.items2 = res.data
                     console.log(res,this.items2)
                 }
@@ -470,7 +465,6 @@ export default {
             this.loading = true
             setTimeout(() => {
                 try{
-                    //this.singleSelect = true
                     const axios = require('axios')
                     const res = axios.post('/operasi/response_operasi_mulai/' + this.loginService.getCurrentUsername())
                     if(res.data.status == 'berhasil'){
@@ -498,29 +492,25 @@ export default {
                     console.log(error)
                 }
                 this.refresh()
-            }, 5000)
+            }, 3000)
         },
         
-
         async getLinkOperator(){
             try{
-
                 const axios = require('axios')
                 const res = await axios.get('/operator/get_link_operator/' + this.loginService.getCurrentUsername())
                 if (res.data == null){
-                    console.log("data kosong")
+                    console.log("Data kosong")
                 }else{
                     this.listOperatorPhoto = res.data
-                    console.log("data terisi")
+                    console.log("Data terisi")
                     console.log(res,this.listOperatorPhoto)
                 }
-
             }catch(error){
                 console.log(error)
             }
         }
     },
-   
 }
 </script>
 

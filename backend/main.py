@@ -515,9 +515,9 @@ def add_material_supplier(code):
     hasil = AddMaterialTypeSupplierbySupplier(code)
     return hasil
 
-@app.route('/supplier_material/show_supplier_name',methods = ['GET'])
-def show_supplier_name():
-    hasil = ShowSupplierName()
+@app.route('/supplier_material/show_material_type_name',methods = ['GET'])
+def show_material_type_name():
+    hasil = ShowMaterialTypeName()
     return hasil
 
 @app.route('/supplier_material/show_materialtype_supplier/<code>',methods = ['GET'])

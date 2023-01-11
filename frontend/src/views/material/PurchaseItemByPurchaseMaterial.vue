@@ -11,34 +11,24 @@
           @submit.prevent="submitHandler"
           v-model="valid"
           lazy-validation>
-        
-          <!--
-          <v-text-field
-          v-model="id_item"
-          :counter="3"
-          :rules="idRules"
-          label="ID Item"
-          required
-          ></v-text-field>
-          -->
 
           <v-autocomplete
           item-text="nama"
           item-value="code"
-          v-model="supply"
-          :items="supplier"
-          label="Supplier"
-          @change="updateMaterialType()"
-          ></v-autocomplete>
-
-          <v-autocomplete
-          item-text="namaMaterialType"
-          item-value="materialTypeCode"
           v-model="type"
           :items="materialType"
           label="Material Type"
+          @change="updateSupplier()"
           ></v-autocomplete>
-      
+
+          <v-autocomplete
+          item-text="namaSupplier"
+          item-value="code"
+          v-model="supply"
+          :items="supplier"
+          label="Supplier"
+          ></v-autocomplete>
+
           <v-text-field
           v-model="quantity"
           label="Quantity"
@@ -83,22 +73,26 @@
     </v-card>
       
     <v-card 
-        class="mx-auto text-center mt-10"
+        class="mx-auto text-center mt-10 pa-6 mb-10"
         max-width = "1450">
         <br>
         <div class="d-flex">
             <v-menu class="ml-4 mt-6">
             <template v-slot:activator="{ on, attrs }">
               <v-text-field class="mx-10" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal" prepend-icon="mdi-calendar"></v-text-field>
-              <v-text-field :value="datetime" v-bind="attrs" v-on="on" label="Due Time" prepend-icon="mdi-clock"></v-text-field>
             </template>
             <v-date-picker width="250" v-model="dueDate"></v-date-picker>
-            <v-time-picker width="250" v-model="datetime"></v-time-picker>
-            
+          </v-menu>
+          <v-menu class="ml-4 mt-6">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field class="mx-10" :value="datetime" v-bind="attrs" v-on="on" label="Due Time" prepend-icon="mdi-clock"></v-text-field>
+            </template>
+            <v-time-picker v-model="datetime"></v-time-picker>
           </v-menu>
         </div>
         <br>
         <v-btn
+          :loading="loading"
           color="primary"
           class="d-flex mx-auto"
           @click="showRequirementPurchaseMaterial()"
@@ -126,7 +120,7 @@
       supply: '',
       supplier: undefined,
       type: '',
-      materialType: undefined,
+      materialType: [],
       unit: '',
       units: undefined,
       quantity: '',
@@ -134,13 +128,13 @@
       dueDate : '',
       datetime : '',
       fullDate : '',
+      loading : false,
       snackbar : {
         show : false,
         color : null,
         message : null,
       },
       requirmentMaterial : [],
-      
       column3 : [
         {text : 'Material Code',    value : 'code'},
         {text : 'Nama Material',    value : 'nama'},
@@ -149,7 +143,7 @@
     }),
 
     mounted(){
-      this.fetchSupplierName(),
+      this.fetchMaterialTypeName(),
       this.fetchUnit(),
       this.showMaterialBatas()
       //this.showRequirementPurchaseMaterial()
@@ -175,15 +169,15 @@
         console.log(this.tanggalPurchase)
       },  
 
-      async updateMaterialType() {
+      async updateSupplier() {
         try{
           const axios = require('axios')
-          const res = await axios.get('/supplier_material/show_materialtype_supplier/' + this.supply)
+          const res = await axios.get('/supplier_material/show_materialtype_supplier/' + this.type)
           if (res.data == null){
-            alert("Material Type Kosong")
+            alert("Supplier Kosong")
           }else{
-            this.materialType = res.data
-            console.log(res,this.materialType)
+            this.supplier = res.data
+            console.log(res,this.supplier)
           }
         }catch(error){
           alert(error)
@@ -191,15 +185,15 @@
         }
       },
 
-      async fetchSupplierName(){
+      async fetchMaterialTypeName(){
         try{
             const axios = require('axios')
-            const res = await axios.get('/supplier_material/show_supplier_name')
+            const res = await axios.get('/supplier_material/show_material_type_name')
             if (res.data == null){
-                alert("Supplier Kosong")
+                alert("Material Type Kosong")
             }else{
-                this.supplier = res.data
-                console.log(res,this.supplier)
+                this.materialType = res.data
+                console.log(res,this.materialType)
             }
         }catch(error){
             alert(error)
@@ -265,43 +259,46 @@
       },
 
       async showRequirementPurchaseMaterial(){
-        
+        this.loading = true
           try{
             console.log(this.dueDate + " " + this.datetime)
             const axios = require('axios');
             this.fullDate = this.dueDate + " " + this.datetime
             console.log("Full Date : ",this.fullDate)
             const res = await axios.post('/material/add_batas_material_requirement',{fullDate : this.fullDate})
-            if (res.data.status == "berhasil"){
+            setTimeout(() => {
+              if (res.data.status == "berhasil"){
                 this.snackbar = {
-                show : true,
-                message : "Pencarian Kebutuhan Material Berhasil",
-                color : "green"
-              }
-                const res2 = await axios.get('/material/show_material_requirement')
+                  show : true,
+                  message : "Pencarian Kebutuhan Material Berhasil",
+                  color : "green"
+                }
+                const res2 = axios.get('/material/show_material_requirement')
                 if(res2.data == null){
-                  console.log("material kosong")
+                  console.log("")
                 }
                 else{
-                    this.requirmentMaterial = res2.data
-                    console.log(res2,this.requirmentMaterial)
+                  this.requirmentMaterial = res2.data
+                  console.log(res2,this.requirmentMaterial)
                 }
-            
-            }else if(res.data.status == "gagal"){
+                this.loading = false
+              }else if(res.data.status == "gagal"){
                 this.snackbar = {
-                show : true,
-                message : "Pencarian Kebutuhan Material Gagal",
-                color : "red"
+                  show : true,
+                  message : "Pencarian Kebutuhan Material Gagal",
+                  color : "red"
+                }
+                console.log("Gagal")
+                this.loading = false
               }
-               console.log("gagal")
-            }
-            
+            }, 2000)
           }
           catch(error){
             alert("Error")
             console.log(error)
           }
-        },
+        
+      },
 
         async showMaterialBatas(){
             try{
@@ -318,7 +315,6 @@
               console.log("error")
             }
         }
-
     },
   }
 

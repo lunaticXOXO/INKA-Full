@@ -84,7 +84,7 @@
             <h3>Node Parent {{this.$route.params.id}}</h3>
             <v-data-table
               :headers = "column2"
-              :items = "jproduk">
+              :items = "jenisProduk">
             </v-data-table>
           </v-card>
         </div>
@@ -116,7 +116,8 @@
             'Unit',
             'Set'
           ],
-          items3 : [],      
+          items3 : [],
+          jenisProduk : [],      
           column2 : [
             {text : 'ID Nodal',value : 'idNodal'},
             {text : 'Nama Node',value : 'nama'},
@@ -235,7 +236,7 @@
             if(res.data == null){
               console.log("Data Kosong")
             }else{
-              this.jproduk = res.data
+              this.jenisProduk = res.data
               console.log(res,this.jproduk)
             }
           },

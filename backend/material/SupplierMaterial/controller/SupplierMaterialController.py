@@ -46,10 +46,10 @@ def AddMaterialTypeSupplierbySupplier(code):
     return hasil
 
 
-def ShowSupplierName():
+def ShowMaterialTypeName():
     conn = db.connector()
     cursor = conn.cursor()
-    query = "SELECT code,nama FROM gen_r_supplier"
+    query = "SELECT code,nama FROM mat_r_materialtype"
     cursor.execute(query)
 
     records = cursor.fetchall()
@@ -80,11 +80,10 @@ def ShowMaterialTypeSupplierBySupplier(code):
     return make_response(jsonify(json_data),200)
 
 
-
 def ShowMaterialTypeInPurchaseItem(code):
     conn = db.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code,a.nama AS 'namaSupplier',b.materialTypeCode,c.nama AS 'namaMaterialType' FROM gen_r_supplier a JOIN mat_r_materialtypesupplier b ON b.supplierCode = a.code JOIN mat_r_materialtype c ON c.code = b.materialTypeCode WHERE a.code = '"+code+"'"
+    query = "SELECT a.code, a.nama AS 'namaMaterial', b.materialTypeCode, c.nama AS 'namaSupplier' FROM mat_r_materialtype a  JOIN mat_r_materialtypesupplier b  ON b.materialTypeCode = a.code  JOIN gen_r_supplier c  ON c.code = b.supplierCode WHERE a.code = '"+code+"'"
     cursor.execute(query)
 
     records = cursor.fetchall()
