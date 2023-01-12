@@ -1,7 +1,7 @@
 <template>
     <v-card 
         class="mx-auto text-center mt-10"
-        max-width = "1450">
+        max-width = "1200">
         <br>
         <h1>List Stok Material by Purchase Item {{this.$route.params.id}}</h1>
         <br>

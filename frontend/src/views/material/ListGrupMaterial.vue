@@ -1,8 +1,10 @@
 <template>
     <v-card  
         class="mx-auto text-center mt-10"
-        max-width="1000">
-        <h2>List Grup Material</h2>
+        max-width = "1200">
+        <br>
+        <h1>List Grup Material</h1>
+        <br>
         <v-data-table
           :headers = "column"
           :items = "grup"

@@ -1,7 +1,7 @@
 <template>
     <v-card  
         class="mx-auto text-center mt-10"
-        max-width="1000">
+        max-width="1200">
         <br>
         <h1>List Material Login</h1>
         <br>
