@@ -1,5 +1,5 @@
 <template>
-<v-app>
+  <v-app>
     <v-card
       class="mx-auto text-center mt-6"
       width="1000">

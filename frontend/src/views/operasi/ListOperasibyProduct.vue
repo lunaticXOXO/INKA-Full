@@ -78,7 +78,6 @@ export default {
 
         async fetchInfoOperasi(){
             try{
-                
                 const axios = require('axios')
                 const res = await axios.get('/operasi/get_operasi_byproduk/' + this.$route.params.id)
                 if(res == null){
@@ -87,7 +86,6 @@ export default {
                     this.items2 = res.data
                     console.log(res,this.items2)
                 }
-
             }catch(error){
                 alert("Error")
                 console.log(error)

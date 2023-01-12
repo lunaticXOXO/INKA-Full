@@ -155,7 +155,6 @@ export default {
                 { title: '651600475', name: 'BAGAS LIDAKDHO', flex: 2},
                 { title: '651500190', name: 'PUPUT ABDUL SAPUTRA', flex: 2},
             ],
-
             listOperator : undefined
         }
     },

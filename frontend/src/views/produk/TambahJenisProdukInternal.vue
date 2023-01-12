@@ -1,5 +1,5 @@
 <template>
-<v-app>
+  <v-app>
     <v-card
       class="mx-auto text-center mt-6"
       max-width="1500">
@@ -73,10 +73,7 @@
           >
         </v-data-table>
     </v-card>
-
-
-
-</v-app>
+  </v-app>
 </template>
 
 <script>

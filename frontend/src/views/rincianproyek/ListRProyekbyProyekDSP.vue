@@ -28,9 +28,19 @@
                     :items = "rincianbyproyek">
                     <template v-slot:[`item.aksi`]="{ item }">
                         <router-link :to="{name:'List Produk by Rproyek DSP',params:{'id': `${item.id}`}}">
-                        <v-btn class="mx-1" x-small color="blue">
-                            <v-icon small dark>mdi-check</v-icon>
-                        </v-btn>
+                            <v-tooltip top>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn 
+                                    class="mx-1" 
+                                    x-small
+                                    color="blue"
+                                    v-bind="attrs"
+                                    v-on="on">
+                                    <v-icon small dark>mdi-check</v-icon>
+                                    </v-btn>
+                                </template>
+                                <span>List Produk By Rincian Proyek</span>
+                            </v-tooltip>
                         </router-link>
                     </template>
                 </v-data-table>

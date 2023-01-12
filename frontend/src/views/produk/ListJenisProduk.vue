@@ -6,17 +6,13 @@
         <h1>List Jenis Produk</h1>
         <br>
         <v-card
-
-        class="mx-auto text-center"
-        max-width="1000">
-
-        
-
+            class="mx-auto text-center"
+            max-width="1000">
             <v-data-table
                 :headers = "column"
                 :items = "jenisproduk"
                 :items-per-page="2"
-                >
+            >
             <template v-slot:[`item.id`]="{ item }">
                 <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
                 <span v-else>{{item.id}}</span>
@@ -30,25 +26,59 @@
             <template v-slot:[`item.aksi`]="{ item }">
             <div v-if="item.id==editedItem.id">
                 <v-icon color="red" class="mr-3" @click="close()">
-                        mdi-window-close
+                    mdi-window-close
                 </v-icon>
                 <v-icon color="green" @click="updateJenisProduk()">
-                        mdi-content-save
+                    mdi-content-save
                 </v-icon>
             </div>
             <div v-else>
-            <router-link :to="{name : 'List Struktur Jenis Produk by Jenis Produk',params:{id : `${item.id}`}}">
-              <v-btn class="mx-1" x-small color="blue" @click="selectJProduktoSJProduk(item)">
-                    <v-icon small dark>mdi-check</v-icon>
-                </v-btn>
-            </router-link>
-            
-                <v-btn class="mx-1" x-small color="green" @click="editJenisProduk(item)">
-                    <v-icon small dark>mdi-pencil</v-icon>
-                </v-btn>
-                <v-btn class="mx-1" x-small color="red" @click="deleteJenisProduk(item)">
-                    <v-icon small dark>mdi-trash-can-outline</v-icon>
-                </v-btn>
+                <router-link :to="{name : 'List Struktur Jenis Produk by Jenis Produk', params:{id : `${item.id}`}}">
+                    <v-tooltip top>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn 
+                            class="mx-1" 
+                            x-small
+                            color="blue"
+                            @click="selectJProduktoSJProduk(item)"
+                            v-bind="attrs"
+                            v-on="on">
+                            <v-icon small dark>mdi-check</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>List Struktur Jenis Produk by Jenis Produk</span>
+                    </v-tooltip>
+                </router-link>
+
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                      class="mx-1" 
+                      x-small
+                      color="green"
+                      @click="editJenisProduk(item)"
+                      v-bind="attrs"
+                      v-on="on">
+                      <v-icon small dark>mdi-pencil</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Edit</span>
+                </v-tooltip>
+
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                      class="mx-1" 
+                      x-small
+                      color="red"
+                      @click="deleteJenisProduk(item)"
+                      v-bind="attrs"
+                      v-on="on">
+                      <v-icon small dark>mdi-trash-can-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Delete</span>
+                </v-tooltip>
             </div>
             </template>
             </v-data-table>
@@ -74,7 +104,6 @@
 </template>
 
 <script>
-
 export default {
     data(){
         return {
@@ -94,8 +123,6 @@ export default {
                 id : '',
                 nama : '',
             },
-            'id' : '',
-            'nama' : '',
         }
     },
 
@@ -135,7 +162,6 @@ export default {
 
         selectJProduktoSJProduk(jenisproduk){
             console.log(jenisproduk.id)
-            //open(`/listStrukturJenisProduk/${jenisproduk.id}`)
         },
 
         async updateJenisProduk(){
@@ -157,5 +183,4 @@ export default {
         }
     }
 }
-
 </script>

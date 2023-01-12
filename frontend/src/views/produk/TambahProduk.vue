@@ -1,66 +1,66 @@
 <template>
-    <v-card
-      class="mx-auto text-center mt-6"
-      max-width="1000">
-      <br>
-      <h1>Tambah Produk Baru</h1>
-      <v-form
-        class="pa-6"
-        ref="form"
-        @submit.prevent="submitHandler"
-        v-model="valid"
-        lazy-validation>
-        
-        <v-text-field
-        v-model="id"
-        :counter="9"
-        :rules="idRules"
-        label="ID"
-        required
-        ></v-text-field>
-
-        <v-autocomplete
-        item-text="id"
-        item-value="id"
-        v-model="rincianProyek"
-        :items="items"
-        label="Rincian Proyek"
-        ></v-autocomplete>
-
-        <v-btn
-        :disabled="!valid"
-        color="success"
-        class="mr-4"
-        type="submit"
-        @click="validate()"
-        >
-        Submit
-        </v-btn>
-
-        <v-btn
-        color="error"
-        class="mr-4"
-        @click="reset"
-        >
-        Reset
-        </v-btn>
-      </v-form>
+  <v-card
+    class="mx-auto text-center mt-6"
+    max-width="1000">
+    <br>
+    <h1>Tambah Produk Baru</h1>
+    <v-form
+      class="pa-6"
+      ref="form"
+      @submit.prevent="submitHandler"
+      v-model="valid"
+      lazy-validation>
       
-      <div v-if="snackBar == true">
-        <v-snackbar top color="green" v-model="snackBar">
-          Insert Produk Sukses!
-        </v-snackbar>
-      </div>
+      <v-text-field
+      v-model="id"
+      :counter="9"
+      :rules="idRules"
+      label="ID"
+      required
+      ></v-text-field>
 
-      <div v-else-if="snackBar == false">
-        <v-snackbar top color="red" v-model="snackBar">
-          Insert Produk Gagal!
-        </v-snackbar>
-      </div>
+      <v-autocomplete
+      item-text="id"
+      item-value="id"
+      v-model="rincianProyek"
+      :items="items"
+      label="Rincian Proyek"
+      ></v-autocomplete>
 
-      <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
-        {{snackbar.message}}
+      <v-btn
+      :disabled="!valid"
+      color="success"
+      class="mr-4"
+      type="submit"
+      @click="validate()"
+      >
+      Submit
+      </v-btn>
+
+      <v-btn
+      color="error"
+      class="mr-4"
+      @click="reset"
+      >
+      Reset
+      </v-btn>
+    </v-form>
+    
+    <div v-if="snackBar == true">
+      <v-snackbar top color="green" v-model="snackBar">
+        Insert Produk Sukses!
       </v-snackbar>
+    </div>
+
+    <div v-else-if="snackBar == false">
+      <v-snackbar top color="red" v-model="snackBar">
+        Insert Produk Gagal!
+      </v-snackbar>
+    </div>
+
+    <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+      {{snackbar.message}}
+    </v-snackbar>
   </v-card>
 </template>
 

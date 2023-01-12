@@ -1,92 +1,93 @@
 <template>
-<v-app>
-    <v-card
-        class="mx-auto text-center mt-6"
-        width="1000">
-        <br>
-        <h1>Tambah Proses Baru Sesuai Strk.Jns.Prod</h1>
-        <v-form
-            class="pa-6"
-            ref="form"
-            @submit.prevent="submitHandler"
-            v-model="valid"
-            lazy-validation>
+    <v-app>
+        <v-card
+            class="mx-auto text-center mt-6"
+            width="1000">
+            <br>
+            <h1>Tambah Proses Baru Sesuai Strk.Jns.Prod</h1>
+            <v-form
+                class="pa-6"
+                ref="form"
+                @submit.prevent="submitHandler"
+                v-model="valid"
+                lazy-validation>
 
-            <v-autocomplete
-            item-value="id"
-            :item-text="items2 => items2.id +' - '+ items2.namaJenisProses"
-            v-model="jenisProses"
-            :items="items2"
-            label="Jenis Proses"
-            ></v-autocomplete>
+                <v-autocomplete
+                item-value="id"
+                :item-text="items2 => items2.id +' - '+ items2.namaJenisProses"
+                v-model="jenisProses"
+                :items="items2"
+                label="Jenis Proses"
+                ></v-autocomplete>
 
-            <v-text-field
-            v-model="id"
-            :counter="2"
-            :rules="idRules"
-            label="ID"
-            required
-            ></v-text-field>
+                <v-text-field
+                v-model="id"
+                :counter="2"
+                :rules="idRules"
+                label="ID"
+                required
+                ></v-text-field>
 
-            <v-autocomplete
-            item-text="nama"
-            item-value="id"
-            v-model="prosesSesudahnya"
-            :items="items"
-            label="Proses Sesudahnya"
-            ></v-autocomplete>
+                <v-autocomplete
+                item-text="nama"
+                item-value="id"
+                v-model="prosesSesudahnya"
+                :items="items"
+                label="Proses Sesudahnya"
+                ></v-autocomplete>
 
-            <v-text-field
-            v-model="nama"
-            label="Nama"
-            ></v-text-field>
+                <v-text-field
+                v-model="nama"
+                label="Nama"
+                ></v-text-field>
 
-            <v-text-field
-            v-model="durasi"
-            label="Durasi"
-            type="number"
-            ></v-text-field>
+                <v-text-field
+                v-model="durasi"
+                label="Durasi"
+                type="number"
+                ></v-text-field>
 
-            <v-autocomplete
-            v-model="satuanDurasi"
-            :items="items3"
-            label="Satuan Durasi"
-            ></v-autocomplete>
+                <v-autocomplete
+                v-model="satuanDurasi"
+                :items="items3"
+                label="Satuan Durasi"
+                ></v-autocomplete>
 
-            <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            type="submit"
-            @click="validate()">
-            Submit
-            </v-btn>
+                <v-btn
+                :disabled="!valid"
+                color="success"
+                class="mr-4"
+                type="submit"
+                @click="validate()">
+                Submit
+                </v-btn>
 
-            <v-btn
-            color="error"
-            class="mr-4"
-            @click="reset">
-            Reset
-            </v-btn>
-        </v-form>
-        <div v-if="snackBar == true">
-            <v-snackbar top color="green" v-model="snackBar">
-                Insert Proses by SJProduk Sukses!
+                <v-btn
+                color="error"
+                class="mr-4"
+                @click="reset">
+                Reset
+                </v-btn>
+            </v-form>
+
+            <div v-if="snackBar == true">
+                <v-snackbar top color="green" v-model="snackBar">
+                    Insert Proses by SJProduk Sukses!
+                </v-snackbar>
+            </div>
+
+            <div v-else-if="snackBar == false">
+                <v-snackbar top color="red" v-model="snackBar">
+                    Insert Proses by SJProduk Gagal!
+                </v-snackbar>
+            </div>
+
+            <v-snackbar :color="snackBar.color" v-model="snackBar.show" top>
+                {{snackBar.message}}
             </v-snackbar>
-        </div>
-
-        <div v-else-if="snackBar == false">
-            <v-snackbar top color="red" v-model="snackBar">
-                Insert Proses by SJProduk Gagal!
-            </v-snackbar>
-        </div>
-
-        <v-snackbar :color="snackBar.color" v-model="snackBar.show" top>
-            {{snackBar.message}}
-        </v-snackbar>
-    </v-card>
+        </v-card>
         <div class="d-flex">
-           <v-card class="ml-6 text-center mt-6 mb-10" width="700">
+        <v-card class="ml-6 text-center mt-6 mb-10" width="700">
                 <v-data-table
                     :headers="column2"
                     :items = "sjproduk">
@@ -99,7 +100,7 @@
                 </v-data-table>
             </v-card>
         </div>
-</v-app>
+    </v-app>
 </template>
 
 <script>

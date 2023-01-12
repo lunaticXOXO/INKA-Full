@@ -7,9 +7,7 @@
                     :headers = "headers2"
                     :items = "proyekinrincian"
                     :items-per-page="5"
-                    
-                    
-                    >
+                >
                 </v-data-table>
             </v-card>
       
@@ -82,19 +80,53 @@
                                 mdi-content-save
                             </v-icon>
                         </div>
-                        <div>
-                        <router-link :to="{name:'List Produk by Rincian Proyek',params:{'id': `${item.id}`}}">
-                        <v-btn class="mx-1" x-small color="blue" @click="selectRProyektoProduct(item)">
-                            <v-icon small dark>mdi-check</v-icon>
-                        </v-btn>
-                        </router-link>
- 
-                        <v-btn class="mx-1" x-small color="green" @click="editRProyek(item)">
-                            <v-icon small dark>mdi-pencil</v-icon>
-                        </v-btn>
-                        <v-btn class="mx-1" x-small color="red" @click="deleteRProyek(item)">
-                            <v-icon small dark>mdi-trash-can-outline</v-icon>
-                        </v-btn>
+                        <div v-else>
+                            <router-link :to="{name:'List Produk by Rincian Proyek',params:{'id': `${item.id}`}}">
+                                <v-tooltip top>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-btn 
+                                        class="mx-1" 
+                                        x-small
+                                        color="blue"
+                                        @click="selectRProyektoProduct(item)"
+                                        v-bind="attrs"
+                                        v-on="on">
+                                        <v-icon small dark>mdi-check</v-icon>
+                                        </v-btn>
+                                    </template>
+                                    <span>List Produk By Rincian Proyek</span>
+                                </v-tooltip>
+                            </router-link>
+    
+                            <v-tooltip top>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn 
+                                    class="mx-1" 
+                                    x-small
+                                    color="green"
+                                    @click="editRProyek(item)"
+                                    v-bind="attrs"
+                                    v-on="on">
+                                    <v-icon small dark>mdi-pencil</v-icon>
+                                    </v-btn>
+                                </template>
+                                <span>Edit</span>
+                            </v-tooltip>
+
+                            <v-tooltip top>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn 
+                                    class="mx-1" 
+                                    x-small
+                                    color="red"
+                                    @click="deleteRProyek(item)"
+                                    v-bind="attrs"
+                                    v-on="on">
+                                    <v-icon small dark>mdi-trash-can-outline</v-icon>
+                                    </v-btn>
+                                </template>
+                                <span>Delete</span>
+                            </v-tooltip>
                         </div>
                     </template>
                 </v-data-table>
@@ -210,12 +242,10 @@ export default {
 
         selectRProyektoProduct(rincianbyproyek){
             console.log(rincianbyproyek.id)
-            //open(`/listProdukbyRProyek/${rincianbyproyek.id}`)
         },
 
         selectRProyektoJProduct(rincianbyproyek){
              console.log(rincianbyproyek.id)
-             //open(`/listJenisProdukbyRProyek/${rincianbyproyek.id}`)
         },
 
         editRProyek(rincianbyproyek){

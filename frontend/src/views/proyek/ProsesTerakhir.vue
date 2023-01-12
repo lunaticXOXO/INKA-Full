@@ -1,52 +1,52 @@
 <template>
+  <v-card
+    class="mx-auto text-center mt-6"
+    max-width="1000">
+    <br>
+    <h1>Melihat Proses Terakhir</h1>
+    <v-form
+      class="pa-6"
+      ref="form"
+      @submit.prevent="submitHandler"
+      v-model="valid"
+      lazy-validation
+    >
+      <v-text-field
+      v-model="id"
+      :counter="20"
+      :rules="idRules"
+      label="Input ID Produk"
+      required
+      ></v-text-field>
+
+      <v-btn
+      :disabled="!valid"
+      color="success"
+      class="mr-4"
+      type="submit"
+      @click="fetchData(id)"
+      >
+      Submit
+      </v-btn>
+
+      <v-btn
+      color="error"
+      class="mr-4"
+      @click="reset"
+      >
+      Reset
+      </v-btn>
+    </v-form>
+    <br>
     <v-card
-        class="mx-auto text-center mt-6"
-        max-width="1000">
-        <br>
-        <h1>Melihat Proses Terakhir</h1>
-        <v-form
-            class="pa-6"
-            ref="form"
-            @submit.prevent="submitHandler"
-            v-model="valid"
-            lazy-validation
-        >
-            <v-text-field
-            v-model="id"
-            :counter="20"
-            :rules="idRules"
-            label="Input ID Produk"
-            required
-            ></v-text-field>
-
-            <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            type="submit"
-            @click="fetchData(id)"
-            >
-            Submit
-            </v-btn>
-
-            <v-btn
-            color="error"
-            class="mr-4"
-            @click="reset"
-            >
-            Reset
-            </v-btn>
-        </v-form>
-        <br>
-        <v-card
-        class="mx-auto text-center"
-        max-width="1000">
-            <v-data-table
-                :headers = "headers"
-                :items = "process">
-            </v-data-table>
-        </v-card>
+    class="mx-auto text-center"
+    max-width="1000">
+      <v-data-table
+        :headers = "headers"
+        :items = "process">
+      </v-data-table>
     </v-card>
+  </v-card>
 </template>
 
 <script>

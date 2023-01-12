@@ -36,16 +36,37 @@
                     </div>
                     <!--Jika tidak mengklik tombol update-->
                     <div v-else>
-                        <v-btn class="mx-1" x-small color="green" @click="editNegara(item)">
-                            <v-icon small dark>mdi-pencil</v-icon>
-                        </v-btn>
-                        <v-btn class="mx-1" x-small color="red" @click="deleteNegara(item)">
-                            <v-icon small dark>mdi-trash-can-outline</v-icon>
-                        </v-btn>
+                        <v-tooltip top>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn 
+                                class="mx-1" 
+                                x-small
+                                color="green"
+                                @click="editNegara(item)"
+                                v-bind="attrs"
+                                v-on="on">
+                                <v-icon small dark>mdi-pencil</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Edit</span>
+                        </v-tooltip>
+
+                        <v-tooltip top>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn 
+                                class="mx-1" 
+                                x-small
+                                color="red"
+                                @click="deleteNegara(item)"
+                                v-bind="attrs"
+                                v-on="on">
+                                <v-icon small dark>mdi-trash-can-outline</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Delete</span>
+                        </v-tooltip>
                     </div>
-
                 </template>
-
             </v-data-table>
         </v-card>
     </v-card>

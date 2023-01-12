@@ -62,16 +62,49 @@
               </div>
               <div v-else>
                 <router-link :to="{name : 'Tambah Kemampuan Operator',params:{id : `${item.code}`}}">
-                <v-btn class="mx-1" x-small color="blue">
-                    <v-icon small dark>mdi-check</v-icon>
-                </v-btn>
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn 
+                        class="mx-1" 
+                        x-small
+                        color="blue"
+                        v-bind="attrs"
+                        v-on="on">
+                        <v-icon small dark>mdi-check</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Tambah Kemampuan Operator</span>
+                  </v-tooltip>
                 </router-link>
-                <v-btn class="mx-1" x-small color="green" @click="editOperators(item)">
-                    <v-icon small dark>mdi-pencil</v-icon>
-                </v-btn>
-                <v-btn class="mx-1" x-small color="red" @click="deleteOperator(item)">
-                    <v-icon small dark>mdi-trash-can-outline</v-icon>
-                </v-btn>
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                      class="mx-1" 
+                      x-small
+                      color="green"
+                      @click="editOperator(item)"
+                      v-bind="attrs"
+                      v-on="on">
+                      <v-icon small dark>mdi-pencil</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Edit</span>
+                </v-tooltip>
+
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                      class="mx-1" 
+                      x-small
+                      color="red"
+                      @click="deleteOperator(item)"
+                      v-bind="attrs"
+                      v-on="on">
+                      <v-icon small dark>mdi-trash-can-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Delete</span>
+                </v-tooltip>
               </div>
             </template>
         </v-data-table>
@@ -128,7 +161,7 @@
         }, 300)
       },
 
-      editOperators(operators){
+      editOperator(operators){
         console.log('Code : ' + operators.code)
         this.editedIndex = this.operators.indexOf(operators);
         this.editedItem = Object.assign({}, operators);
