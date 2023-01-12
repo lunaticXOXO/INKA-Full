@@ -258,7 +258,7 @@ def AddProcessBySJProduk(id_sjproduk):
 
     try:
         data = request.json
-        idProses = data["id"]
+        idProses = temp + data["id"]
         prosesSesudah = data["prosesSesudahnya"]
         nama = data["nama"]
         durasi = data["durasi"]
@@ -353,6 +353,38 @@ def UpdateProcess(id):
         print("Error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
+
+def ShowProcessDropDown(id_nodal):
+    conn = database.connector()
+    cursor = conn.cursor()
+    #Query untuk menselect str jenis produk yang dipilih
+    query = "SELECT a.nodalOutput FROM prd_r_proses a WHERE a.nodalOutput = '"+id_nodal+"'"
+    cursor.execute(query)
+    records_strjproduk = cursor.fetchall()
+    temp_idnode = ""
+    for index in records_strjproduk:
+        temp_idnode = index[0]
+    
+    #Query untuk mendapatkan jenis produk dari struktur jenis produk yang dipilih
+    query2 = "SELECT a.jnsProduk FROM prd_r_strukturjnsprd a WHERE a.idNodal = '"+temp_idnode+"'"
+    cursor.execute(query2)
+    records_jproduk = cursor.fetchall()
+    temp_jproduk = ""
+    for index in records_jproduk:
+        temp_jproduk = index[0]
+    
+    
+    #Query untuk menampilkan proses dari strjenisproduk dan jenis produknya
+    query3 = "SELECT a.id,a.nama FROM prd_r_proses a JOIN prd_r_strukturjnsprd b ON b.idNodal = a.nodalOutput JOIN prd_r_jenisproduk c ON c.id = b.jnsProduk WHERE b.idNodal = '"+id_nodal+"' AND c.id = '"+temp_jproduk+"'"
+    cursor.execute(query3)
+    row_headers = [x[0] for x in cursor.description]
+    records = cursor.fetchall()
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
 
 
 def ShowLastProcessofProduct():

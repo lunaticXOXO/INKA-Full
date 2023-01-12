@@ -355,6 +355,11 @@ def get_process_by_sjproduct(idNodal):
     hasil = ShowProsesbySJProduk(idNodal)
     return hasil
 
+@app.route('/proses/get_process_dropwdown/<idNodal>',methods = ['GET'])
+def get_process_dropdown(idNodal):
+    hasil = ShowProcessDropDown(idNodal)
+    return hasil
+
 @app.route('/proses/get_lastprocess_product/<id>',methods = ['GET'])
 def get_lastprocess_product(id):
     hasil = ShowLastProcessofProductAPI(id)

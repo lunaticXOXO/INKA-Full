@@ -22,7 +22,7 @@
 
             <v-text-field
             v-model="id"
-            :counter="9"
+            :counter="2"
             :rules="idRules"
             label="ID"
             required
@@ -115,7 +115,7 @@
             id: '',
             idRules: [
                 v => !!v || 'ID is required',
-                v => (v && v.length <= 9 && v.length >= 7) || 'ID must be 7-9 characters',
+                v => (v && v.length <= 2 && v.length >= 2) || 'ID must be 7-9 characters',
             ],
             nama: '',
             durasi: '',
@@ -180,7 +180,7 @@
 
             async fetchProses(){
                 try{
-                    const res = await axios.get('/proses/get_listprocess')
+                    const res = await axios.get('/proses/get_process_dropwdown/' + this.$route.params.id)
                     if (res.data == null){
                         alert("Proses Kosong")
                     }else{
