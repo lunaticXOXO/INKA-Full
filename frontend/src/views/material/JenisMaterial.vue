@@ -1,80 +1,79 @@
 <template>
-    <v-card
-        class="mx-auto text-center mt-6"
-        max-width="1000">
-        <br>
-        <h1>Tambah Jenis Material</h1>
-        <v-form
-            class="pa-6"
-            ref="form"
-            @submit.prevent="submitHandler"
-            v-model="valid"
-            lazy-validation>
+  <v-card
+    class="mx-auto text-center mt-6"
+    max-width="1000">
+    <br>
+    <h1>Tambah Jenis Material</h1>
+    <v-form
+      class="pa-6"
+      ref="form"
+      @submit.prevent="submitHandler"
+      v-model="valid"
+      lazy-validation>
 
-            <v-text-field
-            v-model="kode"
-            :counter="12"
-            :rules="kodeRules"
-            label="Code"
-            required
-            ></v-text-field>
+      <v-text-field
+      v-model="kode"
+      :counter="12"
+      :rules="kodeRules"
+      label="Code"
+      required
+      ></v-text-field>
 
-            <v-autocomplete
-            v-model="classificationCode"
-            :items="list_klasifikasi"
-            item-text="descriptions"
-            item-value="code"
-            label="Klasifikasi"
-            required
-            ></v-autocomplete>
+      <v-autocomplete
+      v-model="classificationCode"
+      :items="list_klasifikasi"
+      item-text="descriptions"
+      item-value="code"
+      label="Klasifikasi"
+      required
+      ></v-autocomplete>
 
-            <v-autocomplete
-            v-model="groupCode"
-            :items="list_grup"
-            item-text="descriptions"
-            item-value="code"
-            label="Grup"
-            required
-            ></v-autocomplete>
+      <v-autocomplete
+      v-model="groupCode"
+      :items="list_grup"
+      item-text="descriptions"
+      item-value="code"
+      label="Grup"
+      required
+      ></v-autocomplete>
 
-            <v-text-field
-            v-model="nama"
-            label="Nama"
-            ></v-text-field>
+      <v-text-field
+      v-model="nama"
+      label="Nama"
+      ></v-text-field>
 
-            <v-checkbox
-            v-model="isAvailable"
-            label="Is Available?"
-            required
-            ></v-checkbox>
+      <v-checkbox
+      v-model="isAvailable"
+      label="Is Available?"
+      required
+      ></v-checkbox>
 
-            <v-checkbox
-            v-model="isAssy"
-            label="Is Assy?"
-            required
-            ></v-checkbox>
+      <v-checkbox
+      v-model="isAssy"
+      label="Is Assy?"
+      required
+      ></v-checkbox>
 
-            <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            type="submit"
-            @click="validate">
-            Submit
-            </v-btn>
+      <v-btn
+      :disabled="!valid"
+      color="success"
+      class="mr-4"
+      type="submit"
+      @click="validate">
+      Submit
+      </v-btn>
 
-            <v-btn
-            color="error"
-            class="mr-4"
-            @click="reset">
-            Reset
-            </v-btn>
-
-        </v-form>
-          <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
-            {{snackbar.message}}
-        </v-snackbar>
-    </v-card>
+      <v-btn
+      color="error"
+      class="mr-4"
+      @click="reset">
+      Reset
+      </v-btn>
+    </v-form>
+    <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+      {{snackbar.message}}
+    </v-snackbar>
+  </v-card>
 </template>
 
 <script>

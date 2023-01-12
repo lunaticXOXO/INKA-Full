@@ -52,16 +52,50 @@
               </div>
               <div v-else>
                 <router-link :to="{name : 'List Purchase Item Material Stock',params:{id : `${item.id}`}}">
-                  <v-btn class="mx-1" x-small color="blue">
-                      <v-icon small dark>mdi-check</v-icon>
-                  </v-btn>
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn 
+                        class="mx-1" 
+                        x-small
+                        color="blue"
+                        v-bind="attrs"
+                        v-on="on">
+                        <v-icon small dark>mdi-check</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>List Purchase Item by Material Stock</span>
+                  </v-tooltip>
                 </router-link>
-                <v-btn class="mx-1" x-small color="green" @click="editMaterial(item)">
-                    <v-icon small dark>mdi-pencil</v-icon>
-                </v-btn>
-                <v-btn class="mx-1" x-small color="red" @click="deleteMaterial(item)">
-                    <v-icon small dark>mdi-trash-can-outline</v-icon>
-                </v-btn>
+                
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                      class="mx-1" 
+                      x-small
+                      color="green"
+                      @click="editMaterial(item)"
+                      v-bind="attrs"
+                      v-on="on">
+                      <v-icon small dark>mdi-pencil</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Edit</span>
+                </v-tooltip>
+
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                      class="mx-1" 
+                      x-small
+                      color="red"
+                      @click="deleteMaterial(item)"
+                      v-bind="attrs"
+                      v-on="on">
+                      <v-icon small dark>mdi-trash-can-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Delete</span>
+                </v-tooltip>
               </div>
             </template>
         </v-data-table>

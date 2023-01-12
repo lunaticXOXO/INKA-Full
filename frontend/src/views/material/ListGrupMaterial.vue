@@ -2,7 +2,6 @@
     <v-card  
         class="mx-auto text-center mt-10"
         max-width="1000">
-
         <h2>List Grup Material</h2>
         <v-data-table
           :headers = "column"

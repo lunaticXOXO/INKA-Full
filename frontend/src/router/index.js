@@ -829,6 +829,7 @@ const routes = [
 
     }
   },
+
   {
     path : '/listPurchaseItemMaterialStock/:id',
     name : 'List Purchase Item Material Stock',
@@ -840,25 +841,21 @@ const routes = [
   },
 
   {
-      path : '/listStockMaterialOnWS/:id',
-      name : 'List Stock Material On WS',
-      component : ListMaterialStockOnWs,
-      meta : {
-
-          title : "List Stock Material On WS - PT.INKA "
-      }
-
+    path : '/listStockMaterialOnWS/:id',
+    name : 'List Stock Material On WS',
+    component : ListMaterialStockOnWs,
+    meta : {
+      title : "List Stock Material On WS - PT.INKA "
+    }
   },
+
   {
-
-      path : '/statusBarcode',
-      name : 'Status Barcode',
-      component : StatusBarcode,
-      meta : {
-
-        title : "Status Barcode - PT.INKA"
-      }
-
+    path : '/statusBarcode',
+    name : 'Status Barcode',
+    component : StatusBarcode,
+    meta : {
+      title : "Status Barcode - PT.INKA"
+    }
   },
 
   {
@@ -871,16 +868,14 @@ const routes = [
   },
 
   {
-
-     path : '/listOperasiByProduk/:id',
-     name : 'List Operasi By Produk Tabel',
-     component : ListOperasibyProduct,
-     meta : {
-
-        title : "List Operasi By Produk - PT. INKA"
-     }
-
+    path : '/listOperasiByProduk/:id',
+    name : 'List Operasi By Produk Tabel',
+    component : ListOperasibyProduct,
+    meta : {
+      title : "List Operasi By Produk - PT. INKA"
+    }
   },
+
   {
     path : '/tambahJenisProdukInternal',
     name : 'Tambah Jenis Produk Internal',
@@ -891,19 +886,13 @@ const routes = [
   },
 
   {
-  
-     path : '/tambahStrukturJenisProdukByParent/:id',
-     name : 'Tambah Struktur Jenis Produk By Parent',
-     component : TambahStrukturJenisProdukByParent,
-     meta : {
-
+    path : '/tambahStrukturJenisProdukByParent/:id',
+    name : 'Tambah Struktur Jenis Produk By Parent',
+    component : TambahStrukturJenisProdukByParent,
+    meta : {
       title : "Tambah Node Sturktur Jenis Produk - PT.INKA"
-
-     }
-  
+    }
   },
-
-  
 ]
 
 const router = new VueRouter({

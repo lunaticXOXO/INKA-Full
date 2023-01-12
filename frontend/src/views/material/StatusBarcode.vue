@@ -8,7 +8,6 @@
         <v-data-table 
             :headers = "column"
             :items = "statusbarcode">
-            
         </v-data-table>
     </v-card>
 </template>

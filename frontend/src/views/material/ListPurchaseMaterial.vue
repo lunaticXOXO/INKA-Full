@@ -12,59 +12,93 @@
             </v-btn>
         </router-link>
         <v-data-table 
-            :headers = "column"
-            :items = "types"
-            :items-per-page="5"
-            >
-            <template v-slot:[`item.id`]="{ item }">
-              <div v-if="item.id === editedItem.id">
-                  <v-text-field disabled v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
-                  <span v-else>{{item.id}}</span>
-              </div>
-              <div v-else>
-                  <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
-                  <span v-else>{{item.id}}</span>
-              </div>
-            </template>
-
-            <template v-slot:[`item.nama`]="{ item }">
-                <v-text-field v-model="editedItem.nama" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
-                <span v-else>{{item.nama}}</span>
-            </template>
-
-           <template v-slot:[`item.purchaseDate`]="{ item }">
-                <v-text-field v-model="editedItem.purchaseDate" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
-                <span v-else>{{item.purchaseDate}}</span>
+          :headers = "column"
+          :items = "types"
+          :items-per-page="5"
+          >
+          <template v-slot:[`item.id`]="{ item }">
+            <div v-if="item.id === editedItem.id">
+                <v-text-field disabled v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                <span v-else>{{item.id}}</span>
+            </div>
+            <div v-else>
+                <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                <span v-else>{{item.id}}</span>
+            </div>
           </template>
 
-            <template v-slot:[`item.purchaserName`]="{ item }">
-                <v-text-field v-model="editedItem.purchaserName" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
-                <span v-else>{{item.purchaserName}}</span>
+          <template v-slot:[`item.nama`]="{ item }">
+            <v-text-field v-model="editedItem.nama" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+            <span v-else>{{item.nama}}</span>
           </template>
-           
-            <template v-slot:[`item.aksi`]="{ item }">
-              <div v-if="item.id == editedItem.id">
-                  <v-icon color="red" class="mr-3" @click="close">
-                    mdi-window-close
-                  </v-icon>
-                  <v-icon color="green" @click="updateData()">
-                    mdi-content-save
-                  </v-icon>
-              </div>
-              <div v-else>
-                <router-link :to="{name : 'List Purchase Item By Purchase Material',params:{id : `${item.id}`}}">
-                  <v-btn class="mx-1" x-small color="blue">
+
+          <template v-slot:[`item.purchaseDate`]="{ item }">
+            <v-text-field v-model="editedItem.purchaseDate" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+            <span v-else>{{item.purchaseDate}}</span>
+          </template>
+
+          <template v-slot:[`item.purchaserName`]="{ item }">
+            <v-text-field v-model="editedItem.purchaserName" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+            <span v-else>{{item.purchaserName}}</span>
+          </template>
+          
+          <template v-slot:[`item.aksi`]="{ item }">
+            <div v-if="item.id == editedItem.id">
+              <v-icon color="red" class="mr-3" @click="close">
+                mdi-window-close
+              </v-icon>
+              <v-icon color="green" @click="updateData()">
+                mdi-content-save
+              </v-icon>
+            </div>
+            <div v-else>
+              <router-link :to="{name : 'List Purchase Item By Purchase Material',params:{id : `${item.id}`}}">
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                      class="mx-1" 
+                      x-small
+                      color="blue"
+                      v-bind="attrs"
+                      v-on="on">
                       <v-icon small dark>mdi-check</v-icon>
-                  </v-btn>
-                </router-link>
-                <v-btn class="mx-1" x-small color="green" @click="editMaterial(item)">
+                    </v-btn>
+                  </template>
+                  <span>List Purchase Item By Purchase Material</span>
+                </v-tooltip>
+              </router-link>
+              
+              <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn 
+                    class="mx-1" 
+                    x-small
+                    color="green"
+                    @click="editMaterial(item)"
+                    v-bind="attrs"
+                    v-on="on">
                     <v-icon small dark>mdi-pencil</v-icon>
-                </v-btn>
-                <v-btn class="mx-1" x-small color="red" @click="deleteMaterial(item)">
+                  </v-btn>
+                </template>
+                <span>Edit</span>
+              </v-tooltip>
+              
+              <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn 
+                    class="mx-1" 
+                    x-small
+                    color="red"
+                    @click="deleteMaterial(item)"
+                    v-bind="attrs"
+                    v-on="on">
                     <v-icon small dark>mdi-trash-can-outline</v-icon>
-                </v-btn>
-              </div>
-            </template>
+                  </v-btn>
+                </template>
+                <span>Delete</span>
+              </v-tooltip>
+            </div>
+          </template>
         </v-data-table>
     </v-card>
   </v-app>

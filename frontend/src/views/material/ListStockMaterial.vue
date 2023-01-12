@@ -38,11 +38,22 @@
             </template>
            
             <template v-slot:[`item.aksi`]="{ item }">
-                <router-link :to="{name : 'List Stock Material On WS', params:{id : `${item.id}`}}">
-                    <v-btn class="mx-1" x-small color="blue" @click="selectStock(item)">
-                        <v-icon small dark>mdi-check</v-icon>
+              <router-link :to="{name : 'List Stock Material On WS', params:{id : `${item.id}`}}">
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                      class="mx-1" 
+                      x-small
+                      color="blue"
+                      @click="selectStock(item)"
+                      v-bind="attrs"
+                      v-on="on">
+                      <v-icon small dark>mdi-check</v-icon>
                     </v-btn>
-                </router-link>
+                  </template>
+                  <span>List Stock Material On WS</span>
+                </v-tooltip>
+              </router-link>
             </template>
         </v-data-table>
     </v-card>
