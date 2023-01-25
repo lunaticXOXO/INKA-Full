@@ -170,7 +170,6 @@ def AddRincianProyekByProyek(id_proyek):
                 counter  = 1
                 counter2 = counter2 + 1
             
-
             if read == '1' and counter2 > counter:    
                 boolean = False
                 break
@@ -186,6 +185,38 @@ def AddRincianProyekByProyek(id_proyek):
         hasil = {"status" : "gagal"}
     
     return hasil
+
+
+def GetFirstOperation():
+    conn = db.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id,a.rencanaMulai FROM prd_d_operasi a WHERE confirm IS NULL ORDER BY a.rencanaMulai ASC LIMIT 1"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    keterangan2 = ""
+    headers = "keterangan"
+   
+    for index in records:
+        renmul = index[1]
+        if renmul < datetime.datetime.now():
+            keterangan2 = "Terlambat"
+        elif renmul > datetime.datetime.now():
+            keterangan2 = "Tepat"
+    
+    records = records + (keterangan2)
+    print(records)
+
+    row_headers = [x[0] for x in cursor.description]
+    row_headers.append(headers)
+    print(row_headers)
+
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+        print(data)
+        print(json_data)
+    return make_response(jsonify(json_data),200) 
 
 
 def GenerateSNProduct():

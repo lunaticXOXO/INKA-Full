@@ -71,6 +71,13 @@
                 indeterminate
                 color="primary"
               ></v-progress-circular>
+              <br>
+              <v-data-table
+                hide-default-header
+                hide-default-footer
+                :headers = "headers4"
+                :items = "listOperasiBaru">
+              </v-data-table>
             </div>
           </v-card>
         </v-dialog>
@@ -116,12 +123,17 @@
       dialog : false,
       valid: true,
         headers2 : [
-            {text : 'ID Proyek', value : 'IdProyek'},
-            {text : 'Nama Proyek', value : 'NamaProyek'}
+          {text : 'ID Proyek', value : 'IdProyek'},
+          {text : 'Nama Proyek', value : 'NamaProyek'}
         ],
         headers3 : [
-            {text : 'ID Customer', value : 'IdCustomer'},
-            {text : 'Nama Customer',value : 'NamaCustomer'},
+          {text : 'ID Customer', value : 'IdCustomer'},
+          {text : 'Nama Customer',value : 'NamaCustomer'}
+        ],
+        headers4 : [
+          {text : 'ID Operasi',   value : 'id'},
+          {text : 'Rencana Mulai',value : 'rencanaMulai'},
+          {text : 'Keterangan',   value : 'keterangan'}
         ],
       snackbar: {
         show: false,
@@ -136,6 +148,7 @@
       items : undefined,
       proyekinrincian : [],
       customer : [],
+      listOperasiBaru : []
     }),
 
     watch: {
@@ -150,7 +163,10 @@
 
     mounted(){
       this.fetchJenisProduk(),
-      this.fetchProyekInRProyek()
+      this.fetchProyekInRProyek(),
+      //window.setInterval(() => {
+        this.fetchOperasiAwal()
+      //}, 2000)
     },
 
     methods: {
@@ -176,6 +192,21 @@
         console.log(this.dueDate)
       },
 
+      async fetchOperasiAwal(){
+        try{
+          const axios = require('axios')
+          const res = await axios.get('/rproyek/show_first_operation')
+          if(res == null){
+              console.log("Data kosong")
+          }else{
+              this.listOperasiBaru = res.data
+              console.log(res,this.listOperasiBaru)
+          }
+        }catch(error){
+            console.log(error)
+        }
+      },
+
       async addRProyekbyProyek(){
         try{
           const axios = require('axios')
@@ -188,6 +219,7 @@
           console.log(response)
           if(response.data.status == "berhasil"){
             this.loading = false
+            this.dialog = false
             this.snackbar = {
               message : "Insert Rincian Proyek by Proyek Success",
               color : 'green',
@@ -195,7 +227,7 @@
             }
             setTimeout(() => {
               location.replace('/listRProyekbyProyek/' + this.$route.params.id)
-            }, 3000)
+            }, 1000)
           }
           else if(response.data.status == "gagal"){
             this.loading = false

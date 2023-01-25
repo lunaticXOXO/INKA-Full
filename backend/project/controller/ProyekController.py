@@ -81,10 +81,11 @@ def AddProyekbyCustomer(id_customer):
     cursor.execute(query)
     records = cursor.fetchall()
     temp = ""
+    confirm = 1
     for data in records:
         temp = data[0]
    
-    query = "INSERT INTO prd_d_proyek(id,nama,tglDibuat,customerid)VALUES(%s,%s,%s,'"+temp+"')"
+    query = "INSERT INTO prd_d_proyek(id,nama,tglDibuat,customerid,confirm)VALUES(%s,%s,%s,'"+temp+"','"+confirm+"')"
     try:
         data = request.json
         id = data["id"]

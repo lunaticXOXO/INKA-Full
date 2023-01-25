@@ -218,6 +218,12 @@ def update_duedate_rproyek(id_proyek):
     hasil = UpdateDueDateRProyek(id_proyek)
     return hasil
 
+
+@app.route('/rproyek/show_first_operation',methods = ['GET'])
+def show_first_operation():
+    hasil = GetFirstOperation()
+    return hasil
+
 #PRODUCT
 @app.route('/product/get_product',methods = ['GET'])
 def get_product():
