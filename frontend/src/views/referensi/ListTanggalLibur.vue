@@ -78,7 +78,7 @@ export default {
     data: () => ({
       valid: true,
       headers:[
-        {text : 'Tanggal', value : 'tanggal'},
+        {text : 'Tanggal', value : 'hariLibur'},
         {text : 'Deskripsi', value : 'deskripsi'},
         {text : 'Action', value : 'aksi'}  
       ],
@@ -127,11 +127,11 @@ export default {
 
         async fetchData(){
             try{
-                const res = await axios.get(`/city/get_allcities`);
+                const res = await axios.get(`/holiday/get_all_holiday`);
                 if(res.data == null){
                     alert("Kota Kosong")
                 }else{
-                    this.kota = res.data;
+                    this.tglLibur = res.data;
                     console.log(res, this.kota)
                 }
             }catch(error){
@@ -140,21 +140,6 @@ export default {
             }
         },
 
-        async fetchDataNegara(){
-            try{
-                const res = await axios.get(`/countries/get_allcountries`);
-                if(res.data == null){
-                    alert("Negara Kosong")
-                }else{
-                    this.negara = res.data;
-                    console.log(res,this.data)
-                }
-            } 
-            catch(error){
-                alert("Error")
-                console.log(error)
-            }
-        },
 
         async updateData(){
             if (this.editedIndex > -1) {

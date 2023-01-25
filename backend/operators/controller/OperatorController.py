@@ -51,15 +51,8 @@ def AddOperator():
         email = data["email"]
         city = data["city"]
         username = data['username']
-        values1 = (code,nama,adress1,postalcode,phone,email,city)
+        values1 = (code,nama,adress1,postalcode,phone,email,city,username)
         cursor.execute(query,values1)
-
-        query2 = "INSERT INTO users(username,passwords,userType)VALUES(%s,%s,%s)"
-       
-        password = '12345ws'
-        passwordEncrypt = hashlib.md5(password.encode('utf8')).hexdigest()
-        values2 = (username,passwordEncrypt,7)
-        cursor.execute(query2,values2)
         conn.commit()
 
         hasil = {"status" : "berhasil"}

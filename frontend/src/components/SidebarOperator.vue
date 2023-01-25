@@ -38,7 +38,8 @@
                 <v-card class="mx-auto mb-6 text-center mt-6" width="800">
                     <v-data-table
                         :headers = "headers"
-                        :items = "items"                
+                        :items = "items"
+                        :items-per-page="5"               
                         >
                     </v-data-table>
                 </v-card>
@@ -47,6 +48,7 @@
                     <v-data-table
                         :headers = "headers2"
                         :items = "items2"
+                        :items-per-page="5"
                         >
                     </v-data-table>
                 </v-card>

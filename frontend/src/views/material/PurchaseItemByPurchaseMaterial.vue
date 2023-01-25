@@ -23,7 +23,7 @@
 
           <v-autocomplete
           item-text="namaSupplier"
-          item-value="code"
+          item-value="codeSupplier"
           v-model="supply"
           :items="supplier"
           label="Supplier"
@@ -87,7 +87,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field class="mx-10" :value="datetime" v-bind="attrs" v-on="on" label="Due Time" prepend-icon="mdi-clock"></v-text-field>
             </template>
-            <v-time-picker v-model="datetime"></v-time-picker>
+            <v-time-picker format="24hr" v-model="datetime"></v-time-picker>
           </v-menu>
         </div>
         <br>
@@ -112,11 +112,6 @@
   export default {
     data: () => ({
       valid: true,
-      id_item : '',
-      idRules: [
-        v => !!v || 'ID is required',
-        v => (v && v.length <= 11 && v.length >= 1) || 'ID must be 1-11 characters',
-      ],
       supply: '',
       supplier: undefined,
       type: '',
@@ -145,7 +140,9 @@
     mounted(){
       this.fetchMaterialTypeName(),
       this.fetchUnit(),
-      this.showMaterialBatas()
+      window.setInterval(() => {
+        this.showMaterialBatas()
+      }, 1000)
       //this.showRequirementPurchaseMaterial()
     },
   
@@ -161,7 +158,6 @@
       },
 
       submitHandler() {
-        console.log(this.id_item)
         console.log(this.supply)
         console.log(this.type)
         console.log(this.quantity)

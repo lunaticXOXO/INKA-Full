@@ -6,7 +6,7 @@ def ShowSupplierWithMaterialType():
     cursor = conn.cursor()
 
     query = "SELECT * FROM mat_r_materialtypesupplier"
-    cursor.execute(query)
+    cursor.execute(query)   
 
     row_headers = [x[0] for x in cursor.description]
     json_data = []
@@ -83,7 +83,7 @@ def ShowMaterialTypeSupplierBySupplier(code):
 def ShowMaterialTypeInPurchaseItem(code):
     conn = db.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code, a.nama AS 'namaMaterial', b.materialTypeCode, c.nama AS 'namaSupplier' FROM mat_r_materialtype a  JOIN mat_r_materialtypesupplier b  ON b.materialTypeCode = a.code  JOIN gen_r_supplier c  ON c.code = b.supplierCode WHERE a.code = '"+code+"'"
+    query = "SELECT a.code, a.nama AS 'namaMaterial', c.nama AS 'namaSupplier',c.code AS 'codeSupplier' FROM mat_r_materialtype a JOIN mat_r_materialtypesupplier b ON b.materialTypeCode = a.code JOIN gen_r_supplier c ON c.code = b.supplierCode WHERE a.code = '"+code+"'"
     cursor.execute(query)
 
     records = cursor.fetchall()

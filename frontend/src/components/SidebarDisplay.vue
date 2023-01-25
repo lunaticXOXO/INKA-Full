@@ -113,14 +113,14 @@ export default {
                 title: 'Jadwal',
                 },
 
-                //{
-                //action: 'mdi-progress-helper',
-                //active: false,
-                //items: [
-                    //{ title: 'Status Pengerjaan Proyek', icon: 'mdi-book', route: '/statusPengerjaanProyek'},
-                //],
-                //title: 'Progress',
-                //},
+                {
+                action: 'mdi-progress-helper',
+                active: false,
+                items: [
+                    { title: 'Status Pengerjaan Proyek', icon: 'mdi-book', route: '/statusPengerjaanProyek'},
+                ],
+                title: 'Progress',
+                },
             ],
         }
     },

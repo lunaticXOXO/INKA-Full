@@ -8,7 +8,7 @@ def GetAllProyek():
   conn = database.connector()
   cursor = conn.cursor()
 
-  query = "SELECT * FROM prd_d_proyek"
+  query = "SELECT * FROM prd_d_proyek WHERE customerid IS NOT NULL"
   cursor.execute(query)
 
   row_headers = [x[0] for x in cursor.description]

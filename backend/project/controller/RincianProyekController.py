@@ -8,6 +8,7 @@ from flask import request,make_response,jsonify
 import random
 import string
 import datetime
+import time
 
 def GetAllRincianProyek():
     conn = db.connector()
@@ -150,11 +151,34 @@ def AddRincianProyekByProyek(id_proyek):
         cursor.execute(query,values)
        
         conn.commit()
-
+         
         cursor.close()
         conn.close()
-        
+
+        boolean = True
+        counter = 1
+        counter2 = 0
+
+        while boolean :
+            f = open("C:\\Users\Rispro LPDP\operasi04\demofile3.txt", "r")
+            read = f.read()
+            print("nilai : ",read)
+            if read == '0':
+                boolean = True
+
+            if read == '1' and counter == 1 :
+                counter  = 1
+                counter2 = counter2 + 1
+            
+
+            if read == '1' and counter2 > counter:    
+                boolean = False
+                break
+            print("counter1 : ",counter)
+            print("counter2 : ", counter2)
+            time.sleep(5)
         hasil = {"status" : "berhasil"}
+
         print("Rincian Proyek Baru Ditambahkan!")
 
     except Exception as e:

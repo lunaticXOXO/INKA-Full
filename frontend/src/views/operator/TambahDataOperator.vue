@@ -197,6 +197,8 @@
                 color : 'green',
                 show : true
             }
+
+            location.replace('/listOperator')
           }
           else if(response.data.status == "gagal"){
               this.snackbar = {

@@ -58,8 +58,10 @@
     
     <v-card
       class="mx-auto text-center mt-10"
-        max-width = "1000">
+      max-width = "1000">
+      <br>
       <h2>Detail Purchase Material</h2>
+      <br>
       <v-data-table 
           :headers="column2"
           :items="purchasematerial">

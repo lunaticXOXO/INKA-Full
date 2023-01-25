@@ -26,6 +26,7 @@ from operasi.controller.OperasiController import *
 from operators.controller.OperatorController import *
 from rfid.controller.ScanBarcodeRFID import *
 from material.StatusBarcode.controller.StatusBarcodeController import *
+from umum.controller.UmumController import *
 
 
 from flask import Flask,session
@@ -422,7 +423,7 @@ def stop_liniproduksi(id):
 @app.route('/stasiun_kerja/show_stasiun_kerja',methods = ['GET'])
 def show_stasiun_kerja():
     hasil = GetAllWorkstation()
-    return hasi
+    return hasil
 
 @app.route('/stasiun_kerja/show_stasiun_kerja_by_process/<id_process>',methods = ['GET'])
 def show_stasiun_kerja_by_process(id_process):
@@ -854,6 +855,18 @@ def get_requirement_byprocess(idProcess):
 @app.route('/rfid/insert_material',methods = ['POST'])
 def scan_barcode_rfid():
     hasil = ScanBarcodeRFID()
+    return hasil
+
+#Tanggal Libur
+@app.route('/holiday/add_holiday',methods = ['POST'])
+def add_holiday():
+    hasil = AddNewTanggalLibur()
+    return hasil
+
+
+@app.route('/holiday/get_all_holiday',methods = ['GET'])
+def get_all_holiday():
+    hasil = GetAllTanggalLibur()
     return hasil
 
 #USERS 

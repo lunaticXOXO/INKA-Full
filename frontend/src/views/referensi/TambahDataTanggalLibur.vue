@@ -13,10 +13,15 @@
         >
             <v-menu>
                 <template v-slot:activator="{ on, attrs }">
-                    <v-text-field :value="tanggal" v-bind="attrs" v-on="on" label="Choose Date" prepend-icon="mdi-calendar"></v-text-field>
+                    <v-text-field :value="hariLibur" v-bind="attrs" v-on="on" label="Choose Date" prepend-icon="mdi-calendar"></v-text-field>
                 </template>
-                <v-date-picker width="1000" v-model="tanggal"></v-date-picker>
+                <v-date-picker width="1000" v-model="hariLibur"></v-date-picker>
             </v-menu>
+
+            <v-text-field
+            v-model="deskripsi"
+            label="Deskripsi"
+            ></v-text-field>
             
             <br>
             <v-btn
@@ -65,7 +70,8 @@
         message: null,
         color: null
       },
-      tanggal: null,
+      hariLibur: null,
+      deskripsi : null,
       tanggalRules: [
         v => !!v || 'Tanggal is required',
       ],
@@ -90,7 +96,8 @@
         try{
           const axios = require('axios');
           const response = await axios.post('/holiday/add_holiday',
-            { tanggal: this.tanggal 
+            { hariLibur: this.hariLibur,
+              deskripsi : this.deskripsi
             }
           );
           console.log(response,this.data)
@@ -101,6 +108,8 @@
                 color : 'green',
                 show : true
             }
+
+            location.replace('/listTanggalLibur')
           }
           else if(response.data.status == "gagal"){
               this.snackbar = {

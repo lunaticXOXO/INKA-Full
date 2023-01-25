@@ -132,6 +132,8 @@ export default {
                 {text : 'Nama Customer',value : 'NamaCustomer'}
             ],
             rproyek : [],
+            proyek : [],
+            customer : [],
             produk  : [],
             rincian : [],
             editedIndex : -1,
@@ -161,7 +163,7 @@ export default {
                     alert("Rincian Proyek Kosong")
              } else{  
                     this.produk = res.data
-                    console.log(res,this.product)    
+                    console.log(res)    
                 }
             }catch(error){
                 console.log(error)
@@ -195,7 +197,7 @@ export default {
                     this.rproyek = res.data
                     this.proyek = res.data
                     this.customer = res.data
-                    console.log(res,this.rincianinproduk)
+                    console.log(res)
                 }
 
             }catch(error){

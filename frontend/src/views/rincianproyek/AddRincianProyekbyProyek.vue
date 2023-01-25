@@ -12,17 +12,7 @@
         @submit.prevent="submitHandler"
         v-model="valid"
         lazy-validation>
-       
-        <!--
-        <v-text-field
-        v-model="id"
-        :counter="20"
-        :rules="idRules"
-        label="ID"
-        required
-        ></v-text-field>
-        -->
-
+      
         <v-text-field
         v-model="jumlah"
         label="Jumlah"
@@ -45,16 +35,6 @@
         </template>
         </v-menu>
         
-        <!--
-         <v-menu>
-        <template v-slot:activator="{ on, attrs }">
-            <v-text-field :value="dueDate" v-bind="attrs" v-on="on" label="Due Date" prepend-icon="mdi-calendar"></v-text-field>
-        <v-datetime-picker label="Select Datetime" v-model="datetime"> 
-        </v-datetime-picker>
-        </template>
-        </v-menu>
-        -->
-        
         <v-autocomplete 
         v-model="jenisProduk"
         item-text="nama"
@@ -64,7 +44,8 @@
         </v-autocomplete>
 
         <v-btn
-        :disabled="!valid"
+        :disabled="dialog"
+        :loading="loading"
         color="success"
         class="mr-4"
         type="submit"
@@ -72,6 +53,27 @@
         >
         Submit
         </v-btn>
+
+        <v-dialog
+          v-model="dialog"
+          width="500">
+          <v-card class="pa-6">
+            <v-card-title class="text-h5 grey lighten-2">
+              Pembuatan Operasi
+            </v-card-title>
+            <v-card-text>
+              Melakukan Pembuatan Operasi
+            </v-card-text>
+            <div class="mx-auto text-center">
+              <v-progress-circular
+                :size="70"
+                :width="7"
+                indeterminate
+                color="primary"
+              ></v-progress-circular>
+            </div>
+          </v-card>
+        </v-dialog>
 
         <v-btn
         color="error"
@@ -81,18 +83,6 @@
         Reset
         </v-btn>
       </v-form>
-
-      <div v-if="snackBar == true">
-        <v-snackbar top color="green" v-model="snackBar">
-          Insert Rincian Proyek by Proyek Sukses!
-        </v-snackbar>
-      </div>
-
-      <div v-else-if="snackBar == false">
-        <v-snackbar top color="red" v-model="snackBar">
-          Insert Rincian Proyek by Proyek Gagal!
-        </v-snackbar>
-      </div>
 
       <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
         {{snackbar.message}}
@@ -122,6 +112,8 @@
 <script>
   export default {
     data: () => ({
+      loading : false,
+      dialog : false,
       valid: true,
         headers2 : [
             {text : 'ID Proyek', value : 'IdProyek'},
@@ -131,26 +123,30 @@
             {text : 'ID Customer', value : 'IdCustomer'},
             {text : 'Nama Customer',value : 'NamaCustomer'},
         ],
-     snackbar: {
+      snackbar: {
         show: false,
         message: null,
         color: null
       },
-      snackBar: undefined,
       jumlah : '',
       datetime: null,
       dueDate : null,
       gabunganTanggal : null,
       jenisProduk : '',
       items : undefined,
-      id: '',
       proyekinrincian : [],
       customer : [],
-      idRules: [
-        v => !!v || 'ID is required',
-        v => (v && v.length <= 20 && v.length >= 1) || 'ID must be 1-20 characters',
-      ],
     }),
+
+    watch: {
+      dialog (val) {
+        if (!val) return
+
+        if(this.snackbar.color == "green"){
+          this.dialog = false
+        }
+      },
+    },
 
     mounted(){
       this.fetchJenisProduk(),
@@ -160,6 +156,13 @@
     methods: {
       validate () {
         if(this.$refs.form.validate()){
+          if(this.snackbar.color == "red"){
+            this.loading = false
+            this.dialog = false
+          }else{
+            this.loading = true
+            this.dialog = true
+          }
           this.addRProyekbyProyek()
         }
       },
@@ -169,10 +172,8 @@
       },
 
       submitHandler() {
-        console.log(this.id)
         console.log(this.jumlah)
         console.log(this.dueDate)
-        //console.log(this.proyek)
       },
 
       async addRProyekbyProyek(){
@@ -186,19 +187,24 @@
           })
           console.log(response)
           if(response.data.status == "berhasil"){
-             this.snackbar = {
+            this.loading = false
+            this.snackbar = {
               message : "Insert Rincian Proyek by Proyek Success",
               color : 'green',
               show : true
-          }
-            location.replace('/listRProyekbyProyek/' + this.$route.params.id)
+            }
+            setTimeout(() => {
+              location.replace('/listRProyekbyProyek/' + this.$route.params.id)
+            }, 3000)
           }
           else if(response.data.status == "gagal"){
-              this.snackbar = {
+            this.loading = false
+            this.snackbar = {
               message : "Insert Rincian Proyek by Proyek Gagal, ID sudah tersedia",
               color : 'red',
               show : true
-          }}
+            }
+          }
         }
         catch(error){
           this.snackbar = {
@@ -209,24 +215,24 @@
           console.log(error)
         }
       },
-      async fetchProyekInRProyek(){
-            try{
-                
-                const axios = require('axios')
-                const res = await axios.get('/rproyek/show_proyek_inrproyek/' + this.$route.params.id)
-                if(res == null){
-                    console.log("Data kosong")
-                }else{
-                    this.proyekinrincian = res.data
-                    this.customer = res.data
-                    console.log(res,this.proyekinrincian)
-                }
 
-            }catch(error){
-                alert("Error")
-                console.log(error)
-            }
-        },
+      async fetchProyekInRProyek(){
+        try{
+          const axios = require('axios')
+          const res = await axios.get('/rproyek/show_proyek_inrproyek/' + this.$route.params.id)
+          if(res == null){
+              console.log("Data kosong")
+          }else{
+              this.proyekinrincian = res.data
+              this.customer = res.data
+              console.log(res,this.proyekinrincian)
+          }
+        }catch(error){
+            alert("Error")
+            console.log(error)
+        }
+      },
+
       async fetchJenisProduk(){
         try{
           const axios = require('axios')
