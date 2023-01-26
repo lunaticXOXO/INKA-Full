@@ -218,10 +218,25 @@ def update_duedate_rproyek(id_proyek):
     hasil = UpdateDueDateRProyek(id_proyek)
     return hasil
 
-
 @app.route('/rproyek/show_first_operation',methods = ['GET'])
 def show_first_operation():
     hasil = GetFirstOperation()
+    return hasil
+
+@app.route('/rproyek/show_first_operation_dsc',methods = ['GET'])
+def show_first_operation_dsc():
+    hasil = GetFirstOperationDsc()
+    return hasil
+
+
+@app.route('/rproyek/accept_operasi',methods = ['POST'])
+def accept_operasi():
+    hasil = TerimaOperasi()
+    return hasil
+
+@app.route('/rproyek/decline_operasi',methods = ['DELETE'])
+def decline_operasi():
+    hasil = BatalOperasi()
     return hasil
 
 #PRODUCT

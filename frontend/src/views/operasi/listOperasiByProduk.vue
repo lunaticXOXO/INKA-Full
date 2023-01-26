@@ -54,6 +54,16 @@
             <span v-else>{{item.produk}}</span>
       </template>
     </v-data-table>
+    
+    <div class="d-flex">
+    <v-btn color="primary" class="d-flex ml-4 mb-6" @click="terimaOperasi()">
+      Terima Operasi
+    </v-btn>
+    <v-btn color="red" class="d-flex ml-4 mb-6" @click="batalOperasi()">
+      Batal Operasi
+    </v-btn>
+  </div>
+
   </v-card>
 </template>
 
@@ -99,7 +109,67 @@
           alert("Error")
           console.log(error)
         }
+      },
+
+      async terimaOperasi(){
+        try{
+          const axios = require('axios')
+          const res = await axios.post('/rproyek/accept_operasi')
+          if(res.data.status == "berhasil"){
+            console.log("Penerimaan operasi berhasil")
+            this.snackbar = {
+              show : true,
+              message : "Penerimaan Operasi Berhasil",
+              color : "green"
+            }
+          }
+          else if(res.data.status == "gagal"){
+            this.snackbar = {
+              show : true,
+              message : "Penerimaan Operasi Gagal",
+              color : "red"
+            }
+            
+          }
+        }catch(error){
+          this.snackbar = {
+              show : true,
+              message : "Penerimaan Operasi Error",
+              color : "red"
+            }
+            console.log("")
+        }
+      },
+      async batalOperasi(){
+        try{
+          const axios = require('axios')
+          const res = await axios.delete('/rproyek/decline_operasi')
+          if(res.data.status == "berhasil"){
+            console.log("Penerimaan operasi berhasil")
+            this.snackbar = {
+              show : true,
+              message : "Penerimaan Operasi Berhasil",
+              color : "green"
+            }
+          }
+          else if(res.data.status == "gagal"){
+            this.snackbar = {
+              show : true,
+              message : "Penerimaan Operasi Gagal",
+              color : "red"
+            }
+            
+          }
+        }catch(error){
+          this.snackbar = {
+              show : true,
+              message : "Penerimaan Operasi Error",
+              color : "red"
+            }
+            console.log("")
+        }
       }
     }
+
   }
 </script>

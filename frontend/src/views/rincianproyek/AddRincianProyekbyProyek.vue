@@ -19,7 +19,7 @@
         type="number"
         ></v-text-field>
 
-        <v-date-picker width="1000" v-model="dueDate"></v-date-picker>
+        <v-date-picker width="800" v-model="dueDate" color="grey"></v-date-picker>
 
         <v-menu>
         <template v-slot:activator="{ on, attrs }">
@@ -27,7 +27,7 @@
         </template>
         </v-menu>
 
-        <v-time-picker width="300" v-model="datetime"></v-time-picker>
+        <v-time-picker width="300" v-model="datetime" format="24hr" color="grey"></v-time-picker>
 
         <v-menu>
         <template v-slot:activator="{ on, attrs }">
@@ -61,15 +61,13 @@
             <v-card-title class="text-h5 grey lighten-2">
               Pembuatan Operasi
             </v-card-title>
-            <v-card-text>
-              Melakukan Pembuatan Operasi
-            </v-card-text>
+            <br>
             <div class="mx-auto text-center">
               <v-progress-circular
                 :size="70"
                 :width="7"
                 indeterminate
-                color="primary"
+                color="grey darken-2"
               ></v-progress-circular>
               <br>
               <v-data-table
@@ -78,6 +76,15 @@
                 :headers = "headers4"
                 :items = "listOperasiBaru">
               </v-data-table>
+              <v-text-field
+                dense
+                flat
+                v-model="listKeterangan"
+                class="font-weight-bold mx-auto text-center"
+                solo
+                readonly
+                disabled
+              ></v-text-field>
             </div>
           </v-card>
         </v-dialog>
@@ -96,7 +103,7 @@
       </v-snackbar>
     </v-card>
 
-    <div class="d-flex ml-14">
+    <div class="d-flex text-center mx-auto">
       <v-card class="ml-14 text-center mt-6" width="500">
         <h3>Proyek {{this.$route.params.id}}</h3>
         <v-data-table
@@ -113,6 +120,7 @@
           </v-data-table>
       </v-card>
     </div>
+    <br><br>
   </v-app>
 </template>
 
@@ -148,7 +156,9 @@
       items : undefined,
       proyekinrincian : [],
       customer : [],
-      listOperasiBaru : []
+      listOperasiBaru : [],
+      listKeterangan : [],
+      keterangan: null
     }),
 
     watch: {
@@ -164,9 +174,10 @@
     mounted(){
       this.fetchJenisProduk(),
       this.fetchProyekInRProyek(),
-      //window.setInterval(() => {
-        this.fetchOperasiAwal()
-      //}, 2000)
+      window.setInterval(() => {
+        this.fetchOperasiAwal(),
+        this.fetchOperasiAwalDsc()
+      }, 2000)
     },
 
     methods: {
@@ -201,6 +212,21 @@
           }else{
               this.listOperasiBaru = res.data
               console.log(res,this.listOperasiBaru)
+          }
+        }catch(error){
+            console.log(error)
+        }
+      },
+
+      async fetchOperasiAwalDsc(){
+        try{
+          const axios = require('axios')
+          const res = await axios.get('/rproyek/show_first_operation_dsc')
+          if(res == null){
+              console.log("Data kosong")
+          }else{
+              this.listKeterangan = res.data
+              console.log(res,this.listKeterangan)
           }
         }catch(error){
             console.log(error)

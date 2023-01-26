@@ -73,21 +73,52 @@
     </v-card>
       
     <v-card 
-        class="mx-auto text-center mt-10 pa-6 mb-10"
+        class="mx-auto text-center mt-10 pa-2 mb-10"
         max-width = "1450">
         <br>
         <div class="d-flex">
-            <v-menu class="ml-4 mt-6">
+            <v-menu 
+              class="mt-6"
+              transition="scale-transition"
+              offset-y
+              max-width="290px"
+              min-width="290px"
+            >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field class="mx-10" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal" prepend-icon="mdi-calendar"></v-text-field>
             </template>
-            <v-date-picker width="250" v-model="dueDate"></v-date-picker>
+            <v-date-picker full-width v-model="dueDate"></v-date-picker>
           </v-menu>
-          <v-menu class="ml-4 mt-6">
+          
+          <v-menu
+            ref="menu"
+            v-model="menu2"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            :return-value.sync="time"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="290px"
+          >
             <template v-slot:activator="{ on, attrs }">
-              <v-text-field class="mx-10" :value="datetime" v-bind="attrs" v-on="on" label="Due Time" prepend-icon="mdi-clock"></v-text-field>
+              <v-text-field
+                class="mx-10"
+                v-model="datetime"
+                label="Due Time"
+                prepend-icon="mdi-clock-time-four-outline"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              ></v-text-field>
             </template>
-            <v-time-picker format="24hr" v-model="datetime"></v-time-picker>
+            <v-time-picker
+              v-if="menu2"
+              v-model="datetime"
+              full-width
+              format="24hr"
+              @click:minute="$refs.menu.save(time)"
+            ></v-time-picker>
           </v-menu>
         </div>
         <br>
@@ -111,6 +142,8 @@
 <script>
   export default {
     data: () => ({
+      time: null,
+      menu2: false,
       valid: true,
       supply: '',
       supplier: undefined,
