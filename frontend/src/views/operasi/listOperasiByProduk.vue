@@ -56,10 +56,10 @@
     </v-data-table>
     
     <div class="d-flex">
-    <v-btn color="primary" class="d-flex ml-4 mb-6" @click="terimaOperasi()">
+    <v-btn color="primary" class="d-flex ml-4 mb-6"  @click="terimaOperasi()" :disabled="isActive">
       Terima Operasi
     </v-btn>
-    <v-btn color="red" class="d-flex ml-4 mb-6" @click="batalOperasi()">
+    <v-btn color="red" class="d-flex ml-4 mb-6" @click="batalOperasi()" :disabled="isActive">
       Batal Operasi
     </v-btn>
   </div>
@@ -71,6 +71,8 @@
   export default {
     data(){
       return {
+        
+        isActive : false,
         valid : true,
         column : [
           {text : 'ID',               value : 'id'},
@@ -91,6 +93,9 @@
 
     mounted(){
       this.fetchOperasi()
+      // window.setInterval(() => {
+      //   this.fetchOperasi()
+      // }, 1000)
     },
 
     methods : {
@@ -101,7 +106,13 @@
           if (res.data == null){
             console.log('Operasi Kosong')
           }else{
+
             this.operation = res.data
+            if(res.data[0].confirm == 1){
+                
+                this.isActive = true
+              
+            }
             console.log(res,this.operation)
           }
         }
@@ -122,6 +133,11 @@
               message : "Penerimaan Operasi Berhasil",
               color : "green"
             }
+            
+            setTimeout(() => {
+              location.replace('/listOperasiByProduk/' + this.$route.params.id)
+            }, 1000)
+            console.log("terima operasi")
           }
           else if(res.data.status == "gagal"){
             this.snackbar = {
@@ -151,6 +167,8 @@
               message : "Penerimaan Operasi Berhasil",
               color : "green"
             }
+            console.log("batal operasi")
+            
           }
           else if(res.data.status == "gagal"){
             this.snackbar = {
@@ -158,9 +176,17 @@
               message : "Penerimaan Operasi Gagal",
               color : "red"
             }
+            console.log("disable button")
             
           }
-        }catch(error){
+
+           
+        setTimeout(() => {
+          location.replace('/lihatProyek')
+            }, 1000)
+        }
+        
+        catch(error){
           this.snackbar = {
               show : true,
               message : "Penerimaan Operasi Error",

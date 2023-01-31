@@ -294,18 +294,31 @@ def BatalOperasi():
     cursor = conn.cursor()
     try:
         query_delete_cplrinci = "DELETE FROM cpl_rinciproyek WHERE confirm IS NULL"
-        query_delete_cplproduk = "DELETE FROM cpl_produk WHERE confirm IS NULL"
-        query_delete_operasi  = "DELETE FROM prd_d_operasi WHERE confirm IS NULL"
-        query_delete_produk = "DELETE FROM prd_d_produk WHERE confirm IS NULL"
-        query_delete_rinci = "DELETE FROM prd_d_rincianproyek WHERE confirm IS NULL"
-        query_delete_proyek = "DELETE FROM prd_d_proyek WHERE confirm != 1 OR customerid IS NULL"
         cursor.execute(query_delete_cplrinci)
+        conn.commit()
+
+        query_delete_cplproduk = "DELETE FROM cpl_produk WHERE confirm IS NULL"
         cursor.execute(query_delete_cplproduk)
+        conn.commit()
+
+        query_delete_operasi  = "DELETE FROM prd_d_operasi WHERE confirm IS NULL"
         cursor.execute(query_delete_operasi)
+        conn.commit()
+
+        query_delete_produk = "DELETE FROM prd_d_produk WHERE confirm IS NULL"
         cursor.execute(query_delete_produk)
+        conn.commit()
+
+        query_delete_rinci = "DELETE FROM prd_d_rincianproyek WHERE confirm IS NULL"
         cursor.execute(query_delete_rinci)
+        conn.commit()
+     
+
+        query_delete_proyek = "DELETE FROM prd_d_proyek WHERE confirm IS NULL OR customerid IS NULL"
         cursor.execute(query_delete_proyek)
         conn.commit()
+        
+        
         cursor.close()
         conn.close()
         hasil = {"status" : "berhasil"}

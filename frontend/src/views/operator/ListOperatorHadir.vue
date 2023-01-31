@@ -163,24 +163,22 @@ export default {
         this.getLinkOperator()
     },
     methods : {
-
         async getLinkOperator(){
-        try{
+            try{
+                const axios = require('axios')
+                const res = await axios.get('/operator/get_operator_hadir')
+                if (res.data == null){
+                    console.log("data kosong")
+                }else{
+                    this.listOperator = res.data
+                    console.log("data terisi")
+                    console.log(res,this.listOperator)
+                }
 
-            const axios = require('axios')
-            const res = await axios.get('/operator/get_operator_hadir')
-            if (res.data == null){
-                console.log("data kosong")
-            }else{
-                this.listOperator = res.data
-                console.log("data terisi")
-                console.log(res,this.listOperator)
+            }catch(error){
+                console.log(error)
             }
-
-        }catch(error){
-            console.log(error)
         }
-    }
     },
 }
 </script>
