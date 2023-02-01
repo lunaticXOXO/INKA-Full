@@ -25,7 +25,7 @@
             </v-img>
             <v-spacer></v-spacer>
             <span class="font-weight-light white--text ">Welcome,</span>
-            <span class="white--text mr-6">user umum</span>
+            <span class="white--text mr-6">umum</span>
             <v-btn @click="logout()" color="grey">
                 <span>Sign Out</span>
                 <v-img src="../assets/logo/arrow-right.png"></v-img>
@@ -94,6 +94,15 @@ export default {
                     { title: 'Tambah Operator', icon: 'mdi-account-plus', route: '/tambahOperator'},
                 ],
                 title: 'Operator',
+                },
+
+                {
+                action: 'mdi-account-star',
+                active: false,
+                items: [
+                    { title: 'Pendaftaran RFID', icon: 'mdi-playlist-check', route: '/listKartu'}
+                ],
+                title: 'RFID',
                 },
 
                 {

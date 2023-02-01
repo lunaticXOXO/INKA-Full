@@ -88,6 +88,8 @@ import MaterialLogin from '../views/material/MaterialLogin.vue'
 import ListOperasibyProduct from '../views/operasi/listOperasiByProduk.vue'
 import TambahJenisProdukInternal from '../views/produk/TambahJenisProdukInternal.vue'
 import TambahStrukturJenisProdukByParent from '../views/produk/TambahStrukturJenisProdukByParent.vue'
+import ListKartu from '../views/operator/PendaftaranKartu.vue'
+import FormKartu from '../views/operator/FormPendaftaranKartu.vue'
 
 Vue.use(VueRouter)
 
@@ -891,6 +893,24 @@ const routes = [
     component : TambahStrukturJenisProdukByParent,
     meta : {
       title : "Tambah Node Sturktur Jenis Produk - PT.INKA"
+    }
+  },
+
+  {
+    path : '/listKartu',
+    name : 'Daftar RFID',
+    component : ListKartu,
+    meta : {
+      title : "Daftar RFID - PT.INKA"
+    }
+  },
+
+  {
+    path : '/daftarKartu/:id',
+    name : 'Form Daftar RFID',
+    component : FormKartu,
+    meta : {
+      title : "Form Daftar RFID - PT.INKA"
     }
   },
 ]

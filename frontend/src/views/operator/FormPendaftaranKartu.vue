@@ -1,0 +1,89 @@
+<template>
+    <v-app>
+      <v-card
+        class="mx-auto text-center mt-6"
+        width="1000">
+        <br>
+        <h1>Pendaftaran Kartu</h1>
+        <v-form
+          class="pa-6"
+          ref="form"
+          @submit.prevent="submitHandler"
+          v-model="valid"
+          lazy-validation>
+
+          <span class="font-weight-light black--text ">Silahkan Input Kartu RFID</span>
+          <br><br>
+          <v-text-field
+           dense
+           v-model="id"
+           @keyup.enter="validate()"
+           autofocus>
+          </v-text-field>
+        </v-form>
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+          {{snackbar.message}}
+        </v-snackbar>
+      </v-card>
+    </v-app>
+  </template>
+  
+  <script>
+    export default {
+      data: () => ({
+        valid: true,
+        snackbar: {
+          show: false,
+          message: null,
+          color: null
+        },
+        id: '',
+      }),
+  
+      methods: {
+        validate () {
+          if(this.$refs.form.validate()){
+            this.InsertKartu()
+          }
+        },
+  
+        submitHandler() {
+          console.log(this.id)
+        },
+  
+        async InsertKartu(){
+          try{
+            const axios = require('axios');
+            const response = await axios.post('/operator/daftarKartu/' + this.$route.params.id,
+              { id: this.id
+              }
+             );
+            console.log(response,this.data)
+            if(response.data.status == "berhasil"){
+               this.snackbar = {
+                message : "Daftar Kartu RFID Berhasil",
+                color : 'green',
+                show : true
+              
+            }
+            location.replace('/proyekListbyCustomer/' + this.$route.params.id)
+            }
+            else if(response.data.status == "gagal"){
+                this.snackbar = {
+                message : "Daftar Kartu RFID Gagal",
+                color : 'red',
+                show : true
+            }}
+          }
+          catch(error){
+            this.snackbar = {
+              message : "Daftar Kartu RFID Error",
+              color : 'error',
+              show : true
+            }
+            console.log(error)
+          }
+        },
+      }
+    }
+  </script>
