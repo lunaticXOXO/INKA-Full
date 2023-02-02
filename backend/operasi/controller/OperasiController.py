@@ -404,12 +404,10 @@ def IfOperasiSiap(username):
     return make_response(jsonify(json_data),200)
 
 
-
-
 def ShowOperasiByProduct(idProduct):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT * FROM prd_d_operasi WHERE produk = '"+idProduct+"' ORDER BY rencanaMulai ASC"
+    query = "SELECT * FROM prd_d_operasi WHERE produk = '"+idProduct+"' ORDER BY rencanaMulai ASC LIMIT 1"
     cursor.execute(query)
 
     records = cursor.fetchall()

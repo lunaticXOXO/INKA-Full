@@ -8,6 +8,7 @@
       height="100"
       hide-delimiters
       :show-arrows="false"
+      :interval="15000"
     >
       <v-carousel-item
         v-for="(slide, i) in slides"
@@ -30,7 +31,7 @@
       </v-carousel-item>
     </v-carousel>
 
-    <v-carousel cycle :show-arrows="false" delimiter-icon="mdi-minus" height="700">
+    <v-carousel cycle :show-arrows="false" delimiter-icon="mdi-minus" height="700" :interval="15000">
       <v-carousel-item>
         <v-row
           class="fill-height"
@@ -57,10 +58,228 @@
       </v-carousel-item>
       
       <v-carousel-item>
-        Operator pada WS
-        <v-data-table>
+        <v-row
+          class="fill-height"
+          align="center"
+          justify="center"
+        >
+          <v-col
+          v-for=" index in listOperatorWS01"
+          :key="index"
+          cols="8"
+          sm="auto"
+          >
+            <v-img
+                height="200"
+                width="150" 
+                :src="require(`@/views/operator/foto/${index.link}`)" 
+            >
+            </v-img>
+              <span class="mx-auto"><b>{{index.uuid}}</b></span>
+            <br>
+            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+          </v-col> 
+        </v-row>
+      </v-carousel-item>
 
-        </v-data-table>
+      <v-carousel-item>
+        <v-row
+          class="fill-height"
+          align="center"
+          justify="center"
+        >
+          <v-col
+          v-for=" index in listOperatorWS02"
+          :key="index"
+          cols="8"
+          sm="auto"
+          >
+            <v-img
+                height="200"
+                width="150" 
+                :src="require(`@/views/operator/foto/${index.link}`)" 
+            >
+            </v-img>
+              <span class="mx-auto"><b>{{index.uuid}}</b></span>
+            <br>
+            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+          </v-col> 
+        </v-row>
+      </v-carousel-item>
+
+      <v-carousel-item>
+        <v-row
+          class="fill-height"
+          align="center"
+          justify="center"
+        >
+          <v-col
+          v-for=" index in listOperatorWS03"
+          :key="index"
+          cols="8"
+          sm="auto"
+          >
+            <v-img
+                height="200"
+                width="150" 
+                :src="require(`@/views/operator/foto/${index.link}`)" 
+            >
+            </v-img>
+              <span class="mx-auto"><b>{{index.uuid}}</b></span>
+            <br>
+            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+          </v-col> 
+        </v-row>
+      </v-carousel-item>
+
+      <v-carousel-item>
+        <v-row
+          class="fill-height"
+          align="center"
+          justify="center"
+        >
+          <v-col
+          v-for=" index in listOperatorWS04"
+          :key="index"
+          cols="8"
+          sm="auto"
+          >
+            <v-img
+                height="200"
+                width="150" 
+                :src="require(`@/views/operator/foto/${index.link}`)" 
+            >
+            </v-img>
+              <span class="mx-auto"><b>{{index.uuid}}</b></span>
+            <br>
+            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+          </v-col> 
+        </v-row>
+      </v-carousel-item>
+
+      <v-carousel-item>
+        <v-row
+          class="fill-height"
+          align="center"
+          justify="center"
+        >
+          <v-col
+          v-for=" index in listOperatorWS05"
+          :key="index"
+          cols="8"
+          sm="auto"
+          >
+            <v-img
+                height="200"
+                width="150" 
+                :src="require(`@/views/operator/foto/${index.link}`)" 
+            >
+            </v-img>
+              <span class="mx-auto"><b>{{index.uuid}}</b></span>
+            <br>
+            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+          </v-col> 
+        </v-row>
+      </v-carousel-item>
+
+      <v-carousel-item>
+        <v-row
+          class="fill-height"
+          align="center"
+          justify="center"
+        >
+          <v-col
+          v-for=" index in listOperatorWS06"
+          :key="index"
+          cols="8"
+          sm="auto"
+          >
+            <v-img
+                height="200"
+                width="150" 
+                :src="require(`@/views/operator/foto/${index.link}`)" 
+            >
+            </v-img>
+              <span class="mx-auto"><b>{{index.uuid}}</b></span>
+            <br>
+            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+          </v-col> 
+        </v-row>
+      </v-carousel-item>
+
+      <v-carousel-item>
+        <v-row
+          class="fill-height"
+          align="center"
+          justify="center"
+        >
+          <v-col
+          v-for=" index in listOperatorWS07"
+          :key="index"
+          cols="8"
+          sm="auto"
+          >
+            <v-img
+                height="200"
+                width="150" 
+                :src="require(`@/views/operator/foto/${index.link}`)" 
+            >
+            </v-img>
+              <span class="mx-auto"><b>{{index.uuid}}</b></span>
+            <br>
+            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+          </v-col> 
+        </v-row>
+      </v-carousel-item>
+
+      <v-carousel-item>
+        <v-row
+          class="fill-height"
+          align="center"
+          justify="center"
+        >
+          <v-col
+          v-for=" index in listOperatorWS08"
+          :key="index"
+          cols="8"
+          sm="auto"
+          >
+            <v-img
+                height="200"
+                width="150" 
+                :src="require(`@/views/operator/foto/${index.link}`)" 
+            >
+            </v-img>
+              <span class="mx-auto"><b>{{index.uuid}}</b></span>
+            <br>
+            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+          </v-col> 
+        </v-row>
+      </v-carousel-item>
+
+      <v-carousel-item>
+        <v-row
+          class="fill-height"
+          align="center"
+          justify="center"
+        >
+          <v-col
+          v-for=" index in listOperatorWS09"
+          :key="index"
+          cols="8"
+          sm="auto"
+          >
+            <v-img
+                height="200"
+                width="150" 
+                :src="require(`@/views/operator/foto/${index.link}`)" 
+            >
+            </v-img>
+              <span class="mx-auto"><b>{{index.uuid}}</b></span>
+            <br>
+            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+          </v-col> 
+        </v-row>
       </v-carousel-item>
 
       <v-carousel-item>
@@ -221,6 +440,11 @@
           {text : 'Customer ID',      value : 'customerid'},
           {text : 'Progress',         value : 'percentage'},
         ],
+        headers2:[   
+          {text : 'ID',         value : 'operatorid'},
+          {text : 'WS',         value : 'workstationCode'},
+          {text : 'Login',      value : 'login'},
+        ],
         proyek:[],
         customer:[],
         colors: [
@@ -232,12 +456,29 @@
         ],
         slides: [
           'Operator Hadir',
-          'Operator pada WS',
+          'Operator pada WS01',
+          'Operator pada WS02',
+          'Operator pada WS03',
+          'Operator pada WS04',
+          'Operator pada WS05',
+          'Operator pada WS06',
+          'Operator pada WS07',
+          'Operator pada WS08',
+          'Operator pada WS09',
           'Jadwal Operasi WS',
           'Material pada Gudang',
           'Persentase Proyek',
         ],
         listOperator: [],
+        listOperatorWS01: [],
+        listOperatorWS02: [],
+        listOperatorWS03: [],
+        listOperatorWS04: [],
+        listOperatorWS05: [],
+        listOperatorWS06: [],
+        listOperatorWS07: [],
+        listOperatorWS08: [],
+        listOperatorWS09: [],
         itemsWS00: undefined,
         itemsWS01: undefined,
         itemsWS02: undefined,
@@ -295,7 +536,8 @@
       this.fetchDataStatusWS09(),
       this.fetchData(),
       this.fetchCustomer(),
-      this.tanggal()
+      this.tanggal(),
+      this.fetchOperatorOnWS()
     },
 
     methods : {
@@ -321,6 +563,23 @@
           }else{
               this.proyek = res.data;
               console.log(res,this.data)
+          }
+        } 
+        catch(error){
+            alert("Error")
+            console.log(error)
+        }
+      },
+
+      async fetchOperatorOnWS(){
+        try{
+          const axios = require('axios')
+          const res = await axios.get(`/operator/get_operator_on_ws`);
+          if(res.data == null){
+              console.log("Operator Kosong")
+          }else{
+              this.listOperatorOnWS = res.data;
+              console.log(res,this.listOperatorOnWS)
           }
         } 
         catch(error){

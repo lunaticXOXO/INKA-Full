@@ -1,6 +1,7 @@
 from flask import request,make_response,jsonify,session
 import db.db_handler as database
 import hashlib
+import datetime
 
 def AddQualification():
     conn = database.connector()
@@ -113,7 +114,6 @@ def GetMaterialbyOperatorLogin(username):
     return make_response(jsonify(json_data),200)
 
 
-
 def AddLevelByOperator(code):
     conn = database.connector()
     cursor = conn.cursor()
@@ -211,8 +211,6 @@ def ShowOperator():
     return make_response(jsonify(json_data),200)
 
 
-
-
 def GetLinkOperator(code):
     conn = database.connector()
     cursor = conn.cursor()
@@ -280,5 +278,56 @@ def GetOperatorHadir():
     return make_response(jsonify(json_data),200)
     
 
+def AddCardByIdOperator(code):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query_get_id = "SELECT code FROM opd_r_operator WHERE code = '"+code+"'"
+    cursor.execute(query_get_id)
+    records = cursor.fetchall()
+    for index in records:
+        code = index[0]
+    query_insert_card = "INSERT INTO opr_d_dictoperator(uuid,operatorid,created)VALUES(%s,%s,%s)"
+    try:
+        data = request.json
+        uuid = data["uuid"]
+        created = datetime.datetime.now()
+        values = (uuid,code,created)
+        cursor.execute(query_insert_card,values)
+        conn.commit()
+        cursor.close()
+        conn.close()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+    
 
+def ShowOperatorRfid():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query_get_operatorRfid = "SELECT a.code,a.nama,a.email,a.adress1,a.city,a.phone,a.postalcode,b.uuid FROM opd_r_operator a  JOIN opr_d_dictoperator b ON b.operatorid = a.code"
+    cursor.execute(query_get_operatorRfid)
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
 
+def GetOperatorOnWS():
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM opr_d_operatoronws WHERE logout IS NULL"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)

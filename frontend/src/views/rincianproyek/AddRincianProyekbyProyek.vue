@@ -294,7 +294,7 @@
       async fetchJenisProduk(){
         try{
           const axios = require('axios')
-          const res = await axios.get('/jproduct/get_jproduct')
+          const res = await axios.get('/jproduct/show_jproduct_eksternal')
           if(res.data == null){
             console.log("data kosong")
           }else{

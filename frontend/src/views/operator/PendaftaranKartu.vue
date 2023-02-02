@@ -46,6 +46,10 @@
                 <v-text-field v-model="editedItem.postalcode" :hide-details="true" dense single-line v-if="item.code == editedItem.code" ></v-text-field>
                 <span v-else>{{item.postalcode}}</span>
             </template>
+            <template v-slot:[`item.uuid`]="{ item }">
+                <v-text-field v-model="editedItem.uuid" :hide-details="true" dense single-line v-if="item.code == editedItem.code" ></v-text-field>
+                <span v-else>{{item.uuid}}</span>
+            </template>
             <template v-slot:[`item.aksi`]="{ item }">
               <div>
                 <router-link :to="{name : 'Form Daftar RFID',params:{id : `${item.code}`}}">
@@ -78,10 +82,11 @@
             {text : 'Code',         value : 'code'},
             {text : 'Nama',         value : 'nama'},
             {text : 'Email',        value : 'email'},
-            {text : 'Alamat',     value : 'adress1'},
+            {text : 'Alamat',       value : 'adress1'},
             {text : 'Kota',         value : 'city'},
             {text : 'Phone',        value : 'phone'},
             {text : 'Kode Pos',     value : 'postalcode'},
+            {text : 'UUID',         value : 'uuid'},
             {text : 'Action',       value : 'aksi'}
         ],
         operators : [],
@@ -115,7 +120,7 @@
       async fetchOperator(){
         try{
           const axios = require('axios');
-          const res = await axios.get('/operator/get_operator');
+          const res = await axios.get('/operator/get_operator_rfid');
           if (res.data == null){
             alert('Operator Kosong')
           }else{

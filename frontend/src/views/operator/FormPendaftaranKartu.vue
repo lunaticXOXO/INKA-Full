@@ -16,7 +16,7 @@
           <br><br>
           <v-text-field
            dense
-           v-model="id"
+           v-model="uuid"
            @keyup.enter="validate()"
            autofocus>
           </v-text-field>
@@ -37,7 +37,7 @@
           message: null,
           color: null
         },
-        id: '',
+        uuid: '',
       }),
   
       methods: {
@@ -55,7 +55,7 @@
           try{
             const axios = require('axios');
             const response = await axios.post('/operator/daftarKartu/' + this.$route.params.id,
-              { id: this.id
+              { uuid: this.uuid
               }
              );
             console.log(response,this.data)
@@ -66,7 +66,7 @@
                 show : true
               
             }
-            location.replace('/proyekListbyCustomer/' + this.$route.params.id)
+            location.replace('/listKartu' + this.$route.params.id)
             }
             else if(response.data.status == "gagal"){
                 this.snackbar = {

@@ -797,6 +797,11 @@ def get_operator():
     hasil = ShowOperator()
     return hasil
 
+@app.route('/operator/get_operator_rfid',methods = ['GET'])
+def get_operator_rfid():
+    hasil = ShowOperatorRfid()
+    return hasil
+
 @app.route('/qualification/add_qualification',methods = ['POST'])
 def add_qualification():
     hasil = AddQualification()
@@ -854,6 +859,16 @@ def get_link_operator(code):
 @app.route('/operator/get_operator_hadir',methods = ['GET'])
 def get_operator_hadir():
     hasil = GetOperatorHadir()
+    return hasil
+
+@app.route('/operator/daftarKartu/<code>',methods = ['POST'])
+def daftarKartu(code):
+    hasil = AddCardByIdOperator(code)
+    return hasil
+
+@app.route('/operator/get_operator_on_ws',methods = ['GET'])
+def get_operator_on_ws():
+    hasil = GetOperatorOnWS()
     return hasil
 
 # Process Requirement

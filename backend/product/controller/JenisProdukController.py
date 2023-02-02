@@ -106,6 +106,8 @@ def GetAllJenisProduk():
     conn.commit()
     return make_response(jsonify(json_data),200)
 
+
+
 def GetJenisProdukbyRincianProyek(id_rproyek):
     conn = database.connector()
     cursor = conn.cursor()
