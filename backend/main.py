@@ -871,6 +871,56 @@ def get_operator_on_ws():
     hasil = GetOperatorOnWS()
     return hasil
 
+
+@app.route('/operator/get_operator_on_ws01',methods = ['GET'])
+def get_operator_on_ws01():
+    hasil = GetOperatorOnWS01()
+    return hasil
+
+@app.route('/operator/get_operator_on_ws02',methods = ['GET'])
+def get_operator_on_ws02():
+    hasil = GetOperatorOnWS02()
+    return hasil
+
+
+@app.route('/operator/get_operator_on_ws03',methods = ['GET'])
+def get_operator_on_ws03():
+    hasil = GetOperatorOnWS03()
+    return hasil
+
+
+@app.route('/operator/get_operator_on_ws04',methods = ['GET'])
+def get_operator_on_ws04():
+    hasil = GetOperatorOnWS04()
+    return hasil
+
+
+@app.route('/operator/get_operator_on_ws05',methods = ['GET'])
+def get_operator_on_ws05():
+    hasil = GetOperatorOnWS05()
+    return hasil
+
+
+@app.route('/operator/get_operator_on_ws06',methods = ['GET'])
+def get_operator_on_ws06():
+    hasil = GetOperatorOnWS06()
+    return hasil
+
+@app.route('/operator/get_operator_on_ws07',methods = ['GET'])
+def get_operator_on_ws07():
+    hasil = GetOperatorOnWS07()
+    return hasil
+
+@app.route('/operator/get_operator_on_ws08',methods = ['GET'])
+def get_operator_on_ws08():
+    hasil = GetOperatorOnWS08()
+    return hasil
+
+@app.route('/operator/get_operator_on_ws09',methods = ['GET'])
+def get_operator_on_ws09():
+    hasil = GetOperatorOnWS09()
+    return hasil
+
 # Process Requirement
 @app.route('/requirement/add_process_requirement/<id>',methods = ['POST'])
 def add_process_requirement(id):

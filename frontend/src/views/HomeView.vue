@@ -537,7 +537,16 @@
       this.fetchData(),
       this.fetchCustomer(),
       this.tanggal(),
-      this.fetchOperatorOnWS()
+      this.fetchOperatorOnWS(),
+      this.fetchOperatorOnWS01(),
+      this.fetchOperatorOnWS02(),
+      this.fetchOperatorOnWS03(),
+      this.fetchOperatorOnWS04(),
+      this.fetchOperatorOnWS05(),
+      this.fetchOperatorOnWS06(),
+      this.fetchOperatorOnWS07(),
+      this.fetchOperatorOnWS08(),
+      this.fetchOperatorOnWS09()
     },
 
     methods : {
@@ -729,6 +738,120 @@
           console.log(res,this.itemsWS09)
         }
       },
+
+      async fetchOperatorOnWS01(){
+        const axios = require('axios')
+        const res = await axios.get('/operator/get_operator_on_ws01')
+        if(res.data == null){
+          console.log("Data kosong")
+        }else{
+          
+          this.listOperatorWS01 = res.data
+          console.log(res,this.listOperatorWS01)
+        }
+      },
+
+      async fetchOperatorOnWS02(){
+        const axios = require('axios')
+        const res = await axios.get('/operator/get_operator_on_ws02')
+        if(res.data == null){
+          console.log("Data kosong")
+        }else{
+          
+          this.listOperatorWS02 = res.data
+          console.log(res,this.listOperatorWS02)
+        }
+      },
+
+      async fetchOperatorOnWS03(){
+        const axios = require('axios')
+        const res = await axios.get('/operator/get_operator_on_ws03')
+        if(res.data == null){
+          console.log("Data kosong")
+        }else{
+          
+          this.listOperatorWS03 = res.data
+          console.log(res,this.listOperatorWS03)
+        }
+      },
+
+      async fetchOperatorOnWS04(){
+        const axios = require('axios')
+        const res = await axios.get('/operator/get_operator_on_ws04')
+        if(res.data == null){
+          console.log("Data kosong")
+        }else{
+          
+          this.listOperatorWS04 = res.data
+          console.log(res,this.listOperatorWS04)
+        }
+      },
+
+      async fetchOperatorOnWS05(){
+        const axios = require('axios')
+        const res = await axios.get('/operator/get_operator_on_ws05')
+        if(res.data == null){
+          console.log("Data kosong")
+        }else{
+          
+          this.listOperatorWS05 = res.data
+          console.log(res,this.listOperatorWS05)
+        }
+      },
+
+      async fetchOperatorOnWS06(){
+        const axios = require('axios')
+        const res = await axios.get('/operator/get_operator_on_ws06')
+        if(res.data == null){
+          console.log("Data kosong")
+        }else{
+          
+          this.listOperatorWS06 = res.data
+          console.log(res,this.listOperatorWS06)
+        }
+      },
+
+      async fetchOperatorOnWS07(){
+        const axios = require('axios')
+        const res = await axios.get('/operator/get_operator_on_ws07')
+        if(res.data == null){
+          console.log("Data kosong")
+        }else{
+          
+          this.listOperatorWS07 = res.data
+          console.log(res,this.listOperatorWS07)
+        }
+      },
+
+      async fetchOperatorOnWS08(){
+        const axios = require('axios')
+        const res = await axios.get('/operator/get_operator_on_ws08')
+        if(res.data == null){
+          console.log("Data kosong")
+        }else{
+          
+          this.listOperatorWS08 = res.data
+          console.log(res,this.listOperatorWS08)
+        }
+      },
+
+      async fetchOperatorOnWS09(){
+        const axios = require('axios')
+        const res = await axios.get('/operator/get_operator_on_ws09')
+        if(res.data == null){
+          console.log("Data kosong")
+        }else{
+          
+          this.listOperatorWS09 = res.data
+          console.log(res,this.listOperatorWS09)
+        }
+      },
+
+
+
+
+      
+
     },
   }
 </script>

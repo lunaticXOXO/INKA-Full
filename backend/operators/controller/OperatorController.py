@@ -331,3 +331,146 @@ def GetOperatorOnWS():
         json_data.append(dict(zip(row_headers,data)))
 
     return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS01():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws01' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+def GetOperatorOnWS02():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws02' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS03():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws03' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS04():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws04' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS05():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws05'GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS06():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws06' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS07():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws07' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS08():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws08' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS09():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws09' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)

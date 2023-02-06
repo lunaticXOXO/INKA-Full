@@ -391,6 +391,7 @@ export default {
         async fetchOperasiLayak(){
             try{
                 const axios = require('axios')
+                this.namaOperator = this.loginService.getCurrentUsername()
                 const res = await axios.get('/operasi/show_operasilayak/' + this.loginService.getCurrentUsername())
                 if(res.data.length == null){
                     console.log("Data kosong")
