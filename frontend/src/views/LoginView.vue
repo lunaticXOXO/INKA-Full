@@ -88,8 +88,11 @@ export default {
                             let uname
                             tipeUser = response.data.userType
                             uname = response.data.username
-                            this.loginService.addToUserType(tipeUser)
-                            this.loginService.addToUsername(uname)
+                            console.log("Tipe User : ",tipeUser)
+                            console.log("Username : ",uname )
+
+                            this.loginService.addToUserType(response.data.userType)
+                            this.loginService.addToUsername(response.data.username)
                             this.loading = false
                             this.snackBar = true
                             location.replace("/")

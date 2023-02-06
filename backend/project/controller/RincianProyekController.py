@@ -8,6 +8,7 @@ from flask import request,make_response,jsonify
 import random
 import string
 import datetime
+import time
 
 def GetAllRincianProyek():
     conn = db.connector()
@@ -150,11 +151,33 @@ def AddRincianProyekByProyek(id_proyek):
         cursor.execute(query,values)
        
         conn.commit()
-
+         
         cursor.close()
         conn.close()
-        
+
+        boolean = True
+        counter = 1
+        counter2 = 0
+
+        while boolean :
+            f = open("C:\\Users\Rispro LPDP\operasi04\demofile3.txt", "r")
+            read = f.read()
+            print("nilai : ",read)
+            if read == '0':
+                boolean = True
+
+            if read == '1' and counter == 1 :
+                counter  = 1
+                counter2 = counter2 + 1
+            
+            if read == '1' and counter2 > counter:    
+                boolean = False
+                break
+            print("counter1 : ",counter)
+            print("counter2 : ", counter2)
+            time.sleep(5)
         hasil = {"status" : "berhasil"}
+
         print("Rincian Proyek Baru Ditambahkan!")
 
     except Exception as e:
@@ -162,6 +185,51 @@ def AddRincianProyekByProyek(id_proyek):
         hasil = {"status" : "gagal"}
     
     return hasil
+
+
+def GetFirstOperation():
+    conn = db.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id,a.rencanaMulai FROM prd_d_operasi a WHERE confirm IS NULL ORDER BY a.rencanaMulai ASC LIMIT 1"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    keterangan2 = ""
+    headers = "keterangan"
+   
+    for index in records:
+        renmul = index[1]
+        if renmul < datetime.datetime.now():
+            keterangan2 = "Terlambat"
+        elif renmul > datetime.datetime.now():
+            keterangan2 = "Tepat"
+
+    row_headers = [x[0] for x in cursor.description]
+
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200) 
+
+
+def GetFirstOperationDsc():
+    conn = db.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id,a.rencanaMulai FROM prd_d_operasi a WHERE confirm IS NULL ORDER BY a.rencanaMulai ASC LIMIT 1"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    keterangan2 = []
+   
+    for index in records:
+        renmul = index[1]
+        if renmul < datetime.datetime.now():
+            keterangan2 = "Terlambat"
+        elif renmul > datetime.datetime.now():
+            keterangan2 = "Tepat"
+    
+    print(keterangan2)
+
+    return make_response(jsonify(keterangan2),200) 
 
 
 def GenerateSNProduct():
@@ -197,8 +265,67 @@ def UpdateRProyek(id_rproyek):
 
 
 
+def TerimaOperasi():
+    conn = db.connector()
+    cursor = conn.cursor()
+    try:
+        query_accept_rinci = "UPDATE prd_d_rincianproyek SET confirm = 1 WHERE confirm IS NULL"
+        query_accept_product = "UPDATE prd_d_produk SET confirm = 1 WHERE confirm IS NULL"
+        query_accept_operasi = "UPDATE prd_d_operasi SET confirm = 1 WHERE confirm IS NULL"
+        query_accept_cpl_produk = "UPDATE cpl_produk SET confirm = 1 WHERE confirm IS NULL"
+        query_accept_cplrinci = "UPDATE cpl_rinciproyek SET confirm = 1 WHERE confirm IS NULL"
+
+        cursor.execute(query_accept_rinci)
+        cursor.execute(query_accept_product)
+        cursor.execute(query_accept_operasi)
+        cursor.execute(query_accept_cpl_produk)
+        cursor.execute(query_accept_cplrinci)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+        
+    except Exception as e:
+        hasil = {"status" : "gagal"}
+        print("Error",str(e))
+    return hasil
 
 
+def BatalOperasi():
+    conn = db.connector()
+    cursor = conn.cursor()
+    try:
+        query_delete_cplrinci = "DELETE FROM cpl_rinciproyek WHERE confirm IS NULL"
+        cursor.execute(query_delete_cplrinci)
+        conn.commit()
+
+        query_delete_cplproduk = "DELETE FROM cpl_produk WHERE confirm IS NULL"
+        cursor.execute(query_delete_cplproduk)
+        conn.commit()
+
+        query_delete_operasi  = "DELETE FROM prd_d_operasi WHERE confirm IS NULL"
+        cursor.execute(query_delete_operasi)
+        conn.commit()
+
+        query_delete_produk = "DELETE FROM prd_d_produk WHERE confirm IS NULL"
+        cursor.execute(query_delete_produk)
+        conn.commit()
+
+        query_delete_rinci = "DELETE FROM prd_d_rincianproyek WHERE confirm IS NULL"
+        cursor.execute(query_delete_rinci)
+        conn.commit()
+     
+
+        query_delete_proyek = "DELETE FROM prd_d_proyek WHERE confirm IS NULL OR customerid IS NULL"
+        cursor.execute(query_delete_proyek)
+        conn.commit()
+        
+        
+        cursor.close()
+        conn.close()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
 
 def fetchOperatorQualification():
     conn = db.connector()

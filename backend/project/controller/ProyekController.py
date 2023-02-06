@@ -8,7 +8,7 @@ def GetAllProyek():
   conn = database.connector()
   cursor = conn.cursor()
 
-  query = "SELECT * FROM prd_d_proyek"
+  query = "SELECT * FROM prd_d_proyek WHERE customerid IS NOT NULL"
   cursor.execute(query)
 
   row_headers = [x[0] for x in cursor.description]
@@ -81,16 +81,18 @@ def AddProyekbyCustomer(id_customer):
     cursor.execute(query)
     records = cursor.fetchall()
     temp = ""
+    confirm = 1
+
     for data in records:
         temp = data[0]
    
-    query = "INSERT INTO prd_d_proyek(id,nama,tglDibuat,customerid)VALUES(%s,%s,%s,'"+temp+"')"
+    query = "INSERT INTO prd_d_proyek(id,nama,tglDibuat,customerid,confirm)VALUES(%s,%s,%s,'"+temp+"',%s)"
     try:
         data = request.json
         id = data["id"]
         nama = data["nama"]
         now = datetime.now()
-        values = (id,nama,now)
+        values = (id,nama,now,confirm)
         cursor.execute(query,values)
         conn.commit()
         hasil = {"status" : "berhasil"}

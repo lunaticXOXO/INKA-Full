@@ -1,6 +1,7 @@
 from flask import request,make_response,jsonify,session
 import db.db_handler as database
 import hashlib
+import datetime
 
 def AddQualification():
     conn = database.connector()
@@ -51,15 +52,8 @@ def AddOperator():
         email = data["email"]
         city = data["city"]
         username = data['username']
-        values1 = (code,nama,adress1,postalcode,phone,email,city)
+        values1 = (code,nama,adress1,postalcode,phone,email,city,username)
         cursor.execute(query,values1)
-
-        query2 = "INSERT INTO users(username,passwords,userType)VALUES(%s,%s,%s)"
-       
-        password = '12345ws'
-        passwordEncrypt = hashlib.md5(password.encode('utf8')).hexdigest()
-        values2 = (username,passwordEncrypt,7)
-        cursor.execute(query2,values2)
         conn.commit()
 
         hasil = {"status" : "berhasil"}
@@ -118,7 +112,6 @@ def GetMaterialbyOperatorLogin(username):
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
     return make_response(jsonify(json_data),200)
-
 
 
 def AddLevelByOperator(code):
@@ -218,8 +211,6 @@ def ShowOperator():
     return make_response(jsonify(json_data),200)
 
 
-
-
 def GetLinkOperator(code):
     conn = database.connector()
     cursor = conn.cursor()
@@ -287,5 +278,199 @@ def GetOperatorHadir():
     return make_response(jsonify(json_data),200)
     
 
+def AddCardByIdOperator(code):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query_get_id = "SELECT code FROM opd_r_operator WHERE code = '"+code+"'"
+    cursor.execute(query_get_id)
+    records = cursor.fetchall()
+    for index in records:
+        code = index[0]
+    query_insert_card = "INSERT INTO opr_d_dictoperator(uuid,operatorid,created)VALUES(%s,%s,%s)"
+    try:
+        data = request.json
+        uuid = data["uuid"]
+        created = datetime.datetime.now()
+        values = (uuid,code,created)
+        cursor.execute(query_insert_card,values)
+        conn.commit()
+        cursor.close()
+        conn.close()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+    
+
+def ShowOperatorRfid():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query_get_operatorRfid = "SELECT a.code,a.nama,a.email,a.adress1,a.city,a.phone,a.postalcode,b.uuid FROM opd_r_operator a  JOIN opr_d_dictoperator b ON b.operatorid = a.code"
+    cursor.execute(query_get_operatorRfid)
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
+
+def GetOperatorOnWS():
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM opr_d_operatoronws WHERE logout IS NULL"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
 
 
+def GetOperatorOnWS01():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws01' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+def GetOperatorOnWS02():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws02' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS03():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws03' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS04():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws04' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS05():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws05'GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS06():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws06' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS07():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws07' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS08():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws08' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperatorOnWS09():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws09' GROUP BY a.code"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+    return make_response(jsonify(json_data),200)

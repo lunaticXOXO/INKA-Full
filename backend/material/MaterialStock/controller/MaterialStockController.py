@@ -92,8 +92,18 @@ def AddMaterialStockbyOrders(orders):
     year = today.year
     month = today.month
     day = today.day
+    print(type(month))
+    if month < 10:
+        today_str = str(year) + '0' + str(month) + str(day)
 
-    today_str = str(year) + str(month) + str(day)
+    if month < 10 and day < 10:
+        today_str = str(year) + '0' + str(month) + '0' + str(day)
+
+    if month > 10 and day > 10:
+        today_str = str(year) +  str(month) +  str(day)
+
+
+    
     print(today_str)
 
     

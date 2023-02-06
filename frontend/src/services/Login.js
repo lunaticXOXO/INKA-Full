@@ -7,7 +7,7 @@ export default class Login {
   getCurrentUserType() {
     return JSON.parse(localStorage.getItem(this.KEY)) || 'Guest';
   }
-
+    
   getCurrentUsername(){
     return JSON.parse(localStorage.getItem(this.username)) || 'Guest';
   }

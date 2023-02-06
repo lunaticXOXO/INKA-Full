@@ -4,8 +4,8 @@ from flask import request,make_response,jsonify
 def GetMaterialType():
     conn = db.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code,a.nama, a.isAvailable,a.isAssy, b.descriptions AS 'descriptionClassification', c.descriptions AS 'descriptionGroup' FROM mat_r_materialtype a JOIN mat_r_classification b ON b.code = a.classificationCode JOIN mat_r_group c ON c.code = a.groupCode"
-
+    #query = "SELECT a.code,a.nama, a.isAvailable,a.isAssy, b.descriptions AS 'descriptionClassification', c.descriptions AS 'descriptionGroup' FROM mat_r_materialtype a JOIN mat_r_classification b ON b.code = a.classificationCode JOIN mat_r_group c ON c.code = a.groupCode"
+    query = "SELECT a.code,a.nama, a.isAvailable,a.isAssy FROM mat_r_materialtype a"
     cursor.execute(query)
     records = cursor.fetchall()
 

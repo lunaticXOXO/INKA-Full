@@ -26,6 +26,7 @@ from operasi.controller.OperasiController import *
 from operators.controller.OperatorController import *
 from rfid.controller.ScanBarcodeRFID import *
 from material.StatusBarcode.controller.StatusBarcodeController import *
+from umum.controller.UmumController import *
 
 
 from flask import Flask,session
@@ -215,6 +216,27 @@ def add_rproyek():
 @app.route('/rproyek/update_duedate_rproyek/<id_proyek>',methods = ['POST'])
 def update_duedate_rproyek(id_proyek):
     hasil = UpdateDueDateRProyek(id_proyek)
+    return hasil
+
+@app.route('/rproyek/show_first_operation',methods = ['GET'])
+def show_first_operation():
+    hasil = GetFirstOperation()
+    return hasil
+
+@app.route('/rproyek/show_first_operation_dsc',methods = ['GET'])
+def show_first_operation_dsc():
+    hasil = GetFirstOperationDsc()
+    return hasil
+
+
+@app.route('/rproyek/accept_operasi',methods = ['POST'])
+def accept_operasi():
+    hasil = TerimaOperasi()
+    return hasil
+
+@app.route('/rproyek/decline_operasi',methods = ['DELETE'])
+def decline_operasi():
+    hasil = BatalOperasi()
     return hasil
 
 #PRODUCT
@@ -422,7 +444,7 @@ def stop_liniproduksi(id):
 @app.route('/stasiun_kerja/show_stasiun_kerja',methods = ['GET'])
 def show_stasiun_kerja():
     hasil = GetAllWorkstation()
-    return hasi
+    return hasil
 
 @app.route('/stasiun_kerja/show_stasiun_kerja_by_process/<id_process>',methods = ['GET'])
 def show_stasiun_kerja_by_process(id_process):
@@ -775,6 +797,11 @@ def get_operator():
     hasil = ShowOperator()
     return hasil
 
+@app.route('/operator/get_operator_rfid',methods = ['GET'])
+def get_operator_rfid():
+    hasil = ShowOperatorRfid()
+    return hasil
+
 @app.route('/qualification/add_qualification',methods = ['POST'])
 def add_qualification():
     hasil = AddQualification()
@@ -834,6 +861,66 @@ def get_operator_hadir():
     hasil = GetOperatorHadir()
     return hasil
 
+@app.route('/operator/daftarKartu/<code>',methods = ['POST'])
+def daftarKartu(code):
+    hasil = AddCardByIdOperator(code)
+    return hasil
+
+@app.route('/operator/get_operator_on_ws',methods = ['GET'])
+def get_operator_on_ws():
+    hasil = GetOperatorOnWS()
+    return hasil
+
+
+@app.route('/operator/get_operator_on_ws01',methods = ['GET'])
+def get_operator_on_ws01():
+    hasil = GetOperatorOnWS01()
+    return hasil
+
+@app.route('/operator/get_operator_on_ws02',methods = ['GET'])
+def get_operator_on_ws02():
+    hasil = GetOperatorOnWS02()
+    return hasil
+
+
+@app.route('/operator/get_operator_on_ws03',methods = ['GET'])
+def get_operator_on_ws03():
+    hasil = GetOperatorOnWS03()
+    return hasil
+
+
+@app.route('/operator/get_operator_on_ws04',methods = ['GET'])
+def get_operator_on_ws04():
+    hasil = GetOperatorOnWS04()
+    return hasil
+
+
+@app.route('/operator/get_operator_on_ws05',methods = ['GET'])
+def get_operator_on_ws05():
+    hasil = GetOperatorOnWS05()
+    return hasil
+
+
+@app.route('/operator/get_operator_on_ws06',methods = ['GET'])
+def get_operator_on_ws06():
+    hasil = GetOperatorOnWS06()
+    return hasil
+
+@app.route('/operator/get_operator_on_ws07',methods = ['GET'])
+def get_operator_on_ws07():
+    hasil = GetOperatorOnWS07()
+    return hasil
+
+@app.route('/operator/get_operator_on_ws08',methods = ['GET'])
+def get_operator_on_ws08():
+    hasil = GetOperatorOnWS08()
+    return hasil
+
+@app.route('/operator/get_operator_on_ws09',methods = ['GET'])
+def get_operator_on_ws09():
+    hasil = GetOperatorOnWS09()
+    return hasil
+
 # Process Requirement
 @app.route('/requirement/add_process_requirement/<id>',methods = ['POST'])
 def add_process_requirement(id):
@@ -854,6 +941,18 @@ def get_requirement_byprocess(idProcess):
 @app.route('/rfid/insert_material',methods = ['POST'])
 def scan_barcode_rfid():
     hasil = ScanBarcodeRFID()
+    return hasil
+
+#Tanggal Libur
+@app.route('/holiday/add_holiday',methods = ['POST'])
+def add_holiday():
+    hasil = AddNewTanggalLibur()
+    return hasil
+
+
+@app.route('/holiday/get_all_holiday',methods = ['GET'])
+def get_all_holiday():
+    hasil = GetAllTanggalLibur()
     return hasil
 
 #USERS 

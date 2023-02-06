@@ -54,6 +54,16 @@
             <span v-else>{{item.produk}}</span>
       </template>
     </v-data-table>
+    
+    <div class="d-flex">
+    <v-btn color="primary" class="d-flex ml-4 mb-6"  @click="terimaOperasi()" :disabled="isActive">
+      Terima Operasi
+    </v-btn>
+    <v-btn color="red" class="d-flex ml-4 mb-6" @click="batalOperasi()" :disabled="isActive">
+      Batal Operasi
+    </v-btn>
+  </div>
+
   </v-card>
 </template>
 
@@ -61,6 +71,8 @@
   export default {
     data(){
       return {
+        
+        isActive : false,
         valid : true,
         column : [
           {text : 'ID',               value : 'id'},
@@ -81,6 +93,9 @@
 
     mounted(){
       this.fetchOperasi()
+      // window.setInterval(() => {
+      //   this.fetchOperasi()
+      // }, 1000)
     },
 
     methods : {
@@ -91,7 +106,13 @@
           if (res.data == null){
             console.log('Operasi Kosong')
           }else{
+
             this.operation = res.data
+            if(res.data[0].confirm == 1){
+                
+                this.isActive = true
+              
+            }
             console.log(res,this.operation)
           }
         }
@@ -99,7 +120,82 @@
           alert("Error")
           console.log(error)
         }
+      },
+
+      async terimaOperasi(){
+        try{
+          const axios = require('axios')
+          const res = await axios.post('/rproyek/accept_operasi')
+          if(res.data.status == "berhasil"){
+            console.log("Penerimaan operasi berhasil")
+            this.snackbar = {
+              show : true,
+              message : "Penerimaan Operasi Berhasil",
+              color : "green"
+            }
+            
+            setTimeout(() => {
+              location.replace('/listOperasiByProduk/' + this.$route.params.id)
+            }, 1000)
+            console.log("terima operasi")
+          }
+          else if(res.data.status == "gagal"){
+            this.snackbar = {
+              show : true,
+              message : "Penerimaan Operasi Gagal",
+              color : "red"
+            }
+            
+          }
+        }catch(error){
+          this.snackbar = {
+              show : true,
+              message : "Penerimaan Operasi Error",
+              color : "red"
+            }
+            console.log("")
+        }
+      },
+      async batalOperasi(){
+        try{
+          const axios = require('axios')
+          const res = await axios.delete('/rproyek/decline_operasi')
+          if(res.data.status == "berhasil"){
+            console.log("Penerimaan operasi berhasil")
+            this.snackbar = {
+              show : true,
+              message : "Penerimaan Operasi Berhasil",
+              color : "green"
+            }
+            console.log("batal operasi")
+            
+          }
+          else if(res.data.status == "gagal"){
+            this.snackbar = {
+              show : true,
+              message : "Penerimaan Operasi Gagal",
+              color : "red"
+            }
+            console.log("disable button")
+            
+          }
+
+           
+        setTimeout(() => {
+          location.replace('/lihatProyek')
+            }, 1000)
+        }
+        
+        catch(error){
+          this.snackbar = {
+              show : true,
+              message : "Penerimaan Operasi Error",
+              color : "red"
+            }
+            console.log("")
+        }
       }
     }
+
   }
 </script>
