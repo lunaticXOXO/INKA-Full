@@ -27,6 +27,7 @@ from operators.controller.OperatorController import *
 from rfid.controller.ScanBarcodeRFID import *
 from material.StatusBarcode.controller.StatusBarcodeController import *
 from umum.controller.UmumController import *
+from tools.tooltype.ToolTypeController import *
 
 
 from flask import Flask,session
@@ -797,6 +798,12 @@ def get_operator():
     hasil = ShowOperator()
     return hasil
 
+
+@app.route('/operator/get_operator_uuid',methods = ['GET'])
+def get_operator_uuid():
+    hasil = ShowOperatorUUID()
+    return hasil
+
 @app.route('/operator/get_operator_rfid',methods = ['GET'])
 def get_operator_rfid():
     hasil = ShowOperatorRfid()
@@ -953,6 +960,19 @@ def add_holiday():
 @app.route('/holiday/get_all_holiday',methods = ['GET'])
 def get_all_holiday():
     hasil = GetAllTanggalLibur()
+    return hasil
+
+
+#Tools
+#Tool Type
+@app.route('/tools/add_tooltype_consumable',methods = ['POST'])
+def add_tooltype_consumable():
+    hasil = AddToolTypeConsumable()
+    return hasil
+
+@app.route('/tools/add_tooltype_nonconsumable',methods = ['POST'])
+def add_tooltype_nonconsumable():
+    hasil = AddToolTypeNonConsumable()
     return hasil
 
 #USERS 

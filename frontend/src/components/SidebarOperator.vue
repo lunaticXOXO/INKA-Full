@@ -23,8 +23,7 @@
                 <v-spacer></v-spacer>
                 <span class="font-weight-light white--text ">Workstation:</span>
                 <span class="white--text mr-6">
-                    <v-text-field background-color="#6f6f6f" class="mt-6 white--text font-weight-bold" v-model="namaOperator" disabled solo dense flat>
-                    </v-text-field>
+                    <v-text-field background-color="#6f6f6f" class="mt-6 white--text font-weight-bold" v-model="namaOperator" disabled solo dense flat></v-text-field>
                 </span>
                 <v-btn @click="logout()" color="grey">
                     <span>Sign Out</span>

@@ -64,6 +64,7 @@ import LihatStatusPengerjaanWS from '../views/stasiunKerja/LihatStatusPengerjaan
 import LihatStatusPengerjaanProyek from '../views/proyek/StatusPengerjaanProyek.vue'
 import OperasibyProduct from '../views/operasi/ListOperasibyProduct.vue'
 import ListOperator from '../views/operator/ListOperator.vue'
+import ListOperatorRFID from '../views/operator/ListOperatorRFID.vue'
 import TambahKemampuanOperator from '../views/operator/TambahKemampuanOperator.vue'
 import ListOperatorHadir from '../views/operator/ListOperatorHadir.vue'
 import ListRProyekbyProyekDSP from '../views/rincianproyek/ListRProyekbyProyekDSP.vue'
@@ -710,6 +711,15 @@ const routes = [
     component : ListOperator,
     meta : {
       title : "List Operator - PT.INKA"
+    }
+  },
+
+  {
+    path : '/listOperatorRFID',
+    name : 'List Operator RFID',
+    component : ListOperatorRFID,
+    meta : {
+      title : "List Operator RFID - PT INKA"
     }
   },
 

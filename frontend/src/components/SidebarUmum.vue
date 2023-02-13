@@ -91,6 +91,7 @@ export default {
                 active: false,
                 items: [
                     { title: 'List Operator', icon: 'mdi-playlist-check', route: '/listOperator'},
+                    { title: 'List Operator RFID', icon: 'mdi-playlist-check', route: '/listOperatorRFID'},
                     { title: 'Tambah Operator', icon: 'mdi-account-plus', route: '/tambahOperator'},
                 ],
                 title: 'Operator',
