@@ -28,7 +28,8 @@ from rfid.controller.ScanBarcodeRFID import *
 from material.StatusBarcode.controller.StatusBarcodeController import *
 from umum.controller.UmumController import *
 from tools.tooltype.ToolTypeController import *
-
+from tools.toolstock.ToolStockController import *
+from tools.toolpurchase.ToolPurchaseController import *
 
 from flask import Flask,session
 from flask_cors import CORS
@@ -944,6 +945,9 @@ def get_requirement_byprocess(idProcess):
     hasil = ShowRequirmentByIdProcess(idProcess)
     return hasil
 
+
+
+
 #RFID
 @app.route('/rfid/insert_material',methods = ['POST'])
 def scan_barcode_rfid():
@@ -973,6 +977,20 @@ def add_tooltype_consumable():
 @app.route('/tools/add_tooltype_nonconsumable',methods = ['POST'])
 def add_tooltype_nonconsumable():
     hasil = AddToolTypeNonConsumable()
+    return hasil
+
+
+#Tool Purchase
+@app.route('/tools/add_tool_purchase',methods = ['POST'])
+def add_tool_purchase():
+    hasil = AddToolPurchase()
+    return hasil
+
+
+#Tool Stock
+@app.route('/tools/add_toolstock_by_toolPurchaseItem/<toolPurchaseItem>',methods = ['POST'])
+def add_toolstock_by_toolPurchaseItem(toolPurchaseItem):
+    hasil = AddToolStockByToolPurchaseItem(toolPurchaseItem)
     return hasil
 
 #USERS 
