@@ -8,10 +8,18 @@
         <v-card
             class="mx-auto text-center"
             max-width="1000">
+            <div class="pa-6">
+                <v-text-field
+                    v-model="search"
+                    label="Search"
+                    variant="plain"
+                ></v-text-field>
+            </div>
             <v-data-table
                 :headers = "column"
                 :items = "toolStock"
                 :items-per-page = 100
+                :search="search"
             >
             <template v-slot:[`item.id`]="{ item }">
                 <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
@@ -72,6 +80,7 @@ export default {
                 {text : 'Action',value : 'aksi'}
             ],
             toolStock : [],
+            search: "",
             editedIndex : -1,
             editedItem : {
                 id : '',
