@@ -41,7 +41,7 @@
           <v-col
           v-for=" index in listOperator"
           :key="index"
-          cols="8"
+          cols="4"
           sm="auto"
           >
             <v-img

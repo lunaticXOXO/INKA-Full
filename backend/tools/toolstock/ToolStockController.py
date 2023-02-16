@@ -25,7 +25,7 @@ def AddToolStockByToolPurchaseItem(toolPurchaseItem):
             quantity_purchaseitem = index[2]
             quantity_purchaseitem = int(quantity_purchaseitem)
 
-        
+    
         query_getquantityunit = "SELECT multiplier FROM gen_r_materialunit WHERE id = '"+unit+"'"
         cursor.execute(query_getquantityunit)
         records_quantityunit = cursor.fetchall()
@@ -40,42 +40,46 @@ def AddToolStockByToolPurchaseItem(toolPurchaseItem):
         records_count = cursor.fetchall()
 
         for index in records_count:
-            count = index[0]
+            count_data = index[0]
 
         count_data = int(count_data)
         quantity_int = int(quantity)
-
-        total_stock = 0
-        for i in range(quantity_int):   
-            if count == 0:
+        print("Qty Int : ",quantity_int)
+        print("count data : ",count_data)
+        
+        i = 0
+        tool_stock = 0   
+        for i in range(quantity_int):
+            
+            if count_data == 0:
                 id = toolType + "0000"
                 values = (id,toolPurchaseItem,toolType,merk,new_qty,unit,arrivalDate)
                 cursor.execute(query,values)
             else:
-                i = 0
+             
                 if quantity_int >= 10:
-                    count_data = count_data + i
-                    id = toolType + count
+                    count_data = count_data + 1
+                    id = toolType + "00" + str(count_data)
                     values = (id,toolPurchaseItem,toolType,merk,new_qty,unit,arrivalDate)
                     cursor.execute(query,values)
                 else:
-                    count_data = count_data + i
-                    id = toolType + count
+                    count_data = count_data + 1
+                    id = toolType + "000" + str(count_data)
+                    print("ID : ",id)
                     values = (id,toolPurchaseItem,toolType,merk,new_qty,unit,arrivalDate)
                     cursor.execute(query,values)
-                    
-            query_updateUnit = "UPDATE eqp_d_toolstock SET unit = U01 WHERE toolPurchaseItem = '"+toolPurchaseItem+"'"
-            cursor.execute(query_updateUnit)
-            total_stock = total_stock + int(new_qty)
+            tool_stock = tool_stock + new_qty
         
-        
+        print("Tool Stock : ",tool_stock)
         qty_akhir = 0   
-        qty_akhir = quantity_purchaseitem - total_stock
+        qty_akhir = quantity_purchaseitem - tool_stock
         if qty_akhir < 0:
             qty_akhir = 0
         
-        query_accumulate_quantity = "UPDATE eqp_d_toolpurchaseitem SET quantity = '"+qty_akhir+"' WHERE purchaseItemId = '"+toolPurchaseItem+"'"
-        cursor.execute(query_accumulate_quantity)
+        print("QTY akhir : ",qty_akhir)
+        query_accumulate_quantity = "UPDATE eqp_d_toolpurchaseitem SET quantity = %s WHERE purchaseItemId = %s"
+        values2 = (qty_akhir,toolPurchaseItem)
+        cursor.execute(query_accumulate_quantity,values2)
         conn.commit()
         hasil = {"status" : "berhasil"}
 
@@ -83,3 +87,18 @@ def AddToolStockByToolPurchaseItem(toolPurchaseItem):
         print("Error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
+
+
+def ShowToolStockNotRegisteredInBox():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id,b.nama,a.merk,a.quantity,a.unit FROM eqp_d_toolstock a JOIN eqp_r_tooltype b ON b.codes = a.toolTypeCode WHERE a.id NOT IN (SELECT b.toolStockId FROM eqp_d_boxitem b)"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records :
+        json_data.append(dict(zip(row_headers,data)))
+  
+    return make_response(jsonify(json_data),200)

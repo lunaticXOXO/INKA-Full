@@ -91,6 +91,11 @@ import TambahJenisProdukInternal from '../views/produk/TambahJenisProdukInternal
 import TambahStrukturJenisProdukByParent from '../views/produk/TambahStrukturJenisProdukByParent.vue'
 import ListKartu from '../views/operator/PendaftaranKartu.vue'
 import FormKartu from '../views/operator/FormPendaftaranKartu.vue'
+import ListToolBox from '../views/tools/ShowToolBox.vue'
+import TambahToolBox from '../views/tools/AddToolBox.vue'
+import TambahToolTypeConsume from '../views/tools/AddToolTypeConsume.vue'
+import TambahToolTypeNonConsume from '../views/tools/AddToolTypeNonConsume.vue'
+import TambahToolStockByBox from '../views/tools/AddToolStockByBox.vue'
 
 Vue.use(VueRouter)
 
@@ -921,6 +926,51 @@ const routes = [
     component : FormKartu,
     meta : {
       title : "Form Daftar RFID - PT.INKA"
+    }
+  },
+  
+  {
+    path : '/showToolBox',
+    name : 'List Tool Box',
+    component : ListToolBox,
+    meta : {
+      title : "List Tool Box - PT.INKA"
+    }
+  },
+
+  {
+    path : '/addToolBox',
+    name : 'Tambah Tool Box',
+    component : TambahToolBox,
+    meta : {
+      title : "Tambah Tool Box - PT.INKA"
+    }
+  },
+
+  {
+    path : '/addToolTypeConsume',
+    name : 'Tambah Tool Type Consumable',
+    component : TambahToolTypeConsume,
+    meta : {
+      title : "Tambah Tool Type Consumable - PT.INKA"
+    }
+  },
+
+  {
+    path : '/addToolTypeNonConsume',
+    name : 'Tambah Tool Type Non Consumable',
+    component : TambahToolTypeNonConsume,
+    meta : {
+      title : "Tambah Tool Type Non Consumable - PT.INKA"
+    }
+  },
+
+  {
+    path : '/addToolStockByBox/:id',
+    name : 'Tambah Tool Stock By Box',
+    component : TambahToolStockByBox,
+    meta : {
+      title : "Tambah Tool Stock By Box - PT.INKA"
     }
   },
 ]

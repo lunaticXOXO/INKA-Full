@@ -25,7 +25,7 @@
             </v-img>
             <v-spacer></v-spacer>
             <span class="font-weight-light white--text ">Welcome,</span>
-            <span class="white--text mr-6">material</span>
+            <span class="white--text mr-6">tools</span>
             <v-btn @click="logout()" color="grey">
                 <span>Sign Out</span>
                 <v-img src="../assets/logo/arrow-right.png"></v-img>
@@ -77,80 +77,22 @@ export default {
             drawer: false,
             items: [
                 {
-                    action: 'mdi-svg',
+                    action: 'mdi-wrench',
                     active: false,
                     items: [
-                        {title : 'List Klasifikasi Material',icon : 'mdi-playlist-check',route : '/listKlasifikasiMaterial'},
-                        {title : 'Add Klasifikasi Material',icon : 'mdi-plus',route : '/addKlasifikasiMaterial'}
-                    ],  
-                    title: 'Klasifikasi Material',  
-                },
-            
-                {
-                    action: 'mdi-book',
-                    active: false,
-                    items: [
-                       { title : 'List Grup Material',icon : 'mdi-playlist-check',route : '/listGrupMaterial'},
-                       { title : 'Add Grup Material',icon : 'mdi-plus',route : '/addGrupMaterial'}
+                        { title: 'List Tool Box', icon : 'mdi-filter-variant', route : '/showToolBox'},
+                        { title: 'Tambah Tool Box', icon : 'mdi-plus', route : '/addToolBox'},
                     ],
-                    title: 'Group Material',  
+                    title: 'Tool Box',
                 },
-
-                {
-                    action: 'mdi-account-star',
-                    active: false,
-                    items: [
-                        { title: 'List Pemasok',icon : 'mdi-playlist-check',route : '/listPemasok'},
-                        { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'},
-                    ],
-                    title: 'Pemasok',
-                },
-
                 {
                     action: 'mdi-wrench',
                     active: false,
                     items: [
-                        { title: 'Tambah Tipe Material', icon: 'mdi-sort-variant', route: '/jenisMaterial'},
-                        { title: 'List Tipe Material', icon : 'mdi-filter-variant', route : '/listMaterialType'},
+                        { title: 'Tambah Tool Type Consumable', icon : 'mdi-plus', route : '/addToolTypeConsume'},
+                        { title: 'Tambah Tool Type Non Consumable', icon : 'mdi-plus', route : '/addToolTypeNonConsume'},
                     ],
-                    title: 'Jenis Material',
-                },
-
-                {
-                    action: 'mdi-svg',
-                    active: false,
-                    items: [
-                        { title: 'Purchase Material', icon: 'mdi-plus', route: '/pesanMaterial'},
-                        {title : 'List Purchase Material', icon : 'mdi-filter-variant', route : '/listPurchaseMaterial'},
-                        {title : 'List Purchase Material Item',icon : 'mdi-gavel',route : '/listPurchaseMaterialItem'}
-                        
-                    ],
-                    title: 'Purchase',
-                },
-
-                {
-                    action: 'mdi-blur',
-                    active: false,
-                    items: [
-
-                        { title: 'List Stock Material Purchase Material', icon : 'mdi-filter-variant', route : '/listPurchaseMaterialStock'},
-                        {title : 'List Stock Material',icon : 'mdi-filter-variant',route : '/listStockMaterial'},
-                        { title: 'Add Stock Material', icon : 'mdi-plus',route : '/addStockMaterial'},
-                        { title: 'Tambah Material Consumable', icon : 'mdi-plus', route : '/tambahMaterialConsumable'},
-                        {title : 'Status Barcode Material', icon : 'mdi-gavel',route : '/statusBarcode'}
-                    ],
-                    title: 'Stock Material',
-                },
-
-                {
-                    action: 'mdi-account',
-                    active: false,
-                    items: [
-
-                        { title: 'List Material Login', icon : 'mdi-filter-variant', route : '/listMatLogin'},
-                      
-                    ],
-                    title: 'Material Login',
+                    title: 'Tool Type',
                 },
             ],
         }
