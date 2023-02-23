@@ -135,3 +135,33 @@ def AddToolTypeNonConsumable():
 
 
 
+def ShowToolTypeConsumable():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM eqp_r_tooltype a WHERE codes LIKE 'CT%' ORDER BY a.codes DESC"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return  make_response(jsonify(json_data),200)
+
+
+def ShowToolTypeNonConsumable():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM eqp_r_tooltype a WHERE codes LIKE 'TS%' ORDER BY a.codes DESC"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return  make_response(jsonify(json_data),200)

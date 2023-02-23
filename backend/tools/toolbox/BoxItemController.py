@@ -65,6 +65,8 @@ def ShowToolBox():
     return  make_response(jsonify(json_data),200)
 
 
+
+
 def AddToolStockToBox(boxId):
     conn = database.connector()
     cursor = conn.cursor()

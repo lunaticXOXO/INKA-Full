@@ -67,6 +67,7 @@
             Reset
           </v-btn>
         </v-form>
+        
         <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
             {{snackbar.message}}
         </v-snackbar>
@@ -131,6 +132,7 @@
           Search
         </v-btn>
         <br><br>
+
         <v-data-table
           :headers = "column3"
           :items = "requirmentMaterial">

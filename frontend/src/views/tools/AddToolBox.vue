@@ -1,4 +1,5 @@
 <template>
+  <v-app>
     <v-card
       class="mx-auto text-center mt-6"
       max-width="1000">
@@ -40,6 +41,21 @@
         {{snackbar.message}}
       </v-snackbar>
     </v-card>
+    
+    <br><br>
+
+    <v-card>
+      <v-data-table
+          :headers = "column"
+          :items = "box"
+          :items-per-page = 5
+          >
+      </v-data-table>
+
+
+    </v-card>
+
+  </v-app>
   </template>
   
   <script>
@@ -53,8 +69,17 @@
         color: null
       },
       nama: '',
+      box : [],
+      column : [
+      {text   : 'Id',   value : 'id'},
+        {text : 'Nama', value : 'nama'},
+      ],
     }),
-  
+    
+    mounted(){
+      this.showToolBox()
+    },
+
     methods: {
       validate () {
         if(this.$refs.form.validate()){
@@ -69,13 +94,19 @@
             }
           );
           console.log(response,this.data)
-          if(response.data.Status == "Berhasil"){
+          if(response.data.status == "berhasil"){
               this.snackbar = {
               message : "Insert Tool Box Success",
               color : 'green',
               show : true
-          }}
-          else if(response.data.Status == "Gagal"){
+          }
+          
+          location.replace('/showToolBox')
+
+        }
+
+          
+          else if(response.data.status == "gagal"){
               this.snackbar = {
               message : "Insert Tool Box Gagal",
               color : 'red',
@@ -91,6 +122,25 @@
           console.log(error)
         }
       },
+
+      async showToolBox(){
+        try{
+                const axios = require('axios')
+                const res = await axios.get('/box/show_toolbox')
+                if(res.data == null){
+                    alert("Data Tool Box kosong")
+                }else{
+                    this.box = res.data
+                    console.log(res,this.box)
+                }
+            }
+            catch(error){
+                console.log(error)
+            }
+
+      }
+
+
     }
   }
   </script>

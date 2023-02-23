@@ -1,4 +1,5 @@
 <template>
+  <v-app>
     <v-card
       class="mx-auto text-center mt-6"
       max-width="1000">
@@ -39,7 +40,20 @@
       <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
         {{snackbar.message}}
       </v-snackbar>
+
     </v-card>
+    <br><br>
+    <v-card>
+      <h1>Jenis Perkakas Consumable Yang Sudah Tersedia</h1>
+      
+      <v-data-table
+          :headers = "column"
+          :items = "consumbale"
+          :items-per-page = 5>
+      </v-data-table>
+
+    </v-card>
+  </v-app>
   </template>
   
   <script>
@@ -53,8 +67,19 @@
         color: null
       },
       nama: '',
+      consumbale : [],
+      nonconsume : [],
+      column : [
+          {text : 'Code',   value : 'codes'},
+          {text : 'Nama',value : 'nama'},
+ 
+        ],
     }),
-  
+    
+    mounted(){
+      this.ShowToolTypeConsumable()
+    },
+
     methods: {
       validate () {
         if(this.$refs.form.validate()){
@@ -91,6 +116,22 @@
           console.log(error)
         }
       },
+
+      async ShowToolTypeConsumable(){
+        try{
+                const axios = require('axios')
+                const res = await axios.get('/tools/show_tooltype_consumable')
+                if(res.data == null){
+                    alert("Data Tool Box kosong")
+                }else{
+                    this.consumbale = res.data
+                    console.log(res,this.consumbale)
+                }
+            }
+            catch(error){
+                console.log(error)
+            }
+      }
     }
   }
   </script>

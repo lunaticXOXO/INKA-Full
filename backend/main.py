@@ -973,6 +973,16 @@ def add_tooltype_nonconsumable():
     hasil = AddToolTypeNonConsumable()
     return hasil
 
+@app.route('/tools/show_tooltype_consumable',methods = ['GET'])
+def show_tooltype_consumable():
+    hasil = ShowToolTypeConsumable()
+    return hasil
+
+
+@app.route('/tools/show_tooltype_nonconsumable',methods = ['GET'])
+def show_tooltype_nonconsumable():
+    hasil = ShowToolTypeNonConsumable()
+    return hasil
 
 #Tool Purchase
 @app.route('/tools/add_tool_purchase',methods = ['POST'])
