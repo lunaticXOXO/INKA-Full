@@ -211,6 +211,25 @@ def ShowOperator():
     return make_response(jsonify(json_data),200)
 
 
+def ShowOperatorUUID():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.code,a.nama,a.adress1,a.city,a.phone,a.postalcode FROM opd_r_operator a JOIN opr_d_dictoperator b ON b.operatorid = a.code WHERE b.uuid IS NULL"
+    cursor.execute(query)
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
+
+
+    pass
+
+
 def GetLinkOperator(code):
     conn = database.connector()
     cursor = conn.cursor()
@@ -336,7 +355,7 @@ def GetOperatorOnWS():
 def GetOperatorOnWS01():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws01' GROUP BY a.code"
+    query = "SELECT a.code,a.nama,a.link,b.workstationCode,c.uuid FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code JOIN opr_d_dictoperator c ON c.operatorid = a.code WHERE b.workstationCode = 'ws01' GROUP BY a.code;"
     cursor.execute(query)
     records = cursor.fetchall()
 
@@ -351,7 +370,7 @@ def GetOperatorOnWS01():
 def GetOperatorOnWS02():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws02' GROUP BY a.code"
+    query = "SELECT a.code,a.nama,a.link,b.workstationCode,c.uuid FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code JOIN opr_d_dictoperator c ON c.operatorid = a.code WHERE b.workstationCode = 'ws02' GROUP BY a.code;"
     cursor.execute(query)
     records = cursor.fetchall()
 
@@ -367,7 +386,7 @@ def GetOperatorOnWS02():
 def GetOperatorOnWS03():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws03' GROUP BY a.code"
+    query = "SELECT a.code,a.nama,a.link,b.workstationCode,c.uuid FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code JOIN opr_d_dictoperator c ON c.operatorid = a.code WHERE b.workstationCode = 'ws03' GROUP BY a.code;"
     cursor.execute(query)
     records = cursor.fetchall()
 
@@ -383,7 +402,7 @@ def GetOperatorOnWS03():
 def GetOperatorOnWS04():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws04' GROUP BY a.code"
+    query = "SELECT a.code,a.nama,a.link,b.workstationCode,c.uuid FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code JOIN opr_d_dictoperator c ON c.operatorid = a.code WHERE b.workstationCode = 'ws04' GROUP BY a.code;"
     cursor.execute(query)
     records = cursor.fetchall()
 
@@ -399,7 +418,7 @@ def GetOperatorOnWS04():
 def GetOperatorOnWS05():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws05'GROUP BY a.code"
+    query = "SELECT a.code,a.nama,a.link,b.workstationCode,c.uuid FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code JOIN opr_d_dictoperator c ON c.operatorid = a.code WHERE b.workstationCode = 'ws05' GROUP BY a.code;"
     cursor.execute(query)
     records = cursor.fetchall()
 
@@ -415,7 +434,7 @@ def GetOperatorOnWS05():
 def GetOperatorOnWS06():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws06' GROUP BY a.code"
+    query = "SELECT a.code,a.nama,a.link,b.workstationCode,c.uuid FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code JOIN opr_d_dictoperator c ON c.operatorid = a.code WHERE b.workstationCode = 'ws06' GROUP BY a.code;"
     cursor.execute(query)
     records = cursor.fetchall()
 
@@ -431,7 +450,7 @@ def GetOperatorOnWS06():
 def GetOperatorOnWS07():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws07' GROUP BY a.code"
+    query = "SELECT a.code,a.nama,a.link,b.workstationCode,c.uuid FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code JOIN opr_d_dictoperator c ON c.operatorid = a.code WHERE b.workstationCode = 'ws07' GROUP BY a.code;"
     cursor.execute(query)
     records = cursor.fetchall()
 
@@ -447,7 +466,7 @@ def GetOperatorOnWS07():
 def GetOperatorOnWS08():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws08' GROUP BY a.code"
+    query = "SELECT a.code,a.nama,a.link,b.workstationCode,c.uuid FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code JOIN opr_d_dictoperator c ON c.operatorid = a.code WHERE b.workstationCode = 'ws08' GROUP BY a.code;"
     cursor.execute(query)
     records = cursor.fetchall()
 
@@ -463,7 +482,7 @@ def GetOperatorOnWS08():
 def GetOperatorOnWS09():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.code,a.link,b.workstationCode FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code WHERE b.workstationCode = 'ws09' GROUP BY a.code"
+    query = "SELECT a.code,a.nama,a.link,b.workstationCode,c.uuid FROM opd_r_operator a JOIN opr_d_operatoronws b ON b.operatorid = a.code JOIN opr_d_dictoperator c ON c.operatorid = a.code WHERE b.workstationCode = 'ws09' GROUP BY a.code;"
     cursor.execute(query)
     records = cursor.fetchall()
 

@@ -25,7 +25,7 @@
             </v-img>
             <v-spacer></v-spacer>
             <span class="font-weight-light white--text ">Welcome,</span>
-            <span class="white--text mr-6">umum</span>
+            <span class="white--text mr-6">tools</span>
             <v-btn @click="logout()" color="grey">
                 <span>Sign Out</span>
                 <v-img src="../assets/logo/arrow-right.png"></v-img>
@@ -77,53 +77,22 @@ export default {
             drawer: false,
             items: [
                 {
-                action: 'mdi-city',
-                active: false,
-                items: [
-                    { title: 'Lihat Kota', icon: 'mdi-eye', route: '/listKota'},
-                    { title: 'Tambah Kota', icon: 'mdi-plus', route: '/tambahKota'},
-                ],
-                title: 'Kota',
+                    action: 'mdi-wrench',
+                    active: false,
+                    items: [
+                        { title: 'List Tool Box', icon : 'mdi-filter-variant', route : '/showToolBox'},
+                        { title: 'Tambah Tool Box', icon : 'mdi-plus', route : '/addToolBox'},
+                    ],
+                    title: 'Tool Box',
                 },
-
                 {
-                action: 'mdi-account-star',
-                active: false,
-                items: [
-                    { title: 'List Operator', icon: 'mdi-playlist-check', route: '/listOperator'},
-                    { title: 'List Operator RFID', icon: 'mdi-playlist-check', route: '/listOperatorRFID'},
-                    { title: 'Tambah Operator', icon: 'mdi-account-plus', route: '/tambahOperator'},
-                ],
-                title: 'Operator',
-                },
-
-                {
-                action: 'mdi-account-star',
-                active: false,
-                items: [
-                    { title: 'Pendaftaran RFID', icon: 'mdi-playlist-check', route: '/listKartu'}
-                ],
-                title: 'RFID',
-                },
-
-                {
-                action: 'mdi-flag',
-                active: false,
-                items: [
-                    { title: 'Lihat Negara', icon: 'mdi-eye', route: '/listNegara'},
-                    { title: 'Tambah Negara', icon: 'mdi-plus', route: '/tambahNegara'},
-                ],
-                title: 'Negara',
-                },
-
-                {
-                action: 'mdi-code-brackets',
-                active: false,
-                items: [
-                    { title: 'List Tanggal Libur', icon: 'mdi-playlist-check', route: '/listTanggalLibur'},
-                    { title: 'Tanggal Libur', icon: 'mdi-calendar-range', route: '/tambahLibur'},
-                ],
-                title: 'Referensi',
+                    action: 'mdi-wrench',
+                    active: false,
+                    items: [
+                        { title: 'Tambah Tool Type Consumable', icon : 'mdi-plus', route : '/addToolTypeConsume'},
+                        { title: 'Tambah Tool Type Non Consumable', icon : 'mdi-plus', route : '/addToolTypeNonConsume'},
+                    ],
+                    title: 'Tool Type',
                 },
             ],
         }

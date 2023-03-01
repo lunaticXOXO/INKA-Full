@@ -170,7 +170,7 @@
       async fetchOperator(){
         try{
           const axios = require('axios');
-          const res = await axios.get('/operator/get_operator');
+          const res = await axios.get('/operator/get_operator_uuid');
           if (res.data == null){
             alert('Operator Kosong')
           }else{

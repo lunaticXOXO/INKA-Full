@@ -23,8 +23,7 @@
                 <v-spacer></v-spacer>
                 <span class="font-weight-light white--text ">Workstation:</span>
                 <span class="white--text mr-6">
-                    <v-text-field background-color="#6f6f6f" class="mt-6 white--text font-weight-bold" v-model="namaOperator" disabled solo dense flat>
-                    </v-text-field>
+                    <v-text-field background-color="#6f6f6f" class="mt-6 white--text font-weight-bold" v-model="namaOperator" disabled solo dense flat></v-text-field>
                 </span>
                 <v-btn @click="logout()" color="grey">
                     <span>Sign Out</span>
@@ -39,7 +38,9 @@
                     <v-data-table
                         :headers = "headers"
                         :items = "items"
-                        :items-per-page="5"               
+                        item-key="code"
+                        :items-per-page = "5"
+                        :item-class = "itemRowBackground"              
                         >
                     </v-data-table>
                 </v-card>
@@ -48,6 +49,7 @@
                     <v-data-table
                         :headers = "headers2"
                         :items = "items2"
+                        item-key="code"
                         :items-per-page="5"
                         >
                     </v-data-table>
@@ -203,7 +205,8 @@ export default {
                 {text : 'Rencana Mulai',      value : 'rencanaMulai'},
                 {text : 'Rencana Selesai',    value : 'rencanaSelesai'},
                 {text : 'Mulai',              value : 'mulai'},
-                {text : 'Selesai',            value : 'selesai'}
+                {text : 'Selesai',            value : 'selesai'},
+               
             ],
             headers2 : [
                 {text : 'Nama Material',    value : 'nama'},
@@ -229,6 +232,7 @@ export default {
             loading : false,
             listOperator : [],
             listOperatorPhoto : [],
+            color : null,
         }
     },
 
@@ -398,11 +402,15 @@ export default {
                 }
                 else if(res.data.length > 0){
                     this.items = res.data
-                    console.log(res,this.items)
+
                 }
             }catch(error){
                 console.log(error)
             }  
+        },
+
+        itemRowBackground: function (item) {
+            return item.selesai != null ? 'style-1' : 'style-2'
         },
 
         async fetchOperasiSiap(){
@@ -427,7 +435,7 @@ export default {
                         }
                         break
                     }
-                    if( this.items3[this.index].mulai != null && this.items3[this.index].selesai == null){
+                    if(this.items3[this.index].mulai != null && this.items3[this.index].selesai == null){
                         this.btn1 = {
                             color : 'blue',
                             text : 'Operasi Selesai'
@@ -532,5 +540,11 @@ export default {
     }
     #border{
         border-radius: 50%;
+    }
+    .style-1{
+        background-color : rgba(30, 255, 0, 0.333)
+    }
+    .style-2{
+        background-color : rgb(255, 255, 255)
     }
 </style>

@@ -66,7 +66,7 @@
                 show : true
               
             }
-            location.replace('/listKartu' + this.$route.params.id)
+            location.replace('/listKartu')
             }
             else if(response.data.status == "gagal"){
                 this.snackbar = {
