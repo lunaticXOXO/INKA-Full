@@ -44,7 +44,7 @@
                         <v-icon class="white--text">{{item.action}}</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title class="white--text" v-text="item.title"></v-list-item-title>
+                        <v-list-item-title class="white--text">{{ item.title }}</v-list-item-title>
                     </v-list-item-content>
                     </template>
 
@@ -57,7 +57,7 @@
                             <v-icon class="white--text ml-6">{{child.icon}}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
-                            <v-list-item-title class="white--text" v-text="child.title"></v-list-item-title>
+                            <v-list-item-title class="white--text">{{ child.title }}</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list-group>
@@ -76,8 +76,6 @@ export default {
             routeHome: "/",
             drawer: false,
             items: [
-              
-
                 {
                 action: 'mdi-account-multiple',
                 active: false,

@@ -44,7 +44,7 @@
                         <v-icon class="white--text">{{item.action}}</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title class="white--text" v-text="item.title"></v-list-item-title>
+                        <v-list-item-title class="white--text">{{item.title}}</v-list-item-title>
                     </v-list-item-content>
                     </template>
 
@@ -57,7 +57,7 @@
                             <v-icon class="white--text ml-6">{{child.icon}}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
-                            <v-list-item-title class="white--text" v-text="child.title"></v-list-item-title>
+                            <v-list-item-title class="white--text">{{child.title}}</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list-group>
@@ -77,22 +77,23 @@ export default {
             drawer: false,
             items: [
                 {
-                    action: 'mdi-wrench',
-                    active: false,
-                    items: [
-                        { title: 'List Tool Box', icon : 'mdi-filter-variant', route : '/showToolBox'},
-                        { title: 'Tambah Tool Box', icon : 'mdi-plus', route : '/addToolBox'},
-                    ],
-                    title: 'Tool Box',
+                action: 'mdi-wrench',
+                active: false,
+                items: [
+                    { title: 'List Tool Box', icon: 'mdi-filter-variant', route: '/showToolBox'},
+                    { title: 'Tambah Tool Box', icon: 'mdi-plus', route: '/addToolBox'},
+                ],
+                title: 'Tool Box',
                 },
+
                 {
-                    action: 'mdi-wrench',
-                    active: false,
-                    items: [
-                        { title: 'Tambah Tool Type Consumable', icon : 'mdi-plus', route : '/addToolTypeConsume'},
-                        { title: 'Tambah Tool Type Non Consumable', icon : 'mdi-plus', route : '/addToolTypeNonConsume'},
-                    ],
-                    title: 'Tool Type',
+                action: 'mdi-book-open-outline',
+                active: false,
+                items: [
+                    { title: 'Tambah Tool Type Consumable', icon: 'mdi-plus', route: '/addToolTypeConsume'},
+                    { title: 'Tambah Tool Type Non Consumable', icon: 'mdi-plus', route: '/addToolTypeNonConsume'},
+                ],
+                title: 'Tool Type',
                 },
             ],
         }
