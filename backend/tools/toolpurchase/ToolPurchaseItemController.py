@@ -58,3 +58,18 @@ def AddToolPurchaseItemByToolPurchase(toolPurchase):
         print("Error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
+
+
+def ShowToolPurchaseItemByPurchase(toolPurchase):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.purchaseItemId,c.nama AS 'namaToolType', a.quantity,d.nama,a.arrivalDatePlan FROM eqp_d_toolpurchaseitem a JOIN eqp_d_toolpurchase b ON b.toolPurchaseId = a.toolPurchaseId JOIN eqp_r_tooltype c ON c.codes = a.toolTypeId JOIN gen_r_materialunit d ON d.id = a.unit WHERE b.toolPurchaseId = '"+toolPurchase+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records :
+        json_data.append(dict(zip(row_headers,data)))
+  
+    return make_response(jsonify(json_data),200)
