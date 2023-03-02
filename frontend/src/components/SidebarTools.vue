@@ -96,6 +96,21 @@ export default {
                 ],
                 title: 'Tool Type',
                 },
+
+                {
+                    action: 'mdi-svg',
+                    active: false,
+                    items: [
+                        { title: 'Purchase Tools', icon: 'mdi-plus', route: '/purchaseTools'},
+                        {title : 'List Purchase Tools', icon : 'mdi-filter-variant', route : '/listPurchaseTools'},
+                        {title : 'List Purchase Tool Item',icon : 'mdi-gavel',route : '/listPurchaseToollItem/:id'}
+                    
+                        
+                    ],
+                    title: 'Tool Purchase',
+                },
+
+
             ],
         }
     },
