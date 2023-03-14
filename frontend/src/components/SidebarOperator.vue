@@ -49,7 +49,6 @@
                     <v-data-table
                         :headers = "headers2"
                         :items = "items2"
-                        item-key="code"
                         :items-per-page="5"
                         >
                     </v-data-table>
@@ -205,8 +204,7 @@ export default {
                 {text : 'Rencana Mulai',      value : 'rencanaMulai'},
                 {text : 'Rencana Selesai',    value : 'rencanaSelesai'},
                 {text : 'Mulai',              value : 'mulai'},
-                {text : 'Selesai',            value : 'selesai'},
-               
+                {text : 'Selesai',            value : 'selesai'},        
             ],
             headers2 : [
                 {text : 'Nama Material',    value : 'nama'},
@@ -402,7 +400,6 @@ export default {
                 }
                 else if(res.data.length > 0){
                     this.items = res.data
-
                 }
             }catch(error){
                 console.log(error)

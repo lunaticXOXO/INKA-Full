@@ -3,7 +3,7 @@
         <v-app-bar app color="#6f6f6f">
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
             <v-btn icon :to="routeHome" class="mr-2">
-                <v-icon src="../assets/logo/home.png"></v-icon>
+                <v-icon>mdi-home</v-icon>
             </v-btn>
             <v-img 
                 max-height="50"
@@ -25,13 +25,13 @@
             </v-img>
             <v-spacer></v-spacer>
             <span class="font-weight-light white--text ">Welcome,</span>
-            <span class="white--text mr-6">admin</span>
+            <span class="white--text mr-6">tools</span>
             <v-btn @click="logout()" color="grey">
                 <span>Sign Out</span>
                 <v-img src="../assets/logo/arrow-right.png"></v-img>
             </v-btn>
         </v-app-bar>
-    
+
         <v-navigation-drawer app v-model="drawer" color="#555555" width="22%">
             <v-list>
                 <v-list-group
@@ -44,7 +44,7 @@
                         <v-icon class="white--text">{{item.action}}</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title class="white--text">{{ item.title }}</v-list-item-title>
+                        <v-list-item-title class="white--text">{{item.title}}</v-list-item-title>
                     </v-list-item-content>
                     </template>
 
@@ -57,7 +57,7 @@
                             <v-icon class="white--text ml-6">{{child.icon}}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
-                            <v-list-item-title class="white--text">{{ child.title }}</v-list-item-title>
+                            <v-list-item-title class="white--text">{{child.title}}</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list-group>
@@ -77,41 +77,23 @@ export default {
             drawer: false,
             items: [
                 {
-                action: 'mdi-account-multiple',
+                action: 'mdi-wrench',
                 active: false,
                 items: [
-                    { title: 'List Pelanggan', icon: 'mdi-playlist-check', route: '/listPelanggan'},
-                    { title: 'Tambah Pelanggan', icon: 'mdi-account-plus', route: '/tambahPelanggan'},
+                    { title: 'List Tool Box', icon: 'mdi-filter-variant', route: '/showToolBox'},
+                    { title: 'Tambah Tool Box', icon: 'mdi-plus', route: '/addToolBox'},
                 ],
-                title: 'Pelanggan',
-                },
-                
-                {
-                action: 'mdi-projector-screen-variant-outline',
-                active: false,
-                items: [
-                    { title: 'List Proyek', icon: 'mdi-filter-variant', route: '/lihatProyek'},
-                    { title: 'Proses Terakhir', icon: 'mdi-state-machine', route: '/prosesTerakhir'},
-                ],
-                title: 'Proyek',
+                title: 'Tool Box',
                 },
 
                 {
                 action: 'mdi-book-open-outline',
                 active: false,
                 items: [
-                    { title: 'List Rincian Proyek', icon: 'mdi-filter-variant', route: '/listRincianProyek'},
+                    { title: 'Tambah Tool Type Consumable', icon: 'mdi-plus', route: '/addToolTypeConsume'},
+                    { title: 'Tambah Tool Type Non Consumable', icon: 'mdi-plus', route: '/addToolTypeNonConsume'},
                 ],
-                title: 'Rincian Proyek',
-                },
-
-                {
-                action: 'mdi-chart-ppf',
-                active: false,
-                items: [
-                    { title: 'Lihat Produk', icon: 'mdi-eye',route : '/listProduk'},
-                ],
-                title: 'Produk',
+                title: 'Tool Type',
                 },
             ],
         }
