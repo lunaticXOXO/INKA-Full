@@ -991,11 +991,25 @@ def add_tool_purchase():
     return hasil
 
 
+@app.route('/tools/show_tool_purchase',methods = ['GET'])
+def show_tool_purchase():
+    hasil = ShowToolPurchase()
+    return hasil
+
+
+
 # Tool Purchase Item
 @app.route('/tools/add_toolpurchase_by_purchasetools/<toolPurchase>',methods = ['POST'])
 def add_toolpurchase_by_purchasetools(toolPurchase):
     hasil = AddToolPurchaseItemByToolPurchase(toolPurchase)
     return hasil
+
+
+@app.route('/tools/show_purchase_item_bypurchase/<toolPurchase>',methods = ['GET'])
+def show_purchase_item_bypurchase(toolPurchase):
+    hasil = ShowToolPurchaseItemByPurchase(toolPurchase)
+    return hasil
+
 
 
 #Tool Stock

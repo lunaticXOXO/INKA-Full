@@ -12,13 +12,13 @@
         lazy-validation>
         
         <v-text-field
-        v-model="namaOrder"
+        v-model="orderName"
         label="Order Name"
         required
         ></v-text-field>
 
         <v-text-field
-        v-model="namaPurchaser"
+        v-model="purchaserName"
         label="Purchaser Name"
         required
         ></v-text-field>
@@ -58,8 +58,8 @@
         message: null,
         color: null
       },
-      namaOrder: '',
-      namaPurchaser: '',
+      orderName: '',
+      purchaserName: '',
     }),
   
     methods: {
@@ -72,18 +72,21 @@
       async InsertToolPurchase(){
         try{
           const response = await axios.post('/tools/add_tool_purchase',
-            { orderName: this.namaOrder,
+            { orderName: this.orderName,
               purchaserName: this.purchaserName
             }
           );
           console.log(response,this.data)
-          if(response.data.Status == "Berhasil"){
+          if(response.data.status == "berhasil"){
               this.snackbar = {
               message : "Insert Tool Purchase Success",
               color : 'green',
               show : true
-          }}
-          else if(response.data.Status == "Gagal"){
+          }
+          
+          location.replace('/listPurchaseTools')
+        }
+          else if(response.data.status == "gagal"){
               this.snackbar = {
               message : "Insert Tool Purchase Gagal",
               color : 'red',

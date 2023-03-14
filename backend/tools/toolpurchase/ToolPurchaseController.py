@@ -48,3 +48,20 @@ def AddToolPurchase():
         print("Error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
+
+
+def ShowToolPurchase():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM eqp_d_toolpurchase"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records :
+        json_data.append(dict(zip(row_headers,data)))
+  
+    return make_response(jsonify(json_data),200)
+
+
