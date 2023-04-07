@@ -59,6 +59,7 @@ def GetMaterialStockbyOrder(order):
     cursor.close()
     conn.close()
     return make_response(jsonify(json_data),200)
+    
 def AddMaterialStockbyOrders(orders):
     conn = database.connector()
     cursor = conn.cursor()
@@ -105,8 +106,6 @@ def AddMaterialStockbyOrders(orders):
 
     
     print(today_str)
-
-    
 
     query_insert =  "INSERT INTO mat_d_materialstock(id,purchaseItem,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"
     query_insert2 = "INSERT INTO mat_d_materialonws01(workstationCode,materialStock,login)VALUES(%s,%s,%s)"
@@ -162,12 +161,25 @@ def AddMaterialStockbyOrders(orders):
                 conn.commit()
             else:
                 print("jumlah data : ", jumlah)
-                if jumlah >= 10:
+                if jumlah >= 10 and jumlah <= 99:
                     angka_awal = '0'
                     #angka_akhir = angka_akhir + 1
                     angka_akhir = jumlah
                     angka_akhir_str = str(angka_akhir)
                     id_stock = today_str  +  angka_awal + angka_akhir_str
+                    values = (id_stock,orders,merk,quantity_unit,unit,arrivalDate)
+                    values2 = (workstationCode,id_stock,login)
+                    values3 = (id_stock,workstationCode)
+                    cursor.execute(query_insert,values)
+                    cursor.execute(query_insert2,values2)
+                    cursor.execute(query_insert3,values3)
+                    conn.commit()
+
+                elif jumlah >= 100:
+                    #angka_akhir = angka_akhir + 1
+                    angka_akhir = jumlah
+                    angka_akhir_str = str(angka_akhir)
+                    id_stock = today_str  +  angka_akhir_str
                     values = (id_stock,orders,merk,quantity_unit,unit,arrivalDate)
                     values2 = (workstationCode,id_stock,login)
                     values3 = (id_stock,workstationCode)

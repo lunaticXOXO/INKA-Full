@@ -64,7 +64,7 @@ import Login from "./services/Login.js"
 import SidebarUmum from './components/SidebarUmum.vue'
 import SidebarDisplay from './components/SidebarDisplay.vue'
 import SidebarOperator from './components/SidebarOperator.vue'
-//import SidebarTools from './components/SidebarTools.vue'
+import SidebarTools from './components/SidebarTools.vue'
 
 export default {
   name: 'App',
@@ -77,7 +77,7 @@ export default {
     SidebarUmum,
     SidebarDisplay,
     SidebarOperator,
-    //SidebarTools
+    SidebarTools
 },
 
   mounted() {
