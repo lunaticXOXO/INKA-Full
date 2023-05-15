@@ -98,7 +98,7 @@ import TambahToolTypeNonConsume from '../views/tools/AddToolTypeNonConsume.vue'
 import TambahToolStockByBox from '../views/tools/AddToolStockByBox.vue'
 import ShowToolPurchase from '../views/tools/ShowToolPurchase.vue'
 import AddToolPurchase from '../views/tools/AddToolPurchase.vue'
-import ShowToolPurchaseItemByPurchase from '/views/tools/ShowToolPurchaseItemByPurchase.vue'
+//import ShowToolPurchaseItemByPurchase from '/views/tools/ShowToolPurchaseItemByPurchase.vue'
 
 Vue.use(VueRouter)
 
@@ -995,15 +995,15 @@ const routes = [
 
  },
 
- {
-   path : '/listPurchaseItemToolsByPurchase/:id',
-   name : 'List Purchase Item By Tool Purchase',
-   component : ShowToolPurchaseItemByPurchase,
-   meta : {
-      title : "List Purchase Item By Tool Purchase - PT.INKA "
-   }
+//  {
+//    path : '/listPurchaseItemToolsByPurchase/:id',
+//    name : 'List Purchase Item By Tool Purchase',
+//    component : ShowToolPurchaseItemByPurchase,
+//    meta : {
+//       title : "List Purchase Item By Tool Purchase - PT.INKA "
+//    }
 
- },
+//  },
 
 
 ]

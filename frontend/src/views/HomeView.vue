@@ -386,7 +386,7 @@
       <v-carousel-item>
         <v-row
           class="fill-height"
-          align="center"
+          :align="center"
           justify="center"
         >
           <v-card

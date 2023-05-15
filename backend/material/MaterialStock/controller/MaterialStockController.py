@@ -106,8 +106,6 @@ def AddMaterialStockbyOrders(orders):
     
     print(today_str)
 
-    
-
     query_insert =  "INSERT INTO mat_d_materialstock(id,purchaseItem,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"
     query_insert2 = "INSERT INTO mat_d_materialonws01(workstationCode,materialStock,login)VALUES(%s,%s,%s)"
     query_insert3 = "INSERT INTO mat_d_statusbarcode(id,workstation)VALUES(%s,%s)"
@@ -162,7 +160,7 @@ def AddMaterialStockbyOrders(orders):
                 conn.commit()
             else:
                 print("jumlah data : ", jumlah)
-                if jumlah >= 10:
+                if jumlah >= 10 and jumlah <= 99:
                     angka_awal = '0'
                     #angka_akhir = angka_akhir + 1
                     angka_akhir = jumlah
@@ -174,7 +172,20 @@ def AddMaterialStockbyOrders(orders):
                     cursor.execute(query_insert,values)
                     cursor.execute(query_insert2,values2)
                     cursor.execute(query_insert3,values3)
-                    conn.commit()
+                    #conn.commit()
+
+                elif jumlah >= 100:
+                    #angka_akhir = angka_akhir + 1
+                    angka_akhir = jumlah
+                    angka_akhir_str = str(angka_akhir)
+                    id_stock = today_str  +  angka_akhir_str
+                    values = (id_stock,orders,merk,quantity_unit,unit,arrivalDate)
+                    values2 = (workstationCode,id_stock,login)
+                    values3 = (id_stock,workstationCode)
+                    cursor.execute(query_insert,values)
+                    cursor.execute(query_insert2,values2)
+                    cursor.execute(query_insert3,values3)
+                    #conn.commit()
                 else:
                     #angka_akhir = angka_akhir + 1
                     print("jumlah data : ",jumlah)
@@ -187,7 +198,7 @@ def AddMaterialStockbyOrders(orders):
                     cursor.execute(query_insert,values)
                     cursor.execute(query_insert2,values2)
                     cursor.execute(query_insert3,values3)
-                    conn.commit()
+                    #conn.commit()
             
             #Query untuk mendapatkan multiplier , multiplier sebagai output quantity nya
             query_get_unit_by_stock = "SELECT b.multiplier FROM mat_d_materialstock a JOIN gen_r_materialunit b ON b.id = a.unit WHERE a.id = '"+id_stock+"'"
@@ -250,7 +261,6 @@ def AddMaterialStockbyOrders(orders):
         cursor.execute(query_update_jumlah,values4)
 
         print("Jumlah Sekarang : ",jumlah_now)
-        
         conn.commit()
         cursor.close()
         conn.close()
@@ -259,7 +269,6 @@ def AddMaterialStockbyOrders(orders):
         hasil = {"status" : "gagal"}
         print("Error",str(e))
     return hasil
-
 
 
 
