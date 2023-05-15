@@ -34,7 +34,6 @@
 
        
         <div class="d-flex">
-            
             <div class = "ma-6">
                 <h3>Operasi</h3>
                 <v-card class="mx-auto mb-6 text-center mt-6" width="800">
@@ -59,6 +58,7 @@
                         >
                     </v-data-table>
                 </v-card>
+
                 <v-carousel
                     cycle
                     height="10"
@@ -92,8 +92,6 @@
                         align="center"
                         justify="center"
                     >
-                    </v-row>
-
                     <v-col>
                         <h3>Material yang diperlukan</h3>
                         <v-card class="mx-auto mb-6 text-center mt-6" width="700">
@@ -102,10 +100,33 @@
                             :items = "items2"
                             :items-per-page="5"   
                         >
-                        
+                        </v-data-table>
+                        </v-card>
+                    </v-col>
+                    </v-row>
+
+                    
+                </v-carousel-item>
+                <v-carousel-item>
+                    <v-row
+                        class="fill-height"
+                        :align="center"
+                        justify="center"
+                    >
+                    <v-col>
+                        <h3>Material yang diperlukan</h3>
+                        <v-card class="mx-auto mb-6 text-center mt-6" width="700">
+                        <v-data-table
+                            :headers = "headers2"
+                            :items = "items2"
+                            :items-per-page="5"   
+                        >
                     </v-data-table>
                 </v-card>
-                    </v-col>
+                </v-col>
+                    </v-row>
+
+                   
                 </v-carousel-item>
             </div>
             
