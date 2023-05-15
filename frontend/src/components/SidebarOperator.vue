@@ -49,7 +49,7 @@
                 
                 
                 
-                <h3>Material yang diperlukan</h3>
+                <!-- <h3>Material yang diperlukan</h3>
                 <v-card class="mx-auto mb-6 text-center mt-6" width="700">
                     <v-data-table
                         :headers = "headers2"
@@ -57,11 +57,11 @@
                         :items-per-page="5"
                         >
                     </v-data-table>
-                </v-card>
-
+                </v-card> -->
+                <br>  
                 <v-carousel
                     cycle
-                    height="10"
+                    height="30"
                     hide-delimiters
                     :show-arrows="false"
                     :interval="10000">
@@ -75,7 +75,7 @@
                         >
                         <v-row
                             class="fill-height"
-                            align="center"
+                            :align="center"
                             justify="center"
                         >
                         <div class="text-h3">
@@ -85,16 +85,20 @@
                         </v-sheet>
                         </v-carousel-item>
                 </v-carousel>
-                <v-carousel cycle :show-arrows="false" delimiter-icon="mdi-minus" height="50" :interval="10000"></v-carousel>
+                <v-carousel cycle :show-arrows="false" delimiter-icon="mdi-minus" height="200" :interval="15000">
                 <v-carousel-item>
                     <v-row
                         class="fill-height"
-                        align="center"
-                        justify="center"
+                        :align="left"
+                        justify="left"
                     >
-                    <v-col>
-                        <h3>Material yang diperlukan</h3>
-                        <v-card class="mx-auto mb-6 text-center mt-6" width="700">
+
+                        <v-col  cols="3">
+                            <h4>Material yang diperlukan</h4>
+                        </v-col>
+                       
+                        <v-card class="mx-auto mb-6 text-center mt-6" width="550">
+                            
                         <v-data-table
                             :headers = "headers2"
                             :items = "items2"
@@ -102,7 +106,7 @@
                         >
                         </v-data-table>
                         </v-card>
-                    </v-col>
+                 
                     </v-row>
 
                     
@@ -113,9 +117,12 @@
                         :align="center"
                         justify="center"
                     >
-                    <v-col>
-                        <h3>Material yang diperlukan</h3>
-                        <v-card class="mx-auto mb-6 text-center mt-6" width="700">
+                    
+                    <v-col cols="3">
+                        <h4>Perkakas yang diperlukan</h4>
+                    </v-col>   
+                        <v-card class="mx-auto mb-6 text-center mt-6" width="550">
+                       
                         <v-data-table
                             :headers = "headers2"
                             :items = "items2"
@@ -123,11 +130,11 @@
                         >
                     </v-data-table>
                 </v-card>
-                </v-col>
+              
                     </v-row>
-
                    
                 </v-carousel-item>
+            </v-carousel>
             </div>
             
            
