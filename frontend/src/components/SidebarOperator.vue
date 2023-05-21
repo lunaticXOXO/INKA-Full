@@ -31,6 +31,8 @@
                 </v-btn>
             </v-app-bar>
         </nav>
+
+       
         <div class="d-flex">
             <div class = "ma-6">
                 <h3>Operasi</h3>
@@ -44,7 +46,10 @@
                         >
                     </v-data-table>
                 </v-card>
-                <h3>Material yang diperlukan</h3>
+                
+                
+                
+                <!-- <h3>Material yang diperlukan</h3>
                 <v-card class="mx-auto mb-6 text-center mt-6" width="700">
                     <v-data-table
                         :headers = "headers2"
@@ -52,8 +57,87 @@
                         :items-per-page="5"
                         >
                     </v-data-table>
+                </v-card> -->
+                <br>  
+                <v-carousel
+                    cycle
+                    height="30"
+                    hide-delimiters
+                    :show-arrows="false"
+                    :interval="10000">
+                        <v-carousel-item
+                            v-for="(slide, i) in slides"
+                            :key="i"
+                        >
+                        <v-sheet
+                            :color="colors[i]"
+                            height="100%"
+                        >
+                        <v-row
+                            class="fill-height"
+                            :align="center"
+                            justify="center"
+                        >
+                        <div class="text-h3">
+                        {{ slide }}
+                        </div>
+                        </v-row>
+                        </v-sheet>
+                        </v-carousel-item>
+                </v-carousel>
+                <v-carousel cycle :show-arrows="false" delimiter-icon="mdi-minus" height="200" :interval="15000">
+                <v-carousel-item>
+                    <v-row
+                        class="fill-height"
+                        :align="left"
+                        justify="left"
+                    >
+
+                        <v-col  cols="3">
+                            <h4>Material yang diperlukan</h4>
+                        </v-col>
+                       
+                        <v-card class="mx-auto mb-6 text-center mt-6" width="550">
+                            
+                        <v-data-table
+                            :headers = "headers2"
+                            :items = "items2"
+                            :items-per-page="5"   
+                        >
+                        </v-data-table>
+                        </v-card>
+                 
+                    </v-row>
+
+                    
+                </v-carousel-item>
+                <v-carousel-item>
+                    <v-row
+                        class="fill-height"
+                        :align="center"
+                        justify="center"
+                    >
+                    
+                    <v-col cols="3">
+                        <h4>Perkakas yang diperlukan</h4>
+                    </v-col>   
+                        <v-card class="mx-auto mb-6 text-center mt-6" width="550">
+                       
+                        <v-data-table
+                            :headers = "headers2"
+                            :items = "items2"
+                            :items-per-page="5"   
+                        >
+                    </v-data-table>
                 </v-card>
+              
+                    </v-row>
+                   
+                </v-carousel-item>
+            </v-carousel>
             </div>
+            
+           
             <div class = "ma-6">
                 <h3>Operator</h3>
                 <div class = "mt-4">

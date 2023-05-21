@@ -274,12 +274,14 @@ def TerimaOperasi():
         query_accept_operasi = "UPDATE prd_d_operasi SET confirm = 1 WHERE confirm IS NULL"
         query_accept_cpl_produk = "UPDATE cpl_produk SET confirm = 1 WHERE confirm IS NULL"
         query_accept_cplrinci = "UPDATE cpl_rinciproyek SET confirm = 1 WHERE confirm IS NULL"
+        query_accept_proyek = "UPDATE prd_d_proyek SET confirm = 1 WHERE confirm IS NULL"
 
         cursor.execute(query_accept_rinci)
         cursor.execute(query_accept_product)
         cursor.execute(query_accept_operasi)
         cursor.execute(query_accept_cpl_produk)
         cursor.execute(query_accept_cplrinci)
+        cursor.execute(query_accept_proyek)
         conn.commit()
         hasil = {"status" : "berhasil"}
         
@@ -314,7 +316,7 @@ def BatalOperasi():
         conn.commit()
      
 
-        query_delete_proyek = "DELETE FROM prd_d_proyek WHERE confirm IS NULL OR customerid IS NULL"
+        query_delete_proyek = "DELETE FROM prd_d_proyek WHERE confirm IS NULL AND customerid IS NULL"
         cursor.execute(query_delete_proyek)
         conn.commit()
         
@@ -341,7 +343,6 @@ def fetchOperatorQualification():
 
 
 def fetchProcesstoOperation(idProduk):
-   
     conn = db.connector()
     cursor = conn.cursor()
     query3 = "SELECT c.id AS 'IdProses',a.stasiunKerja,c.durasi,i.qualificationCode FROM gen_r_mampuproses a JOIN prd_r_proses c ON c.id = a.proses JOIN prd_r_strukturjnsprd d ON d.idNodal = c.nodalOutput JOIN prd_r_jenisproduk e ON e.id = d.jnsProduk JOIN prd_d_rincianproyek f ON f.jenisProduk = e.id JOIN prd_d_proyek g ON g.id = f.proyek JOIN prd_d_produk h ON h.rincianProyek = f.id JOIN prd_r_operatorrequirement i ON i.processCode = c.id WHERE h.id = '"+idProduk+"'ORDER BY c.id DESC"

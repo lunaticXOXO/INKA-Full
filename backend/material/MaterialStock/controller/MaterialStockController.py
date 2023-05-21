@@ -171,7 +171,7 @@ def AddMaterialStockbyOrders(orders):
                     cursor.execute(query_insert,values)
                     cursor.execute(query_insert2,values2)
                     cursor.execute(query_insert3,values3)
-                    conn.commit()
+                    #conn.commit()
 
                 elif jumlah >= 100:
                     #angka_akhir = angka_akhir + 1
@@ -184,7 +184,7 @@ def AddMaterialStockbyOrders(orders):
                     cursor.execute(query_insert,values)
                     cursor.execute(query_insert2,values2)
                     cursor.execute(query_insert3,values3)
-                    conn.commit()
+                    #conn.commit()
                 else:
                     #angka_akhir = angka_akhir + 1
                     print("jumlah data : ",jumlah)
@@ -197,7 +197,7 @@ def AddMaterialStockbyOrders(orders):
                     cursor.execute(query_insert,values)
                     cursor.execute(query_insert2,values2)
                     cursor.execute(query_insert3,values3)
-                    conn.commit()
+                    #conn.commit()
             
             #Query untuk mendapatkan multiplier , multiplier sebagai output quantity nya
             query_get_unit_by_stock = "SELECT b.multiplier FROM mat_d_materialstock a JOIN gen_r_materialunit b ON b.id = a.unit WHERE a.id = '"+id_stock+"'"
@@ -260,7 +260,6 @@ def AddMaterialStockbyOrders(orders):
         cursor.execute(query_update_jumlah,values4)
 
         print("Jumlah Sekarang : ",jumlah_now)
-        
         conn.commit()
         cursor.close()
         conn.close()
@@ -269,7 +268,6 @@ def AddMaterialStockbyOrders(orders):
         hasil = {"status" : "gagal"}
         print("Error",str(e))
     return hasil
-
 
 
 

@@ -386,7 +386,7 @@
       <v-carousel-item>
         <v-row
           class="fill-height"
-          align="center"
+          :align="center"
           justify="center"
         >
           <v-card
@@ -395,7 +395,7 @@
             <v-data-table
               :headers = "headers"
               :items = "proyek"> 
-              <template v-slot:[`item.id`]="{ item }">
+              <!-- <template v-slot:[`item.id`]="{ item }">
                   <span>{{item.id}}</span>
               </template>
               <template v-slot:[`item.nama`]="{ item }">
@@ -406,7 +406,7 @@
               </template>
               <template v-slot:[`item.percentage`]="{ item }">
                   <span>{{item.percentage}}%</span>
-              </template>
+              </template> -->
             </v-data-table>
           </v-card>
         </v-row>
