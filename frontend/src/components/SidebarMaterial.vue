@@ -129,6 +129,18 @@ export default {
                 },
 
                 {
+                    action: 'mdi-svg',
+                    active: false,
+                    items: [
+                        { title: 'Purchase Material', icon: 'mdi-plus', route: '/pesanMaterial'},
+                        {title : 'List Purchase Material', icon : 'mdi-filter-variant', route : '/listPurchaseMaterialNew'},
+                        {title : 'List Purchase Material Item',icon : 'mdi-gavel',route : '/listPurchaseMaterialItem'}
+                        
+                    ],
+                    title: 'Purchase Material New',
+                },
+
+                {
                     action: 'mdi-blur',
                     active: false,
                     items: [
