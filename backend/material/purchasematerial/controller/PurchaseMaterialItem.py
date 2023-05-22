@@ -190,3 +190,29 @@ def GetPurchaseMaterialItemComparedMatStock(idPurchase):
     return make_response(jsonify(json_data),200)
 
 
+
+def OrderMaterialLoop(code):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM cpl_haruspesan02"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    try:
+        query_insert = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId)VALUES(%s,%s,%s,%s,%s,%s)"
+
+        for index in records:
+            query2 = "SELECT * FROM cpl_haruspesan02 WHERE code = '"+code+"'"
+            cursor.execute(query2)
+            data = cursor.fetchone()
+            code = data[0]
+            if index[0] == code:
+                values = (data[0],data[1],data[2])
+                cursor.execute(query_insert,values)
+        
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        hasil = {"status" : "berhasil"}
+        print("Error",str(e))
+    return hasil

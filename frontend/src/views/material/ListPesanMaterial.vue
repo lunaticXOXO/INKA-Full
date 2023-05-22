@@ -3,13 +3,13 @@
         class="mx-auto text-center mt-10"
         max-width = "1200">
         <br>
-        <h1>List Material Type</h1>
+        <h1>Material Perlu Pesan</h1>
         <br>
-        <router-link to="/jenisMaterial">
+        <!-- <router-link to="/jenisMaterial">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
                 Add Material Type
             </v-btn>
-        </router-link>
+        </router-link> -->
 
         <!-- <v-data-table 
             v-model="selected"
@@ -20,6 +20,14 @@
             class="elevation-1">
            
         </v-data-table> -->
+
+        <v-menu>
+            <template v-slot:activator="{ on, attrs }">
+                <v-text-field :value="tanggalPurchase" v-bind="attrs" v-on="on" label="Purchase Date" prepend-icon="mdi-calendar"></v-text-field>
+            </template>
+            <v-date-picker width="500" v-model="tanggalPurchase"></v-date-picker>
+          </v-menu>
+
         <v-data-table 
           id="mytable"
           show-select
@@ -30,6 +38,11 @@
           class="elevation-1"
           item-key="code"
     ></v-data-table>
+
+    <v-btn color="primary" class="d-flex ml-15 mb-20">
+        Purchase
+    </v-btn>
+    
     </v-card>
 </template>
 

@@ -99,6 +99,8 @@ import TambahToolStockByBox from '../views/tools/AddToolStockByBox.vue'
 import ShowToolPurchase from '../views/tools/ShowToolPurchase.vue'
 import AddToolPurchase from '../views/tools/AddToolPurchase.vue'
 import ListPesanMaterial from '../views/material/ListPesanMaterial.vue'
+import ListPurchaseMaterialNew from '../views/material/ListPurchaseMaterialNew'
+import ListPurchaseItembyPurchaseMaterialNew from '../views/material/ListPurchaseItembyPurchaseMaterialNew'
 //import ShowToolPurchaseItemByPurchase from '/views/tools/ShowToolPurchaseItemByPurchase.vue'
 
 Vue.use(VueRouter)
@@ -872,8 +874,8 @@ const routes = [
 
   {
 
-    path : '/listPurchaseMaterialNew',
-    name : 'List Purchase Material New',
+    path : '/listHarusPesanMaterial',
+    name : 'List Harus Pesan Material New',
     component : ListPesanMaterial,
     meta : {
       title : "List Material Yang Harus Dipesan"
@@ -1006,6 +1008,26 @@ const routes = [
     }
 
  },
+
+ {
+
+    path : '/listPurchaseItemByPurchaseMaterialNew/:id',
+    name : 'List Purchase Item By Purchase Material New',
+    component : ListPurchaseItembyPurchaseMaterialNew,
+    meta : {
+        title : "List Purchase Item By Purchase Material - PT.INKA"
+    }
+
+ },
+
+ {
+    path : '/listPurchaseMaterialNew',
+    name : 'List Purchase Material New',
+    component : ListPurchaseMaterialNew,
+    meta : {
+      title : "List Purchase Material New - PT.INKA"
+    }
+ }
 
 //  {
 //    path : '/listPurchaseItemToolsByPurchase/:id',
