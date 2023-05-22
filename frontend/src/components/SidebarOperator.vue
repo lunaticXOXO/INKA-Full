@@ -85,7 +85,7 @@
                         </v-sheet>
                         </v-carousel-item>
                 </v-carousel>
-                <v-carousel cycle :show-arrows="false" delimiter-icon="mdi-minus" height="200" :interval="15000">
+                <v-carousel cycle :show-arrows="true"  height="200" :interval="15000">
                 <v-carousel-item>
                     <v-row
                         class="fill-height"

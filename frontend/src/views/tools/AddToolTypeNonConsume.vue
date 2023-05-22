@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-card
-      class="mx-auto text-center mt-6"
-      max-width="1000">
+    class="mx-auto text-center mt-10"
+      width = "1150">
       <br>
       <h1>Tambah Tool Type Non Consumable</h1>
       <v-form
@@ -44,8 +44,8 @@
 
     <br><br>
 
-    <v-card>
-      <h1>Jenis Perkakas Non Consumable Yang Tersedia</h1>
+    <v-card max-width="1500" class="mx-auto text-center mt-10 pa-2 mb-10">
+      <h2>Jenis Perkakas Non Consumable Yang Tersedia</h2>
       <v-data-table
           :headers = "column"
           :items = "non"

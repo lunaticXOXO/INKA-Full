@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-card
-      class="mx-auto text-center mt-6"
-      max-width="1000">
+      class="mx-auto text-center mt-10"
+      width = "1150">
       <br>
       <h1>Tambah Tool Box</h1>
       <v-form
@@ -44,7 +44,8 @@
     
     <br><br>
 
-    <v-card>
+    <v-card max-width="1500" class="mx-auto text-center mt-10 pa-2 mb-10">
+      <h2>Box Yang Tersedia</h2>
       <v-data-table
           :headers = "column"
           :items = "box"

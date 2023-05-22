@@ -2,9 +2,9 @@
     <v-app>
       <v-card 
           class="mx-auto text-center mt-10"
-          max-width = "1200">
+          max-width = "1300">
           <br>
-          <h1>List Purchase Material</h1>
+          <h2>List Purchase Tools</h2>
           <br>
           <router-link to="/purchaseTools">
               <v-btn color="primary" class="d-flex ml-4 mb-6">
@@ -16,7 +16,7 @@
             :items = "types"
             :items-per-page="5"
             >
-            <template v-slot:[`item.id`]="{ item }">
+            <template #[`item.id`]="{ item }">
               <div v-if="item.id === editedItem.id">
                   <v-text-field disabled v-model="editedItem.toolPurchaseId" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
                   <span v-else>{{item.id}}</span>
