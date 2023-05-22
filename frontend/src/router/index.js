@@ -98,6 +98,7 @@ import TambahToolTypeNonConsume from '../views/tools/AddToolTypeNonConsume.vue'
 import TambahToolStockByBox from '../views/tools/AddToolStockByBox.vue'
 import ShowToolPurchase from '../views/tools/ShowToolPurchase.vue'
 import AddToolPurchase from '../views/tools/AddToolPurchase.vue'
+import ListPesanMaterial from '../views/material/ListPesanMaterial.vue'
 //import ShowToolPurchaseItemByPurchase from '/views/tools/ShowToolPurchaseItemByPurchase.vue'
 
 Vue.use(VueRouter)
@@ -870,6 +871,17 @@ const routes = [
   },
 
   {
+
+    path : '/listPurchaseMaterialNew',
+    name : 'List Purchase Material New',
+    component : ListPesanMaterial,
+    meta : {
+      title : "List Material Yang Harus Dipesan"
+    }
+
+  },
+
+  {
     path : '/statusBarcode',
     name : 'Status Barcode',
     component : StatusBarcode,
@@ -1003,7 +1015,7 @@ const routes = [
 //       title : "List Purchase Item By Tool Purchase - PT.INKA "
 //    }
 
-//  },
+//  ,
 
 
 ]

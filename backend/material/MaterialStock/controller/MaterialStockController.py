@@ -59,6 +59,7 @@ def GetMaterialStockbyOrder(order):
     cursor.close()
     conn.close()
     return make_response(jsonify(json_data),200)
+    
 def AddMaterialStockbyOrders(orders):
     conn = database.connector()
     cursor = conn.cursor()
@@ -93,6 +94,7 @@ def AddMaterialStockbyOrders(orders):
     month = today.month
     day = today.day
     print(type(month))
+    
     if month < 10:
         today_str = str(year) + '0' + str(month) + str(day)
 
@@ -100,10 +102,7 @@ def AddMaterialStockbyOrders(orders):
         today_str = str(year) + '0' + str(month) + '0' + str(day)
 
     if month > 10 and day > 10:
-        today_str = str(year) +  str(month) +  str(day)
-
-
-    
+        today_str = str(year) +  str(month) +  str(day)    
     print(today_str)
 
     query_insert =  "INSERT INTO mat_d_materialstock(id,purchaseItem,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"

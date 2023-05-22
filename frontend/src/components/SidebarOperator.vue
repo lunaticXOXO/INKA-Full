@@ -498,6 +498,7 @@ export default {
             try{
                 const axios = require('axios')
                 this.namaOperator = this.loginService.getCurrentUsername()
+                console.log("Operator : ",this.namaOperator)
                 const res = await axios.get('/operasi/get_operasi_siap/' + this.loginService.getCurrentUsername())
                 if(res.data.length == 0){
                     console.log("Data kosong")

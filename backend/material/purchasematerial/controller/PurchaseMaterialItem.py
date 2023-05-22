@@ -64,7 +64,7 @@ def PurchaseMaterialItemByIDPurchase(idPurchase):
     angka_awal = '00'
     angka_akhir = 0
     temp = ""
-    id_item_new = ""
+    id_item_new = ""    
 
 
     query_get_purchaseItem = "SELECT a.id_item FROM mat_d_purchaseitem a JOIN mat_d_purchasematerial b ON b.id = a.purchaseId WHERE b.id = '"+idPurchase+"'"

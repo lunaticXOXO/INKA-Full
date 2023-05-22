@@ -28,7 +28,7 @@ def ShowCustomerNames():
 
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
-    return make_response(jsonify(json_data),200)
+    return make_response(jsonify(json_data),200)    
 
 
 def AddNewCustomer():
