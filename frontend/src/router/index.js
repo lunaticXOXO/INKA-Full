@@ -101,6 +101,8 @@ import AddToolPurchase from '../views/tools/AddToolPurchase.vue'
 import ListPesanMaterial from '../views/material/ListPesanMaterial.vue'
 import ListPurchaseMaterialNew from '../views/material/ListPurchaseMaterialNew'
 import ListPurchaseItembyPurchaseMaterialNew from '../views/material/ListPurchaseItembyPurchaseMaterialNew'
+import ListPeringkatSupplier from '../views/pemasok/ListPeringkatSupplier.vue'
+import ListDetailPeringkatBySupplier from '../views/pemasok/ListDetailPeringkatBySupplier.vue'
 //import ShowToolPurchaseItemByPurchase from '/views/tools/ShowToolPurchaseItemByPurchase.vue'
 
 Vue.use(VueRouter)
@@ -1027,7 +1029,7 @@ const routes = [
     meta : {
       title : "List Purchase Material New - PT.INKA"
     }
- }
+ },
 
 //  {
 //    path : '/listPurchaseItemToolsByPurchase/:id',
@@ -1038,6 +1040,25 @@ const routes = [
 //    }
 
 //  ,
+
+
+{
+    path : '/listPeringkatSupplier',
+    name : 'List Peringkat Supplier',
+    component : ListPeringkatSupplier,
+    meta : {
+        title : "List Peringkat Supplier - PT.INKA"
+    }
+},
+
+{
+  path : '/listDetailPeringkatSupplier/:id',
+  name : 'List Detail Peringkat By Supplier',
+  component : ListDetailPeringkatBySupplier,
+  meta : {
+      title : "List Detail Peringkat Supplier - PT.INKA"
+  }
+}
 
 
 ]

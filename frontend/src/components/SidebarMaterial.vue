@@ -102,6 +102,7 @@ export default {
                     items: [
                         { title: 'List Pemasok',icon : 'mdi-playlist-check',route : '/listPemasok'},
                         { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'},
+                        {title : 'Peringkat Supplier', icon : 'mdi-rank',route : '/listPeringkatSupplier'}
                     ],
                     title: 'Pemasok',
                 },
@@ -164,38 +165,38 @@ export default {
                     ],
                     title: 'Material Login',
                 },
-                {
-                action: 'mdi-wrench',
-                active: false,
-                items: [
-                    { title: 'List Tool Box', icon: 'mdi-filter-variant', route: '/showToolBox'},
-                    { title: 'Tambah Tool Box', icon: 'mdi-plus', route: '/addToolBox'},
-                ],
-                title: 'Tool Box',
-                },
+                // {
+                // action: 'mdi-wrench',
+                // active: false,
+                // items: [
+                //     { title: 'List Tool Box', icon: 'mdi-filter-variant', route: '/showToolBox'},
+                //     { title: 'Tambah Tool Box', icon: 'mdi-plus', route: '/addToolBox'},
+                // ],
+                // title: 'Tool Box',
+                // },
 
-                {
-                action: 'mdi-book-open-outline',
-                active: false,
-                items: [
-                    { title: 'Tambah Tool Type Consumable', icon: 'mdi-plus', route: '/addToolTypeConsume'},
-                    { title: 'Tambah Tool Type Non Consumable', icon: 'mdi-plus', route: '/addToolTypeNonConsume'},
-                ],
-                title: 'Tool Type',
-                },
+                // {
+                // action: 'mdi-book-open-outline',
+                // active: false,
+                // items: [
+                //     { title: 'Tambah Tool Type Consumable', icon: 'mdi-plus', route: '/addToolTypeConsume'},
+                //     { title: 'Tambah Tool Type Non Consumable', icon: 'mdi-plus', route: '/addToolTypeNonConsume'},
+                // ],
+                // title: 'Tool Type',
+                // },
 
-                {
-                    action: 'mdi-svg',
-                    active: false,
-                    items: [
-                        { title: 'Purchase Tools', icon: 'mdi-plus', route: '/purchaseTools'},
-                        {title : 'List Purchase Tools', icon : 'mdi-filter-variant', route : '/listPurchaseTools'},
-                        {title : 'List Purchase Tool Item',icon : 'mdi-gavel',route : '/listPurchaseToollItem/:id'}
+                // {
+                //     action: 'mdi-svg',
+                //     active: false,
+                //     items: [
+                //         { title: 'Purchase Tools', icon: 'mdi-plus', route: '/purchaseTools'},
+                //         {title : 'List Purchase Tools', icon : 'mdi-filter-variant', route : '/listPurchaseTools'},
+                //         {title : 'List Purchase Tool Item',icon : 'mdi-gavel',route : '/listPurchaseToollItem/:id'}
                     
                         
-                    ],
-                    title: 'Tool Purchase',
-                },
+                //     ],
+                //     title: 'Tool Purchase',
+                // },
 
 
             ],

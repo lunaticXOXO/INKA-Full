@@ -109,6 +109,11 @@ def get_supplier():
     hasil = GetSupplier()
     return hasil
 
+
+@app.route('/supplier/get_supplier_byid/<idSupplier>',methods = ['GET'])
+def get_supplier_byid(idSupplier):
+    return GetSupplierById(idSupplier)
+
 @app.route('/supplier/add_supplier',methods = ['POST'])
 def add_supplier():
     hasil = AddSupplier()
@@ -129,6 +134,15 @@ def get_materialtype_bysupplier(code):
     hasil = ShowMaterialTypeSupplierBySupplier(code)
     return hasil
 
+@app.route('/supplier/get_supplier_rank',methods = ['GET'])
+def get_supplier_rank():
+    return RankingSupplier()
+
+
+
+@app.route('/supplier/detail_get_supplier_rank/<idSupplier>',methods = ['GET'])
+def detail_get_supplier_rank(idSupplier):
+    return GetDetailRankingSupplier(idSupplier)
 
 #PROYEK
 @app.route('/proyek/get_allproyek',methods = ['GET'])
