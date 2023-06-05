@@ -85,19 +85,19 @@
                         </v-sheet>
                         </v-carousel-item>
                 </v-carousel>
-                <v-carousel cycle :show-arrows="true"  height="200" :interval="15000">
+                <v-carousel cycle :show-arrows="true"  height="250" :interval="15000">
                 <v-carousel-item>
                     <v-row
                         class="fill-height"
-                        :align="left"
-                        justify="left"
+                        :align="center"
+                        justify="center"
                     >
 
-                        <v-col  cols="3">
-                            <h4>Material yang diperlukan</h4>
+                        <v-col  cols="8">
+                            <h3>Material yang diperlukan</h3>
                         </v-col>
                        
-                        <v-card class="mx-auto mb-6 text-center mt-6" width="550">
+                        <v-card class="mx-auto mb-6 text-center mt-3" width="525">
                             
                         <v-data-table
                             :headers = "headers2"
@@ -118,14 +118,14 @@
                         justify="center"
                     >
                     
-                    <v-col cols="3">
-                        <h4>Perkakas yang diperlukan</h4>
+                    <v-col cols="8">
+                        <h3>Kebutuhan Perkakas</h3>
                     </v-col>   
-                        <v-card class="mx-auto mb-6 text-center mt-6" width="550">
+                        <v-card class="mx-auto mb-6 text-center mt-3" width="525">
                        
                         <v-data-table
-                            :headers = "headers2"
-                            :items = "items2"
+                            :headers = "headers3"
+                            :items = "itemtool"
                             :items-per-page="5"   
                         >
                     </v-data-table>
@@ -295,6 +295,14 @@ export default {
                 {text : 'Butuh',            value : 'butuh'},
                 {text : 'Kurang',           value : 'kurang'},
             ],
+
+            headers3 : [
+                
+                {text : 'Nama Tool', value : 'namaTool'},
+                {text : 'Butuh', value : 'kebutuhanTool'},
+                {text : 'Kurang',           value : 'Kekurangan'},
+            ],
+
             items: undefined,
             items2: undefined,
             items3 : undefined,
@@ -314,6 +322,7 @@ export default {
             loading : false,
             listOperator : [],
             listOperatorPhoto : [],
+            itemtool : [],
             color : null,
         }
     },
@@ -329,6 +338,9 @@ export default {
         }, 1000),
         window.setInterval(() => {
             this.fetchOperasiSiap()
+        }, 1000),
+        window.setInterval(() => {
+            this.fetchTools()
         }, 1000)
     },
 
@@ -548,6 +560,21 @@ export default {
                 }else if(res.data.length > 0){
                     this.items2 = res.data
                     console.log(res,this.items2)
+                }
+            }catch(error){
+                console.log(error)
+            }
+        },
+
+        async fetchTools(){
+            try{
+                const axios = require('axios')
+                const res = await axios.get('/tools/show_tool_butuhopr/' + this.loginService.getCurrentUsername())
+                if(res.data.length == 0){
+                    console.log("Data kosong")
+                }else if(res.data.length > 0){
+                    this.itemtool = res.data
+                    console.log(res,this.itemstool)
                 }
             }catch(error){
                 console.log(error)

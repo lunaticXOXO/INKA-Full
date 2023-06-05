@@ -32,6 +32,7 @@ from tools.toolstock.ToolStockController import *
 from tools.toolpurchase.ToolPurchaseController import *
 from tools.toolpurchase.ToolPurchaseItemController import *
 from tools.toolbox.BoxItemController import *
+from tools.toolbutuhopr.controller.ToolButuhOpr import *
 
 from flask import Flask,session
 from flask_cors import CORS
@@ -1036,6 +1037,12 @@ def add_toolstock_by_toolPurchaseItem(toolPurchaseItem):
 def show_tools_not_in_box():
     hasil = ShowToolStockNotRegisteredInBox()
     return hasil
+
+
+# Tool Butuh Opr
+@app.route('/tools/show_tool_butuhopr/<username>',methods = ['GET'])
+def show_tool_butuhopr(username):
+    return GetToolButuhOpr(username)
 
 
 # Box
