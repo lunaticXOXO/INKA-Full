@@ -103,6 +103,7 @@ import ListPurchaseMaterialNew from '../views/material/ListPurchaseMaterialNew'
 import ListPurchaseItembyPurchaseMaterialNew from '../views/material/ListPurchaseItembyPurchaseMaterialNew'
 import ListPeringkatSupplier from '../views/pemasok/ListPeringkatSupplier.vue'
 import ListDetailPeringkatBySupplier from '../views/pemasok/ListDetailPeringkatBySupplier.vue'
+import ListPeringkatKriteria from '../views/pemasok/ListPeringkatKriteria.vue'
 //import ShowToolPurchaseItemByPurchase from '/views/tools/ShowToolPurchaseItemByPurchase.vue'
 
 Vue.use(VueRouter)
@@ -1058,6 +1059,18 @@ const routes = [
   meta : {
       title : "List Detail Peringkat Supplier - PT.INKA"
   }
+},
+
+{
+     
+    path : '/listPeringkatKriteria',
+    name : 'List Peringkat Kriteria',
+    component : ListPeringkatKriteria,
+    meta : {
+      title : "List Peringkat Kriteria - PT.INKA"
+    }
+
+
 }
 
 

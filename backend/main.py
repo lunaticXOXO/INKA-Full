@@ -145,6 +145,11 @@ def get_supplier_rank():
 def detail_get_supplier_rank(idSupplier):
     return GetDetailRankingSupplier(idSupplier)
 
+@app.route('/supplier/get_kriteria_rank',methods = ['GET'])
+def get_kriteria_rank():
+    return GetPeringkatKriteria()
+
+
 #PROYEK
 @app.route('/proyek/get_allproyek',methods = ['GET'])
 def get_allproyek():

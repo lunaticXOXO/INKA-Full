@@ -138,5 +138,23 @@ def GetDetailRankingSupplier(idSupplier):
     return make_response(jsonify(json_data),200)
 
 
+def GetPeringkatKriteria():
+    conn = db.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT a.IDKriteria,b.namaKriteria,a.rangking,a.Bobot FROM gen_r_kriteriabobot a JOIN gen_r_kriteria b ON b.ID = a.IDKriteria ORDER BY a.Bobot DESC"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
+
+
+
 
     

@@ -1,73 +1,71 @@
 <template>
-    <v-card
-      class="mx-auto text-center mt-6"
-      max-width="1000">
+  <v-card 
+      class="mx-auto text-center mt-10"
+      max-width = "1200">
       <br>
-      <h1>Peringkat Supplier</h1>
+      <h1>List Supplier</h1>
       <br>
-      <v-card
-        class="mx-auto text-center"
-        max-width="1000">
-          <v-data-table
-            :headers = "headers"
-            :items = "supplierRank"> 
-             
-            <template v-slot:[`item.aksi`]="{ item }">
-            
+      <router-link to="/tambahPemasok">
+          <v-btn color="primary" class="d-flex ml-4 mb-6">
+              Add Supplier
+          </v-btn>
+      </router-link>
+      
+      <v-data-table 
+          :headers = "headers"
+          :items = "supplierRank">
+          <template v-slot:[`item.IDSupplier`]="{ item }">
+            <div v-if="item.IDSupplier === editedItem.IDSupplier">
+                <v-text-field disabled v-model="editedItem.IDSupplier" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDSupplier == editedItem.IDSupplier"></v-text-field>
+                <span v-else>{{item.IDSupplier}}</span>
+            </div>
+            <div v-else>
+                <v-text-field v-model="editedItem.IDSupplier" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDSupplier == editedItem.IDSupplier"></v-text-field>
+                <span v-else>{{item.IDSupplier}}</span>
+            </div>
+          </template>
+          <!-- <template v-slot:[`item.namaSupplier`]="{ item }">
+              <v-text-field v-model="editedItem.namaSupplier" :hide-details="true" dense single-line v-if="item.code == editedItem.code" ></v-text-field>
+              <span v-else>{{item.namaSupplier}}</span>
+          </template>
+          <template v-slot:[`item.Rangking`]="{ item }">
+              <v-text-field v-model="editedItem.Rangking" :hide-details="true" dense single-line v-if="item.code == editedItem.code" ></v-text-field>
+              <span v-else>{{item.Rangking}}</span>
+          </template>
+          <template v-slot:[`item.Bobot`]="{ item }">
+              <v-text-field v-model="editedItem.bobot" :hide-details="true" dense single-line v-if="item.code == editedItem.code" ></v-text-field>
+              <span v-else>{{item.Bobot}}</span>
+          </template> -->
+
+       
+
+        
+          <template v-slot:[`item.aksi`]="{ item }">
+          
             <div>
-              <router-link :to="{name : 'List Detail Peringkat By Supplier',params:{id : `${item.id}`}}">
+              <router-link :to="{name : 'List Detail Peringkat By Supplier',params:{id : `${item.IDSupplier}`}}">
                 <v-tooltip top>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn 
                       class="mx-1" 
                       x-small
                       color="blue"
-                      @click="selectProyek(item)"
                       v-bind="attrs"
                       v-on="on">
                       <v-icon small dark>mdi-check</v-icon>
                     </v-btn>
                   </template>
-                  <span>Detail Supplier</span>
+                  <span>List Material Type By Supplier</span>
                 </v-tooltip>
               </router-link>
-<!--               
-              <v-tooltip top>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn 
-                    class="mx-1" 
-                    x-small
-                    color="green"
-                    @click="editProyek(item)"
-                    v-bind="attrs"
-                    v-on="on">
-                    <v-icon small dark>mdi-pencil</v-icon>
-                  </v-btn>
-                </template>
-                <span>Edit</span>
-              </v-tooltip>
-  
-              <v-tooltip top>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn 
-                    class="mx-1" 
-                    x-small
-                    color="red"
-                    @click="deleteProyek(item)"
-                    v-bind="attrs"
-                    v-on="on">
-                    <v-icon small dark>mdi-trash-can-outline</v-icon>
-                  </v-btn>
-                </template>
-                <span>Delete</span>
-              </v-tooltip> -->
+             
+             
             </div>
           </template>
-        </v-data-table>
-      </v-card>
-    </v-card>
-  </template>
-  
+      </v-data-table>
+  </v-card>
+</template>
+
   <script>
     import axios from 'axios'
     export default {
@@ -183,3 +181,4 @@
       }
     }
   </script>
+

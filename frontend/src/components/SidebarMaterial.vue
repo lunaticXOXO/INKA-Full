@@ -102,7 +102,8 @@ export default {
                     items: [
                         { title: 'List Pemasok',icon : 'mdi-playlist-check',route : '/listPemasok'},
                         { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'},
-                        {title : 'Peringkat Supplier', icon : 'mdi-rank',route : '/listPeringkatSupplier'}
+                        {title : 'Peringkat Supplier', icon : 'mdi-person',route : '/listPeringkatSupplier'},
+                        {title : 'Peringkat Kriteria', icon : 'mdi-sort-variant',route : '/listPeringkatKriteria'}
                     ],
                     title: 'Pemasok',
                 },
