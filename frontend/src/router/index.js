@@ -105,6 +105,7 @@ import ListPeringkatSupplier from '../views/pemasok/ListPeringkatSupplier.vue'
 import ListDetailPeringkatBySupplier from '../views/pemasok/ListDetailPeringkatBySupplier.vue'
 import ListPeringkatKriteria from '../views/pemasok/ListPeringkatKriteria.vue'
 import ShowToolPurchaseItemByPurchase from '../views/tools/ShowToolPurchaseItemByPurchase.vue'
+import ShowToolStockByPurchaseItem from '../views/tools/ShowToolStockByPurchaseItem.vue'
 
 Vue.use(VueRouter)
 
@@ -1081,6 +1082,16 @@ const routes = [
     meta : {
         title : "List Purchase Item By Purchase - PT.INKA"
     }
+
+},
+
+{
+   path : '/listToolStockByPurchaseItem/:id',
+   name : 'List Tools Stock By Purchase Item',
+   component : ShowToolStockByPurchaseItem,
+   meta : {
+      title : "List Tool Stock By Purchase Item - PT.INKA"
+   }
 
 }
 

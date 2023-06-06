@@ -44,7 +44,7 @@
             </template>
             
             <template v-slot:[`item.aksi`]="{ item }">
-              <div v-if="item.id == editedItem.id">
+              <div v-if="item.toolPurchaseId == editedItem.toolPurchaseId">
                 <v-icon color="red" class="mr-3" @click="close">
                   mdi-window-close
                 </v-icon>
