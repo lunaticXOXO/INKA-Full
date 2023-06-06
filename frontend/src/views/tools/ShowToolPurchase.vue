@@ -6,7 +6,7 @@
           <br>
           <h2>List Purchase Tools</h2>
           <br>
-          <router-link to="/purchaseTools">
+          <router-link :to="{name : 'List Purchase Item By Purchase Tools', params : {id : `${this.$route.params.id}`}}">
               <v-btn color="primary" class="d-flex ml-4 mb-6">
                   Purchase Tools
               </v-btn>
@@ -16,30 +16,30 @@
             :items = "types"
             :items-per-page="5"
             >
-            <template #[`item.id`]="{ item }">
-              <div v-if="item.id === editedItem.id">
-                  <v-text-field disabled v-model="editedItem.toolPurchaseId" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
-                  <span v-else>{{item.id}}</span>
+            <template #[`item.toolPurchaseId`]="{ item }">
+              <div v-if="item.toolPurchaseId === editedItem.toolPurchaseId">
+                  <v-text-field disabled v-model="editedItem.toolPurchaseId" :hide-details="true" dense single-line :autofocus="true" v-if="item.toolPurchaseId == editedItem.toolPurchaseId"></v-text-field>
+                  <span v-else>{{item.toolPurchaseId}}</span>
               </div>
               <div v-else>
                   <v-text-field v-model="editedItem.toolPurchaseId" :hide-details="true" dense single-line :autofocus="true" v-if="item.toolPurchaseId == editedItem.toolPurchaseId"></v-text-field>
-                  <span v-else>{{item.id}}</span>
+                  <span v-else>{{item.toolPurchaseId}}</span>
               </div>
             </template>
   
-            <template v-slot:[`item.nama`]="{ item }">
-            <v-text-field v-model="editedItem.nama" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
-            <span v-else>{{item.nama}}</span>
+            <template v-slot:[`item.orderName`]="{ item }">
+            <v-text-field v-model="editedItem.orderName" :hide-details="true" dense single-line v-if="item.toolPurchaseId == editedItem.toolPurchaseId" ></v-text-field>
+            <span v-else>{{item.orderName}}</span>
           </template>
   
           <template v-slot:[`item.purchaseDate`]="{ item }">
-            <v-text-field v-model="editedItem.purchaseDate" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+            <v-text-field v-model="editedItem.purchaseDate" :hide-details="true" dense single-line v-if="item.toolPurchaseId == editedItem.toolPurchaseId" ></v-text-field>
             <span v-else>{{item.purchaseDate}}</span>
           </template>
 
   
-            <template v-slot:[`item.PurchaserName`]="{ item }">
-              <v-text-field v-model="editedItem.PurchaserName" :hide-details="true" dense single-line v-if="item.toolPurchaseId == editedItem.toolPurchaseId" ></v-text-field>
+            <template v-slot:[`item.purchaserName`]="{ item }">
+              <v-text-field v-model="editedItem.purchaserName" :hide-details="true" dense single-line v-if="item.toolPurchaseId == editedItem.toolPurchaseId" ></v-text-field>
               <span v-else>{{item.purchaserName}}</span>
             </template>
             
@@ -53,7 +53,7 @@
                 </v-icon>
               </div>
               <div v-else>
-                <router-link :to="{name : 'List Purchase Item By Tool Purchase',params:{id : `${item.id}`}}">
+                <router-link :to="{name : 'List Purchase Item By Purchase Tools',params:{id : `${item.toolPurchaseId}`}}">
                   <v-tooltip top>
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn 

@@ -104,7 +104,7 @@ import ListPurchaseItembyPurchaseMaterialNew from '../views/material/ListPurchas
 import ListPeringkatSupplier from '../views/pemasok/ListPeringkatSupplier.vue'
 import ListDetailPeringkatBySupplier from '../views/pemasok/ListDetailPeringkatBySupplier.vue'
 import ListPeringkatKriteria from '../views/pemasok/ListPeringkatKriteria.vue'
-//import ShowToolPurchaseItemByPurchase from '/views/tools/ShowToolPurchaseItemByPurchase.vue'
+import ShowToolPurchaseItemByPurchase from '../views/tools/ShowToolPurchaseItemByPurchase.vue'
 
 Vue.use(VueRouter)
 
@@ -1070,6 +1070,17 @@ const routes = [
       title : "List Peringkat Kriteria - PT.INKA"
     }
 
+
+},
+
+{
+
+    path : '/listPurchaseItemByPurchaseTools/:id',
+    name : 'List Purchase Item By Purchase Tools',
+    component : ShowToolPurchaseItemByPurchase,
+    meta : {
+        title : "List Purchase Item By Purchase - PT.INKA"
+    }
 
 }
 
