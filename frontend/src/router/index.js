@@ -109,6 +109,8 @@ import ShowToolStockByPurchaseItem from '../views/tools/ShowToolStockByPurchaseI
 import ShowToolStock from '../views/tools/ShowToolStock.vue'
 import ShowDetailToolStock from '../views/tools/ShowDetailToolStock.vue'
 import ChooseKebutuhanTool from '../views/tools/ChooseKebutuhanTool.vue'
+import ListKriteriaPemasok from '../views/pemasok/ListKriteriaPemasok.vue'
+import PerhitunganKriteria from '../views/pemasok/PerhitunganKriteria.vue'
 
 
 Vue.use(VueRouter)
@@ -1125,6 +1127,27 @@ const routes = [
    component : ChooseKebutuhanTool,
    meta : {
       title : "Kebutuhan Perkakas - PT.INKA"
+   }
+
+},
+
+{
+
+    path : '/perhitunganKriteria',
+    name : 'Perhitungan Kriteria',
+    component : PerhitunganKriteria,
+    meta : {
+       title : "Perhitungan Kriteria - PT.INKA"
+    }
+
+},
+
+{
+   path : '/listKriteriaPemasok',
+   name : 'List Kriteria Pemasok',
+   component : ListKriteriaPemasok,
+   meta : {
+    title : "List Kriteria Pemasok - PT.INKA"
    }
 
 }

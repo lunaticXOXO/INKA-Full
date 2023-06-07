@@ -156,5 +156,66 @@ def GetPeringkatKriteria():
 
 
 
+def GetKriteriaPemasok():
+    conn = db.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.ID AS 'IdKriteria',a.namaKriteria,a.mulai,a.selesai FROM gen_r_kriteria a"
+
+    cursor.execute(query)
+
+    records = cursor.fetchall()
+    
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
+
+
+
+def InsertMatriksKriteria():
+    conn = db.connector()
+    cursor = conn.cursor()
+    query = "INSERT INTO gen_r_matrikskriteria(IDKriteria,IDKriteria02,Nilai)VALUES(%s,%s,%s)"
+    try:
+        data = request.json
+        IDKriteria = data["criteria01"]
+        IDKriteria02 = data["criteria02"]
+        nilai = data["Nilai"]
+        values = (IDKriteria,IDKriteria02,nilai)
+        cursor.execute(query,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
+
+
+
+
+def GetMatriksKriteriaInput():
+    conn = db.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.IDKriteria,b.namaKriteria,a.IDKriteria02,c.namaKriteria AS 'namaKriteria02',a.nilai FROM gen_r_matrikskriteria a JOIN gen_r_kriteria b ON b.ID = a.IDKriteria JOIN gen_r_kriteria c ON c.ID = a.IDKriteria02 WHERE a.konfirm IS NULL"
+    cursor.execute(query)
+
+    records = cursor.fetchall()
+    
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
+
+
+
+
+
 
     

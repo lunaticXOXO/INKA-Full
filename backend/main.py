@@ -146,9 +146,26 @@ def get_supplier_rank():
 def detail_get_supplier_rank(idSupplier):
     return GetDetailRankingSupplier(idSupplier)
 
+
+@app.route('/supplier/get_kriteria_supplier',methods = ['GET'])
+def get_kriteria_supplier():
+    return GetKriteriaPemasok()
+
+
+@app.route('/supplier/get_matriks_kriteria',methods = ['GET'])
+def get_matriks_kriteria():
+    return GetMatriksKriteriaInput()
+
+@app.route('/supplier/add_matriks_kriteria',methods = ['POST'])
+def add_matriks_kriteria():
+    return InsertMatriksKriteria()
+
+
 @app.route('/supplier/get_kriteria_rank',methods = ['GET'])
 def get_kriteria_rank():
     return GetPeringkatKriteria()
+
+
 
 
 #PROYEK
