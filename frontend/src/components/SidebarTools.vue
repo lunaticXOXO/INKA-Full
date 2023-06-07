@@ -109,6 +109,18 @@ export default {
                     ],
                     title: 'Tool Purchase',
                 },
+                
+                {
+                    action: 'mdi-book',
+                    active: false,
+                    items: [
+                        {title : 'List Tool Stock', icon : 'mdi-wrench', route : '/listToolStock'}
+            
+                    ],
+                    title: 'Tool Stock',
+                },
+
+
 
 
             ],

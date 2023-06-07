@@ -148,9 +148,9 @@
                 </v-icon>
             </div>
             <div v-else>
-                <router-link :to="{name : 'Tambah Tool Stock By Box', params:{id : `${item.id}`}}">
+                <router-link :to="{name : 'List Tools Stock By Purchase Item', params:{id : `${item.purchaseItemId}`}}">
                     <v-tooltip top>
-                        <template v-slot:activator="{ on, attrs }">
+                        <template v-slot:activator="{ on, attrs }"> 
                             <v-btn 
                             class="mx-1" 
                             x-small
@@ -160,7 +160,7 @@
                             <v-icon small dark>mdi-check</v-icon>
                             </v-btn>
                         </template>
-                        <span>Tambah Tool Stock</span>
+                        <span>List Tool Stock</span>
                     </v-tooltip>
                 </router-link>
 

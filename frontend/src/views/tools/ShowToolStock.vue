@@ -2,7 +2,7 @@
     <v-app>
     
     
-        <v-card class="text-center mt-4 ml-3" max-width="1350">
+        <v-card class="text-center mt-4 ml-3" max-width="1150">
     
             <v-form
               class="pa-6"
@@ -10,10 +10,18 @@
               @submit.prevent="submitHandler"
               v-model="valid"
               lazy-validation>
-    
+            
+              <v-autocomplete
+                 item-text="nama"
+                 item-value="id"
+                 v-model="type"
+                 :items="list_type"
+                 label="Tool Type"
+            ></v-autocomplete>
+
               <v-text-field
-              v-model="nama"
-              label="Order Name"
+              v-model="merk"
+              label="Merk"
               required
               ></v-text-field>
     
@@ -23,6 +31,18 @@
               required
               ></v-text-field>
             
+            <v-autocomplete
+                 item-text="nama"
+                 item-value="id"
+                 v-model="unit"
+                 :items="list_unit"
+                 label="Unit"
+            ></v-autocomplete>
+
+
+
+
+
     
               <div class="d-flex">
                 <v-menu 
@@ -49,24 +69,7 @@
                 max-width="290px"
                 min-width="290px"
               >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    class="mx-10"
-                    v-model="datetime"
-                    label="Due Time"
-                    prepend-icon="mdi-clock-time-four-outline"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-time-picker
-                  v-if="menu2"
-                  v-model="datetime"
-                  full-width
-                  format="24hr"
-                  @click:minute="$refs.menu.save(time)"
-                ></v-time-picker>
+               
               </v-menu>
     
     
@@ -101,7 +104,7 @@
             class="text-center mt-10 ml-3"
             max-width="1000">
             <br>
-            <h1>List Tool Stock By Purchase Item {{this.$route.params.id}}</h1>
+            <h1>List Tool Stock </h1>
             <br>
             <v-card
                 class="mx-auto text-center"
@@ -109,6 +112,7 @@
                 <v-data-table
                     :headers = "column"
                     :items = "toolStock"
+                    :items-per-page="5"
                 >
                 <template v-slot:[`item.id`]="{ item }">
                     <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
@@ -121,11 +125,7 @@
                 </template>
 
 
-                <template v-slot:[`item.namaToolType`]="{ item }">
-                    <v-text-field v-model="editedItem.namaToolType" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
-                    <span v-else>{{item.namaToolType}}</span>
-                </template>
-
+            
                 <template v-slot:[`item.merk`]="{ item }">
                     <v-text-field v-model="editedItem.merk" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
                     <span v-else>{{item.merk}}</span>
@@ -159,7 +159,7 @@
                     </v-icon>
                 </div>
                 <div v-else>
-                    <router-link :to="{name : 'Tambah Tool Stock By Box', params:{id : `${item.id}`}}">
+                    <router-link :to="{name : 'List Detail Tool Stock By Tool Stock', params:{id : `${item.toolTypeCode}`}}">
                         <v-tooltip top>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn 
@@ -171,7 +171,7 @@
                                 <v-icon small dark>mdi-check</v-icon>
                                 </v-btn>
                             </template>
-                            <span>Tambah Tool Stock</span>
+                            <span>Detail Tool Stock</span>
                         </v-tooltip>
                     </router-link>
     
@@ -220,7 +220,6 @@
                 column : [
                     {text : 'ID Tool Stock', value : 'id'},
                     {text : 'ID Tool Type', value : 'toolTypeCode'},
-                    {text : 'Nama Tool Type', value : 'namaToolType'},
                     {text : 'Merk', value : 'merk'},
                     {text : 'Quantity', value : 'quantity'},
                     {text : 'Satuan', value : 'unit'},
@@ -247,7 +246,7 @@
             async fetchData(){
                 try{
                     const axios = require('axios')
-                    const res = await axios.get('/tools/get_toolstock_by_purchaseitem/' + this.$route.params.id)
+                    const res = await axios.get('/tools/get_toolstock')
                     if(res.data == null){
                         alert("Data Tool Box kosong")
                     }else{

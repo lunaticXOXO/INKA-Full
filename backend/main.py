@@ -34,6 +34,7 @@ from tools.toolpurchase.ToolPurchaseItemController import *
 from tools.toolbox.BoxItemController import *
 from tools.toolbutuhopr.controller.ToolButuhOpr import *
 
+
 from flask import Flask,session
 from flask_cors import CORS
 #from flask_restful import Api
@@ -1044,11 +1045,30 @@ def show_tools_not_in_box():
     return hasil
 
 
+@app.route('/tools/get_toolstock_by_purchaseitem/<purchaseItem>',methods = ['GET'])
+def get_toolstock_by_purchaseitem(purchaseItem):
+    return ShowToolStockByPurchaseItem(purchaseItem)
+
+@app.route('/tools/get_toolstock',methods = ['GET'])
+def get_toolstock():
+    return ShowToolStock()
+
+
+@app.route('/tools/detail_toolstock/<toolTypeCode>',methods = ['GET'])
+def detail_toolstock(toolTypeCode):
+    return ShowToolStockByToolType(toolTypeCode)
+
+
 # Tool Butuh Opr
 @app.route('/tools/show_tool_butuhopr/<username>',methods = ['GET'])
 def show_tool_butuhopr(username):
     return GetToolButuhOpr(username)
 
+
+# Ketersediaan Perkakas
+@app.route('/tools/ketersediaan_perkakas',methods = ['GET'])
+def ketersediaan_perkakas():
+    return jumlahToolTypeKeseluruhanDiWorkshop()
 
 # Box
 @app.route('/box/add_toolbox',methods = ['POST'])
