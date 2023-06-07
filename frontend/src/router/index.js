@@ -108,6 +108,7 @@ import ShowToolPurchaseItemByPurchase from '../views/tools/ShowToolPurchaseItemB
 import ShowToolStockByPurchaseItem from '../views/tools/ShowToolStockByPurchaseItem.vue'
 import ShowToolStock from '../views/tools/ShowToolStock.vue'
 import ShowDetailToolStock from '../views/tools/ShowDetailToolStock.vue'
+import ChooseKebutuhanTool from '../views/tools/ChooseKebutuhanTool.vue'
 
 
 Vue.use(VueRouter)
@@ -1115,6 +1116,17 @@ const routes = [
   meta : {
     title : "List Detail Tool Stock - PT.INKA"
   }
+},
+
+{
+
+   path : '/chooseKebutuhanTool',
+   name : 'Choose Kebutuhan Tool',
+   component : ChooseKebutuhanTool,
+   meta : {
+      title : "Kebutuhan Perkakas - PT.INKA"
+   }
+
 }
 
 

@@ -83,42 +83,31 @@ export default {
                 items: [
                     { title: 'List Tool Box', icon: 'mdi-filter-variant', route: '/showToolBox'},
                     { title: 'Tambah Tool Box', icon: 'mdi-plus', route: '/addToolBox'},
-                ],
-                title: 'Tool Box',
-                },
-
-                {
-                action: 'mdi-book-open-outline',
-                active: false,
-                items: [
                     { title: 'Tambah Tool Type Consumable', icon: 'mdi-plus', route: '/addToolTypeConsume'},
                     { title: 'Tambah Tool Type Non Consumable', icon: 'mdi-plus', route: '/addToolTypeNonConsume'},
+                    { title: 'Purchase Tools', icon: 'mdi-plus', route: '/purchaseTools'},
+                    {title : 'List Purchase Tools', icon : 'mdi-filter-variant', route : '/listPurchaseTools'},
+                    {title : 'List Tool Stock', icon : 'mdi-wrench', route : '/listToolStock'}
+                        //{title : 'List Purchase Tool Item',icon : 'mdi-gavel',route : '/listPurchaseToollItem/:id'}
                 ],
-                title: 'Tool Type',
-                },
-
-                {
-                    action: 'mdi-svg',
-                    active: false,
-                    items: [
-                        { title: 'Purchase Tools', icon: 'mdi-plus', route: '/purchaseTools'},
-                        {title : 'List Purchase Tools', icon : 'mdi-filter-variant', route : '/listPurchaseTools'},
-                        {title : 'List Purchase Tool Item',icon : 'mdi-gavel',route : '/listPurchaseToollItem/:id'}
-                    
-                        
-                    ],
-                    title: 'Tool Purchase',
+                title: 'New Item',
                 },
                 
                 {
-                    action: 'mdi-book',
+                    action: 'mdi-wrench',
                     active: false,
                     items: [
-                        {title : 'List Tool Stock', icon : 'mdi-wrench', route : '/listToolStock'}
-            
-                    ],
-                    title: 'Tool Stock',
-                },
+                    { title: 'Choose Distribusi Perkakas', icon: 'mdi-filter-variant', route: '/chooseKebutuhanTool'},
+                  
+                ],
+
+                    title : "Distribusi Perkakas"
+
+                }
+              
+
+              
+           
 
 
 
