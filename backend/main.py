@@ -33,6 +33,7 @@ from tools.toolpurchase.ToolPurchaseController import *
 from tools.toolpurchase.ToolPurchaseItemController import *
 from tools.toolbox.BoxItemController import *
 from tools.toolbutuhopr.controller.ToolButuhOpr import *
+from tools.toolneed.ToolNeedController import *
 
 
 from flask import Flask,session
@@ -1081,6 +1082,11 @@ def detail_toolstock(toolTypeCode):
 def show_tool_butuhopr(username):
     return GetToolButuhOpr(username)
 
+
+# Tool Need
+@app.route('/tools/show_toolneed_byprocess/<idProcess>',methods = ['GET'])
+def show_toolneed_byprocess(idProcess):
+    return ShowToolNeedByProcess(idProcess)
 
 # Ketersediaan Perkakas
 @app.route('/tools/ketersediaan_perkakas',methods = ['GET'])

@@ -70,6 +70,21 @@
                                 <span>List Stasiun Kerja By Proses</span>
                             </v-tooltip>
                         </router-link>
+                        <router-link :to="{name : 'List Tool Need By Process',params : {id : `${item.id}`}}">
+                            <v-tooltip top>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn 
+                                    class="mx-1" 
+                                    x-small
+                                    color="green"
+                                    v-bind="attrs"
+                                    v-on="on">
+                                    <v-icon small dark>mdi-check</v-icon>
+                                    </v-btn>
+                                </template>
+                                <span>List Tools By Process</span>
+                            </v-tooltip>
+                        </router-link>
                         <v-tooltip top>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn 

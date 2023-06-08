@@ -112,6 +112,7 @@ import ChooseKebutuhanTool from '../views/tools/ChooseKebutuhanTool.vue'
 import ListKriteriaPemasok from '../views/pemasok/ListKriteriaPemasok.vue'
 import PerhitunganKriteria from '../views/pemasok/PerhitunganKriteria.vue'
 import AddDistribusiTools from '../views/tools/AddDistribusiTools.vue'
+import ListToolNeedByProcess from '../views/tools/ListToolNeedByProcess.vue'
 
 
 Vue.use(VueRouter)
@@ -1161,6 +1162,15 @@ const routes = [
        title : "Add Distribusi Tools - PT.INKA"
    }
 
+},
+
+{
+  path : '/listToolNeedByProcess/:id',
+  name : 'List Tool Need By Process',
+  component : ListToolNeedByProcess,
+  meta : {
+     title : "List Tool Need By Process - PT.INKA"
+  }
 }
 
 
