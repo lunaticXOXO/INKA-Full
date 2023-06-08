@@ -111,6 +111,7 @@ import ShowDetailToolStock from '../views/tools/ShowDetailToolStock.vue'
 import ChooseKebutuhanTool from '../views/tools/ChooseKebutuhanTool.vue'
 import ListKriteriaPemasok from '../views/pemasok/ListKriteriaPemasok.vue'
 import PerhitunganKriteria from '../views/pemasok/PerhitunganKriteria.vue'
+import AddDistribusiTools from '../views/tools/AddDistribusiTools.vue'
 
 
 Vue.use(VueRouter)
@@ -1148,6 +1149,16 @@ const routes = [
    component : ListKriteriaPemasok,
    meta : {
     title : "List Kriteria Pemasok - PT.INKA"
+   }
+
+},
+
+{
+   path : '/addDistribusiTools',
+   name : 'Add Distribusi Tools',
+   component : AddDistribusiTools,
+   meta : {
+       title : "Add Distribusi Tools - PT.INKA"
    }
 
 }

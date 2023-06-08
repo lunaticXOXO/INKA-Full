@@ -7,15 +7,19 @@
         <div class="d-flex"> 
 
             <div class="mx-auto text-center">
-    <v-btn
+    <router-link to="addDistribusiTools">
+      <v-btn
       class="text-center ma-2  mt-15 mb-5"
       color="secondary"
-        width = "250"
+      width = "250"
       height = "100"
     
     >
       Shift 1
     </v-btn>
+
+    </router-link>      
+    
 
     <v-btn
       color="blue-grey"

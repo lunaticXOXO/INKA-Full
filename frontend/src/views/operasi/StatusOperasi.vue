@@ -222,7 +222,7 @@
                 this.stasiun = "FITTING ACCESORIES BOGIE 2"
                 this.material = ""
                 this.operators = ""
-                this.rmulai = "09 September 2022 7.00"
+                this.rmulai = "09 September 2022 7.00"  
                 this.rselesai = "09 September 2022 11.00"
                 this.mulai = ""
                 this.selesai = ""
