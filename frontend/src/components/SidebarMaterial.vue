@@ -104,7 +104,7 @@ export default {
                         { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'},
                         {title : 'Peringkat Supplier', icon : 'mdi-person',route : '/listPeringkatSupplier'},
                         {title : 'Kriteria Pemasok', icon : 'mdi-gavel',route : '/listKriteriaPemasok'},
-                        {title : 'Perhitungan Kriteria', icon : 'mdi-sort-variant', route : '/perhitunganKriteria'},
+                        {title : 'Perhitungan Kriteria', icon : 'mdi-sort-variant', route : '/listPenghitungMatriks'},
                         {title : 'Peringkat Kriteria', icon : 'mdi-sort-variant',route : '/listPeringkatKriteria'}
                     ],
                     title: 'Pemasok',

@@ -113,6 +113,7 @@ import ListKriteriaPemasok from '../views/pemasok/ListKriteriaPemasok.vue'
 import PerhitunganKriteria from '../views/pemasok/PerhitunganKriteria.vue'
 import AddDistribusiTools from '../views/tools/AddDistribusiTools.vue'
 import ListToolNeedByProcess from '../views/tools/ListToolNeedByProcess.vue'
+import ListPenghitungKriteria from '../views/pemasok/ListPenghitungKriteria.vue'
 
 
 Vue.use(VueRouter)
@@ -1171,6 +1172,16 @@ const routes = [
   meta : {
      title : "List Tool Need By Process - PT.INKA"
   }
+},
+
+{
+   path : '/listPenghitungMatriks',
+   name : 'List Penghitung Matrix',
+   component : ListPenghitungKriteria,
+   meta : {
+      title : "List Penghitung Kriteria - PT.INKA"
+   }
+
 }
 
 

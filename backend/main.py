@@ -162,6 +162,14 @@ def add_matriks_kriteria():
     return InsertMatriksKriteria()
 
 
+@app.route('/supplier/show_admin_penghitung',methods = ['GET'])
+def show_admin_penghitung():
+    return GetPenghitungMatriks()
+
+@app.route('/supplier/add_admin_penghitung',methods = ['POST'])
+def add_admin_penghitung():
+    return InsertNewPenghitung()
+
 @app.route('/supplier/get_kriteria_rank',methods = ['GET'])
 def get_kriteria_rank():
     return GetPeringkatKriteria()
