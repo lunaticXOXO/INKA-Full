@@ -10,7 +10,7 @@
                 Add Supplier
             </v-btn>
         </router-link>
-
+        
         <v-data-table 
             :headers = "column"
             :items = "supplier">
