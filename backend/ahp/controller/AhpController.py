@@ -3,9 +3,6 @@ import math
 import db.db_handler as database
 
 
-connect = database.connect
-cursor = database.connect.cursor()
-
 
 ## AHP untuk Kriteria
 def hitungSetengahMatrik(cur00,con00):
@@ -21,7 +18,11 @@ def hitungSetengahMatrik(cur00,con00):
             nilai) values('"+K2+"', '"+K1+"', '"+str(1/nil)+"')"
             cur00.execute(q01)
             con00.commit()
-    return q01
+            hasil = True
+        else:
+            hasil = False
+
+    return hasil
 
 
 def totalkolom (cur00, con00):
@@ -51,25 +52,29 @@ def normalisasi(cur00, con00):
     cur00.execute(q00)
     tabel00=cur00.fetchall()
     angka = 0
-    for row00 in tabel00:
-        idkri00=row00[0]
-        q01="select * from gen_r_matrikskriteria"
-        cur00.execute(q01)
-        tabel01=cur00.fetchall()
-        for row01 in tabel01:
-            K01 = row01[0]
-            K02 = row01[1]
-            nil01 = row01[2]
-            jml01 = total[angka]
-            if (idkri00 == K02):
-                normalisasi = nil01/jml01
-                q02 = "UPDATE gen_r_matrikskriteria SET nilai02 = \
-                '"+str(normalisasi)+"' where idKriteria02 = '"+idkri00+"' AND \
-                idKriteria = '"+K01+"' "
-                cur00.execute(q02)
-                con00.commit()
-        angka = angka + 1    
-
+    try:
+        for row00 in tabel00:
+            idkri00=row00[0]
+            q01="select * from gen_r_matrikskriteria"
+            cur00.execute(q01)
+            tabel01=cur00.fetchall()
+            for row01 in tabel01:
+                K01 = row01[0]
+                K02 = row01[1]
+                nil01 = row01[2]
+                jml01 = total[angka]
+                if (idkri00 == K02):
+                    normalisasi = nil01/jml01
+                    q02 = "UPDATE gen_r_matrikskriteria SET nilai02 = \
+                    '"+str(normalisasi)+"' where idKriteria02 = '"+idkri00+"' AND \
+                    idKriteria = '"+K01+"' "
+                    cur00.execute(q02)
+                    con00.commit()
+            angka = angka + 1 
+        hasil = True   
+    except Exception:
+        hasil = False
+    return hasil
 
 def totalbaris(cur00, con00):
     q00 = "select distinct idKriteria from gen_r_matrikskriteria order by \
@@ -114,8 +119,8 @@ def buatmatriks(cur00, con00):
         idkri00 = row00[0]
         q01 = "select * from gen_r_matrikskriteria where IDKriteria = \
         '"+idkri00+"' order by IDKriteria02"
-        cursor.execute(q01)
-        tabel01 = cursor.fetchall()
+        cur00.execute(q01)
+        tabel01 = cur00.fetchall()
         n = []
         for row01 in tabel01:
             nil01 = row01[2]
@@ -187,8 +192,24 @@ def insertkriteria(cur00,con00):
         print("Perbaiki Matriks")
     
 
+def MergeCalculateKriteria():
+    con00 = database.connect
+    cur00 = database.connect.cursor()
+    hasil = hitungSetengahMatrik(cur00,con00)
+    if hasil == True:
+        hasil01 = normalisasi(cur00,con00)
+        hasil02 = insertkriteria(cur00,con00)
+        if hasil01 == True and hasil02 ==  True:
+            hasil03 = {"status" : "berhasil"}
+        else:
+            hasil03 = {"status" : "gagal"}
+    return hasil03 
+
+
 
 ## AHP untuk supplier
+
+#1
 def hitungSetengahMatrik01(cur00,con00):
     #Untuk menghitung nilai setengah matriks supplier setiap kriteria
     q00="select distinct idKriteria from gen_r_perbandingan"
@@ -212,7 +233,7 @@ def hitungSetengahMatrik01(cur00,con00):
                 cur00.execute(q02)
                 con00.commit()
 
-
+#2
 def totalkolom01 (cur00, con00):
     q00="Select distinct IDKriteria from gen_r_perbandingan order by \
     IDKriteria"
@@ -244,7 +265,7 @@ def totalkolom01 (cur00, con00):
         total01.append(total)
     return total01
 
-
+#3
 def normalisasi01(cur00, con00):
     total01 = totalkolom01 (cur00, con00)
     q00="Select distinct IDKriteria from gen_r_perbandingan order by \
@@ -282,6 +303,7 @@ def normalisasi01(cur00, con00):
         angka01 = angka01 +1
 
 
+#4
 def totalbaris01(cur00, con00):
     q00 = "select distinct IDKriteria from gen_r_perbandingan order by \
     IDKriteria"
@@ -313,7 +335,7 @@ def totalbaris01(cur00, con00):
         total01.append(total)
     return total01
 
-
+#5
 def bobot01Supplier(cur00, con00):
     total01 = totalbaris01(cur00, con00)
     jml = len(total01)
@@ -358,7 +380,7 @@ def buatmatriks01(cur00, con00):
         k.append(m)
     return k
   
-       
+# hasil akhir dari perhitungan bobot global       
 def insertSupplier(cur00, con00):
     matriks= buatmatriks01(cur00, con00)
     bobot= bobot01Supplier(cur00, con00)
@@ -388,9 +410,24 @@ def insertSupplier(cur00, con00):
                 mulai) values('"+idKri00+"','"+idSup01+"', '"+str(bobot01)+"', current_timestamp)"
                 cur00.execute(q02)
                 con00.commit()
+                hasil = True
         else:
             print("Perbaiki Matriks")
-        
+            hasil = False
+    return hasil
+
+def MergeCountBobotGlobal():
+    con00 = database.connect
+    cur00 = database.connect.cursor()
+    output = insertSupplier(cur00,con00)
+    if output == True:
+        hasil = {"status" : "berhasil"}
+    elif output == False:
+        hasil = {"status" : "gagal"} 
+    return hasil
+
+
+
 def bobotglobal(cur00, con00):
      jumlah = 0
      q00="select * from gen_r_kriteriabobot where selesai is null"
@@ -471,4 +508,5 @@ def supplierrangking(cur00, con00):
 ##insertSupplier(cursor, connect)
              
 ##bobotglobal(cursor, connect)
-supplierrangking(cursor, connect)
+
+#supplierrangking(cursor, connect)

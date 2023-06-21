@@ -16,7 +16,7 @@
                  item-value="IdKriteria"
                  v-model="criteria01"
                  :items="criteriaDesc"
-                 label="Kriteria 01"
+                 label="Supplier 01"
             ></v-autocomplete>
             
 
@@ -25,7 +25,7 @@
                  item-value="IdKriteria"
                  v-model="criteria02"
                  :items="criteriaDesc"
-                 label="Kriteria 02"
+                 label="Supplier 02"
             ></v-autocomplete>
 
               <v-text-field
@@ -64,37 +64,34 @@
             class="text-center mt-10 ml-3"
             max-width="1000">
             <br>
-            <h1>Matriks Kriteria Input </h1>
+            <h1>Matriks Supplier Input </h1>
             <br>
             <v-card
                 class="mx-auto text-center"
                 max-width="900">
                 <v-data-table
                     :headers = "column"
-                    :items = "matrixCriteriaByAdmin"
+                    :items = "matrixSupplierByAdmin"
                     :items-per-page="5"
                 >
-                <template v-slot:[`item.IdKriteria01`]="{ item }">
-                    <v-text-field v-model="editedItem.IdKriteria01" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria01 == editedItem.IdKriteria01"></v-text-field>
-                    <span v-else>{{item.IdKriteria01}}</span>
+                <template v-slot:[`item.IDKriteria`]="{ item }">
+                    <v-text-field v-model="editedItem.IDKriteria" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDKriteria == editedItem.IDKriteria"></v-text-field>
+                    <span v-else>{{item.IDKriteria}}</span>
                 </template>
     
-                <template v-slot:[`item.namaKriteria`]="{ item }">
-                    <v-text-field v-model="editedItem.namaKriteria" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria01 == editedItem.IdKriteria01"></v-text-field>
-                    <span v-else>{{item.namaKriteria}}</span>
+                <template v-slot:[`item.IDSupplier01`]="{ item }">
+                    <v-text-field v-model="editedItem.IDSupplier01" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDSupplier01 == editedItem.IDSupplier01"></v-text-field>
+                    <span v-else>{{item.IDSupplier01}}</span>
                 </template>
 
 
             
-                <template v-slot:[`item.IdKriteria02`]="{ item }">
-                    <v-text-field v-model="editedItem.IdKriteria02" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria02 == editedItem.IdKriteria02"></v-text-field>
-                    <span v-else>{{item.IdKriteria02}}</span>
+                <template v-slot:[`item.IDSupplier02`]="{ item }">
+                    <v-text-field v-model="editedItem.IDSupplier02" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDSupplier02 == editedItem.IDSupplier02"></v-text-field>
+                    <span v-else>{{item.IDSupplier02}}</span>
                 </template>
     
-                <template v-slot:[`item.namaKriteria02`]="{ item }">
-                    <v-text-field v-model="editedItem.namaKriteria02" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria02 == editedItem.IdKriteria02"></v-text-field>
-                    <span v-else>{{item.namaKriteria02}}</span>
-                </template>
+                
     
                 <template v-slot:[`item.nilai`]="{ item }">
                     <v-text-field v-model="editedItem.nilai" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria01 == editedItem.IdKriteria01"></v-text-field>
@@ -179,11 +176,10 @@
         data(){
             return {
                 column : [
-                    {text : 'ID Kriteria', value : 'IdKriteria01'},
-                    {text : 'Nama Kriteria', value : 'namaKriteria01'},
-                    {text : 'ID Kriteria 02', value : 'IdKriteria02'},
-                    {text : 'Nama Kriteria 02', value : 'namaKriteria02'},
-                    {text : 'Nilai', value : 'Nilai'},
+                    {text : 'ID Kriteria', value : 'IDKriteria'},
+                    {text : 'ID Supplier 01', value : 'IDSupplier01'},
+                    {text : 'ID Supplier 02', value : 'IDSupplier02'},
+                    {text : 'Nilai', value : 'nilai'},
                     {text : 'Action',value : 'aksi'}
                 ],
 
@@ -194,7 +190,7 @@
                 },
                 criteria : [],
                 criteriaDesc : [],
-                matrixCriteriaByAdmin : [],
+                matrixSupplierByAdmin : [],
                 editedIndex : -1,
                 criteria01 : '',
                 criteria02 : '',
@@ -272,12 +268,12 @@
 
                 try{
                     const axios = require('axios')
-                    const res = await axios.get('/supplier/get_matrikskriteria_byadmin/' + this.$route.params.id)
+                    const res = await axios.get('/supplier/get_matrikssupplier_byadmin/' + this.$route.params.id)
                     if(res.data == null){
                         console.log("data kosong")
                     }else{
-                        this.matrixCriteriaByAdmin = res.data
-                        console.log(res,this.matrixCriteriaByAdmin)
+                        this.matrixSupplierByAdmin = res.data
+                        console.log(res,this.matrixSupplierByAdmin)
                     }
 
                 }catch(error){

@@ -103,7 +103,17 @@ export default {
 
                     title : "Distribusi Perkakas"
 
+                },
+                {
+                    action: 'mdi-wrench',
+                    active: false,
+                    items: [
+                    { title: 'Choose Peminjaman Tools', icon: 'mdi-filter-variant', route: '/choosePeminjamanTool'},
+                  
+                ],
+                    title : "Peminjaman dan Pengembalian Perkakas"
                 }
+
               
 
               

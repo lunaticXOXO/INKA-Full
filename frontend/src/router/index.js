@@ -114,7 +114,12 @@ import PerhitunganKriteria from '../views/pemasok/PerhitunganKriteria.vue'
 import AddDistribusiTools from '../views/tools/AddDistribusiTools.vue'
 import ListToolNeedByProcess from '../views/tools/ListToolNeedByProcess.vue'
 import ListPenghitungKriteria from '../views/pemasok/ListPenghitungKriteria.vue'
-
+import PerhitunganSupplier from '../views/pemasok/PerhitunganSupplier.vue'
+import ListToolNeedByWorkstation from '../views/tools/ListToolNeedByWorkstation.vue'
+import ChoosePeminjamanTool from '../views/tools/ChoosePeminjamanTool.vue'
+import ChooseWorkstation from '../views/tools/ChooseWorkstation.vue'
+import ShowToolsOnWorkstation from '../views/tools/ShowToolsOnWorkstation.vue'
+//import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
 Vue.use(VueRouter)
 
@@ -1113,7 +1118,7 @@ const routes = [
   }
 
 },
-
+      
 {
   path : '/listDetailToolStock/:id',
   name : 'List Detail Tool Stock By Tool Stock',
@@ -1136,12 +1141,23 @@ const routes = [
 
 {
 
-    path : '/perhitunganKriteria',
+    path : '/perhitunganKriteria/:id',
     name : 'Perhitungan Kriteria',
     component : PerhitunganKriteria,
     meta : {
        title : "Perhitungan Kriteria - PT.INKA"
     }
+
+},
+
+{
+
+  path : '/perhitunganSupplier/:id',
+  name : 'Perhitungan Supplier',
+  component : PerhitunganSupplier,
+  meta : {
+    titlee : "Perhitungan Supplier - PT.INKA"
+  }
 
 },
 
@@ -1182,7 +1198,66 @@ const routes = [
       title : "List Penghitung Kriteria - PT.INKA"
    }
 
-}
+},
+
+{
+
+  path : '/listKebutuhanPerkakasByWorkstation/:id',
+  name : 'List Tool Need By Workstation',
+  component : ListToolNeedByWorkstation,
+  meta : {
+
+    title : "List Tool Need By Workstation - PT.INKA"
+  },
+
+
+},
+{
+
+  
+  path : '/choosePeminjamanTool',
+  name : 'Choose Peminjaman Tool',
+  component : ChoosePeminjamanTool,
+  meta : {
+      title : "Choose Peminjaman Tool - PT.INKA"
+  }
+
+},
+
+{
+
+  path : '/chooseWorkstation',
+  name : 'Choose Workstation Pengembalian Perkakas',
+  component : ChooseWorkstation,
+  meta : {
+     title : "Choose Workstation Pengembalian Tool - PT.INKA"
+  }
+
+},
+
+{
+    path : '/showToolsOnWorkstation/:id',
+    name : 'Show Tools On Workstation',
+    component : ShowToolsOnWorkstation,
+    meta : {
+
+      title : "Show Tools On Workstation - PT.INKA"
+
+    }
+
+},
+
+// {
+
+//    path : '/listToolNeedByProcess/:id',
+//    name : 'List Tool Need By Process',
+//    component : ListToolsByProcess,
+//    meta : {
+//       title : "List Tool Need By Process - PT.INKA"
+
+//    }
+// }
+
 
 
 ]

@@ -108,7 +108,7 @@
               </v-icon>
             </div>
             <div v-else>
-              <router-link :to="{name : 'List Purchase Item By Purchase Material',params:{id : `${item.idPenghitung}`}}">
+              <router-link :to="{name : 'Perhitungan Kriteria',params:{id : `${item.idPenghitung}`}}">
                 <v-tooltip top>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn 
@@ -121,6 +121,22 @@
                     </v-btn>
                   </template>
                   <span>List Perhitungan Matriks Kriteria</span>
+                </v-tooltip>
+              </router-link>
+
+              <router-link :to="{name : 'Perhitungan Supplier',params:{id : `${item.idPenghitung}`}}">
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                      class="mx-1" 
+                      x-small
+                      color="green"
+                      v-bind="attrs"
+                      v-on="on">
+                      <v-icon small dark>mdi-check</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>List Perhitungan Matriks Supplier</span>
                 </v-tooltip>
               </router-link>
               

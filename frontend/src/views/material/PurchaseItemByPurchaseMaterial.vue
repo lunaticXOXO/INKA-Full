@@ -111,7 +111,7 @@
                 readonly
                 v-bind="attrs"
                 v-on="on"
-              ></v-text-field>
+              ></v-text-field>  
             </template>
             <v-time-picker
               v-if="menu2"
@@ -247,7 +247,7 @@
         }catch(error){
             alert(error)
             console.log(error)
-        }
+        } 
       },
 
       async InsertMaterialItemByPurchaseMaterial(){

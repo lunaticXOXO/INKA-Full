@@ -2,12 +2,12 @@ from datetime import date
 import db.db_handler as database
 from flask import request,make_response,jsonify
 
-conn = database.connector()
-cursor = conn.cursor()
 
 
-def AddToolStockByToolPurchaseItem(toolPurchaseItem):
-    
+
+def AddToolStockByToolPurchaseItem(toolPurchaseItem):   
+    conn = database.connector()
+    cursor = conn.cursor()
     query = "INSERT INTO eqp_d_toolstock(id,toolPurchaseItem,toolTypeCode,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s,%s)"
     try:
 
@@ -35,8 +35,6 @@ def AddToolStockByToolPurchaseItem(toolPurchaseItem):
         for index in records_quantityunit:
             new_qty = index[0]
             
-
-
         query_counttooltype = "SELECT COUNT(*) FROM eqp_d_toolstock WHERE toolTypeCode LIKE '"+toolType+"'"
         cursor.execute(query_counttooltype)
         records_count = cursor.fetchall()
@@ -92,7 +90,8 @@ def AddToolStockByToolPurchaseItem(toolPurchaseItem):
 
 
 def ShowToolStockNotRegisteredInBox():
-   
+    conn = database.connector()
+    cursor = conn.cursor()
     query = "SELECT a.id,b.nama,a.merk,a.quantity,a.unit FROM eqp_d_toolstock a JOIN eqp_r_tooltype b ON b.codes = a.toolTypeCode WHERE a.id NOT IN (SELECT b.toolStockId FROM eqp_d_boxitem b)"
     cursor.execute(query)
     records = cursor.fetchall()
@@ -107,8 +106,24 @@ def ShowToolStockNotRegisteredInBox():
 
 
 def ShowToolStock():
-    
-    query = "SELECT a.id,a.toolTypeCode,a.merk,a.quantity,a.unit,a.arrivalDate  FROM eqp_d_toolstock a GROUP BY a.toolTypeCode"
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id,a.toolTypeCode,a.merk,a.quantity,a.unit,a.arrivalDate FROM eqp_d_toolstock a GROUP BY a.toolTypeCode "
+    cursor.execute(query)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records :
+        json_data.append(dict(zip(row_headers,data)))
+  
+    return make_response(jsonify(json_data),200)
+
+
+def ShowToolTypeInDetailStock(toolTypeCode):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.toolTypeCode,a.merk,a.quantity,a.unit FROM eqp_d_toolstock a WHERE a.toolTypeCode = '"+toolTypeCode+"'"
     cursor.execute(query)
     records = cursor.fetchall()
     json_data = []
@@ -122,7 +137,8 @@ def ShowToolStock():
     
 
 def ShowToolStockByPurchaseItem(purchaseItem):
-    
+    conn = database.connector()
+    cursor = conn.cursor()
     query = "SELECT a.id,a.toolTypeCode,c.nama AS 'namaToolType',a.merk,a.quantity,a.unit,a.arrivalDate FROM eqp_d_toolstock a JOIN eqp_d_toolpurchaseitem b ON b.purchaseItemId = a.toolPurchaseItem JOIN eqp_r_tooltype c ON c.codes = a.toolTypeCode WHERE b.purchaseItemId = '"+purchaseItem+"'"
     cursor.execute(query)
     records = cursor.fetchall()
@@ -137,7 +153,8 @@ def ShowToolStockByPurchaseItem(purchaseItem):
 
 
 def ShowToolStockByToolType(toolTypeCode):
-    
+    conn = database.connector()
+    cursor = conn.cursor()
     query = "SELECT a.id,a.merk,a.quantity,a.unit,a.arrivalDate FROM eqp_d_toolstock a WHERE a.toolTypeCode = '"+toolTypeCode+"'"
     cursor.execute(query)
     records = cursor.fetchall()
@@ -149,7 +166,25 @@ def ShowToolStockByToolType(toolTypeCode):
   
     return make_response(jsonify(json_data),200)
 
+
+def ShowToolTypeInDetailStock(toolTypeCode):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.toolTypeCode,a.merk,a.quantity,a.unit FROM eqp_d_toolstock a WHERE a.toolTypeCode = '"+toolTypeCode+"' GROUP BY a.toolTypeCode"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records :
+        json_data.append(dict(zip(row_headers,data)))
+  
+    return make_response(jsonify(json_data),200)
+
+
 def posisiTool():
+    conn = database.connector()
+    cursor = conn.cursor()
     q00 = f"""SELECT DISTINCT  a. id AS idToolStock, a.toolTypeCode, 
     e.nama, b.boxId, c.stasiunKerja AS SKtool, 
     d.stasiunKerja AS SKBox, a.quantity,
@@ -228,6 +263,8 @@ def jumlahToolTypeByWs():
 ## GROUP BY CC11.toolTypeCode
 ## tabel C7, agregat dari tabel C6
 def jumlahToolTypeKeseluruhanDiWorkshop():
+    conn = database.connector()
+    cursor = conn.cursor()
     q01 = jumlahToolTypeByWs()
     q00 = "SELECT CC11.toolTypeCode, sum(CC11.TotalSisa) as totaltoolOnWs FROM ("+q01+")CC11 "
     q00 = q00 + "GROUP BY CC11.toolTypeCode"
@@ -261,7 +298,7 @@ def KebutuhanOperasiVSjumlahToolTypeKeseluruhanDiWorkshop():
 ## membandingkan jumlah kebutuhan toolType dan jumlah tool type yang sudah ada di WS
 ## untuk operasi yang ada di CPL Layak paling awal
 ## table C9, tabel C8 tambah syarat Id operasinya ada di CPL_oprLayak diurutkan dari rencana mulai
-def kebutuhanOperasiVSTotalToolBerdasarkanOPRLayak():
+def kebutuhanOperasiVSTotalToolBerdasarkanOPRLayak(ws00):
     q01 = KebutuhanOperasiVSjumlahToolTypeKeseluruhanDiWorkshop()
     q00 = q01 + " AND a.id = (SELECT b.id FROM cpl_oprlayak b WHERE b.stasiunKerja='"+ws00+"'"
     q00 = q00 + "ORDER BY b.rencanaMulai LIMIT 1)"

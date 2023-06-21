@@ -195,6 +195,36 @@ def InsertMatriksKriteria():
 
 
 
+def InsertMatriksKriteriaByAdmin(idPenghitung):
+    conn = db.connector()
+    cursor = conn.cursor()
+    query = "SELECT ID FROM gen_r_adminperhitungan WHERE ID = '"+idPenghitung+"'"
+    cursor.execute(query)
+    record = cursor.fetchone()
+    idpenghitung = record[0]
+    query_insert = "INSERT INTO gen_r_matrikskriteria(IDKriteria,IDKriteria02,Nilai,idPenghitung)VALUES(%s,%s,%s,%s)"
+
+    try:
+        data = request.json
+        IDKriteria = data["criteria01"]
+        IDKriteria02 = data["criteria02"]
+        nilai = data["Nilai"]
+
+        values = (IDKriteria,IDKriteria02,nilai,idpenghitung)
+        cursor.execute(query_insert,values)
+        conn.commit()
+
+        hasil = {"status" : "berhasil"}
+
+
+    except Exception as e:
+        print("error",str(e))
+        hasil = {"status" : "gagal"}
+    
+    return hasil
+        
+
+
 
 
 def GetMatriksKriteriaInput():
@@ -214,10 +244,52 @@ def GetMatriksKriteriaInput():
     return make_response(jsonify(json_data),200)
 
 
-def GetMatriksKriteriaInputByAdmin():
+def GetMatriksKriteriaInputByAdmin(IdPenghitung):
     conn = db.connector()
     cursor = conn.cursor()
+    query = "SELECT b.IDKriteria AS 'IdKriteria01',c.namaKriteria AS 'namaKriteria01', "
+    query += "b.IDKriteria02 AS 'IdKriteria02', d.namaKriteria AS 'namaKriteria02',b.Nilai " 
+    query += "FROM gen_r_adminperhitungan a "
+    query += "JOIN gen_r_matrikskriteria b ON b.idPenghitung = a.ID "
+    query += "JOIN gen_r_kriteria c ON c.ID = b.IDKriteria "
+    query += "JOIN gen_r_kriteria d ON d.ID = b.IDKriteria02 "
+    query += "WHERE a.ID = '"+IdPenghitung+"' AND b.konfirm IS NULL"
+
+    cursor.execute(query)
+
+    records = cursor.fetchall()
     
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
+
+
+
+def GetPerbandinganSupplierByAdmin(idPenghitung):
+    conn = db.connector()
+    cursor = conn.cursor()
+    query = "SELECT b.IDKriteria,b.IDSupplier01,b.IDSupplier02,b.nilai "
+    query += "FROM gen_r_adminperhitungan a "
+    query += "JOIN gen_r_perbandingan b ON b.idPenghitung = a.ID "
+    query += "WHERE a.ID = '"+idPenghitung+"' AND b.konfirm IS NULL "
+
+    cursor.execute(query)
+
+    records = cursor.fetchall()
+    
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
+
+
 
 
 def InsertNewPenghitung():
