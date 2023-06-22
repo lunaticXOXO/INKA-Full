@@ -119,6 +119,10 @@ import ListToolNeedByWorkstation from '../views/tools/ListToolNeedByWorkstation.
 import ChoosePeminjamanTool from '../views/tools/ChoosePeminjamanTool.vue'
 import ChooseWorkstation from '../views/tools/ChooseWorkstation.vue'
 import ShowToolsOnWorkstation from '../views/tools/ShowToolsOnWorkstation.vue'
+import ListHasilPerhitunganKriteria from '../views/pemasok/ListHasilPerhitunganKriteria.vue'
+import ListPenghitungSupplier from '../views/pemasok/ListPenghitungSupplier.vue'
+import ListHasilPerhitunganSupplier1 from '../views/pemasok/ListHasilPerhitunganSupplier1.vue'
+import ListHasilPerhitunganSupplier2 from '../views/pemasok/ListHasilPerhitunganSupplier2.vue'
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
 Vue.use(VueRouter)
@@ -1246,6 +1250,47 @@ const routes = [
     }
 
 },
+{
+     path : '/listHasilPerhitunganKriteria',
+     name : 'List Hasil Perhitungan Kriteria',
+     component : ListHasilPerhitunganKriteria,
+     meta : {
+        title : "List Hasil Perhitungan Kriteria - PT.INKA"
+     }
+
+},
+
+{
+
+  path : 'listPenghitungSupplier',
+  name : 'List Penghitung Supplier',
+  component : ListPenghitungSupplier,
+  meta : {
+ 
+      title : "List Penghitung Supplier - PT.INKA"
+  }
+},
+
+{
+   path : '/listHasilPerhitunganSupplier1',
+   name : 'List Hasil Perhitungan Supplier 1',
+   component : ListHasilPerhitunganSupplier1,
+   meta : {
+      title : "List Hasil Perhitungan Supplier 1 - PT.INKA"
+   }
+
+},
+
+{
+   path : '/listHasilPerhitunganSupplier2',
+   name : 'List Hasil Perhitungan Supplier 2',
+   component : ListHasilPerhitunganSupplier2,
+   meta : {
+
+      title : "List Hasil Perhitungan Supplier 2 - PT.INKA"
+   }
+
+}
 
 // {
 

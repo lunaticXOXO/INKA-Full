@@ -5,7 +5,9 @@ import db.db_handler as database
 
 
 ## AHP untuk Kriteria
-def hitungSetengahMatrik(cur00,con00):
+def hitungSetengahMatrik():
+    con00 = database.connector()
+    cur00 = con00.cursor()
     q00="select * from gen_r_matrikskriteria"
     cur00.execute(q00)
     tabel00=cur00.fetchall()
@@ -25,7 +27,9 @@ def hitungSetengahMatrik(cur00,con00):
     return hasil
 
 
-def totalkolom (cur00, con00):
+def totalkolom():
+    con00 = database.connector()
+    cur00 = con00.cursor()
     q00="Select distinct idKriteria02 from gen_r_matrikskriteria order by \
     idkriteria02"
     cur00.execute(q00)
@@ -45,8 +49,10 @@ def totalkolom (cur00, con00):
     return total
 
 
-def normalisasi(cur00, con00):
-    total= totalkolom (cur00, con00)
+def normalisasi():
+    con00 = database.connector()
+    cur00 = con00.cursor()
+    total= totalkolom ()
     q00="Select distinct idKriteria02 from gen_r_matrikskriteria order by \
     idkriteria02"
     cur00.execute(q00)
@@ -76,7 +82,9 @@ def normalisasi(cur00, con00):
         hasil = False
     return hasil
 
-def totalbaris(cur00, con00):
+def totalbaris():
+    con00 = database.connector()
+    cur00 = con00.cursor()
     q00 = "select distinct idKriteria from gen_r_matrikskriteria order by \
     idkriteria02"
     cur00.execute(q00)
@@ -97,8 +105,10 @@ def totalbaris(cur00, con00):
 
 
 
-def bobotKriteria(cur00, con00):
-    total = totalbaris(cur00, con00)
+def bobotKriteria():
+    con00 = database.connector()
+    cur00 = con00.cursor()
+    total = totalbaris()
     jml=len(total)
     list01 = []
     for i in range(jml):
@@ -108,7 +118,9 @@ def bobotKriteria(cur00, con00):
     return list01
         
 
-def buatmatriks(cur00, con00):
+def buatmatriks():
+    con00 = database.connector()
+    cur00 = con00.cursor()
     q00 = "select distinct IDKriteria FROM gen_r_matrikskriteria \
     order by IDKriteria"
     cur00.execute(q00)
@@ -161,54 +173,66 @@ def cariEigen(m00, uk):
 
 ## Jika nilai eigen <= 0.1 maka insert data idKriteria dan bobot ke gen_r_kriteria bobot
 #hasil akhir kriteria
-def insertkriteria(cur00,con00):
-    matriks=buatmatriks(cur00, con00)
+def insertkriteria():
+    con00 = database.connector()
+    cur00 = con00.cursor()
+    matriks=buatmatriks()
     m00=matriks[0]
     uk=matriks[1]
     eigen=cariEigen(m00, uk)
     CR=eigen[3]
     angka01 = 0
-    if (CR <= 0.1):
-        print("Memenuhi Kriteria")
-        bobot=bobotKriteria(cur00, con00)
-        q00="select distinct IDKriteria from gen_r_matrikskriteria \
-        order by IDKriteria"
-        cur00.execute(q00)
-        tabel00=cur00.fetchall()
-        angka = 0
-        q01="UPDATE gen_r_kriteriabobot SET selesai = current_timestamp"
-        cur00.execute(q01)
-        con00.commit()
-        for row00 in tabel00:
-            IDKri=row00[0]
-            bobot01=bobot[angka]
-            angka = angka+1
-            angka01 = angka01+1
-            q02="insert into gen_r_kriteriabobot (IDKriteria, Bobot,\
-            mulai) values('"+IDKri+"', '"+str(bobot01)+"', current_timestamp)"
-            cur00.execute(q02)
+    try:
+        if (CR <= 0.1):
+            print("Memenuhi Kriteria")
+            bobot=bobotKriteria()
+            q00="select distinct IDKriteria from gen_r_matrikskriteria \
+            order by IDKriteria"
+            cur00.execute(q00)
+            tabel00=cur00.fetchall()
+            angka = 0
+            q01="UPDATE gen_r_kriteriabobot SET selesai = current_timestamp"
+            cur00.execute(q01)
             con00.commit()
-    else:
-        print("Perbaiki Matriks")
+            for row00 in tabel00:
+                IDKri=row00[0]
+                bobot01=bobot[angka]
+                angka = angka+1
+                angka01 = angka01+1
+                q02="insert into gen_r_kriteriabobot (IDKriteria, Bobot,\
+                mulai) values('"+IDKri+"', '"+str(bobot01)+"', current_timestamp)"
+                cur00.execute(q02)
+                con00.commit()
+                hasil = True
+        else:
+            print("Perbaiki Matriks")
+    except Exception as e:
+        hasil = False
+        print("error",str(e))
+    return hasil
     
 
 def MergeCalculateKriteria():
-    con00 = database.connect
-    cur00 = database.connect.cursor()
-    hasil = hitungSetengahMatrik(cur00,con00)
-    if hasil == True:
-        hasil01 = normalisasi(cur00,con00)
-        hasil02 = insertkriteria(cur00,con00)
-        if hasil01 == True and hasil02 ==  True:
-            hasil03 = {"status" : "berhasil"}
-        else:
-            hasil03 = {"status" : "gagal"}
-    return hasil03 
-
+    conn = database.connector()
+    cursor = conn.cursor()
+    hitungSetengahMatrik()
+    totalkolom() 
+    normalisasi()
+    totalbaris()
+    bobotKriteria()
+    hasil = buatmatriks()
+    m=hasil[0]
+    uk=hasil[1]
+    hasil=cariEigen(m, uk)
+    hasil2 = insertkriteria()
+    if hasil2 == True:
+        output = {"status" : "berhasill"}
+    elif hasil2 == False:
+        output = {"status" : "gagal"}
+    return output
 
 
 ## AHP untuk supplier
-
 #1
 def hitungSetengahMatrik01(cur00,con00):
     #Untuk menghitung nilai setengah matriks supplier setiap kriteria
@@ -417,9 +441,9 @@ def insertSupplier(cur00, con00):
     return hasil
 
 def MergeCountBobotGlobal():
-    con00 = database.connect
-    cur00 = database.connect.cursor()
-    output = insertSupplier(cur00,con00)
+    conn = database.connector()
+    cursor = conn.cursor()
+    output = insertSupplier(cursor,conn)
     if output == True:
         hasil = {"status" : "berhasil"}
     elif output == False:
@@ -510,3 +534,20 @@ def supplierrangking(cur00, con00):
 ##bobotglobal(cursor, connect)
 
 #supplierrangking(cursor, connect)
+
+
+# hitungSetengahMatrik()
+# totalkolom() 
+# normalisasi()
+# totalbaris()
+# bobotKriteria()
+# hasil = buatmatriks()
+# m=hasil[0]
+# uk=hasil[1]
+# hasil=cariEigen(m, uk)
+# hasil2 = insertkriteria()
+# if hasil2 == True:
+#     output = {"status" : "berhasill"}
+# elif hasil2 == False:
+#     output = {"status" : "gagal"}
+# print(output)

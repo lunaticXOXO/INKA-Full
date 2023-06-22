@@ -142,11 +142,15 @@ class main():
         hasil = ShowMaterialTypeSupplierBySupplier(code)
         return hasil
 
+
+    # Matriks Kriteria & Supplier
     @app.route('/supplier/get_supplier_rank',methods = ['GET'])
     def get_supplier_rank():
         return RankingSupplier()
 
-
+    @app.route('/supplier/get_supplierrank_byid/<IDSupplier>',methods = ['GET'])
+    def get_supplierrank_byid(IDSupplier):
+        return GetPeringkatSupplierByIdSupplier(IDSupplier)
 
     @app.route('/supplier/detail_get_supplier_rank/<idSupplier>',methods = ['GET'])
     def detail_get_supplier_rank(idSupplier):
@@ -181,6 +185,10 @@ class main():
     def add_matrikskriteria_byadmin(idPenghitung):
         return InsertMatriksKriteriaByAdmin(idPenghitung)
 
+    @app.route('/supplier/add_matrikssupplier_byadmin/<idPenghitung>',methods = ['POST'])
+    def add_matrikssupplier_byadmin(idPenghitung):
+        return InsertMatriksSupplierByAdmin(idPenghitung)
+
     @app.route('/supplier/show_admin_penghitung',methods = ['GET'])
     def show_admin_penghitung():
         return GetPenghitungMatriks()
@@ -193,8 +201,17 @@ class main():
     def get_kriteria_rank():
         return GetPeringkatKriteria()
 
+    @app.route('/supplier/get_hasil_perhitungan_kriteria')
+    def get_hasil_perhitungan_kriteria():
+        return HasilPerhitunganKriteria()
 
-
+    @app.route('/supplier/get_hasil_perhitungan_supplier1')
+    def get_hasil_peritungan_supplier1():
+        return HasilPerhitunganSupplier1()
+    
+    @app.route('/supplier/get_hasil_perhitungan_supplier2')
+    def get_hasil_perhitungan_supplier2():
+        return HasilPerhitunganSupplier2()
 
     #PROYEK
     @app.route('/proyek/get_allproyek',methods = ['GET'])
@@ -1177,6 +1194,11 @@ class main():
 
 
     #AHP
+    @app.route('/ahp/merge_count_kriteria',methods = ['POST'])
+    def merge_count_kriteria():
+        return MergeCalculateKriteria()
+
+
     @app.route('/ahp/merge_count_bobot',methods = ['POST'])
     def calculate_bobot():
         return MergeCountBobotGlobal()

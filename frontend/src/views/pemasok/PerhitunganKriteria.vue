@@ -164,7 +164,11 @@
                 </div>
                 </template> -->
                 </v-data-table>
-                <v-btn color="primary" class="mx-auto text-center mb-7">
+                <v-btn 
+                color="primary" 
+                class="mx-auto text-center mb-7"
+                @click = "countKriteria()"
+                >
                     Calculate
 
                 </v-btn>
@@ -315,13 +319,33 @@
                             }
                     }
 
-
                 }catch(error){
                     console.log(error)
                 }
             },
+            async countKriteria(){
+                const axios = require('axios')
+                const res = await axios.get('/ahp/merge_count_kriteria')
+                if(res.data.status == 'berhasil'){
+                    this.snackbar = {
+                        message : "Insert Matrix Kriteria Berhasil",
+                        color : 'green',
+                        show : true
+                    }
+                    setTimeout(() => {
+                        location.replace('/perhitunganKriteria/' + this.$route.params.id )
+                    }, 1000)
 
-
+                }else if(res.data.status == 'gagal'){
+                    this.loading = false
+                            this.snackbar = {
+                                message : "Insert Matrix Kriteria Gagal ",
+                                color : 'red',
+                                show : true
+                    }
+                }
+            },
+            
 
             editToolBox(toolBox){
                 console.log('ID : ' + toolBox.id)
