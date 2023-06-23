@@ -71,103 +71,49 @@
                 max-width="900">
                 <v-data-table
                     :headers = "column"
-                    :items = "criteria"
+                    :items = "matrixCriteriaByAdmin"
                     :items-per-page="5"
                 >
-                <template v-slot:[`item.IdKriteria`]="{ item }">
-                    <v-text-field v-model="editedItem.IdKriteria" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDKriteria == editedItem.IDKriteria"></v-text-field>
-                    <span v-else>{{item.IdKriteria}}</span>
+                <template v-slot:[`item.IdKriteria01`]="{ item }">
+                    <v-text-field v-model="editedItem.IdKriteria01" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria01 == editedItem.IdKriteria01"></v-text-field>
+                    <span v-else>{{item.IdKriteria01}}</span>
                 </template>
     
                 <template v-slot:[`item.namaKriteria`]="{ item }">
-                    <v-text-field v-model="editedItem.namaKriteria" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDKriteria == editedItem.IDKriteria"></v-text-field>
+                    <v-text-field v-model="editedItem.namaKriteria" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria01 == editedItem.IdKriteria01"></v-text-field>
                     <span v-else>{{item.namaKriteria}}</span>
                 </template>
 
 
             
                 <template v-slot:[`item.IdKriteria02`]="{ item }">
-                    <v-text-field v-model="editedItem.IdKriteria02" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDKriteria02 == editedItem.IDKriteria02"></v-text-field>
+                    <v-text-field v-model="editedItem.IdKriteria02" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria02 == editedItem.IdKriteria02"></v-text-field>
                     <span v-else>{{item.IdKriteria02}}</span>
                 </template>
     
                 <template v-slot:[`item.namaKriteria02`]="{ item }">
-                    <v-text-field v-model="editedItem.namaKriteria02" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDKriteria02 == editedItem.IDKriteria02"></v-text-field>
+                    <v-text-field v-model="editedItem.namaKriteria02" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria02 == editedItem.IdKriteria02"></v-text-field>
                     <span v-else>{{item.namaKriteria02}}</span>
                 </template>
     
                 <template v-slot:[`item.nilai`]="{ item }">
-                    <v-text-field v-model="editedItem.nilai" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDKriteria == editedItem.IDKriteria"></v-text-field>
+                    <v-text-field v-model="editedItem.nilai" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria01 == editedItem.IdKriteria01"></v-text-field>
                     <span v-else>{{item.nilai}}</span>
                 </template>
-    
-                
-              
-    
-    
-    
-                <!-- <template v-slot:[`item.aksi`]="{ item }">
-                <div v-if="item.id==editedItem.id">
-                    <v-icon color="red" class="mr-3" @click="close()">
-                        mdi-window-close
-                    </v-icon>
-                    <v-icon color="green" @click="updateToolBox()">
-                        mdi-content-save
-                    </v-icon>
-                </div>
-                <div v-else>
-                    <router-link :to="{name : 'List Detail Tool Stock By Tool Stock', params:{id : `${item.toolTypeCode}`}}">
-                        <v-tooltip top>
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn 
-                                class="mx-1" 
-                                x-small
-                                color="blue"
-                                v-bind="attrs"
-                                v-on="on">
-                                <v-icon small dark>mdi-check</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Detail Tool Stock</span>
-                        </v-tooltip>
-                    </router-link>
-    
-                    <v-tooltip top>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn 
-                          class="mx-1" 
-                          x-small
-                          color="green"
-                          @click="editToolBox(item)"
-                          v-bind="attrs"
-                          v-on="on">
-                          <v-icon small dark>mdi-pencil</v-icon>
-                        </v-btn>
-                      </template>
-                      <span>Edit</span>
-                    </v-tooltip>
-    
-                    <v-tooltip top>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn 
-                          class="mx-1" 
-                          x-small
-                          color="red"
-                          @click="deleteToolBox(item)"
-                          v-bind="attrs"
-                          v-on="on">
-                          <v-icon small dark>mdi-trash-can-outline</v-icon>
-                        </v-btn>
-                      </template>
-                      <span>Delete</span>
-                    </v-tooltip>
-                </div>
-                </template> -->
                 </v-data-table>
-                <v-btn color="primary" class="mx-auto text-center mb-7">
-                    Calculate
-
-                </v-btn>
+                <v-form
+                    class="pa-6"
+                    ref="form2"
+                    v-model="valid2"
+                    @submit.prevent="submitHandler"
+                    lazy-validation>
+                        <v-btn 
+                            color="primary" 
+                            class="mx-auto text-center mb-7"
+                            @click = "countKriteria()">
+                            Calculate
+                        </v-btn>
+                </v-form>
             </v-card>
         </v-card>
     
@@ -179,11 +125,11 @@
         data(){
             return {
                 column : [
-                    {text : 'ID Kriteria', value : 'IDKriteria'},
-                    {text : 'Nama Kriteria', value : 'namaKriteria'},
-                    {text : 'ID Kriteria 02', value : 'IDKriteria02'},
+                    {text : 'ID Kriteria', value : 'IdKriteria01'},
+                    {text : 'Nama Kriteria', value : 'namaKriteria01'},
+                    {text : 'ID Kriteria 02', value : 'IdKriteria02'},
                     {text : 'Nama Kriteria 02', value : 'namaKriteria02'},
-                    {text : 'Nilai', value : 'nilai'},
+                    {text : 'Nilai', value : 'Nilai'},
                     {text : 'Action',value : 'aksi'}
                 ],
 
@@ -194,6 +140,7 @@
                 },
                 criteria : [],
                 criteriaDesc : [],
+                matrixCriteriaByAdmin : [],
                 editedIndex : -1,
                 criteria01 : '',
                 criteria02 : '',
@@ -211,7 +158,8 @@
     
         mounted(){
             this.fetchData(),
-            this.fetchData2()
+            this.fetchData2(),
+            this.fetchData3()
 
         },
         
@@ -232,6 +180,20 @@
                     }
                     this.addPerhitungan()
                 }
+            },
+
+            validate2(){
+                if(this.$refs.form2.validate()){
+                    this.countKriteria()
+                }
+            },
+
+            refresh() {
+            setTimeout(() => {
+                this.timer.setInterval(location.replace('/hasilPerhitunganKriteriaAdmin/' + this.$route.params.id), 2000)
+                this.$forceUpdate();  
+            }, 2000)
+                location.reload()
             },
 
             async fetchData(){
@@ -265,11 +227,28 @@
                     console.log(error)
                 }
             },
+
+            async fetchData3(){
+
+                try{
+                    const axios = require('axios')
+                    const res = await axios.get('/supplier/get_matrikskriteria_byadmin/' + this.$route.params.id)
+                    if(res.data == null){
+                        console.log("data kosong")
+                    }else{
+                        this.matrixCriteriaByAdmin = res.data
+                        console.log(res,this.matrixCriteriaByAdmin)
+                    }
+
+                }catch(error){
+                    console.log(error)
+                }
+            },
             
             async addPerhitungan(){
                 try{
                     const axios = require('axios')
-                    const res = await axios.post('/supplier/add_matriks_kriteria',{
+                    const res = await axios.post('/supplier/add_matrikskriteria_byadmin/' + this.$route.params.id,{
                         criteria01 : this.criteria01,
                         criteria02 : this.criteria02,
                         Nilai : this.Nilai
@@ -283,7 +262,7 @@
                         show : true
                     }
                     setTimeout(() => {
-                        location.replace('/perhitunganKriteria')
+                        location.replace('/perhitunganKriteria/' + this.$route.params.id )
                     }, 1000)
 
                     }
@@ -296,14 +275,40 @@
                             }
                     }
 
-
                 }catch(error){
                     console.log(error)
                 }
             },
+             countKriteria(){
+                this.loading = true
+                setTimeout(() => {
+                try{
+                    const axios = require('axios')
+                    const res = axios.post('/ahp/merge_count_kriteria/' + this.$route.params.id)
+                    if(res.data.status == 'berhasil'){
+                        this.snackbar = {
+                            message : "Perhitungan Kriteria Berhasil",
+                            color : 'green',
+                            show : true
+                        }
+                        setTimeout(() => {
+                            location.replace('/hasilPerhitunganKriteriaAdmin/' + this.$route.params.id )
+                        }, 1000)
 
-
-
+                    }else if(res.data.status == 'gagal'){
+                        this.loading = false
+                            this.snackbar = {
+                                message : "Perhitungan Kriteria Gagal",
+                                color : 'red',
+                                show : true
+                        }
+                    }   
+                    }catch(error){
+                        console.log(error)
+                    }
+                this.refresh()       
+                }, 1000)
+            },
             editToolBox(toolBox){
                 console.log('ID : ' + toolBox.id)
                 this.editedIndex = this.toolBox.indexOf(toolBox)

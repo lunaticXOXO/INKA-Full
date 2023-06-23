@@ -11,17 +11,27 @@
               v-model="valid"
               lazy-validation>
     
+           
               <v-text-field
-              v-model="nama"
-              label="Order Name"
-              required
-              ></v-text-field>
+                v-model="merk"
+                label="Merk"
+            ></v-text-field>
     
               <v-text-field
               v-model="quantity"
               label="Quantity"
               required
               ></v-text-field>
+
+               
+            <v-autocomplete
+                item-text="nama"
+                item-value="id"
+                v-model="unit"
+                :items="list_unit"
+                label="Unit"
+            ></v-autocomplete>
+
             
     
               <div class="d-flex">
@@ -33,44 +43,11 @@
                   min-width="290px"
                 >
                 <template v-slot:activator="{ on, attrs }">
-                  <v-text-field class="mx-10" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal" prepend-icon="mdi-calendar"></v-text-field>
+                  <v-text-field class="mx-10" :value="arrivalDate" v-bind="attrs" v-on="on" label="Arrival Date" prepend-icon="mdi-calendar"></v-text-field>
                 </template>
-                <v-date-picker full-width v-model="dueDate"></v-date-picker>
+                <v-date-picker full-width v-model="arrivalDate"></v-date-picker>
               </v-menu>
               
-              <v-menu
-                ref="menu"
-                v-model="menu2"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                :return-value.sync="time"
-                transition="scale-transition"
-                offset-y
-                max-width="290px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    class="mx-10"
-                    v-model="datetime"
-                    label="Due Time"
-                    prepend-icon="mdi-clock-time-four-outline"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-time-picker
-                  v-if="menu2"
-                  v-model="datetime"
-                  full-width
-                  format="24hr"
-                  @click:minute="$refs.menu.save(time)"
-                ></v-time-picker>
-              </v-menu>
-    
-    
-    
             </div>
              
               <v-btn
@@ -174,6 +151,22 @@
                             <span>Tambah Tool Stock</span>
                         </v-tooltip>
                     </router-link>
+
+                    <router-link :to="{name : 'List Detail Tool Stock By Tool Stock', params:{id : `${item.toolTypeCode}`}}">
+                        <v-tooltip top>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn 
+                                class="mx-1" 
+                                x-small
+                                color="yellow"
+                                v-bind="attrs"
+                                v-on="on">
+                                <v-icon small dark>mdi-check</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Detail Tool Stock</span>
+                        </v-tooltip>
+                    </router-link>
     
                     <v-tooltip top>
                       <template v-slot:activator="{ on, attrs }">
@@ -208,6 +201,10 @@
                 </template>
                 </v-data-table>
             </v-card>
+
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+            {{snackbar.message}}
+      </v-snackbar>
         </v-card>
     
     </v-app>
@@ -227,6 +224,7 @@
                     {text : 'Action',value : 'aksi'}
                 ],
                 toolStock : [],
+                list_unit: [],
                 editedIndex : -1,
                 editedItem : {
                     id : '',
@@ -236,14 +234,30 @@
                     id : '',
                     nama : '',
                 },
+                snackbar: {
+                    show: false,
+                    message: null,
+                    color: null
+                },
+                merk : '',
+                arrivalDate : undefined,
+                quantity : '',
+                unit : undefined
             }
         },
     
         mounted(){
-            this.fetchData()
+            this.fetchData(),
+            this.fetchUnit()
         },
     
         methods : {
+            validate () {
+                if(this.$refs.form.validate()){
+                    this.addToolStock()
+                }
+            },
+
             async fetchData(){
                 try{
                     const axios = require('axios')
@@ -256,6 +270,50 @@
                     }
                 }
                 catch(error){
+                    console.log(error)
+                }
+            },
+
+            async fetchUnit(){
+                try{
+                    const axios = require('axios')
+                    const res = await axios.get('/unit/get_unit_instock')
+                    if (res.data == null){
+                        alert("Material Unit Kosong")
+                    }else{
+                        this.list_unit = res.data
+                        console.log(res,this.list_unit)
+                    }
+                }catch(error){
+                    alert(error)
+                    console.log(error)
+                }   
+            },
+            async addToolStock(){
+                try{
+                    const axios = require('axios')  
+                    const res = await axios.post('/tools/add_toolstock_by_toolPurchaseItem/' + this.$route.params.id,{
+                        merk : this.merk,
+                        quantity : this.quantity,
+                        unit : this.unit,
+                        arrivalDate : this.arrivalDate
+                    })
+                    if(res.data.status == 'berhasil'){
+                        this.snackbar = {
+                        message : "Insert Tool Stock Berhasil",
+                        color : 'green',
+                        show : true
+                    }
+                    location.replace('/listToolStockByPurchaseItem/' + this.$route.params.id)
+                    }  
+                    else if(res.data.status == 'gagal'){
+                        this.snackbar = {
+                            message : "Insert Tool Box Gagal",
+                            color : 'red',
+                            show : true
+                        }
+                    }
+                }catch(error){
                     console.log(error)
                 }
             },
@@ -273,23 +331,7 @@
                 }, 300)
             },
     
-            async updateToolBox(){
-                if (this.editedIndex > -1) {
-                    Object.assign(this.toolBox[this.editedIndex], this.toolBox)
-                    console.log(this.editedItem)
-                }
-                this.close()
-                try{
-                    const axios = require('axios')
-                    const res = await axios.post('/box/update_toolbox/' + this.editedItem.id,
-                    { id : this.editedItem.id,
-                      nama : this.editedItem.nama
-                    })
-                    console.log(res)
-                }catch(error){
-                    console.log(error)
-                }
-            }
+          
         }
     }
     </script>

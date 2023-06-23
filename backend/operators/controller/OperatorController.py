@@ -227,7 +227,6 @@ def ShowOperatorUUID():
     return make_response(jsonify(json_data),200)
 
 
-    pass
 
 
 def GetLinkOperator(code):

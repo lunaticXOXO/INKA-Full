@@ -11,12 +11,12 @@
   lazy-validation> 
 
   <v-autocomplete
-        item-text="id"
-        item-value="id"
-        v-model="prosesSesudahnya"
-        :items="items"
-        label="Tool Type"
-        ></v-autocomplete>
+      item-text="nama"
+      item-value="codes"
+      v-model="toolTypeCode"
+      :items="tooltype"
+      label="Tool Type"
+  ></v-autocomplete>
 
   <v-text-field
   v-model="quantity"
@@ -25,17 +25,13 @@
   ></v-text-field>
 
   <v-autocomplete
-        item-text="id"
+        item-text="nama"
         item-value="id"
-        v-model="prosesSesudahnya"
-        :items="items"
+        v-model="unit"
+        :items="units"
         label="Unit"
         ></v-autocomplete>
 
-
-
- 
- 
   <v-btn
     :disabled="!valid"
     color="success"
@@ -55,6 +51,9 @@
     </v-btn>
 
 </v-form>
+<v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+        {{snackbar.message}}
+  </v-snackbar>
 
 </v-card>
     
@@ -101,8 +100,7 @@
               <v-text-field v-model="editedItem.namaProses" :hide-details="true" dense single-line v-if="item.toolTypeCode == editedItem.toolTypeCode" ></v-text-field>
               <span v-else>{{item.namaProses}}</span>
             </template>
-            
-          
+
           </v-data-table>
       </v-card>
     </v-app>
@@ -123,12 +121,16 @@ export default {
          
       ],
      toolNeed : [],
+     tooltype : [],
+     units : [],
+     toolTypeCode : '',
+     unit : '',
+     quantity : '',
       editedIndex: -1,
       editedItem: {
-        id: '',
-        nama: '',
-        purchaseDate: '',
-        purchaserName: '',
+       toolTypeCode: '',
+        quantity: '',
+        unit : ''
       },
       defaultItem: {
         id: '',
@@ -137,15 +139,28 @@ export default {
         purchaserName: '',
       },
       dueDate: undefined,
-      datetime: undefined
+      datetime: undefined,
+      snackbar: {
+        show: false,
+        message: null,
+        color: null
+      },
     }
   },
 
   mounted(){
-      this.fetchData()
+      this.fetchData(),
+      this.fetchToolType(),
+      this.fetchUnit()
   },
 
   methods: {
+    validate () {
+        if(this.$refs.form.validate()){
+          this.insertToolNeed()
+        }
+    },
+
     close () {
       setTimeout(() => {
           this.editedItem = Object.assign({}, this.defaultItem);
@@ -170,7 +185,70 @@ export default {
         console.log(error)
       }
     },
-    
+
+    async insertToolNeed(){
+      try{
+        const axios = require('axios')
+        const res = await axios.post('/tools/add_toolneed_idProcess/' + this.$route.params.id,{
+          toolTypeCode : this.toolTypeCode,
+          quantity : this.quantity,
+          unit : this.unit
+        }
+        )
+        if (res.data.status == "berhasil"){
+            console.log('berhasil')
+            this.snackbar = {
+              message : "Insert Tool By Process Berhasil",
+              color : 'green',
+              show : true
+          }
+          
+          location.replace('/listToolNeedByProcess/' + this.$route.params.id)
+        }
+        else if(res.data.status == 'gagal'){
+            this.snackbar = {
+                message : "Insert Tool Box Gagal",
+                color : 'red',
+                show : true
+           }
+        }
+      }catch(error){
+         console.log(error)
+      }
+    },
+
+    async fetchToolType(){
+       try{
+          const axios = require('axios')
+          const res = await axios.get('/tools/show_tooltype')
+          if(res.data == null){
+            console.log("kosong")
+          }else{
+
+            this.tooltype = res.data
+            console.log(res,this.tooltype)
+
+          }
+       }catch(error){
+          console.log(error)
+       }
+    },
+
+    async fetchUnit(){
+      try{
+        const axios = require('axios')
+        const res = await axios.get('/unit/get_unit')
+        if(res.data == null){
+           console.log("kosong")
+        }else{
+            this.units = res.data
+            console.log(res,this.unit)
+        }
+      }
+      catch(error){
+         console.log(error)
+      }
+    }
     
     
     
