@@ -212,24 +212,30 @@ def insertkriteria():
     return hasil
     
 
-def MergeCalculateKriteria():
-    conn = database.connector()
-    cursor = conn.cursor()
-    hitungSetengahMatrik()
-    totalkolom() 
-    normalisasi()
-    totalbaris()
-    bobotKriteria()
-    hasil = buatmatriks()
-    m=hasil[0]
-    uk=hasil[1]
-    hasil=cariEigen(m, uk)
-    hasil2 = insertkriteria()
-    if hasil2 == True:
-        output = {"status" : "berhasill"}
-    elif hasil2 == False:
+def MergeCalculateKriteria(idPenghitung):
+    con00 = database.connector()
+    cur00 = con00.cursor()
+    try:
+        hitungSetengahMatrik()
+        totalkolom() 
+        normalisasi()
+        totalbaris()
+        bobotKriteria()
+        hasil = buatmatriks()
+        m=hasil[0]
+        uk=hasil[1]
+        hasil=cariEigen(m, uk)
+        hasil2 = insertkriteria()
+        if hasil2 == True:
+            query = "UPDATE gen_r_matrikskriteria SET konfirm = 1 WHERE idPenghitung = '"+idPenghitung+"'"
+            cur00.execute(query)
+            con00.commit()
+            output = {"status" : "berhasill"}
+    except Exception as e:
         output = {"status" : "gagal"}
+        print("error",str(e))
     return output
+
 
 
 ## AHP untuk supplier

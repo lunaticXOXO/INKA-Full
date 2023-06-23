@@ -123,6 +123,7 @@ import ListHasilPerhitunganKriteria from '../views/pemasok/ListHasilPerhitunganK
 import ListPenghitungSupplier from '../views/pemasok/ListPenghitungSupplier.vue'
 import ListHasilPerhitunganSupplier1 from '../views/pemasok/ListHasilPerhitunganSupplier1.vue'
 import ListHasilPerhitunganSupplier2 from '../views/pemasok/ListHasilPerhitunganSupplier2.vue'
+import HasilPerhitunganKriteriaByAdmin from '../views/pemasok/HasilPerhitunganKriteriaByAdmin.vue'
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
 Vue.use(VueRouter)
@@ -1289,6 +1290,16 @@ const routes = [
 
       title : "List Hasil Perhitungan Supplier 2 - PT.INKA"
    }
+
+},
+
+{
+    path : '/hasilPerhitunganKriteriaAdmin/:id',
+    name : 'List Hasil Perhitungan Kriteria By Admin',
+    component : HasilPerhitunganKriteriaByAdmin,
+    meta : {
+       title : "Hasil Perhitungan Kriteria By Admin - PT.INKA"
+    }
 
 }
 

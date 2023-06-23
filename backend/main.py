@@ -205,6 +205,10 @@ class main():
     def get_hasil_perhitungan_kriteria():
         return HasilPerhitunganKriteria()
 
+    @app.route('/supplier/get_hasil_perhitungankriteria_byadmin/<idPenghitung>')
+    def get_hasil_perhitungankriteria_byadmin(idPenghitung):
+        return HasilPerhitunganKriteriaByAdmin(idPenghitung)
+
     @app.route('/supplier/get_hasil_perhitungan_supplier1')
     def get_hasil_peritungan_supplier1():
         return HasilPerhitunganSupplier1()
@@ -1194,9 +1198,9 @@ class main():
 
 
     #AHP
-    @app.route('/ahp/merge_count_kriteria',methods = ['POST'])
-    def merge_count_kriteria():
-        return MergeCalculateKriteria()
+    @app.route('/ahp/merge_count_kriteria/<idPenghitung>',methods = ['POST'])
+    def merge_count_kriteria(idPenghitung):
+        return MergeCalculateKriteria(idPenghitung)
 
 
     @app.route('/ahp/merge_count_bobot',methods = ['POST'])

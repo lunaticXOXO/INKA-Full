@@ -408,6 +408,22 @@ def HasilPerhitunganKriteria():
 
 
 
+def HasilPerhitunganKriteriaByAdmin(idPenghitung):
+    conn = db.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.IDKriteria,a.IDKriteria02,a.Nilai,a.Nilai02,a.idPenghitung FROM gen_r_matrikskriteria a JOIN gen_r_adminperhitungan b ON a.idPenghitung = b.ID  WHERE a.idPenghitung = '"+idPenghitung+"' AND a.konfirm = 1"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
+
+
+
+
 
 
 
