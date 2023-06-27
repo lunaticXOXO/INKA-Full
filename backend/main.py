@@ -32,6 +32,7 @@ from tools.toolstock.ToolStockController import *
 from tools.toolpurchase.ToolPurchaseController import *
 from tools.toolpurchase.ToolPurchaseItemController import *
 from tools.toolbox.BoxItemController import *
+from ahp.controller.AhpController import *
 
 from flask import Flask,session
 from flask_cors import CORS
@@ -561,6 +562,12 @@ def show_material_type_name():
 def show_materialtype_supplier(code):
     hasil = ShowMaterialTypeInPurchaseItem(code)
     return hasil
+
+
+#AHP
+@app.route('/ahp/merge_count_kriteria/<idPenghitung>',methods = ['POST'])
+def merge_count_kriteria(idPenghitung):
+    return MergeCalculateKriteria(idPenghitung)
 
 
 # Material Unit
