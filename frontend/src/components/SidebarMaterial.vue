@@ -101,9 +101,30 @@ export default {
                     active: false,
                     items: [
                         { title: 'List Pemasok',icon : 'mdi-playlist-check',route : '/listPemasok'},
-                        { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'},
+                        { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'}
+                        // {title : 'Peringkat Supplier', icon : 'mdi-person',route : '/listPeringkatSupplier'},
+                        // {title : 'Kriteria Pemasok', icon : 'mdi-gavel',route : '/listKriteriaPemasok'},
+                        // {title : 'Perhitungan Kriteria', icon : 'mdi-sort-variant', route : '/listPenghitungMatriks'},
+                        // {title : 'Peringkat Kriteria', icon : 'mdi-sort-variant',route : '/listPeringkatKriteria'}
                     ],
                     title: 'Pemasok',
+                },
+
+                {
+                    action: 'mdi-account-star',
+                    active: false,
+                    items: [
+
+                        
+                        {title : 'Kriteria Pemasok', icon : 'mdi-gavel',route : '/listKriteriaPemasok'},
+                        {title : 'Perhitungan Kriteria dan Supplier', icon : 'mdi-sort-variant', route : '/listPenghitungMatriks'},
+                        {title: 'Hasil Perhitungan Kriteria', icon : 'mdi-gavel',route : '/listHasilPerhitunganKriteria'},
+                        {title: 'Hasil Perhitungan Supplier 1', icon : 'mdi-account-plus',route : '/listHasilPerhitunganSupplier1'},
+                        {title : 'Hasil Perhitungan Supplier 2', icon : 'mdi-account-plus',route : '/listHasilPerhitunganSupplier2'},
+                        {title : 'Hasil Perhitungan Supplier 3', icon : 'mdi-account-plus',route : '/listPeringkatSupplier'},
+                        {title : 'Peringkat Kriteria', icon : 'mdi-sort-variant',route : '/listPeringkatKriteria'}
+                    ],
+                    title: 'Perhitungan Kriteria & Pemasok',
                 },
 
                 {
@@ -133,9 +154,8 @@ export default {
                     active: false,
                     items: [
                         { title: 'Purchase Material', icon: 'mdi-plus', route: '/pesanMaterial'},
-                        // {title : 'List Purchase Material', icon : 'mdi-filter-variant', route : '/listPurchaseMaterialNew'},
-                        {title : 'List Purchase Material', icon : 'mdi-filter-variant', route : '/listPurchaseMaterial'},
-                        {title : 'List Purchase Material Item',icon : 'mdi-gavel',route : '/listPurchaseMaterialItem'}
+                       {title : 'List Purchase Material', icon : 'mdi-filter-variant', route : '/listPurchaseMaterialNew'},
+                        // {title : 'List Purchase Material Item',icon : 'mdi-gavel',route : '/listPurchaseMaterialItem'}
                         
                     ],
                     title: 'Purchase Material New',
@@ -165,38 +185,38 @@ export default {
                     ],
                     title: 'Material Login',
                 },
-                {
-                action: 'mdi-wrench',
-                active: false,
-                items: [
-                    { title: 'List Tool Box', icon: 'mdi-filter-variant', route: '/showToolBox'},
-                    { title: 'Tambah Tool Box', icon: 'mdi-plus', route: '/addToolBox'},
-                ],
-                title: 'Tool Box',
-                },
+                // {
+                // action: 'mdi-wrench',
+                // active: false,
+                // items: [
+                //     { title: 'List Tool Box', icon: 'mdi-filter-variant', route: '/showToolBox'},
+                //     { title: 'Tambah Tool Box', icon: 'mdi-plus', route: '/addToolBox'},
+                // ],
+                // title: 'Tool Box',
+                // },
 
-                {
-                action: 'mdi-book-open-outline',
-                active: false,
-                items: [
-                    { title: 'Tambah Tool Type Consumable', icon: 'mdi-plus', route: '/addToolTypeConsume'},
-                    { title: 'Tambah Tool Type Non Consumable', icon: 'mdi-plus', route: '/addToolTypeNonConsume'},
-                ],
-                title: 'Tool Type',
-                },
+                // {
+                // action: 'mdi-book-open-outline',
+                // active: false,
+                // items: [
+                //     { title: 'Tambah Tool Type Consumable', icon: 'mdi-plus', route: '/addToolTypeConsume'},
+                //     { title: 'Tambah Tool Type Non Consumable', icon: 'mdi-plus', route: '/addToolTypeNonConsume'},
+                // ],
+                // title: 'Tool Type',
+                // },
 
-                {
-                    action: 'mdi-svg',
-                    active: false,
-                    items: [
-                        { title: 'Purchase Tools', icon: 'mdi-plus', route: '/purchaseTools'},
-                        {title : 'List Purchase Tools', icon : 'mdi-filter-variant', route : '/listPurchaseTools'},
-                        {title : 'List Purchase Tool Item',icon : 'mdi-gavel',route : '/listPurchaseToollItem/:id'}
+                // {
+                //     action: 'mdi-svg',
+                //     active: false,
+                //     items: [
+                //         { title: 'Purchase Tools', icon: 'mdi-plus', route: '/purchaseTools'},
+                //         {title : 'List Purchase Tools', icon : 'mdi-filter-variant', route : '/listPurchaseTools'},
+                //         {title : 'List Purchase Tool Item',icon : 'mdi-gavel',route : '/listPurchaseToollItem/:id'}
                     
                         
-                    ],
-                    title: 'Tool Purchase',
-                },
+                //     ],
+                //     title: 'Tool Purchase',
+                // },
 
 
             ],

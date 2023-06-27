@@ -8,7 +8,7 @@ import db.db_handler as database
 def hitungSetengahMatrik():
     con00 = database.connector()
     cur00 = con00.cursor()
-    q00="select * from gen_r_matrikskriteria"
+    q00="select * from gen_r_matrikskriteria WHERE konfirm IS NULL"
     cur00.execute(q00)
     tabel00=cur00.fetchall()
     for row00 in tabel00:
@@ -30,7 +30,7 @@ def hitungSetengahMatrik():
 def totalkolom():
     con00 = database.connector()
     cur00 = con00.cursor()
-    q00="Select distinct idKriteria02 from gen_r_matrikskriteria order by \
+    q00="Select distinct idKriteria02 from gen_r_matrikskriteria WHERE konfirm IS NULL order by \
     idkriteria02"
     cur00.execute(q00)
     tabel00=cur00.fetchall()
@@ -38,7 +38,7 @@ def totalkolom():
     for row00 in tabel00:
         idKri00=row00[0]
         q01 = "select * from gen_r_matrikskriteria where idKriteria02= \
-        '"+idKri00+"'"
+        '"+idKri00+"' AND konfirm IS NULL"
         cur00.execute(q01)
         tabel01=cur00.fetchall()
         jml=0
@@ -53,7 +53,7 @@ def normalisasi():
     con00 = database.connector()
     cur00 = con00.cursor()
     total= totalkolom ()
-    q00="Select distinct idKriteria02 from gen_r_matrikskriteria order by \
+    q00="Select distinct idKriteria02 from gen_r_matrikskriteria WHERE konfirm IS NULL order by \
     idkriteria02"
     cur00.execute(q00)
     tabel00=cur00.fetchall()
@@ -61,7 +61,7 @@ def normalisasi():
     try:
         for row00 in tabel00:
             idkri00=row00[0]
-            q01="select * from gen_r_matrikskriteria"
+            q01="select * from gen_r_matrikskriteria WHERE konfirm IS NULL"
             cur00.execute(q01)
             tabel01=cur00.fetchall()
             for row01 in tabel01:
@@ -73,7 +73,7 @@ def normalisasi():
                     normalisasi = nil01/jml01
                     q02 = "UPDATE gen_r_matrikskriteria SET nilai02 = \
                     '"+str(normalisasi)+"' where idKriteria02 = '"+idkri00+"' AND \
-                    idKriteria = '"+K01+"' "
+                    idKriteria = '"+K01+"' AND konfirm IS NULL"
                     cur00.execute(q02)
                     con00.commit()
             angka = angka + 1 
@@ -85,7 +85,7 @@ def normalisasi():
 def totalbaris():
     con00 = database.connector()
     cur00 = con00.cursor()
-    q00 = "select distinct idKriteria from gen_r_matrikskriteria order by \
+    q00 = "select distinct idKriteria from gen_r_matrikskriteria WHERE konfirm IS NULL order by \
     idkriteria02"
     cur00.execute(q00)
     tabel00=cur00.fetchall()
@@ -93,7 +93,7 @@ def totalbaris():
     for row00 in tabel00:
         idkri00 = row00[0]
         q01 = "Select * from gen_r_matrikskriteria where idKriteria = \
-        '"+idkri00+"'"
+        '"+idkri00+"' AND konfirm IS NULL"
         cur00.execute(q01)
         tabel01=cur00.fetchall()
         jml01 = 0
@@ -121,8 +121,8 @@ def bobotKriteria():
 def buatmatriks():
     con00 = database.connector()
     cur00 = con00.cursor()
-    q00 = "select distinct IDKriteria FROM gen_r_matrikskriteria \
-    order by IDKriteria"
+    q00 = "select distinct IDKriteria FROM gen_r_matrikskriteria WHERE konfirm IS NULL\
+    order by IDKriteria "
     cur00.execute(q00)
     tabel00 = cur00.fetchall()
     m = []
@@ -130,7 +130,7 @@ def buatmatriks():
     for row00 in tabel00:
         idkri00 = row00[0]
         q01 = "select * from gen_r_matrikskriteria where IDKriteria = \
-        '"+idkri00+"' order by IDKriteria02"
+        '"+idkri00+"' and konfirm IS NULL order by IDKriteria02"
         cur00.execute(q01)
         tabel01 = cur00.fetchall()
         n = []
@@ -186,7 +186,7 @@ def insertkriteria():
         if (CR <= 0.1):
             print("Memenuhi Kriteria")
             bobot=bobotKriteria()
-            q00="select distinct IDKriteria from gen_r_matrikskriteria \
+            q00="select distinct IDKriteria from gen_r_matrikskriteria WHERE konfirm IS NULL \
             order by IDKriteria"
             cur00.execute(q00)
             tabel00=cur00.fetchall()
@@ -203,7 +203,21 @@ def insertkriteria():
                 mulai) values('"+IDKri+"', '"+str(bobot01)+"', current_timestamp)"
                 cur00.execute(q02)
                 con00.commit()
-                hasil = True
+            angka01 = 0
+            q03="select IDKriteria, Bobot from gen_r_kriteriabobot \
+            WHERE selesai IS NULL order by Bobot DESC"
+            cur00.execute(q03)
+            tabel02=cur00.fetchall()
+            for row01 in tabel02:
+                bobot02=row01[1]
+                IDKri00=row01[0]
+                angka01 = angka01 +1
+                q04="update gen_r_kriteriabobot set rangking =%s\
+                where selesai is null and IDKriteria=%s"
+                values = (angka01,IDKri00)
+                cur00.execute(q04,values)
+                con00.commit()
+            hasil = True
         else:
             print("Perbaiki Matriks")
     except Exception as e:
@@ -229,6 +243,9 @@ def MergeCalculateKriteria(idPenghitung):
         if hasil2 == True:
             query = "UPDATE gen_r_matrikskriteria SET konfirm = 1 WHERE idPenghitung = '"+idPenghitung+"'"
             cur00.execute(query)
+            con00.commit()
+            query2 = "UPDATE gen_r_matrikskriteria SET konfirm = 1, idPenghitung = '"+idPenghitung+"' WHERE konfirm IS NULL and idPenghitung IS NULL"
+            cur00.execute(query2)
             con00.commit()
             output = {"status" : "berhasill"}
     except Exception as e:

@@ -111,7 +111,7 @@
                 readonly
                 v-bind="attrs"
                 v-on="on"
-              ></v-text-field>
+              ></v-text-field>  
             </template>
             <v-time-picker
               v-if="menu2"
@@ -121,6 +121,8 @@
               @click:minute="$refs.menu.save(time)"
             ></v-time-picker>
           </v-menu>
+
+          
         </div>
         <br>
         <v-btn
@@ -245,7 +247,7 @@
         }catch(error){
             alert(error)
             console.log(error)
-        }
+        } 
       },
 
       async InsertMaterialItemByPurchaseMaterial(){

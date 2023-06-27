@@ -99,7 +99,32 @@ import TambahToolStockByBox from '../views/tools/AddToolStockByBox.vue'
 import ShowToolPurchase from '../views/tools/ShowToolPurchase.vue'
 import AddToolPurchase from '../views/tools/AddToolPurchase.vue'
 import ListPesanMaterial from '../views/material/ListPesanMaterial.vue'
-//import ShowToolPurchaseItemByPurchase from '/views/tools/ShowToolPurchaseItemByPurchase.vue'
+import ListPurchaseMaterialNew from '../views/material/ListPurchaseMaterialNew'
+import ListPurchaseItembyPurchaseMaterialNew from '../views/material/ListPurchaseItembyPurchaseMaterialNew'
+import ListPeringkatSupplier from '../views/pemasok/ListPeringkatSupplier.vue'
+import ListDetailPeringkatBySupplier from '../views/pemasok/ListDetailPeringkatBySupplier.vue'
+import ListPeringkatKriteria from '../views/pemasok/ListPeringkatKriteria.vue'
+import ShowToolPurchaseItemByPurchase from '../views/tools/ShowToolPurchaseItemByPurchase.vue'
+import ShowToolStockByPurchaseItem from '../views/tools/ShowToolStockByPurchaseItem.vue'
+import ShowToolStock from '../views/tools/ShowToolStock.vue'
+import ShowDetailToolStock from '../views/tools/ShowDetailToolStock.vue'
+import ChooseKebutuhanTool from '../views/tools/ChooseKebutuhanTool.vue'
+import ListKriteriaPemasok from '../views/pemasok/ListKriteriaPemasok.vue'
+import PerhitunganKriteria from '../views/pemasok/PerhitunganKriteria.vue'
+import AddDistribusiTools from '../views/tools/AddDistribusiTools.vue'
+import ListToolNeedByProcess from '../views/tools/ListToolNeedByProcess.vue'
+import ListPenghitungKriteria from '../views/pemasok/ListPenghitungKriteria.vue'
+import PerhitunganSupplier from '../views/pemasok/PerhitunganSupplier.vue'
+import ListToolNeedByWorkstation from '../views/tools/ListToolNeedByWorkstation.vue'
+import ChoosePeminjamanTool from '../views/tools/ChoosePeminjamanTool.vue'
+import ChooseWorkstation from '../views/tools/ChooseWorkstation.vue'
+import ShowToolsOnWorkstation from '../views/tools/ShowToolsOnWorkstation.vue'
+import ListHasilPerhitunganKriteria from '../views/pemasok/ListHasilPerhitunganKriteria.vue'
+import ListPenghitungSupplier from '../views/pemasok/ListPenghitungSupplier.vue'
+import ListHasilPerhitunganSupplier1 from '../views/pemasok/ListHasilPerhitunganSupplier1.vue'
+import ListHasilPerhitunganSupplier2 from '../views/pemasok/ListHasilPerhitunganSupplier2.vue'
+import HasilPerhitunganKriteriaByAdmin from '../views/pemasok/HasilPerhitunganKriteriaByAdmin.vue'
+//import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
 Vue.use(VueRouter)
 
@@ -872,8 +897,8 @@ const routes = [
 
   {
 
-    path : '/listPurchaseMaterialNew',
-    name : 'List Purchase Material New',
+    path : '/listHarusPesanMaterial',
+    name : 'List Harus Pesan Material New',
     component : ListPesanMaterial,
     meta : {
       title : "List Material Yang Harus Dipesan"
@@ -1007,6 +1032,26 @@ const routes = [
 
  },
 
+ {
+
+    path : '/listPurchaseItemByPurchaseMaterialNew/:id',
+    name : 'List Purchase Item By Purchase Material New',
+    component : ListPurchaseItembyPurchaseMaterialNew,
+    meta : {
+        title : "List Purchase Item By Purchase Material - PT.INKA"
+    }
+
+ },
+
+ {
+    path : '/listPurchaseMaterialNew',
+    name : 'List Purchase Material New',
+    component : ListPurchaseMaterialNew,
+    meta : {
+      title : "List Purchase Material New - PT.INKA"
+    }
+ },
+
 //  {
 //    path : '/listPurchaseItemToolsByPurchase/:id',
 //    name : 'List Purchase Item By Tool Purchase',
@@ -1016,6 +1061,259 @@ const routes = [
 //    }
 
 //  ,
+
+
+{
+    path : '/listPeringkatSupplier',
+    name : 'List Peringkat Supplier',
+    component : ListPeringkatSupplier,
+    meta : {
+        title : "List Peringkat Supplier - PT.INKA"
+    }
+},
+
+{
+  path : '/listDetailPeringkatSupplier/:id',
+  name : 'List Detail Peringkat By Supplier',
+  component : ListDetailPeringkatBySupplier,
+  meta : {
+      title : "List Detail Peringkat Supplier - PT.INKA"
+  }
+},
+
+{
+     
+    path : '/listPeringkatKriteria',
+    name : 'List Peringkat Kriteria',
+    component : ListPeringkatKriteria,
+    meta : {
+      title : "List Peringkat Kriteria - PT.INKA"
+    }
+
+
+},
+
+{
+
+    path : '/listPurchaseItemByPurchaseTools/:id',
+    name : 'List Purchase Item By Purchase Tools',
+    component : ShowToolPurchaseItemByPurchase,
+    meta : {
+        title : "List Purchase Item By Purchase - PT.INKA"
+    }
+
+},
+
+{
+   path : '/listToolStockByPurchaseItem/:id',
+   name : 'List Tools Stock By Purchase Item',
+   component : ShowToolStockByPurchaseItem,
+   meta : {
+      title : "List Tool Stock By Purchase Item - PT.INKA"
+   }
+
+},
+
+{
+  path : '/listToolStock',
+  name : 'List Tool Stock',
+  component : ShowToolStock,
+  meta : {
+    title : "List Tool Stock - PT.INKA"
+  }
+
+},
+      
+{
+  path : '/listDetailToolStock/:id',
+  name : 'List Detail Tool Stock By Tool Stock',
+  component : ShowDetailToolStock,
+  meta : {
+    title : "List Detail Tool Stock - PT.INKA"
+  }
+},
+
+{
+
+   path : '/chooseKebutuhanTool',
+   name : 'Choose Kebutuhan Tool',
+   component : ChooseKebutuhanTool,
+   meta : {
+      title : "Kebutuhan Perkakas - PT.INKA"
+   }
+
+},
+
+{
+
+    path : '/perhitunganKriteria/:id',
+    name : 'Perhitungan Kriteria',
+    component : PerhitunganKriteria,
+    meta : {
+       title : "Perhitungan Kriteria - PT.INKA"
+    }
+
+},
+
+{
+
+  path : '/perhitunganSupplier/:id',
+  name : 'Perhitungan Supplier',
+  component : PerhitunganSupplier,
+  meta : {
+    titlee : "Perhitungan Supplier - PT.INKA"
+  }
+
+},
+
+{
+   path : '/listKriteriaPemasok',
+   name : 'List Kriteria Pemasok',
+   component : ListKriteriaPemasok,
+   meta : {
+    title : "List Kriteria Pemasok - PT.INKA"
+   }
+
+},
+
+{
+   path : '/addDistribusiTools',
+   name : 'Add Distribusi Tools',
+   component : AddDistribusiTools,
+   meta : {
+       title : "Add Distribusi Tools - PT.INKA"
+   }
+
+},
+
+{
+  path : '/listToolNeedByProcess/:id',
+  name : 'List Tool Need By Process',
+  component : ListToolNeedByProcess,
+  meta : {
+     title : "List Tool Need By Process - PT.INKA"
+  }
+},
+
+{
+   path : '/listPenghitungMatriks',
+   name : 'List Penghitung Matrix',
+   component : ListPenghitungKriteria,
+   meta : {
+      title : "List Penghitung Kriteria - PT.INKA"
+   }
+
+},
+
+{
+
+  path : '/listKebutuhanPerkakasByWorkstation/:id',
+  name : 'List Tool Need By Workstation',
+  component : ListToolNeedByWorkstation,
+  meta : {
+
+    title : "List Tool Need By Workstation - PT.INKA"
+  },
+
+
+},
+{
+
+  
+  path : '/choosePeminjamanTool',
+  name : 'Choose Peminjaman Tool',
+  component : ChoosePeminjamanTool,
+  meta : {
+      title : "Choose Peminjaman Tool - PT.INKA"
+  }
+
+},
+
+{
+
+  path : '/chooseWorkstation',
+  name : 'Choose Workstation Pengembalian Perkakas',
+  component : ChooseWorkstation,
+  meta : {
+     title : "Choose Workstation Pengembalian Tool - PT.INKA"
+  }
+
+},
+
+{
+    path : '/showToolsOnWorkstation/:id',
+    name : 'Show Tools On Workstation',
+    component : ShowToolsOnWorkstation,
+    meta : {
+
+      title : "Show Tools On Workstation - PT.INKA"
+
+    }
+
+},
+{
+     path : '/listHasilPerhitunganKriteria',
+     name : 'List Hasil Perhitungan Kriteria',
+     component : ListHasilPerhitunganKriteria,
+     meta : {
+        title : "List Hasil Perhitungan Kriteria - PT.INKA"
+     }
+
+},
+
+{
+
+  path : 'listPenghitungSupplier',
+  name : 'List Penghitung Supplier',
+  component : ListPenghitungSupplier,
+  meta : {
+ 
+      title : "List Penghitung Supplier - PT.INKA"
+  }
+},
+
+{
+   path : '/listHasilPerhitunganSupplier1',
+   name : 'List Hasil Perhitungan Supplier 1',
+   component : ListHasilPerhitunganSupplier1,
+   meta : {
+      title : "List Hasil Perhitungan Supplier 1 - PT.INKA"
+   }
+
+},
+
+{
+   path : '/listHasilPerhitunganSupplier2',
+   name : 'List Hasil Perhitungan Supplier 2',
+   component : ListHasilPerhitunganSupplier2,
+   meta : {
+
+      title : "List Hasil Perhitungan Supplier 2 - PT.INKA"
+   }
+
+},
+
+{
+    path : '/hasilPerhitunganKriteriaAdmin/:id',
+    name : 'List Hasil Perhitungan Kriteria By Admin',
+    component : HasilPerhitunganKriteriaByAdmin,
+    meta : {
+       title : "Hasil Perhitungan Kriteria By Admin - PT.INKA"
+    }
+
+}
+
+// {
+
+//    path : '/listToolNeedByProcess/:id',
+//    name : 'List Tool Need By Process',
+//    component : ListToolsByProcess,
+//    meta : {
+//       title : "List Tool Need By Process - PT.INKA"
+
+//    }
+// }
+
 
 
 ]

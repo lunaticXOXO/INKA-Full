@@ -142,7 +142,22 @@ def ShowProductInPantauOperasi():
     return make_response(jsonify(json_data),200)
 
 
+def ShowOperationByWorkstation(ws):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id, a.rencanaMulai, a.rencanaSelesai, a.mulai,a.selesai FROM prd_d_operasi a WHERE a.stasiunKerja = '"+ws+"' ORDER BY a.rencanaMulai DESC"
+    cursor.execute(query)
+    records = cursor.fetchall()
 
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
+
+    
 def StartOperation(idOperasi):
     conn = database.connector()
     cursor = conn.cursor()
