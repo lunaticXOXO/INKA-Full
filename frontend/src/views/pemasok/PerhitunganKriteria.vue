@@ -110,7 +110,7 @@
                         <v-btn 
                             color="primary" 
                             class="mx-auto text-center mb-7"
-                            @click = "countKriteria()">
+                            @click = "validate2()">
                             Calculate
                         </v-btn>
                 </v-form>
@@ -185,6 +185,7 @@
             validate2(){
                 if(this.$refs.form2.validate()){
                     this.countKriteria()
+                    this.refresh()
                 }
             },
 
@@ -295,7 +296,18 @@
                             location.replace('/hasilPerhitunganKriteriaAdmin/' + this.$route.params.id )
                         }, 1000)
 
-                    }else if(res.data.status == 'gagal'){
+                    }
+                    else if(res.data.status == 'perbaiki matris'){
+                        alert("perbaiki matriks")
+                        this.loading = false
+                            this.snackbar = {
+                                message : "Perhitungan Kriteria Gagal",
+                                color : 'red',
+                                show : true
+                        }
+                    }
+                    else if(res.data.status == 'gagal'){
+                        alert("perhitungan gagal")
                         this.loading = false
                             this.snackbar = {
                                 message : "Perhitungan Kriteria Gagal",
@@ -306,8 +318,8 @@
                     }catch(error){
                         console.log(error)
                     }
-                this.refresh()       
-                }, 1000)
+                //this.refresh()       
+                }, 2000)
             },
             editToolBox(toolBox){
                 console.log('ID : ' + toolBox.id)

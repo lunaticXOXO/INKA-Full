@@ -5,7 +5,7 @@
         <v-card class="text-center mt-4 ml-3" max-width="900">
     
             <v-form
-              class="pa-6"
+              class="pa-6"  
               ref="form"
               @submit.prevent="submitHandler"
               v-model="valid"
@@ -163,10 +163,19 @@
                 </div>
                 </template> -->
                 </v-data-table>
-                <v-btn color="primary" class="mx-auto text-center mb-7">
-                    Calculate
-
-                </v-btn>
+                <v-form
+                    class="pa-6"
+                    ref="form2"
+                    v-model="valid2"
+                    @submit.prevent="submitHandler"
+                    lazy-validation>
+                        <v-btn 
+                            color="primary" 
+                            class="mx-auto text-center mb-7"
+                            @click = "validate2()">
+                            Calculate
+                        </v-btn>
+                </v-form>
             </v-card>
         </v-card>
     
@@ -236,6 +245,28 @@
                     }
                     this.addPerhitungan()
                 }
+            },
+
+            validate2(){
+
+                if(this.$refs.form2.validate()){
+                    if(this.snackbar.color == "red"){
+                        this.loading = false
+                        this.dialog = false
+                    }else{
+                        this.loading = true
+                        this.dialog = true
+                    }
+                    this.countSupplier()
+                }
+            },
+
+            refresh() {
+            setTimeout(() => {
+                this.timer.setInterval(location.replace('/hasilPerhitunganKriteriaAdmin/' + this.$route.params.id), 2000)
+                this.$forceUpdate();  
+            }, 2000)
+                location.reload()
             },
 
             async fetchData(){
@@ -334,6 +365,37 @@
                 }catch(error){
                     console.log(error)
                 }
+            },
+
+            countSupplier(){
+                this.loading = true
+                setTimeout(() => {
+                try{
+                    const axios = require('axios')
+                    const res = axios.post('/ahp/merge_count_supplier/' + this.$route.params.id)
+                    if(res.data.status == 'berhasil'){
+                        this.snackbar = {
+                            message : "Perhitungan Kriteria Berhasil",
+                            color : 'green',
+                            show : true
+                        }
+                        setTimeout(() => {
+                            location.replace('/hasilPerhitunganKriteriaAdmin/' + this.$route.params.id )
+                        }, 2000)
+
+                    }else if(res.data.status == 'gagal'){
+                        this.loading = false
+                            this.snackbar = {
+                                message : "Perhitungan Kriteria Gagal",
+                                color : 'red',
+                                show : true
+                        }
+                    }   
+                    }catch(error){
+                        console.log(error)
+                    }
+                this.refresh()       
+                }, 2000)
             },
 
             editToolBox(toolBox){
