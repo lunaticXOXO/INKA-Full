@@ -1203,9 +1203,9 @@ class main():
         return MergeCalculateKriteria(idPenghitung)
 
 
-    @app.route('/ahp/merge_count_bobot',methods = ['POST'])
-    def calculate_bobot():
-        return MergeCountBobotGlobal()
+    @app.route('/ahp/merge_count_kriteria/<idPenghitung>',methods = ['POST'])
+    def merge_count_supplier(idPenghitung):
+        return MergeCountBobotSupplier(idPenghitung)
 
     @app.route('/login',methods = ['POST'])
     def login():

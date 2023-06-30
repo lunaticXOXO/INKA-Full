@@ -245,7 +245,9 @@ def MergeCalculateKriteria(idPenghitung):
             cur00.execute(query)
             con00.commit()
             query2 = "UPDATE gen_r_matrikskriteria SET konfirm = 1, idPenghitung = '"+idPenghitung+"' WHERE konfirm IS NULL and idPenghitung IS NULL"
+            query3 = "UPDATE gen_r_kriteriabobot SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
             cur00.execute(query2)
+            cur00.execute(query3)
             con00.commit()
             output = {"status" : "berhasill"}
     except Exception as e:
@@ -257,8 +259,10 @@ def MergeCalculateKriteria(idPenghitung):
 
 ## AHP untuk supplier
 #1
-def hitungSetengahMatrik01(cur00,con00):
+def hitungSetengahMatrik01():
     #Untuk menghitung nilai setengah matriks supplier setiap kriteria
+    con00 = database.connector()
+    cur00 = con00.cursor()
     q00="select distinct idKriteria from gen_r_perbandingan"
     cur00.execute(q00)
     tabel00=cur00.fetchall()
@@ -281,7 +285,9 @@ def hitungSetengahMatrik01(cur00,con00):
                 con00.commit()
 
 #2
-def totalkolom01 (cur00, con00):
+def totalkolom01 ():
+    con00 = database.connector()
+    cur00 = con00.cursor()
     q00="Select distinct IDKriteria from gen_r_perbandingan order by \
     IDKriteria"
     cur00.execute(q00)
@@ -313,8 +319,10 @@ def totalkolom01 (cur00, con00):
     return total01
 
 #3
-def normalisasi01(cur00, con00):
-    total01 = totalkolom01 (cur00, con00)
+def normalisasi01():
+    con00 = database.connector()
+    cur00 = con00.cursor()
+    total01 = totalkolom01()
     q00="Select distinct IDKriteria from gen_r_perbandingan order by \
     IDKriteria"
     cur00.execute(q00)
@@ -351,7 +359,9 @@ def normalisasi01(cur00, con00):
 
 
 #4
-def totalbaris01(cur00, con00):
+def totalbaris01():
+    con00 = database.connector()
+    cur00 = con00.cursor()
     q00 = "select distinct IDKriteria from gen_r_perbandingan order by \
     IDKriteria"
     cur00.execute(q00)
@@ -383,8 +393,8 @@ def totalbaris01(cur00, con00):
     return total01
 
 #5
-def bobot01Supplier(cur00, con00):
-    total01 = totalbaris01(cur00, con00)
+def bobot01Supplier():
+    total01 = totalbaris01()
     jml = len(total01)
     list01=[]
     for i in range(jml):
@@ -399,7 +409,9 @@ def bobot01Supplier(cur00, con00):
         
 
 
-def buatmatriks01(cur00, con00):
+def buatmatriks01():
+    con00 = database.connector()
+    cur00 = con00.cursor()
     q00= "select distinct IDKriteria from gen_r_perbandingan order by IDKriteria"
     cur00.execute(q00)
     tabel00=cur00.fetchall()
@@ -429,53 +441,48 @@ def buatmatriks01(cur00, con00):
   
 # hasil akhir dari perhitungan bobot global       
 def insertSupplier(cur00, con00):
-    matriks= buatmatriks01(cur00, con00)
-    bobot= bobot01Supplier(cur00, con00)
+    matriks= buatmatriks01()
+    bobot= bobot01Supplier()
     jml=len(matriks)
     q00="select distinct IDKriteria from gen_r_perbandingan order by IDKriteria"
     cur00.execute(q00)
     tabel00=cur00.fetchall()
     angka=0
-    for i in range(jml):
-        list01=matriks[i]
-        list02=bobot[i]
-        uk=len(list01)
-        eigen=cariEigen(list01, uk)
-        CR=eigen[3]
-        idKri00=tabel00[angka][0]
-        angka=angka+1
-        q01= "select distinct IDSupplier01 from gen_r_perbandingan \
-        order by IDSupplier01"
-        cur00.execute(q01)
-        tabel01=cur00.fetchall()
-        if(CR<=0.1):
-            print("Memenuhi Kriteria")
-            for j in range(uk):
-                idSup01=tabel01[j][0]
-                bobot01=list02[j]
-                q02 = "insert into gen_r_supplierbobot (IDKriteria, IDSupplier, Bobot, \
-                mulai) values('"+idKri00+"','"+idSup01+"', '"+str(bobot01)+"', current_timestamp)"
-                cur00.execute(q02)
-                con00.commit()
-                hasil = True
-        else:
-            print("Perbaiki Matriks")
-            hasil = False
+    try:
+        for i in range(jml):
+            list01=matriks[i]
+            list02=bobot[i]
+            uk=len(list01)
+            eigen=cariEigen(list01, uk)
+            CR=eigen[3]
+            idKri00=tabel00[angka][0]
+            angka=angka+1
+            q01= "select distinct IDSupplier01 from gen_r_perbandingan \
+            order by IDSupplier01"
+            cur00.execute(q01)
+            tabel01=cur00.fetchall()
+            if(CR<=0.1):
+                print("Memenuhi Kriteria")
+                for j in range(uk):
+                    idSup01=tabel01[j][0]
+                    bobot01=list02[j]
+                    q02 = "insert into gen_r_supplierbobot (IDKriteria, IDSupplier, Bobot, \
+                    mulai) values('"+idKri00+"','"+idSup01+"', '"+str(bobot01)+"', current_timestamp)"
+                    cur00.execute(q02)
+                    con00.commit()
+                hasil = {"status" : "berhasil"}
+            else:
+                print("Perbaiki Matriks")
+                hasil = {"status" : "perbaiki matriks"}
+        return hasil
+    except Exception as e:
+        hasil = {"status" : "gagal"}
+        print("error",str(e))
     return hasil
-
-def MergeCountBobotGlobal():
-    conn = database.connector()
-    cursor = conn.cursor()
-    output = insertSupplier(cursor,conn)
-    if output == True:
-        hasil = {"status" : "berhasil"}
-    elif output == False:
-        hasil = {"status" : "gagal"} 
-    return hasil
-
-
 
 def bobotglobal(cur00, con00):
+     con00 = database.connector()
+     cur00 = con00.cursor()
      jumlah = 0
      q00="select * from gen_r_kriteriabobot where selesai is null"
      cur00.execute(q00)
@@ -498,7 +505,9 @@ def bobotglobal(cur00, con00):
              con00.commit()
 
 
-def supplierrangking(cur00, con00):
+def supplierrangking():
+    con00 = database.connector()
+    cur00 = con00.cursor()
     q00= "select IDSupplier, SUM(BobotGlobal) Bobot From gen_r_supplierbobot \
     where selesai is null GROUP BY IDSupplier order by Bobot DESC"
     cur00.execute(q00)
@@ -516,6 +525,41 @@ def supplierrangking(cur00, con00):
         angka = angka + 1
         cur00.execute(q02)
         con00.commit()
+
+
+def MergeCountBobotSupplier(idPenghitung):
+    conn = database.connector()
+    cursor = conn.cursor()
+    try:
+        hitungSetengahMatrik01()
+        totalkolom01()
+        normalisasi01()
+        totalbaris01()
+        bobot01Supplier()
+    ##print(bobot)
+        hasil=buatmatriks01()
+        hasil2 = bobotKriteria()
+        if insertSupplier() == {"status" : "berhasil"}:
+            bobotglobal()
+            query1 = "UPDATE gen_r_supplierbobot SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
+            cursor.execute(query1)
+
+            supplierrangking()
+            query2 = "UPDATE gen_r_supplierrangking SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
+            cursor.execute(query2)
+
+            query3 = "UPDATE gen_r_perbandingan SET konfirm = 1, idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
+            cursor.execute(query3)
+
+            conn.commit()
+            return {"status" : "berhasil"}
+        else:
+            return {"status" : "perbaiki matriks"}
+    except Exception as e:
+        print("error",str(e))
+        return {"status" : "gagal"}
+       
+
 
 ### tambahin semuanya "where selesai is null"
 ### setelah melakukan pembobotan, gen_r_matriks kriteria sebaiknya di hapus
