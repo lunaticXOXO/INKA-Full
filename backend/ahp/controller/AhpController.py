@@ -220,6 +220,7 @@ def insertkriteria():
             hasil = True
         else:
             print("Perbaiki Matriks")
+            
     except Exception as e:
         hasil = False
         print("error",str(e))
