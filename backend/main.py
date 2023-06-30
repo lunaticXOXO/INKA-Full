@@ -1203,7 +1203,7 @@ class main():
         return MergeCalculateKriteria(idPenghitung)
 
 
-    @app.route('/ahp/merge_count_kriteria/<idPenghitung>',methods = ['POST'])
+    @app.route('/ahp/merge_count_supplier/<idPenghitung>',methods = ['POST'])
     def merge_count_supplier(idPenghitung):
         return MergeCountBobotSupplier(idPenghitung)
 
