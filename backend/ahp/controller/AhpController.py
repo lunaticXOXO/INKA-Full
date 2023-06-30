@@ -440,7 +440,9 @@ def buatmatriks01():
     return k
   
 # hasil akhir dari perhitungan bobot global       
-def insertSupplier(cur00, con00):
+def insertSupplier():
+    con00 = database.connector()
+    cur00 = con00.cursor()
     matriks= buatmatriks01()
     bobot= bobot01Supplier()
     jml=len(matriks)
@@ -480,7 +482,7 @@ def insertSupplier(cur00, con00):
         print("error",str(e))
     return hasil
 
-def bobotglobal(cur00, con00):
+def bobotglobal():
      con00 = database.connector()
      cur00 = con00.cursor()
      jumlah = 0
