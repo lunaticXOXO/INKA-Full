@@ -533,8 +533,6 @@ def supplierrangking():
         con00.commit()
 
 
-
-
 def MergeCountBobotSupplier(idPenghitung):
     conn = database.connector()
     cursor = conn.cursor()
@@ -549,12 +547,14 @@ def MergeCountBobotSupplier(idPenghitung):
         uk=hasil[1]
         hasil2=cariEigen(m, uk)
         hasil_insert = insertSupplier()
+        bobotglobal()
+        supplierrangking()
         if hasil_insert == {"status" : "berhasil"}:
-            bobotglobal()
+            
             query1 = "UPDATE gen_r_supplierbobot SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
             cursor.execute(query1)
 
-            supplierrangking()
+            
             query2 = "UPDATE gen_r_supplierrangking SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
             cursor.execute(query2)
 
