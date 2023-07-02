@@ -451,40 +451,43 @@ def buatmatriks01():
 def insertSupplier():
     con00 = database.connector()
     cur00 = con00.cursor()
-    matriks= buatmatriks01()
-    bobot= bobot01Supplier()
-    jml=len(matriks)
-    q00="select distinct IDKriteria from gen_r_perbandingan where konfirm is null \
-    order by IDKriteria"
-    cur00.execute(q00)
-    tabel00=cur00.fetchall()
-    angka=0
-    q03="UPDATE gen_r_supplierbobot SET selesai = current_timestamp"
-    cur00.execute(q03)
-    con00.commit()
-    for i in range(jml):
-        list01=matriks[i]
-        list02=bobot[i]
-        uk=len(list01)
-        eigen=cariEigen(list01, uk)
-        CR=eigen[3]
-        idKri00=tabel00[angka][0]
-        angka=angka+1
-        q01= "select distinct IDSupplier01 from gen_r_perbandingan where konfirm is null \
-        order by IDSupplier01"
-        cur00.execute(q01)
-        tabel01=cur00.fetchall()
-        if(CR<=0.1):
-            print("Memenuhi Kriteria")
-            for j in range(uk):
-                idSup01=tabel01[j][0]
-                bobot01=list02[j]
-                q02 = "insert into gen_r_supplierbobot (IDKriteria, IDSupplier, Bobot, \
-                mulai) values('"+idKri00+"','"+idSup01+"', '"+str(bobot01)+"', current_timestamp)"
-                cur00.execute(q02)
-                con00.commit()
-        else:
-            print("Perbaiki Matriks")
+    try:
+        matriks= buatmatriks01()
+        bobot= bobot01Supplier()
+        jml=len(matriks)
+        q00="select distinct IDKriteria from gen_r_perbandingan where konfirm is null \
+        order by IDKriteria"
+        cur00.execute(q00)
+        tabel00=cur00.fetchall()
+        angka=0
+        q03="UPDATE gen_r_supplierbobot SET selesai = current_timestamp"
+        cur00.execute(q03)
+        con00.commit()
+        for i in range(jml):
+            list01=matriks[i]
+            list02=bobot[i]
+            uk=len(list01)
+            eigen=cariEigen(list01, uk)
+            CR=eigen[3]
+            idKri00=tabel00[angka][0]
+            angka=angka+1
+            q01= "select distinct IDSupplier01 from gen_r_perbandingan where konfirm is null \
+            order by IDSupplier01"
+            cur00.execute(q01)
+            tabel01=cur00.fetchall()
+            if(CR<=0.1):
+                print("Memenuhi Kriteria")
+                for j in range(uk):
+                    idSup01=tabel01[j][0]
+                    bobot01=list02[j]
+                    q02 = "insert into gen_r_supplierbobot (IDKriteria, IDSupplier, Bobot, \
+                    mulai) values('"+idKri00+"','"+idSup01+"', '"+str(bobot01)+"', current_timestamp)"
+                    cur00.execute(q02)
+                    con00.commit()
+            else:
+                print("Perbaiki Matriks")
+    except Exception as e:
+        print("error",str(e))
         
 def bobotglobal():
      con00 = database.connector()
@@ -549,15 +552,13 @@ def MergeCountBobotSupplier(idPenghitung):
         uk=hasil[1]
         hasil2=cariEigen(m, uk)
         hasil_insert = insertSupplier()
+        bobotglobal()
+        supplierrangking()
         if hasil_insert == {"status" : "berhasil"}:
-            bobotglobal()
             query1 = "UPDATE gen_r_supplierbobot SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
             cursor.execute(query1)
-
-            supplierrangking()
             query2 = "UPDATE gen_r_supplierrangking SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
             cursor.execute(query2)
-
             query3 = "UPDATE gen_r_perbandingan SET konfirm = %s, idPenghitung = %s WHERE konfirm IS NULL"
             konfirm = 1
             values = (konfirm,idPenghitung)
