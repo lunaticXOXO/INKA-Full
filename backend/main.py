@@ -1205,7 +1205,7 @@ class main():
 
     @app.route('/ahp/merge_count_supplier/<idPenghitung>',methods = ['POST'])
     def merge_count_supplier(idPenghitung):
-        return MergeCountBobotSupplier(idPenghitung)
+        return MergeCountSupplier(idPenghitung)
 
     @app.route('/login',methods = ['POST'])
     def login():
