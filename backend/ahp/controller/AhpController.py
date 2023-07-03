@@ -1,7 +1,7 @@
 import numpy as np
 import math
 import db.db_handler as database
-
+from flask import request,make_response,jsonify
 
 
 ## AHP untuk Kriteria
@@ -609,7 +609,64 @@ def MergeCountSupplier(idPenghitung):
             return {"status" : "perbaiki matriks"}
     except Exception:
         return {"status" : "gagal"}
-        
+
+
+
+def HasilPerbandinganSupplierByAdmin(idPenghitung):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT a.IDKriteria,a.IDSupplier01,a.IDSupplier02,a.Nilai,a.Nilai02,a.idPenghitung FROM gen_r_perbandingan a WHERE a.konfirm = 1 AND a.idPenghitung = '"+idPenghitung+"'"
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
+
+
+def HasilBobotSupplierByAdmin(idPenghitung):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT c.IDKriteria,c.IDSupplier,c.Bobot,c.BobotGlobal,c.idPenghitung FROM gen_r_supplierbobot c WHERE c.idPenghitung = '"+idPenghitung+"'"
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
+
+
+def HasilRankingSupplierByAdmin(idPenghitung):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT d.IDSupplier,d.Bobot,d.Rangking,d.idPenghitung FROM gen_r_supplierrangking d WHERE d.idPenghitung = '"+idPenghitung+"'"
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
+
+
+
+
 
 
 ### tambahin semuanya "where selesai is null"

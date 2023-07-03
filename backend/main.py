@@ -1208,6 +1208,17 @@ class main():
         return MergeCountSupplier(idPenghitung)
 
     
+    @app.route('/ahp/hasil_perbandingan/<idPenghitung>',methods = ['GET'])
+    def hasil_perbandingansupplier_byadmin(idPenghitung):
+        return HasilPerbandinganSupplierByAdmin(idPenghitung)
+
+    @app.route('/ahp/hasil_rangking_supplier/<idPenghitung>',methods = ['GET'])
+    def hasil_peringkatsupplier_byadmin(idPenghitung):
+        return HasilRankingSupplierByAdmin(idPenghitung)
+
+    @app.route('/ahp/hasil_bobot_supplier/<idPenghitung>',methods = ['GET'])
+    def hasil_bobotsupplier_byadmin(idPenghitung):
+        return HasilBobotSupplierByAdmin(idPenghitung)
 
     @app.route('/login',methods = ['POST'])
     def login():
