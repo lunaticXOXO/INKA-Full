@@ -127,6 +127,7 @@ import HasilPerhitunganKriteriaByAdmin from '../views/pemasok/HasilPerhitunganKr
 import ListAdminPenghitung from '../views/pemasok/ListAdminPenghitung.vue'
 import HasilPerbandinganSupplierByAdmin from '../views/pemasok/HasilPerbandinganSupplierByAdmin.vue'
 import HasilBobotPeringkatSupplierByAdmin from '../views/pemasok/HasilBobotPeringkatSupplierByAdmin.vue'
+import HasilMatriksKriteriaByAdmin from '../views/pemasok/HasilMatriksKriteriaByAdmin.vue'
 
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
@@ -1338,6 +1339,16 @@ const routes = [
     title : "Hasil Bobot dan Peringkat Supplier - PT.INKA"
   }
 
+},
+
+{
+
+   path : '/hasilMatriksKriteriaAdmin/:id',
+   name : 'Hasil Matriks Kriteria dan Bobot By Admin',
+   component : HasilMatriksKriteriaByAdmin,
+   meta : {
+      title : "Hasil Matriks Kriteria Bobot By Admin - PT.INKA"
+   }
 }
 
 // {

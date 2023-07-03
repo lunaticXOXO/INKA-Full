@@ -263,6 +263,40 @@ def MergeCalculateKriteria(idPenghitung):
 
 
 
+def HasilKriteriaByAdmin(idPenghitung):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM gen_r_matrikskriteria WHERE idPenghitung = '"+idPenghitung+"'"
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
+
+
+def HasilKriteriaBobotByAdmin(idPenghitung):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM gen_r_kriteriabobot WHERE idPenghitung = '"+idPenghitung+"'"
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
+
+
 ## AHP untuk supplier
 #1
 def hitungSetengahMatrik01():

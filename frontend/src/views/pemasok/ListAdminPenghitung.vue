@@ -40,7 +40,7 @@
             <template v-slot:[`item.aksi`]="{ item }">
             
             <div>
-              <router-link :to="{name : 'Perhitungan Kriteria',params:{id : `${item.idPenghitung}`}}">
+              <router-link :to="{name : 'Hasil Matriks Kriteria dan Bobot By Admin',params:{id : `${item.idPenghitung}`}}">
                 <v-tooltip top>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn 
