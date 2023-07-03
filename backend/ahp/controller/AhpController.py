@@ -550,10 +550,8 @@ def MergeCountBobotSupplier(idPenghitung):
         bobotglobal()
         supplierrangking()
         if hasil_insert == {"status" : "berhasil"}:
-            
             query1 = "UPDATE gen_r_supplierbobot SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
             cursor.execute(query1)
-
             
             query2 = "UPDATE gen_r_supplierrangking SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
             cursor.execute(query2)
