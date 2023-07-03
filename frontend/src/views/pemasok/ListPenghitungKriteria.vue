@@ -97,7 +97,7 @@
             </template>
   
             
-            
+
             <template v-slot:[`item.aksi`]="{ item }">
             <div v-if="item.idPenghitung == editedItem.idPenghitung">
               <v-icon color="red" class="mr-3" @click="close">

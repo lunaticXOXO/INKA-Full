@@ -294,7 +294,7 @@
                         }
                         setTimeout(() => {
                             location.replace('/hasilPerhitunganKriteriaAdmin/' + this.$route.params.id )
-                        }, 1000)
+                        }, 2000)
 
                     }
                     else if(res.data.status == 'perbaiki matris'){

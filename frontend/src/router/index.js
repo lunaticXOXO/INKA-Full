@@ -124,6 +124,11 @@ import ListPenghitungSupplier from '../views/pemasok/ListPenghitungSupplier.vue'
 import ListHasilPerhitunganSupplier1 from '../views/pemasok/ListHasilPerhitunganSupplier1.vue'
 import ListHasilPerhitunganSupplier2 from '../views/pemasok/ListHasilPerhitunganSupplier2.vue'
 import HasilPerhitunganKriteriaByAdmin from '../views/pemasok/HasilPerhitunganKriteriaByAdmin.vue'
+import ListAdminPenghitung from '../views/pemasok/ListAdminPenghitung.vue'
+import HasilPerbandinganSupplierByAdmin from '../views/pemasok/HasilPerbandinganSupplierByAdmin.vue'
+import HasilBobotPeringkatSupplierByAdmin from '../views/pemasok/HasilBobotPeringkatSupplierByAdmin.vue'
+import HasilMatriksKriteriaByAdmin from '../views/pemasok/HasilMatriksKriteriaByAdmin.vue'
+
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
 Vue.use(VueRouter)
@@ -1207,6 +1212,29 @@ const routes = [
 
 {
 
+  path : '/listAdminPenghitung',
+  name : 'List Admin Penghitung',
+  component : ListAdminPenghitung,
+  meta : {
+
+      title : "List Admin Penghitung - PT.INKA" 
+  }
+},
+
+
+{
+    path : '/hasilPerbandinganSupplierAdmin/:id',
+    name : 'List Hasil Perbandingan Supplier Admin',
+    component : HasilPerbandinganSupplierByAdmin,
+    meta : {
+      title : "Hasil Perbandingan Supplier By Admin - PT.INKA"
+    }
+
+},
+
+
+{
+
   path : '/listKebutuhanPerkakasByWorkstation/:id',
   name : 'List Tool Need By Workstation',
   component : ListToolNeedByWorkstation,
@@ -1301,6 +1329,26 @@ const routes = [
        title : "Hasil Perhitungan Kriteria By Admin - PT.INKA"
     }
 
+},
+
+{
+  path : '/hasilBobotPeringkatSupplierAdmin/:id',
+  name : 'Hasil Perhitungan Bobot Peringkat Supplier By Admin',
+  component : HasilBobotPeringkatSupplierByAdmin,
+  meta : {
+    title : "Hasil Bobot dan Peringkat Supplier - PT.INKA"
+  }
+
+},
+
+{
+
+   path : '/hasilMatriksKriteriaAdmin/:id',
+   name : 'Hasil Matriks Kriteria dan Bobot By Admin',
+   component : HasilMatriksKriteriaByAdmin,
+   meta : {
+      title : "Hasil Matriks Kriteria Bobot By Admin - PT.INKA"
+   }
 }
 
 // {

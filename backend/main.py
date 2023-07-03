@@ -1206,6 +1206,30 @@ class main():
     @app.route('/ahp/merge_count_supplier/<idPenghitung>',methods = ['POST'])
     def merge_count_supplier(idPenghitung):
         return MergeCountSupplier(idPenghitung)
+    
+
+    #ahp kriteria
+    @app.route('/ahp/hasil_matrikskriteria/<idPenghitung>',methods = ['GET'])
+    def hasil_matrikskriteria_byadmin(idPenghitung):
+        return HasilKriteriaByAdmin(idPenghitung)
+    
+
+    @app.route('/ahp/hasil_matriksbobot/<idPenghitung>',methods = ['GET'])
+    def hasil_bobotkriteria_byadmin(idPenghitung):
+        return HasilKriteriaBobotByAdmin(idPenghitung)
+
+    #ahp supplier    
+    @app.route('/ahp/hasil_perbandingan/<idPenghitung>',methods = ['GET'])
+    def hasil_perbandingansupplier_byadmin(idPenghitung):
+        return HasilPerbandinganSupplierByAdmin(idPenghitung)
+
+    @app.route('/ahp/hasil_rangking_supplier/<idPenghitung>',methods = ['GET'])
+    def hasil_peringkatsupplier_byadmin(idPenghitung):
+        return HasilRankingSupplierByAdmin(idPenghitung)
+
+    @app.route('/ahp/hasil_bobot_supplier/<idPenghitung>',methods = ['GET'])
+    def hasil_bobotsupplier_byadmin(idPenghitung):
+        return HasilBobotSupplierByAdmin(idPenghitung)
 
     @app.route('/login',methods = ['POST'])
     def login():
