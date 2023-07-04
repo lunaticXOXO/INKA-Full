@@ -254,8 +254,11 @@ def MergeCalculateKriteria(idPenghitung):
             cur00.execute(query3)
             con00.commit()
             output = {"status" : "berhasill"}
-        elif hasil2 == {"status" : "perbaiki matris"}:
-            output = {"status" : "perbaiki matris"}
+        elif hasil2 == {"status" : "perbaiki matriks"}:
+           output = {"status" : "perbaiki matriks"}
+           query4= "DELETE FROM gen_r_matrikskriteria WHERE idPenghitung IS NULL AND konfirm IS NULL"
+           cur00.execute(query4)
+           con00.commit()
     except Exception as e:
         output = {"status" : "gagal"}
         print("error",str(e))
@@ -586,19 +589,19 @@ def MergeCountBobotSupplier(idPenghitung):
         bobotglobal()
         supplierrangking()
         if hasil_insert == {"status" : "berhasil"}:
-            query1 = "UPDATE gen_r_supplierbobot SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
-            cursor.execute(query1)
+            #query1 = "UPDATE gen_r_supplierbobot SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
+            #cursor.execute(query1)
             
-            query2 = "UPDATE gen_r_supplierrangking SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
-            cursor.execute(query2)
+            #query2 = "UPDATE gen_r_supplierrangking SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
+            #cursor.execute(query2)
 
-            query3 = "UPDATE gen_r_perbandingan SET konfirm = %s, idPenghitung = %s WHERE konfirm IS NULL"
-            konfirm = 1
-            values = (konfirm,idPenghitung)
-            cursor.execute(query3,values)
-            conn.commit()
+            #query3 = "UPDATE gen_r_perbandingan SET konfirm = %s, idPenghitung = %s WHERE konfirm IS NULL"
+            #konfirm = 1
+            #values = (konfirm,idPenghitung)
+            #cursor.execute(query3,values)
+            #conn.commit()
             hasil_response = {"status" : "berhasil"}
-        else:
+        else: 
             hasil_response = {"status" : "perbaiki matriks"}
     except Exception as e:
         print("error",str(e))
@@ -626,9 +629,10 @@ def MergeCountSupplier(idPenghitung):
         print('CR: ', hasil[3]) 
         final = insertSupplier()
         bobotglobal()
+        supplierrangking()
         query1 = "UPDATE gen_r_supplierbobot SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
         cursor.execute(query1)
-        supplierrangking()
+        
         query2 = "UPDATE gen_r_supplierrangking SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
         cursor.execute(query2)
 
@@ -639,6 +643,7 @@ def MergeCountSupplier(idPenghitung):
         conn.commit()
         if final == True:
             return {"status" : "berhasil"}
+
         else:
             return {"status" : "perbaiki matriks"}
     except Exception:
