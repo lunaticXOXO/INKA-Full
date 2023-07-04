@@ -631,18 +631,18 @@ def MergeCountSupplier(idPenghitung):
         
         bobotglobal()
         supplierrangking()
-        query1 = "UPDATE gen_r_supplierbobot SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
-        cursor.execute(query1)
-        
-        query2 = "UPDATE gen_r_supplierrangking SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
-        cursor.execute(query2)
-
-        query3 = "UPDATE gen_r_perbandingan SET konfirm = %s, idPenghitung = %s WHERE konfirm IS NULL"
-        konfirm = 1
-        values = (konfirm,idPenghitung)
-        cursor.execute(query3,values)
-        conn.commit()
         if final == True:
+            query1 = "UPDATE gen_r_supplierbobot SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
+            cursor.execute(query1)
+            
+            query2 = "UPDATE gen_r_supplierrangking SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
+            cursor.execute(query2)
+
+            query3 = "UPDATE gen_r_perbandingan SET konfirm = %s, idPenghitung = %s WHERE konfirm IS NULL"
+            konfirm = 1
+            values = (konfirm,idPenghitung)
+            cursor.execute(query3,values)
+            conn.commit()
             return {"status" : "berhasil"}
 
         else:
