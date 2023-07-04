@@ -103,7 +103,7 @@
                     <v-text-field v-model="editedItem.nilai" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDKriteria == editedItem.IDKriteria"></v-text-field>
                     <span v-else>{{item.nilai}}</span>
                 </template>
-    
+                
     
                 <!-- <template v-slot:[`item.aksi`]="{ item }">
                 <div v-if="item.id==editedItem.id">

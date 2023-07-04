@@ -183,11 +183,18 @@
             },
 
             validate2(){
+
                 if(this.$refs.form2.validate()){
+                    if(this.snackbar.color == "red"){
+                        this.loading = false
+                        this.dialog = false
+                    }else{
+                        this.loading = true
+                        this.dialog = true
+                    }
                     this.countKriteria()
-                    this.refresh()
                 }
-            },
+        },
 
             refresh() {
             setTimeout(() => {
@@ -297,15 +304,6 @@
                         }, 2000)
 
                     }
-                    else if(res.data.status == 'perbaiki matris'){
-                        alert("perbaiki matriks")
-                        this.loading = false
-                            this.snackbar = {
-                                message : "Perhitungan Kriteria Gagal",
-                                color : 'red',
-                                show : true
-                        }
-                    }
                     else if(res.data.status == 'gagal'){
                         alert("perhitungan gagal")
                         this.loading = false
@@ -318,7 +316,7 @@
                     }catch(error){
                         console.log(error)
                     }
-                //this.refresh()       
+                this.refresh()       
                 }, 2000)
             },
             editToolBox(toolBox){
