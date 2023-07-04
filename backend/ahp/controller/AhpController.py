@@ -625,6 +625,7 @@ def MergeCountSupplier(idPenghitung):
         print('CI: ', hasil[2])
         print('CR: ', hasil[3]) 
         final = insertSupplier()
+        
         bobotglobal()
         query1 = "UPDATE gen_r_supplierbobot SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
         cursor.execute(query1)
