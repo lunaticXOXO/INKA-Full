@@ -288,7 +288,7 @@ def GetMatriksKriteriaInputByAdmin(IdPenghitung):
     conn = db.connector()
     cursor = conn.cursor()
     query = "SELECT b.IDKriteria AS 'IdKriteria01',c.namaKriteria AS 'namaKriteria01', "
-    query += "b.IDKriteria02 AS 'IdKriteria02', d.namaKriteria AS 'namaKriteria02',b.Nilai " 
+    query += "b.IDKriteria02 AS 'IdKriteria02', d.namaKriteria AS 'namaKriteria02',b.Nilai,b.idPenghitung " 
     query += "FROM gen_r_adminperhitungan a "
     query += "JOIN gen_r_matrikskriteria b ON b.idPenghitung = a.ID "
     query += "JOIN gen_r_kriteria c ON c.ID = b.IDKriteria "

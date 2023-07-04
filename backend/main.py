@@ -1231,6 +1231,15 @@ class main():
     def hasil_bobotsupplier_byadmin(idPenghitung):
         return HasilBobotSupplierByAdmin(idPenghitung)
 
+    @app.route('/ahp/update_matriks_kriteria/<idPenghitung>',methods = ['POST'])
+    def update_matriks_kriteria(idPenghitung):
+        return PerbaikiInputKriteria(idPenghitung)
+
+    @app.route('/ahp/update_matriks_supplier',methods = ['POST'])
+    def update_matriks_supplier(idPenghitung):  
+        return PerbaikiInputSupplier(idPenghitung)
+
+
     @app.route('/login',methods = ['POST'])
     def login():
         hasil = Login()

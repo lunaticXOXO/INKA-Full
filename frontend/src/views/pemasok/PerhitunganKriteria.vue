@@ -74,32 +74,73 @@
                     :items = "matrixCriteriaByAdmin"
                     :items-per-page="5"
                 >
+
+            <template v-slot:[`item.idPenghitung`]="{ item }">
+              <div v-if="item.idPenghitung === editedItem.idPenghitung">
+                  <v-text-field disabled v-model="editedItem.idPenghitung" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
+                  <span v-else>{{item.idPenghitung}}</span>
+              </div>
+              <div v-else>
+                  <v-text-field v-model="editedItem.idPenghitung" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
+                  <span v-else>{{item.idPenghitung}}</span>
+              </div>
+            </template>
                 <template v-slot:[`item.IdKriteria01`]="{ item }">
-                    <v-text-field v-model="editedItem.IdKriteria01" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria01 == editedItem.IdKriteria01"></v-text-field>
+                    <v-text-field v-model="editedItem.IdKriteria01" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
                     <span v-else>{{item.IdKriteria01}}</span>
                 </template>
     
                 <template v-slot:[`item.namaKriteria`]="{ item }">
-                    <v-text-field v-model="editedItem.namaKriteria" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria01 == editedItem.IdKriteria01"></v-text-field>
+                    <v-text-field v-model="editedItem.namaKriteria" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
                     <span v-else>{{item.namaKriteria}}</span>
                 </template>
 
 
             
                 <template v-slot:[`item.IdKriteria02`]="{ item }">
-                    <v-text-field v-model="editedItem.IdKriteria02" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria02 == editedItem.IdKriteria02"></v-text-field>
+                    <v-text-field v-model="editedItem.IdKriteria02" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
                     <span v-else>{{item.IdKriteria02}}</span>
                 </template>
     
                 <template v-slot:[`item.namaKriteria02`]="{ item }">
-                    <v-text-field v-model="editedItem.namaKriteria02" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria02 == editedItem.IdKriteria02"></v-text-field>
+                    <v-text-field v-model="editedItem.namaKriteria02" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
                     <span v-else>{{item.namaKriteria02}}</span>
                 </template>
     
-                <template v-slot:[`item.nilai`]="{ item }">
-                    <v-text-field v-model="editedItem.nilai" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria01 == editedItem.IdKriteria01"></v-text-field>
-                    <span v-else>{{item.nilai}}</span>
+                <template v-slot:[`item.Nilai`]="{ item }">
+                    <v-text-field v-model="editedItem.Nilai" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
+                    <span v-else>{{item.Nilai}}</span>
                 </template>
+
+
+
+
+                <template v-slot:[`item.aksi`]="{ item }">
+              <div v-if="item.idPenghitung == editedItem.idPenghitung">
+                  <v-icon color="red" class="mr-3" @click="close">
+                  mdi-window-close
+                  </v-icon>
+                  <v-icon color="green"  @click="updateData()">
+                  mdi-content-save
+                  </v-icon>
+              </div>
+              <div v-else>
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                      class="mx-1" 
+                      x-small
+                      color="green"
+                      @click="editKriteria(item)"
+                      v-bind="attrs"
+                      v-on="on">
+                      <v-icon small dark>mdi-pencil</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Edit</span>
+                </v-tooltip>
+                </div>
+            </template>
                 </v-data-table>
                 <v-form
                     class="pa-6"
@@ -125,6 +166,7 @@
         data(){
             return {
                 column : [
+                    {text : 'ID Penghitung', value : 'idPenghitung'},
                     {text : 'ID Kriteria', value : 'IdKriteria01'},
                     {text : 'Nama Kriteria', value : 'namaKriteria01'},
                     {text : 'ID Kriteria 02', value : 'IdKriteria02'},
@@ -145,13 +187,22 @@
                 criteria01 : '',
                 criteria02 : '',
                 Nilai : '',
+               
                 editedItem : {
-                    id : '',
-                    nama  : '',
+                    idPenghitung : '',
+                    IdKriteria01 : '',
+                    namaKriteria : '',
+                    IdKriteria02 : '',
+                    namaKriteria02 : '', 
+                    Nilai : ''
                 },
                 defaultItem : {
-                    id : '',
-                    nama : '',
+                    idPenghitung : '',
+                    IdKriteria01 : '',
+                    namaKriteria : '',
+                    IdKriteria02 : '',
+                    namaKriteria02 : '',
+                    Nilai : ''
                 },
             }
         },
@@ -195,6 +246,19 @@
                     this.countKriteria()
                 }
         },
+
+    close () {
+        setTimeout(() => {
+            this.editedItem = Object.assign({}, this.defaultItem);
+            this.editedIndex = -1;
+        }, 300)
+      },
+
+      editKriteria(matrixCriteriaByAdmin){
+        console.log('ID : ' + matrixCriteriaByAdmin.idPenghitung)
+        this.editedIndex = this.matrixCriteriaByAdmin.indexOf(matrixCriteriaByAdmin);
+        this.editedItem = Object.assign({}, matrixCriteriaByAdmin);
+      },
 
             refresh() {
             setTimeout(() => {
@@ -319,36 +383,31 @@
                 this.refresh()       
                 }, 2000)
             },
-            editToolBox(toolBox){
-                console.log('ID : ' + toolBox.id)
-                this.editedIndex = this.toolBox.indexOf(toolBox)
-                this.editedItem = Object.assign({},toolBox)
-            },
-            
-            close(){
-                setTimeout(() => {
-                    this.editedItem = Object.assign({}, this.defaultItem);
-                    this.editedIndex = -1;
-                }, 300)
-            },
+        
     
-            async updateToolBox(){
-                if (this.editedIndex > -1) {
-                    Object.assign(this.toolBox[this.editedIndex], this.toolBox)
-                    console.log(this.editedItem)
-                }
-                this.close()
-                try{
-                    const axios = require('axios')
-                    const res = await axios.post('/box/update_toolbox/' + this.editedItem.id,
-                    { id : this.editedItem.id,
-                      nama : this.editedItem.nama
-                    })
-                    console.log(res)
-                }catch(error){
-                    console.log(error)
-                }
-            }
+        async updateData(){
+        if (this.editedIndex > -1) {
+            Object.assign(this.matrixCriteriaByAdmin[this.editedIndex], this.editedItem)
+            console.log(this.editedItem)
+        }
+        this.close()
+        try{
+            const axios = require('axios')
+            const res = await axios.post('/ahp/update_matriks_kriteria/'+ this.editedItem.idPenghitung,
+            {  idPenghitung: this.editedItem. idPenghitung,
+               IdKriteria01: this.editedItem.IdKriteria01,
+               namaKriteria : this.editedItem.namaKriteria,
+               IdKriteria02 : this.editedItem.IdKriteria02,
+               namaKriteria02 : this.editedItem.namaKriteria02,
+               Nilai : this.editedItem.Nilai
+            
+          
+            })
+            console.log(res)
+        }catch(error){
+            console.log(error)
+        }
+      } 
         }
     }
     </script>

@@ -705,9 +705,43 @@ def HasilRankingSupplierByAdmin(idPenghitung):
     return make_response(jsonify(json_data),200)
 
 
+def PerbaikiInputKriteria(idPenghitung):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "UPDATE gen_r_matrikskriteria SET IDKriteria = %s, IDKriteria02 = %s, Nilai = %s WHERE idPenghitung = '"+idPenghitung+"'"    
+    try:
+        data = request.json
+        IDKriteria = data["IdKriteria01"]
+        IDKriteria02 = data["IdKriteria02"]
+        Nilai = data["Nilai"]
+        values = (IDKriteria,IDKriteria02,Nilai)
+        cursor.execute(query,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("error",str(e))
+        hasil = {"status" : "gaal"}
+    return hasil
 
 
-
+def PerbaikiInputSupplier(idPenghitung):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "UPDATE gen_r_perbandingan SET IDKriteria = %s, IDSupplier01 = %s, IDSupplier02 = %s, Nilai = %s WHERE idPenghitung = '"+idPenghitung+"'"
+    try:
+        data = request.json
+        IDKriteria = data["IDKriteria"]
+        IDSupplier01 = data["IDSupplier01"]
+        IDSupplier02 = data["IDSupplier02"]
+        Nilai = data["Nilai"]
+        values = (IDKriteria,IDSupplier01,IDSupplier02,Nilai)
+        cursor.execute(query,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
 
 ### tambahin semuanya "where selesai is null"
 ### setelah melakukan pembobotan, gen_r_matriks kriteria sebaiknya di hapus
