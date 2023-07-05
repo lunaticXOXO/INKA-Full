@@ -33,6 +33,7 @@ from tools.toolpurchase.ToolPurchaseController import *
 from tools.toolpurchase.ToolPurchaseItemController import *
 from tools.toolbox.BoxItemController import *
 from tools.toolbutuhopr.controller.ToolButuhOpr import *
+from tools.tooldistribution.ToolDistributionController import *
 from tools.toolneed.ToolNeedController import *
 from tools.pengembaliantool.PengembalianToolController import *
 from ahp.controller.AhpController import *
@@ -1156,9 +1157,14 @@ class main():
     def ketersediaan_perkakas():
         return jumlahToolTypeKeseluruhanDiWorkshop()
 
-    @app.route('/tools/request_kebutuhan_perkakas',methods = ['POST'])
-    def kebutuhan_perkakas_byws():
-        return RequestKebutuhanToolByWorkstation()
+    @app.route('/tools/request_distribusi_perkakas',methods = ['POST'])
+    def distribusi_perkakas_byws():
+        return RequestDistribusiToolByWorkstation()
+
+    @app.route('/tools/request_tool_stock',methods = ['POST'])
+    def kebutuhan_perkakas_stock():
+        return MergeButuhToolStock()
+
 
     @app.route('/tools/get_request_kebutuhantool_byws/<workstation>',methods = ['GET'])
     def get_request_kebutuhantool_byws(workstation):
@@ -1167,6 +1173,8 @@ class main():
     @app.route('/tools/add_toolneed_idProcess/<idProcess>',methods = ['POST'])
     def add_toolneed_byprocess(idProcess):
         return insertToolNeedByProcess(idProcess)
+
+    
 
     # Box
     @app.route('/box/add_toolbox',methods = ['POST'])

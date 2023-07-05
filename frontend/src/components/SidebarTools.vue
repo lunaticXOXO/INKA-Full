@@ -97,7 +97,7 @@ export default {
                     action: 'mdi-wrench',
                     active: false,
                     items: [
-                    { title: 'Choose Distribusi Perkakas', icon: 'mdi-filter-variant', route: '/chooseKebutuhanTool'},
+                    { title: 'Pengiriman Perkakas', icon: 'mdi-filter-variant', route: '/chooseKebutuhanTool'},
                   
                 ],
 
