@@ -104,6 +104,16 @@ export default {
                     title : "Distribusi Perkakas"
 
                 },
+
+                {
+                    action: 'mdi-wrench',
+                    active: false,
+                    items: [
+                    { title: 'Kebutuhan Pengadaan Perkakas', icon: 'mdi-filter-variant', route: '/addPengadaanTools'},
+                  
+                ],
+                    title : "Pengadaan Perkakas"
+                },
                 {
                     action: 'mdi-wrench',
                     active: false,
@@ -112,7 +122,12 @@ export default {
                   
                 ],
                     title : "Peminjaman dan Pengembalian Perkakas"
-                }
+                },
+
+             
+                
+
+
 
               
 

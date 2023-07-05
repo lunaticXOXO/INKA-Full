@@ -128,6 +128,8 @@ import ListAdminPenghitung from '../views/pemasok/ListAdminPenghitung.vue'
 import HasilPerbandinganSupplierByAdmin from '../views/pemasok/HasilPerbandinganSupplierByAdmin.vue'
 import HasilBobotPeringkatSupplierByAdmin from '../views/pemasok/HasilBobotPeringkatSupplierByAdmin.vue'
 import HasilMatriksKriteriaByAdmin from '../views/pemasok/HasilMatriksKriteriaByAdmin.vue'
+import AddPengadaanPerkakas from '../views/tools/AddPengadaanPerkakas.vue'
+import ShowKetersediaanToolsByWS from '../views/tools/ShowKetersediaanToolsByWS.vue'
 
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
@@ -1192,6 +1194,19 @@ const routes = [
 },
 
 {
+  path : '/addPengadaanTools',
+  name : 'Add Pengadaan Tools',
+  component : AddPengadaanPerkakas,
+  meta : {
+     title : "Add Pengadaan Tools - PT.INKA"
+  }
+
+
+},
+
+
+
+{
   path : '/listToolNeedByProcess/:id',
   name : 'List Tool Need By Process',
   component : ListToolNeedByProcess,
@@ -1245,6 +1260,18 @@ const routes = [
 
 
 },
+
+{
+   path : '/listKetersediaanPerkakasByWorkstation/:id',
+   name : 'List Ketersetdiaan Perkakas By Workstation',
+   component : ShowKetersediaanToolsByWS,
+   meta : {
+
+      title : "List Ketersediaan Perkakas By Workstation - PT.INKA"
+   }
+
+},
+
 {
 
   
