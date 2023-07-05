@@ -5,26 +5,35 @@
         <v-card class="text-center mt-4 ml-3" max-width="900">
     
             <v-form
-              class="pa-6"
+              class="pa-6"  
               ref="form"
               @submit.prevent="submitHandler"
               v-model="valid"
               lazy-validation>
-            
+
+          
               <v-autocomplete
                  item-text="namaKriteria"
                  item-value="IdKriteria"
                  v-model="criteria01"
                  :items="criteriaDesc"
-                 label="Supplier 01"
+                 label="Criteria 01"
             ></v-autocomplete>
             
 
             <v-autocomplete
-                 item-text="namaKriteria"
-                 item-value="IdKriteria"
-                 v-model="criteria02"
-                 :items="criteriaDesc"
+                 item-text="nama"
+                 item-value="code"
+                 v-model="supplier01"
+                 :items="supplier"
+                 label="Supplier 01"
+            ></v-autocomplete>
+
+            <v-autocomplete
+                 item-text="nama"
+                 item-value="code"
+                 v-model="supplier02"
+                 :items="supplier"
                  label="Supplier 02"
             ></v-autocomplete>
 
@@ -83,25 +92,18 @@
                     <v-text-field v-model="editedItem.IDSupplier01" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDSupplier01 == editedItem.IDSupplier01"></v-text-field>
                     <span v-else>{{item.IDSupplier01}}</span>
                 </template>
-
-
-            
+        
                 <template v-slot:[`item.IDSupplier02`]="{ item }">
                     <v-text-field v-model="editedItem.IDSupplier02" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDSupplier02 == editedItem.IDSupplier02"></v-text-field>
                     <span v-else>{{item.IDSupplier02}}</span>
                 </template>
     
-                
     
                 <template v-slot:[`item.nilai`]="{ item }">
-                    <v-text-field v-model="editedItem.nilai" :hide-details="true" dense single-line :autofocus="true" v-if="item.IdKriteria01 == editedItem.IdKriteria01"></v-text-field>
+                    <v-text-field v-model="editedItem.nilai" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDKriteria == editedItem.IDKriteria"></v-text-field>
                     <span v-else>{{item.nilai}}</span>
                 </template>
-    
                 
-              
-    
-    
     
                 <!-- <template v-slot:[`item.aksi`]="{ item }">
                 <div v-if="item.id==editedItem.id">
@@ -161,10 +163,19 @@
                 </div>
                 </template> -->
                 </v-data-table>
-                <v-btn color="primary" class="mx-auto text-center mb-7">
-                    Calculate
-
-                </v-btn>
+                <v-form
+                    class="pa-6"
+                    ref="form2"
+                    v-model="valid2"
+                    @submit.prevent="submitHandler"
+                    lazy-validation>
+                        <v-btn 
+                            color="primary" 
+                            class="mx-auto text-center mb-7"
+                            @click = "validate2()">
+                            Calculate
+                        </v-btn>
+                </v-form>
             </v-card>
         </v-card>
     
@@ -180,6 +191,7 @@
                     {text : 'ID Supplier 01', value : 'IDSupplier01'},
                     {text : 'ID Supplier 02', value : 'IDSupplier02'},
                     {text : 'Nilai', value : 'nilai'},
+                    {text : 'ID Penghitung', value : 'idPenghitung'},
                     {text : 'Action',value : 'aksi'}
                 ],
 
@@ -191,9 +203,11 @@
                 criteria : [],
                 criteriaDesc : [],
                 matrixSupplierByAdmin : [],
+                supplier : [],
                 editedIndex : -1,
                 criteria01 : '',
-                criteria02 : '',
+                supplier01 : '',
+                supplier02 : '',
                 Nilai : '',
                 editedItem : {
                     id : '',
@@ -209,7 +223,8 @@
         mounted(){
             this.fetchData(),
             this.fetchData2(),
-            this.fetchData3()
+            this.fetchData3(),
+            this.fetchDataSupplier()
 
         },
         
@@ -232,6 +247,28 @@
                 }
             },
 
+            validate2(){
+
+                if(this.$refs.form2.validate()){
+                    if(this.snackbar.color == "red"){
+                        this.loading = false
+                        this.dialog = false
+                    }else{
+                        this.loading = true
+                        this.dialog = true
+                    }
+                    this.countSupplier()
+                }
+            },
+
+            refresh() {
+            setTimeout(() => {
+                this.timer.setInterval(location.replace('/hasilPerhitunganKriteriaAdmin/' + this.$route.params.id), 2000)
+                this.$forceUpdate();  
+            }, 2000)
+                location.reload()
+            },
+
             async fetchData(){
                 try{
                     const axios = require('axios')
@@ -244,6 +281,21 @@
                     }
                 }
                 catch(error){
+                    console.log(error)
+                }
+            },
+
+            async fetchDataSupplier(){
+                try{
+                    const axios = require('axios')
+                    const res = await axios.get('/supplier/get_supplier')
+                    if(res.data == null){
+                        console.log("supplier kosong")
+                    }else{
+                        this.supplier = res.data
+                        console.log(res,this.supplier)
+                    }
+                }catch(error){
                     console.log(error)
                 }
             },
@@ -284,40 +336,67 @@
             async addPerhitungan(){
                 try{
                     const axios = require('axios')
-                    const res = await axios.post('/supplier/add_matrikskriteria_byadmin/' + this.$route.params.id,{
+                    const res = await axios.post('/supplier/add_matrikssupplier_byadmin/' + this.$route.params.id,{
                         criteria01 : this.criteria01,
-                        criteria02 : this.criteria02,
+                        supplier01 : this.supplier01,
+                        supplier02 : this.supplier02,
                         Nilai : this.Nilai
 
                     })
 
                     if(res.data.status == 'berhasil'){
                         this.snackbar = {
-                        message : "Insert Matrix Kriteria Berhasil",
+                        message : "Insert Matrix Supplier Berhasil",
                         color : 'green',
                         show : true
                     }
                     setTimeout(() => {
-                        location.replace('/perhitunganKriteria/' + this.$route.params.id )
+                        location.replace('/perhitunganSupplier/' + this.$route.params.id )
                     }, 1000)
-
                     }
                     else if(res.data.status == "gagal"){
                             this.loading = false
                             this.snackbar = {
-                                message : "Insert Matrix Kriteria Gagal ",
+                                message : "Insert Matrix Supplier Gagal ",
                                 color : 'red',
                                 show : true
                             }
                     }
-
-
                 }catch(error){
                     console.log(error)
                 }
             },
 
+            countSupplier(){
+                this.loading = true
+                setTimeout(() => {
+                try{
+                    const axios = require('axios')
+                    const res = axios.post('/ahp/merge_count_supplier/' + this.$route.params.id)
+                    if(res.data.status == 'berhasil'){
+                        this.snackbar = {
+                            message : "Perhitungan Kriteria Berhasil",
+                            color : 'green',
+                            show : true
+                        }
+                        setTimeout(() => {
+                            location.replace('/hasilPerhitunganKriteriaAdmin/' + this.$route.params.id )
+                        }, 2000)
 
+                    }else if(res.data.status == 'gagal'){
+                        this.loading = false
+                            this.snackbar = {
+                                message : "Perhitungan Kriteria Gagal",
+                                color : 'red',
+                                show : true
+                        }
+                    }   
+                    }catch(error){
+                        console.log(error)
+                    }
+                this.refresh()       
+                }, 2000)
+            },
 
             editToolBox(toolBox){
                 console.log('ID : ' + toolBox.id)

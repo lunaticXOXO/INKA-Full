@@ -3,14 +3,8 @@
       class="mx-auto text-center mt-10"
       max-width = "1200">
       <br>
-      <h1>List Supplier</h1>
-      <br>
-      <router-link to="/tambahPemasok">
-          <v-btn color="primary" class="d-flex ml-4 mb-6">
-              Add Supplier
-          </v-btn>
-      </router-link>
-      
+      <h1>Peringkat Supplier</h1>
+      <br> 
       <v-data-table 
           :headers = "headers"
           :items = "supplierRank">

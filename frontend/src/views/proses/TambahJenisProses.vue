@@ -14,7 +14,7 @@
       <v-text-field
       v-model="id"
       :counter="2"
-      :rules="idRules"
+      :rules="idRules"  
       label="ID"
       required
       ></v-text-field>

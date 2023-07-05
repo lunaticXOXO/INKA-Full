@@ -33,6 +33,7 @@ from tools.toolpurchase.ToolPurchaseController import *
 from tools.toolpurchase.ToolPurchaseItemController import *
 from tools.toolbox.BoxItemController import *
 from tools.toolbutuhopr.controller.ToolButuhOpr import *
+from tools.tooldistribution.ToolDistributionController import *
 from tools.toolneed.ToolNeedController import *
 from tools.pengembaliantool.PengembalianToolController import *
 from ahp.controller.AhpController import *
@@ -142,11 +143,15 @@ class main():
         hasil = ShowMaterialTypeSupplierBySupplier(code)
         return hasil
 
+
+    # Matriks Kriteria & Supplier
     @app.route('/supplier/get_supplier_rank',methods = ['GET'])
     def get_supplier_rank():
         return RankingSupplier()
 
-
+    @app.route('/supplier/get_supplierrank_byid/<IDSupplier>',methods = ['GET'])
+    def get_supplierrank_byid(IDSupplier):
+        return GetPeringkatSupplierByIdSupplier(IDSupplier)
 
     @app.route('/supplier/detail_get_supplier_rank/<idSupplier>',methods = ['GET'])
     def detail_get_supplier_rank(idSupplier):
@@ -181,6 +186,10 @@ class main():
     def add_matrikskriteria_byadmin(idPenghitung):
         return InsertMatriksKriteriaByAdmin(idPenghitung)
 
+    @app.route('/supplier/add_matrikssupplier_byadmin/<idPenghitung>',methods = ['POST'])
+    def add_matrikssupplier_byadmin(idPenghitung):
+        return InsertMatriksSupplierByAdmin(idPenghitung)
+
     @app.route('/supplier/show_admin_penghitung',methods = ['GET'])
     def show_admin_penghitung():
         return GetPenghitungMatriks()
@@ -193,8 +202,21 @@ class main():
     def get_kriteria_rank():
         return GetPeringkatKriteria()
 
+    @app.route('/supplier/get_hasil_perhitungan_kriteria')
+    def get_hasil_perhitungan_kriteria():
+        return HasilPerhitunganKriteria()
 
+    @app.route('/supplier/get_hasil_perhitungankriteria_byadmin/<idPenghitung>')
+    def get_hasil_perhitungankriteria_byadmin(idPenghitung):
+        return HasilPerhitunganKriteriaByAdmin(idPenghitung)
 
+    @app.route('/supplier/get_hasil_perhitungan_supplier1')
+    def get_hasil_peritungan_supplier1():
+        return HasilPerhitunganSupplier1()
+    
+    @app.route('/supplier/get_hasil_perhitungan_supplier2')
+    def get_hasil_perhitungan_supplier2():
+        return HasilPerhitunganSupplier2()
 
     #PROYEK
     @app.route('/proyek/get_allproyek',methods = ['GET'])
@@ -1135,9 +1157,14 @@ class main():
     def ketersediaan_perkakas():
         return jumlahToolTypeKeseluruhanDiWorkshop()
 
-    @app.route('/tools/request_kebutuhan_perkakas',methods = ['POST'])
-    def kebutuhan_perkakas_byws():
-        return RequestKebutuhanToolByWorkstation()
+    @app.route('/tools/request_distribusi_perkakas',methods = ['POST'])
+    def distribusi_perkakas_byws():
+        return RequestDistribusiToolByWorkstation()
+
+    @app.route('/tools/request_tool_stock',methods = ['POST'])
+    def kebutuhan_perkakas_stock():
+        return MergeButuhToolStock()
+
 
     @app.route('/tools/get_request_kebutuhantool_byws/<workstation>',methods = ['GET'])
     def get_request_kebutuhantool_byws(workstation):
@@ -1146,6 +1173,8 @@ class main():
     @app.route('/tools/add_toolneed_idProcess/<idProcess>',methods = ['POST'])
     def add_toolneed_byprocess(idProcess):
         return insertToolNeedByProcess(idProcess)
+
+    
 
     # Box
     @app.route('/box/add_toolbox',methods = ['POST'])
@@ -1177,9 +1206,47 @@ class main():
 
 
     #AHP
-    @app.route('/ahp/merge_count_bobot',methods = ['POST'])
-    def calculate_bobot():
-        return MergeCountBobotGlobal()
+    @app.route('/ahp/merge_count_kriteria/<idPenghitung>',methods = ['POST'])
+    def merge_count_kriteria(idPenghitung):
+        return MergeCalculateKriteria(idPenghitung)
+
+
+    @app.route('/ahp/merge_count_supplier/<idPenghitung>',methods = ['POST'])
+    def merge_count_supplier(idPenghitung):
+        return MergeCountSupplier(idPenghitung)
+    
+
+    #ahp kriteria
+    @app.route('/ahp/hasil_matrikskriteria/<idPenghitung>',methods = ['GET'])
+    def hasil_matrikskriteria_byadmin(idPenghitung):
+        return HasilKriteriaByAdmin(idPenghitung)
+    
+
+    @app.route('/ahp/hasil_matriksbobot/<idPenghitung>',methods = ['GET'])
+    def hasil_bobotkriteria_byadmin(idPenghitung):
+        return HasilKriteriaBobotByAdmin(idPenghitung)
+
+    #ahp supplier    
+    @app.route('/ahp/hasil_perbandingan/<idPenghitung>',methods = ['GET'])
+    def hasil_perbandingansupplier_byadmin(idPenghitung):
+        return HasilPerbandinganSupplierByAdmin(idPenghitung)
+
+    @app.route('/ahp/hasil_rangking_supplier/<idPenghitung>',methods = ['GET'])
+    def hasil_peringkatsupplier_byadmin(idPenghitung):
+        return HasilRankingSupplierByAdmin(idPenghitung)
+
+    @app.route('/ahp/hasil_bobot_supplier/<idPenghitung>',methods = ['GET'])
+    def hasil_bobotsupplier_byadmin(idPenghitung):
+        return HasilBobotSupplierByAdmin(idPenghitung)
+
+    @app.route('/ahp/update_matriks_kriteria/<idPenghitung>',methods = ['POST'])
+    def update_matriks_kriteria(idPenghitung):
+        return PerbaikiInputKriteria(idPenghitung)
+
+    @app.route('/ahp/update_matriks_supplier',methods = ['POST'])
+    def update_matriks_supplier(idPenghitung):  
+        return PerbaikiInputSupplier(idPenghitung)
+
 
     @app.route('/login',methods = ['POST'])
     def login():

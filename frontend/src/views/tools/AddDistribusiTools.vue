@@ -223,7 +223,7 @@
                 const axios = require('axios')
                 this.rencanaMulaiA = this.dueDate + ' ' +  this.datetime
                 this.rencanaMulaiB = this.dueDate2 + ' ' + this.datetime2
-                const res = await axios.post('/tools/request_kebutuhan_perkakas',{
+                const res = await axios.post('/tools/request_distribusi_perkakas',{
                     rencanaMulaiA : this.rencanaMulaiA,
                     rencanaMulaiB : this.rencanaMulaiB,
                     workstation : this.workstation

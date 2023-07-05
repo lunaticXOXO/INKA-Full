@@ -11,7 +11,7 @@
             </v-btn>
         </router-link>
 
-        <v-data-table 
+        <v-data-table   
             :headers = "column"
             :items = "customers"
             :items-per-page="5"

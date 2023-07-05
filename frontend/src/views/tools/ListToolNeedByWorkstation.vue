@@ -20,7 +20,7 @@
 
         <v-card class="text-center mt-10 ml-3 mr-2"
         max-width="1250">
-        <h2>Kebutuhan Perkakas di {{this.$route.params.id}} </h2>
+        <h2>Kebutuhan Perkakas di Stasiun Kerja {{this.$route.params.id}} </h2>
         <v-card
                 class="mx-auto text-center"
                 max-width="1250">
@@ -51,10 +51,13 @@ export default {
             ],
 
             column2 : [
-                {text : 'Tool Code', value : 'toolTypeCode'},
+                {text : 'Tool Type Code', value : 'toolTypeCode'},
                 {text : 'Nama Tool', value : 'namaTool'},
                 {text : 'Jumlah Kebutuhan',value : 'butuh'},
-              
+                {text : 'Kekurangan Pendistribusian', value : 'kekuranganPendistribusian'},
+                {text : 'Kelompok', value : 'kelompok'}
+            
+
             ],
             operation : [],
             toolneed : [],
