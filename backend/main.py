@@ -1174,7 +1174,9 @@ class main():
     def add_toolneed_byprocess(idProcess):
         return insertToolNeedByProcess(idProcess)
 
-    
+    @app.route('/tools/show_hasil_pengadaantools/<ws>',methods = ['GET'])
+    def show_pengadaan_tool(ws):
+        return ShowPengadaanTool(ws)
 
     # Box
     @app.route('/box/add_toolbox',methods = ['POST'])

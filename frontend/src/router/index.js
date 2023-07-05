@@ -130,6 +130,8 @@ import HasilBobotPeringkatSupplierByAdmin from '../views/pemasok/HasilBobotPerin
 import HasilMatriksKriteriaByAdmin from '../views/pemasok/HasilMatriksKriteriaByAdmin.vue'
 import AddPengadaanPerkakas from '../views/tools/AddPengadaanPerkakas.vue'
 import ShowKetersediaanToolsByWS from '../views/tools/ShowKetersediaanToolsByWS.vue'
+import HasilPengadaanTools from  '../views/tools/HasilPengadaanTools.vue'
+
 
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
@@ -1201,6 +1203,17 @@ const routes = [
      title : "Add Pengadaan Tools - PT.INKA"
   }
 
+
+},
+
+{
+    path : '/hasilPengadaanTools/:id',
+    name : 'Hasil Pengadaan Tools',
+    component : HasilPengadaanTools,
+    meta : {
+
+        title : "Hasil Pengadaan Tools - PT.INKA"
+    }
 
 },
 

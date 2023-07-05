@@ -4,64 +4,71 @@
             class="text-center mt-10 ml-3"
             max-width="1000">
             <br>
-            <h2> Kebutuhan Total Perkakas dan Ketersediaan Perkakas  </h2>
+            <h1>Operasi di {{this.$route.params.id}}</h1>
             <br>
             <v-card
                 class="mx-auto text-center"
                 max-width="1000">
                 <v-data-table
                     :headers = "column"
-                    :items = "toolneed"
+                    :items = "operation"
                     :items-per-page="5"
-                >
-                <template v-slot:[`item.toolTypeCode`]="{ item }">
-                <span>{{item.toolTypeCode}}</span>
-            </template>
-
-            <template v-slot:[`item.namaTool`]="{ item }">
-                <span>{{item.namaTool}}</span>
-            </template>
-
-            <template v-slot:[`item.aksi`]="{ item }">
-            <div>
-                <router-link :to="{name : 'Tambah Tool Stock By Box', params:{id : `${item.toolTypeCode}`}}">
-                    <v-tooltip top>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn 
-                            class="mx-1" 
-                            x-small
-                            color="green"
-                            v-bind="attrs"
-                            v-on="on">
-                            <v-icon small dark>mdi-check</v-icon>
-                            </v-btn>
-                        </template>
-                        <span>Choose Tool Type</span>
-                    </v-tooltip>
-                </router-link>
-        </div>
-        </template>           
+                >           
                 </v-data-table>
             </v-card>
         </v-card>
 
         <v-card class="text-center mt-10 ml-3 mr-2"
         max-width="1250">
-       
+        <h2> PENGADAAN PERKAKAS {{this.$route.params.id}} </h2>
         <v-card
                 class="mx-auto text-center"
                 max-width="1250">
         <v-data-table
                 :headers = "column2"
-                :items = "operation"
+                :items = "toolneed"
                 :items-per-page="5"
         >
-       
+        <template v-slot:[`item.toolTypeCode`]="{ item }">
+                <v-text-field v-model="editedItem.toolTypeCode" :hide-details="true" dense single-line :autofocus="true" v-if="item.toolTypeCode == editedItem.toolTypeCode"></v-text-field>
+                <span v-else>{{item.toolTypeCode}}</span>
+            </template>
+
+            <template v-slot:[`item.namaTool`]="{ item }">
+                <v-text-field v-model="editedItem.namaTool" :hide-details="true" dense single-line :autofocus="true" v-if="item.toolTypeCode == editedItem.toolTypeCode"></v-text-field>
+                <span v-else>{{item.namaTool}}</span>
+            </template>
+
+            <template v-slot:[`item.aksi`]="{ item }">
+           
+            <div>
+                <router-link :to="{name : 'Tambah Tool Stock By Box', params:{id : `${item.id}`}}">
+                    <v-tooltip top>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn 
+                            class="mx-1" 
+                            x-small
+                            color="blue"
+                            v-bind="attrs"
+                            v-on="on">
+                            <v-icon small dark>mdi-check</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>Next</span>
+                    </v-tooltip>
+                </router-link>
+            
+              
+
+              
+            </div>
+            </template>
+
         </v-data-table>
 
         </v-card>
 
-    
+      
 
         </v-card>
     
@@ -73,25 +80,25 @@
 export default {
     data(){
         return {
-          
-
             column : [
+              
+                {text : 'ID Opeerasi', value : 'id'},
+                {text : 'Rencana Mulai', value : 'rencanaMulai'},
+                {text : 'Rencana Selesai', value : 'rencanaSelesai'},
+                {text : 'Mulai', value : 'mulai'},
+                {text : 'Selesai',value : 'selesai'}
+            ],
+
+            column2 : [
                 {text : 'Tool Type Code', value : 'toolTypeCode'},
                 {text : 'Nama Tool', value : 'namaTool'},
-                {text : 'Jumlah Kebutuhan',value : 'butuh'},
-                {text : 'Kekurangan Pendistribusian', value : 'kekuranganPendistribusian'},
+                {text : 'Stock',value : 'stock'},
+                {text : 'Jumlah Butuh', value : 'butuh'},
+                {text : 'Pengadaan Tool', value : 'pengadaanTool'},
                 {text : 'Action', value : 'aksi'}
             
 
             ],
-
-            column2: [
-              
-              {text : 'ID Opeerasi', value : 'id'},
-              {text : 'Rencana Mulai', value : 'rencanaMulai'},
-              {text : 'Rencana Selesai', value : 'rencanaSelesai'},
-            
-          ],
             operation : [],
             toolneed : [],
 
@@ -113,6 +120,12 @@ export default {
     },
 
     methods : {
+
+        validate(){
+            location.replace('/listKetersediaanPerkakasByWorkstation/' + this.$route.params.id)
+
+        },
+
         async fetchData(){
             try{
                 const axios = require('axios')
@@ -133,7 +146,7 @@ export default {
         async fetchData2(){
             try{
                 const axios = require('axios')
-                const res = await axios.get('/tools/get_request_kebutuhantool_byws/' + this.$route.params.id)
+                const res = await axios.get('/tools/show_hasil_pengadaantools/' + this.$route.params.id)
                 if(res.data == null){
                     alert("Data kosong")
                 }else{

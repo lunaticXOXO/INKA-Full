@@ -232,6 +232,11 @@
                     if (res.data.status == 'berhasil'){
                         alert("berhasil")
                         console.log("request berhasil")
+
+                        setTimeout(() => {
+                            location.replace('/hasilPengadaanTools/' + this.workstation)
+                        }, 1000)
+                        
                         this.snackbar = {
                             show : true,
                             message : "Request Berhasil",
