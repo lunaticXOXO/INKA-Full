@@ -6,7 +6,7 @@
           <br>
           <h2>List Purchase Tools</h2>
           <br>
-          <router-link :to="{name : 'List Purchase Item By Purchase Tools', params : {id : `${this.$route.params.id}`}}">
+          <router-link to="/purchaseTools">
               <v-btn color="primary" class="d-flex ml-4 mb-6">
                   Purchase Tools
               </v-btn>

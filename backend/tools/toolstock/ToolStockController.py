@@ -134,6 +134,21 @@ def ShowToolTypeInDetailStock(toolTypeCode):
   
     return make_response(jsonify(json_data),200)
 
+
+def ShowToolStockById(toolstock):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id,b.nama,a.merk,a.unit FROM eqp_d_toolstock a JOIN eqp_r_tooltype b ON b.codes = a.toolTypeCode WHERE a.id = '"+toolstock+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records :
+        json_data.append(dict(zip(row_headers,data)))
+  
+    return make_response(jsonify(json_data),200)
+
     
 
 def ShowToolStockByPurchaseItem(purchaseItem):

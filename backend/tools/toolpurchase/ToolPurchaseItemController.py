@@ -10,7 +10,7 @@ def AddToolPurchaseItemByToolPurchase(toolPurchase):
     try:
         data = request.json
 
-        toolTypeId = data["toolTypeId"]
+        toolTypeId = data["type"]
         quantity = data["quantity"]
         unit = data["unit"]
         arrivalDatePlan = data["arrivalDatePlan"]

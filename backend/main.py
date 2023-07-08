@@ -1140,6 +1140,9 @@ class main():
     def detail_toolstock(toolTypeCode):
         return ShowToolStockByToolType(toolTypeCode)
 
+    @app.route('/tools/get_toolstock_byid/<toolstock>',methods = ['GET'])
+    def get_toolstock_byid(toolstock):
+        return ShowToolStockById(toolstock)
 
     # Tool Butuh Opr
     @app.route('/tools/show_tool_butuhopr/<username>',methods = ['GET'])
@@ -1165,6 +1168,9 @@ class main():
     def kebutuhan_perkakas_stock():
         return MergeButuhToolStock()
 
+    @app.route('/tools/show_disttoolstock_bytype/<tooltype>',methods = ['GET'])
+    def get_distribution_toolstock(tooltype):
+        return ShowDistributionToolStockByToolType(tooltype)
 
     @app.route('/tools/get_request_kebutuhantool_byws/<workstation>',methods = ['GET'])
     def get_request_kebutuhantool_byws(workstation):

@@ -11,18 +11,27 @@
           v-model="valid"
           lazy-validation>
 
-          <v-text-field
-          v-model="nama"
-          label="Order Name"
-          required
-          ></v-text-field>
+          <v-autocomplete
+          item-text="nama"
+          item-value="codes"
+          v-model="type"
+          :items="tooltype"
+          label="Tool Type"
+          ></v-autocomplete>
 
           <v-text-field
           v-model="quantity"
           label="Quantity"
           required
           ></v-text-field>
-        
+
+          <v-autocomplete   
+          item-text="nama"
+          item-value="id"
+          v-model="unit"
+          :items="units"
+          label="Unit"
+          ></v-autocomplete>
 
           <div class="d-flex">
             <v-menu 
@@ -33,44 +42,10 @@
               min-width="290px"
             >
             <template v-slot:activator="{ on, attrs }">
-              <v-text-field class="mx-10" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal" prepend-icon="mdi-calendar"></v-text-field>
+              <v-text-field class="mx-10" :value="arrivalDatePlan" v-bind="attrs" v-on="on" label="Schedulled Arrival" prepend-icon="mdi-calendar"></v-text-field>
             </template>
-            <v-date-picker full-width v-model="dueDate"></v-date-picker>
+            <v-date-picker full-width v-model="arrivalDatePlan"></v-date-picker>
           </v-menu>
-          
-          <v-menu
-            ref="menu"
-            v-model="menu2"
-            :close-on-content-click="false"
-            :nudge-right="40"
-            :return-value.sync="time"
-            transition="scale-transition"
-            offset-y
-            max-width="290px"
-            min-width="290px"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                class="mx-10"
-                v-model="datetime"
-                label="Due Time"
-                prepend-icon="mdi-clock-time-four-outline"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-              ></v-text-field>
-            </template>
-            <v-time-picker
-              v-if="menu2"
-              v-model="datetime"
-              full-width
-              format="24hr"
-              @click:minute="$refs.menu.save(time)"
-            ></v-time-picker>
-          </v-menu>
-
-
-
         </div>
          
           <v-btn
@@ -93,7 +68,12 @@
 
         </v-form>
 
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+            {{snackbar.message}}
+        </v-snackbar>
     </v-card>
+
+ 
 
 
 
@@ -214,6 +194,12 @@ export default {
                 {text : 'Action',value : 'aksi'}
             ],
             toolPurchaseItem : [],
+            tooltype : [],
+            units : [],
+            unit : '',
+            type : '',
+            quantity : '',
+            arrivalDatePlan : '',
             editedIndex : -1,
             editedItem : {
                 id : '',
@@ -223,14 +209,28 @@ export default {
                 id : '',
                 nama : '',
             },
+            snackbar : {
+            show : false,
+            color : null,
+            message : null,
+      },
         }
     },
 
     mounted(){
-        this.fetchData()
+        this.fetchData(),
+        this.fetchUnit(),
+        this.fetchToolType()
     },
 
     methods : {
+
+      validate () {
+        if(this.$refs.form.validate()){
+          this.addPurchaseItem()
+        }
+      },
+
         async fetchData(){
             try{
                 const axios = require('axios')
@@ -246,37 +246,81 @@ export default {
                 console.log(error)
             }
         },
-        
-        editToolBox(toolBox){
-            console.log('ID : ' + toolBox.id)
-            this.editedIndex = this.toolBox.indexOf(toolBox)
-            this.editedItem = Object.assign({},toolBox)
-        },
-        
-        close(){
-            setTimeout(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            }, 300)
-        },
 
-        async updateToolBox(){
-            if (this.editedIndex > -1) {
-                Object.assign(this.toolBox[this.editedIndex], this.toolBox)
-                console.log(this.editedItem)
+        async fetchUnit(){
+        try{
+            const axios = require('axios')
+            const res = await axios.get('/unit/get_unit')
+            if (res.data == null){
+                alert("Material Unit Kosong")
+            }else{
+                this.units = res.data
+                console.log(res,this.units)
             }
-            this.close()
-            try{
-                const axios = require('axios')
-                const res = await axios.post('/box/update_toolbox/' + this.editedItem.id,
-                { id : this.editedItem.id,
-                  nama : this.editedItem.nama
-                })
-                console.log(res)
-            }catch(error){
-                console.log(error)
+        }catch(error){
+            alert(error)
+            console.log(error)
+        } 
+      },
+
+      async fetchToolType(){
+        try{
+
+            const axios = require('axios')
+            const res = await axios.get('/tools/show_tooltype')
+            if(res.data == null){
+              console.log("type kosong")
             }
+            else{
+              this.tooltype = res.data
+              console.log(res,this.tooltype)
+            }
+
+        }catch(error){
+           console.log(error)
         }
+      },
+        
+      async addPurchaseItem(){
+
+        try{
+          const axios = require('axios')
+          const res = await axios.post('/tools/add_toolpurchase_by_purchasetools/' + this.$route.params.id,{
+             type : this.type,
+             quantity : this.quantity,
+             unit : this.unit,
+             arrivalDatePlan : this.arrivalDatePlan
+          })
+
+          if(res.data.status == 'berhasil'){
+            this.snackbar = {
+              show : true,
+              message : "Purchase Tools Item Berhasil",
+              color : "green"
+            }
+
+            location.replace('/listPurchaseItemByPurchaseTools/' + this.$route.params.id)
+
+          }else if(res.data.status == 'gagal'){
+            this.snackbar = {
+              show : true,
+              message : "Purchase Tools Item Gagal",
+              color : "red"
+            }
+          }
+
+        }
+        catch(error){
+          this.snackbar = {
+            show : true,
+            message : "Purchase Item Tools Error",
+            color : "red"
+          }
+          console.log(error)
+        }
+
+      }
+       
     }
 }
 </script>
