@@ -308,7 +308,7 @@
                     }  
                     else if(res.data.status == 'gagal'){
                         this.snackbar = {
-                            message : "Insert Tool Box Gagal",
+                            message : "Insert Tool Stock Gagal",
                             color : 'red',
                             show : true
                         }
