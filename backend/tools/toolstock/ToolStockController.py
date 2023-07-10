@@ -8,7 +8,7 @@ from flask import request,make_response,jsonify
 def AddToolStockByToolPurchaseItem(toolPurchaseItem):   
     conn = database.connector()
     cursor = conn.cursor()
-    query = "INSERT INTO eqp_d_toolstock(id,toolPurchaseItem,toolTypeCode,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s,%s)"
+    query = "INSERT INTO eqp_d_toolstock(id,purchaseItem,toolTypeCode,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s,%s)"
     try:
 
         data = request.json
@@ -52,22 +52,25 @@ def AddToolStockByToolPurchaseItem(toolPurchaseItem):
         for i in range(quantity_int):
             
             if count_data == 0:
-                id = toolType + "0000"
+                id = toolType + "000"
                 values = (id,toolPurchaseItem,toolType,merk,new_qty,unit,arrivalDate)
                 cursor.execute(query,values)
             else:
              
-                if quantity_int >= 10:
+                if count_data >= 9:
                     count_data = count_data + 1
-                    id = toolType + "00" + str(count_data)
+                    id = toolType + "0" + str(count_data)
                     values = (id,toolPurchaseItem,toolType,merk,new_qty,unit,arrivalDate)
                     cursor.execute(query,values)
                 else:
                     count_data = count_data + 1
-                    id = toolType + "000" + str(count_data)
+                    id = toolType + "00" + str(count_data)
                     print("ID : ",id)
                     values = (id,toolPurchaseItem,toolType,merk,new_qty,unit,arrivalDate)
                     cursor.execute(query,values)
+                    
+            print("toolstock id : ",id, "quantity : ",str(new_qty))
+            print("count_data : ",count_data)
             tool_stock = tool_stock + new_qty
         
         print("Tool Stock : ",tool_stock)
@@ -82,7 +85,7 @@ def AddToolStockByToolPurchaseItem(toolPurchaseItem):
         cursor.execute(query_accumulate_quantity,values2)
         conn.commit()
         hasil = {"status" : "berhasil"}
-
+       
     except Exception as e:
         print("Error",str(e))
         hasil = {"status" : "gagal"}
@@ -134,12 +137,27 @@ def ShowToolTypeInDetailStock(toolTypeCode):
   
     return make_response(jsonify(json_data),200)
 
+
+def ShowToolStockById(toolstock):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id,b.nama,a.merk,a.unit FROM eqp_d_toolstock a JOIN eqp_r_tooltype b ON b.codes = a.toolTypeCode WHERE a.id = '"+toolstock+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records :
+        json_data.append(dict(zip(row_headers,data)))
+  
+    return make_response(jsonify(json_data),200)
+
     
 
 def ShowToolStockByPurchaseItem(purchaseItem):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.id,a.toolTypeCode,c.nama AS 'namaToolType',a.merk,a.quantity,a.unit,a.arrivalDate FROM eqp_d_toolstock a JOIN eqp_d_toolpurchaseitem b ON b.purchaseItemId = a.toolPurchaseItem JOIN eqp_r_tooltype c ON c.codes = a.toolTypeCode WHERE b.purchaseItemId = '"+purchaseItem+"'"
+    query = "SELECT a.id,a.toolTypeCode,c.nama AS 'namaToolType',a.merk,a.quantity,a.unit,a.arrivalDate FROM eqp_d_toolstock a JOIN eqp_d_toolpurchaseitem b ON b.purchaseItemId = a.purchaseItem JOIN eqp_r_tooltype c ON c.codes = a.toolTypeCode WHERE b.purchaseItemId = '"+purchaseItem+"'"
     cursor.execute(query)
     records = cursor.fetchall()
     json_data = []

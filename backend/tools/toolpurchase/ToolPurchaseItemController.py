@@ -6,11 +6,11 @@ from flask import request,make_response,jsonify
 def AddToolPurchaseItemByToolPurchase(toolPurchase):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "INSERT INTO eqp_d_toolpurchaseitem(purchaseItemId,toolPurchaseId,toolTypeId,quantity,unit,arrivalDatePlan)VALUES(%s,%s,%s,%s,%s,%s)"
+    query = "INSERT INTO eqp_d_toolpurchaseitem(purchaseItemId,purchaseId,toolTypeId,quantity,unit,arrivalDatePlan)VALUES(%s,%s,%s,%s,%s,%s)"
     try:
         data = request.json
 
-        toolTypeId = data["toolTypeId"]
+        toolTypeId = data["type"]
         quantity = data["quantity"]
         unit = data["unit"]
         arrivalDatePlan = data["arrivalDatePlan"]
@@ -29,7 +29,7 @@ def AddToolPurchaseItemByToolPurchase(toolPurchase):
 
       
 
-        query_purchase = "SELECT toolPurchaseId FROM eqp_d_toolpurchase WHERE toolPurchaseId = '"+toolPurchase+"'"
+        query_purchase = "SELECT purchaseId FROM eqp_d_toolpurchase WHERE purchaseId = '"+toolPurchase+"'"
         cursor.execute(query_purchase)
         toolPurchase = ""
         records_purchase = cursor.fetchall()
@@ -63,7 +63,7 @@ def AddToolPurchaseItemByToolPurchase(toolPurchase):
 def ShowToolPurchaseItemByPurchase(toolPurchase):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.purchaseItemId,c.nama AS 'namaToolType', a.quantity,d.nama,a.arrivalDatePlan FROM eqp_d_toolpurchaseitem a JOIN eqp_d_toolpurchase b ON b.toolPurchaseId = a.toolPurchaseId JOIN eqp_r_tooltype c ON c.codes = a.toolTypeId JOIN gen_r_materialunit d ON d.id = a.unit WHERE b.toolPurchaseId = '"+toolPurchase+"'"
+    query = "SELECT a.purchaseItemId,c.nama AS 'namaToolType', a.quantity,d.nama,a.arrivalDatePlan FROM eqp_d_toolpurchaseitem a JOIN eqp_d_toolpurchase b ON b.toolPurchaseId = a.purchaseId JOIN eqp_r_tooltype c ON c.codes = a.toolTypeId JOIN gen_r_materialunit d ON d.id = a.unit WHERE b.toolPurchaseId = '"+toolPurchase+"'"
     cursor.execute(query)
     records = cursor.fetchall()
     json_data = []

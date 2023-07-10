@@ -133,6 +133,7 @@
             </v-container>
         </v-card> -->
     <div class="d-flex" >
+       
     
         <v-btn
         :disabled="!valid"
@@ -143,6 +144,8 @@
         >
         Submit
         </v-btn>
+   
+
     </div>
     </v-form>
 
@@ -232,7 +235,7 @@
                 if (res.data.status == 'berhasil'){
                     alert("berhasil")
                     setTimeout(() => {
-                        location.replace('/listKebutuhanPerkakasByWorkstation/' + this.workstation)
+                        location.replace('/listKebutuhanPerkakasByWorkstation/' + this.workstation + '?rencanaMulai=' + this.dueDate) 
                     }, 1000)
 
                     console.log("request berhasil")
@@ -253,6 +256,7 @@
                 console.log(error)
             }
            
+            return this.dueDate
 
         }        
        

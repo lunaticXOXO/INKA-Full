@@ -4,7 +4,7 @@
             class="mx-auto text-center mt-15"
             max-width="1200">
             <br>
-            <h2> Kebutuhan Total Perkakas dan Ketersediaan Perkakas  </h2>
+            <h2> Pilih Tool Stock Untuk Pengemasan </h2>
             <br>
             <v-card
                 class="mx-auto text-center"
@@ -14,17 +14,13 @@
                     :items = "toolneed"
                     :items-per-page="5"
                 >
-                <template v-slot:[`item.toolTypeCode`]="{ item }">
-                <span>{{item.toolTypeCode}}</span>
-            </template>
-
-            <template v-slot:[`item.namaTool`]="{ item }">
-                <span>{{item.namaTool}}</span>
+                <template v-slot:[`item.idToolStock`]="{ item }">
+                <span>{{item.idToolStock}}</span>
             </template>
 
             <template v-slot:[`item.aksi`]="{ item }">
             <div>
-                <router-link :to="{name : 'Choose Tool Stock Pengemasan', params:{id : `${item.toolTypeCode}`}}">
+                <router-link :to="{name : 'Choose Box Item For Tool Stock', params:{id : `${item.idToolStock}`}}">
                     <v-tooltip top>
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn 
@@ -36,7 +32,7 @@
                             <v-icon small dark>mdi-check</v-icon>
                             </v-btn>
                         </template>
-                        <span>Choose Tool Type</span>
+                        <span>Pengemasan Tool Stock</span>
                     </v-tooltip>
                 </router-link>
         </div>
@@ -70,17 +66,18 @@ export default {
           
 
             column : [
-                {text : 'Tool Type Code', value : 'toolTypeCode'},
-                {text : 'Nama Tool', value : 'namaTool'},
-                {text : 'Jumlah Kebutuhan',value : 'butuh'},
-                {text : 'Kekurangan Pengemasan', value : 'kekuranganPendistribusian'},
+                {text : 'ID Stock', value : 'idToolStock'},
+                {text : 'Nama Tool', value : 'nama'},
+                {text : 'Merk',value : 'merk'},
+                {text : 'Quantity', value : 'quantity'},
+                {text : 'Unit', value : 'unit'},
                 {text : 'Action', value : 'aksi'}
             
 
             ],
 
             toolneed : [],
-            rencanaMulai : '',
+
             editedIndex : -1,
             editedItem : {
                 id : '',
@@ -103,11 +100,7 @@ export default {
         async fetchData2(){
             try{
                 const axios = require('axios')
-                const res = await axios.get('/tools/get_request_kebutuhantool_byws/' + this.$route.params.id,{
-                    params : {
-                        rencanaMulai : this.$route.query.rencanaMulai
-                    }
-                })
+                const res = await axios.get('/tools/show_disttoolstock_bytype/' + this.$route.params.id)
                 if(res.data.length == 0){
                     alert("Data kosong")
                 }else{

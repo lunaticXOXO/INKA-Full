@@ -126,7 +126,8 @@ def RequestDistribusiToolByWorkstation():
 def GetRequestToolNeedByWorkstation(workstation):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT * FROM cpl_kirimtool02 WHERE stasiunKerja = '"+workstation+"'"
+    tanggal = request.args.get("rencanaMulai")
+    query = "SELECT * FROM cpl_kirimtool02 WHERE stasiunKerja = '"+workstation+"' AND tanggal = '"+tanggal+"'"
     cursor.execute(query)
 
     records = cursor.fetchall()
@@ -137,4 +138,21 @@ def GetRequestToolNeedByWorkstation(workstation):
         json_data.append(dict(zip(row_headers,data)))
     
     return  make_response(jsonify(json_data),200)
+
+
+def ShowDistributionToolStockByToolType(tooltype):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id AS 'idToolStock',b.nama,a.merk,a.quantity,a.unit FROM eqp_d_toolstock a JOIN eqp_r_tooltype b ON b.codes = a.toolTypeCode JOIN eqp_d_toolonws c ON c.toolStockId = a.id WHERE b.codes = '"+tooltype+"' AND c.stasiunKerja = 'WSGD';"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return  make_response(jsonify(json_data),200)
+
+
 

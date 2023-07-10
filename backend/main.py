@@ -32,11 +32,14 @@ from tools.toolstock.ToolStockController import *
 from tools.toolpurchase.ToolPurchaseController import *
 from tools.toolpurchase.ToolPurchaseItemController import *
 from tools.toolbox.BoxItemController import *
+from tools.toolbox.BoxOnWsController import *
 from tools.toolbutuhopr.controller.ToolButuhOpr import *
 from tools.tooldistribution.ToolDistributionController import *
 from tools.toolneed.ToolNeedController import *
 from tools.pengembaliantool.PengembalianToolController import *
 from ahp.controller.AhpController import *
+
+
 import psutil
 
 from flask import Flask,session
@@ -887,6 +890,14 @@ class main():
         return ShowOperationByWorkstation(ws)
 
 
+    @app.route('/operasi/get_operasi_byrenmul/<rencanaMulai>',methods = ['GET'])
+    def get_operasi_byrenmul(rencanaMulai):
+        return ShowOperationByWorkstation(rencanaMulai)
+
+    @app.route('/operasi/get_operasi_bywsrenmul/<workstation>',methods = ['GET'])
+    def get_operasi_byws_byrenmul(workstation):
+        return ShowOperationByWorkstationAndTanggal(workstation)
+
     #Operator
     @app.route('/operator/add_operator',methods = ['POST'])
     def add_operator():
@@ -1140,6 +1151,9 @@ class main():
     def detail_toolstock(toolTypeCode):
         return ShowToolStockByToolType(toolTypeCode)
 
+    @app.route('/tools/get_toolstock_byid/<toolstock>',methods = ['GET'])
+    def get_toolstock_byid(toolstock):
+        return ShowToolStockById(toolstock)
 
     # Tool Butuh Opr
     @app.route('/tools/show_tool_butuhopr/<username>',methods = ['GET'])
@@ -1165,6 +1179,9 @@ class main():
     def kebutuhan_perkakas_stock():
         return MergeButuhToolStock()
 
+    @app.route('/tools/show_disttoolstock_bytype/<tooltype>',methods = ['GET'])
+    def get_distribution_toolstock(tooltype):
+        return ShowDistributionToolStockByToolType(tooltype)
 
     @app.route('/tools/get_request_kebutuhantool_byws/<workstation>',methods = ['GET'])
     def get_request_kebutuhantool_byws(workstation):
@@ -1188,12 +1205,27 @@ class main():
     def show_toolbox():
         hasil = ShowToolBox()
         return hasil
+    
+    @app.route('/box/show_toolbox_byid/<idbox>',methods = ['GET'])
+    def show_toolbox_byid(idbox):
+        return ShowToolBoxById(idbox)
 
     @app.route('/box/add_toolstock_by_box/<boxId>',methods = ['POST'])
     def add_toolstock_by_box(boxId):
         hasil = AddToolStockToBox(boxId)
         return hasil
 
+    @app.route('/box/show_insertedtool_tobox/<idbox>',methods = ['GET'])
+    def show_insertedtool_tobox(idbox):
+        return ShowInsertedToolStockInBox(idbox)
+    
+    @app.route('/box/show_box_bytoolstock/<toolstock>',methods = ['GET'])
+    def showbox_choose_bytoolstock(toolstock):
+        return ShowBoxChoosedByToolStock(toolstock)
+
+    @app.route('/box/addtoolstock_tobox/<toolstock>/<idbox>',methods = ['POST'])
+    def addtoolstock_tobox(toolstock = None,idbox = None):
+        return PengemasanToolStockToBox(toolstock,idbox)
 
     # Pengembalian Tools
     @app.route('/tools/show_tools_onws/<ws>',methods = ['GET'])

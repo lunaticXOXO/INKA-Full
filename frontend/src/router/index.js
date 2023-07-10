@@ -131,7 +131,9 @@ import HasilMatriksKriteriaByAdmin from '../views/pemasok/HasilMatriksKriteriaBy
 import AddPengadaanPerkakas from '../views/tools/AddPengadaanPerkakas.vue'
 import ShowKetersediaanToolsByWS from '../views/tools/ShowKetersediaanToolsByWS.vue'
 import HasilPengadaanTools from  '../views/tools/HasilPengadaanTools.vue'
-
+import ChooseToolStockByToolType from '../views/tools/ChooseToolStockByToolType.vue'
+import PengemasanToolStock from '../views/tools/PengemasanToolStock.vue'
+import ShowInsertedToolToBox from '../views/tools/ShowInsertedToolToBox.vue'
 
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
@@ -1207,6 +1209,40 @@ const routes = [
 },
 
 {
+
+  path : '/chooseToolStockPengemasan/:id',
+  name : 'Choose Tool Stock Pengemasan',
+  component : ChooseToolStockByToolType,
+  meta : {
+      title : "Pengemasan Tool Stock - PT.INKA"
+  }
+
+},
+
+{
+
+  path : '/chooseBoxItem/:id',
+  name : 'Choose Box Item For Tool Stock',
+  component : PengemasanToolStock,
+  meta : {
+
+      title : "Pilih Pengemasan Box Item  - PT.INKA"
+
+  }
+
+},
+
+{
+   path : '/insertedToolInBox/:id',
+   name : 'List Inserted Tools In Box Item',
+   component : ShowInsertedToolToBox,
+   meta : {
+      title : "List Inserted Tool Stock In Box Item"
+   }
+
+},
+
+{
     path : '/hasilPengadaanTools/:id',
     name : 'Hasil Pengadaan Tools',
     component : HasilPengadaanTools,
@@ -1270,7 +1306,7 @@ const routes = [
 
     title : "List Tool Need By Workstation - PT.INKA"
   },
-
+  props : true
 
 },
 
