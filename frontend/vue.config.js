@@ -5,7 +5,7 @@ module.exports = defineConfig({
   ],
   devServer: {
     port: 8181,
-    host: '192.168.134.58'
+    host: '192.168.0.107'
   }
 })
  
