@@ -80,7 +80,7 @@ export default {
             ],
 
             toolneed : [],
-
+            rencanaMulai : '',
             editedIndex : -1,
             editedItem : {
                 id : '',
@@ -103,7 +103,11 @@ export default {
         async fetchData2(){
             try{
                 const axios = require('axios')
-                const res = await axios.get('/tools/get_request_kebutuhantool_byws/' + this.$route.params.id)
+                const res = await axios.get('/tools/get_request_kebutuhantool_byws/' + this.$route.params.id,{
+                    params : {
+                        rencanaMulai : this.$route.query.rencanaMulai
+                    }
+                })
                 if(res.data.length == 0){
                     alert("Data kosong")
                 }else{

@@ -13,7 +13,14 @@
                     :headers = "column"
                     :items = "operation"
                     :items-per-page="5"
-                >           
+                >
+            <template v-slot:[`item.id`]="{ item }">
+                <span>{{item.id}}</span>
+            </template>    
+            
+            <template v-slot:[`item.rencanaMulai`]="{ item }">
+                <span>{{item.rencanaMulai}}</span>
+            </template>
                 </v-data-table>
             </v-card>
         </v-card>
@@ -81,8 +88,10 @@ export default {
 
             ],
             operation : [],
+            operation_complement : [],
             toolneed : [],
-
+            rencanaMulai : '',
+            datetime : '',
             editedIndex : -1,
             editedItem : {
                 id : '',
@@ -92,6 +101,8 @@ export default {
                 id : '',
                 nama : '',
             },
+
+            
         }
     },
 
@@ -103,14 +114,25 @@ export default {
     methods : {
 
         validate(){
-            location.replace('/listKetersediaanPerkakasByWorkstation/' + this.$route.params.id)
+            location.replace('/listKetersediaanPerkakasByWorkstation/' + this.$route.params.id + '?rencanaMulai=' + this.$route.query.rencanaMulai)
 
         },
 
         async fetchData(){
             try{
                 const axios = require('axios')
-                const res = await axios.get('/operasi/get_operasi_byws/' + this.$route.params.id)
+                // const res_complement = await axios.get('/operasi/get_operasi_byws/' + this.$route.params.id)
+                // this.operation_complement = res_complement.data
+                //this.rencanaMulai = this.operation_complement[0].rencanaMulai
+
+                //const res = await axios.get('/operasi/get_operasi_bywsrenmul/' + this.$route.params.id + '?rencanaMulai=' + this.rencanaMulai)
+
+             
+                const res = await axios.get('/operasi/get_operasi_bywsrenmul/' + this.$route.params.id,{
+                    params : {
+                        rencanaMulai : this.$route.query.rencanaMulai
+                    }
+                })
                 if(res.data == null){
                     alert("Data Operasi")
                 }else{
@@ -127,7 +149,12 @@ export default {
         async fetchData2(){
             try{
                 const axios = require('axios')
-                const res = await axios.get('/tools/get_request_kebutuhantool_byws/' + this.$route.params.id)
+                const res = await axios.get('/tools/get_request_kebutuhantool_byws/' + this.$route.params.id,{
+                    params : {
+                        rencanaMulai : this.$route.query.rencanaMulai
+                    }
+
+                })
                 if(res.data == null){
                     alert("Data kosong")
                 }else{

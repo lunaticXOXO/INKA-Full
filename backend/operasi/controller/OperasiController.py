@@ -157,7 +157,39 @@ def ShowOperationByWorkstation(ws):
     return make_response(jsonify(json_data),200)
 
 
-    
+
+def ShowOperationByWorkstation(rencanaMulai):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id, a.rencanaMulai, a.rencanaSelesai, a.mulai,a.selesai FROM prd_d_operasi a WHERE a.rencanaMulai = '"+rencanaMulai+"' GROUP BY a.rencanaMulai"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
+
+
+def ShowOperationByWorkstationAndTanggal(workstation):
+    conn = database.connector()
+    cursor = conn.cursor()
+    rencanaMulai = request.args.get("rencanaMulai")
+    print("rencanaMulai : ",rencanaMulai)
+    query = "SELECT a.id, a.rencanaMulai, a.rencanaSelesai, a.mulai,a.selesai FROM prd_d_operasi a WHERE a.stasiunKerja = '"+workstation+"' AND a.rencanaMulai LIKE '"+rencanaMulai+"%' ORDER BY a.rencanaMulai ASC"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
 def StartOperation(idOperasi):
     conn = database.connector()
     cursor = conn.cursor()

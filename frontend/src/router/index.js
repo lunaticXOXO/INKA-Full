@@ -133,6 +133,7 @@ import ShowKetersediaanToolsByWS from '../views/tools/ShowKetersediaanToolsByWS.
 import HasilPengadaanTools from  '../views/tools/HasilPengadaanTools.vue'
 import ChooseToolStockByToolType from '../views/tools/ChooseToolStockByToolType.vue'
 import PengemasanToolStock from '../views/tools/PengemasanToolStock.vue'
+import ShowInsertedToolToBox from '../views/tools/ShowInsertedToolToBox.vue'
 
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
@@ -1232,6 +1233,16 @@ const routes = [
 },
 
 {
+   path : '/insertedToolInBox/:id',
+   name : 'List Inserted Tools In Box Item',
+   component : ShowInsertedToolToBox,
+   meta : {
+      title : "List Inserted Tool Stock In Box Item"
+   }
+
+},
+
+{
     path : '/hasilPengadaanTools/:id',
     name : 'Hasil Pengadaan Tools',
     component : HasilPengadaanTools,
@@ -1295,7 +1306,7 @@ const routes = [
 
     title : "List Tool Need By Workstation - PT.INKA"
   },
-
+  props : true
 
 },
 

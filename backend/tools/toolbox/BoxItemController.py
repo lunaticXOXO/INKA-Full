@@ -66,7 +66,6 @@ def ShowToolBox():
 
 
 
-
 def AddToolStockToBox(boxId):
     conn = database.connector()
     cursor = conn.cursor()
@@ -86,3 +85,19 @@ def AddToolStockToBox(boxId):
         hasil = {"status" : "gagal"}
     return hasil
   
+
+def ShowToolBoxById(idbox):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM eqp_r_toolbox WHERE id = '"+idbox+"'"
+    cursor.execute(query)
+
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return  make_response(jsonify(json_data),200)
+

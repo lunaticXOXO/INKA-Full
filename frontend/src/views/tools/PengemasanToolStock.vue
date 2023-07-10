@@ -40,7 +40,7 @@
             <template v-slot:[`item.aksi`]="{ item }">
            
             <div>
-                <router-link :to="{name : 'Tambah Tool Stock By Box', params:{id : `${item.id}`}}">
+                <router-link :to="{name : 'List Inserted Tools In Box Item', params:{id : `${item.id}`}}">
                     <v-tooltip top>
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn 
@@ -48,6 +48,7 @@
                             x-small
                             color="blue"
                             v-bind="attrs"
+                            @click="addToolStockToBox()"
                             v-on="on">
                             <v-icon small dark>mdi-plus</v-icon>
                             </v-btn>
@@ -62,6 +63,11 @@
             </template>
             </v-data-table>
         </v-card>
+
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+        {{snackbar.message}}
+      </v-snackbar>
+
         </v-card>
     
     </v-app>
@@ -84,11 +90,13 @@ export default {
             column2 : [
                 {text : 'ID', value : 'id'},
                 {text : 'Nama Tool Box', value : 'nama'},
+                {text : 'Stasiun Kerja', value : 'stasiunKerja'},
                 {text : 'Action',value : 'aksi'}
 
             ],
             stock : [],
             toolbox : [],
+            toolbox2 : [],
             editedIndex : -1,
             editedItem : {
                 id : '',
@@ -97,6 +105,11 @@ export default {
             defaultItem : {
                 id : '',
                 nama : '',
+            },
+            snackbar: {
+                show: false,
+                message: null,
+                color: null
             },
         }
     },
@@ -107,6 +120,8 @@ export default {
     },
 
     methods : {
+
+
         async fetchData(){
             try{
                 const axios = require('axios')
@@ -127,7 +142,9 @@ export default {
         async fetchToolBox(){
             try{
                 const axios = require('axios')
-                const res = await axios.get('/box/show_toolbox')
+          
+                const res = await axios.get('/box/show_box_bytoolstock/' + this.$route.params.id)
+                
                 if(res.data == null){
                     alert("Data Tool Box kosong")
                 }else{
@@ -139,6 +156,35 @@ export default {
                 console.log(error)
             }
         },
+
+
+        async addToolStockToBox(){
+            try{
+                const axios = require('axios')
+                const res_select = await axios.get('/tools/get_toolstock_byid/' + this.$route.params.id)
+                this.toolbox2 = res_select.data
+
+                const res = await axios.post('/box/addtoolstock_tobox/' + this.toolbox2[0].id + '/'  + this.$route.params.id )
+                if(res.data.status == 'berhasil'){
+                    this.snackbar = {
+                        message : "Insert toolstock to box berhasil",
+                        color : 'green',
+                        show : true
+                    }
+                    location.replace('/insertedToolInBox/' + this.$route.params.id)
+                }
+                else if(res.data.status == 'gagal'){
+                    this.snackbar = {
+                        message : "Insert toolstock to box gagal",
+                        color : 'red',
+                        show : true
+                    }
+                }
+            }catch(error){
+                alert(error)
+                console.log(error)
+            }
+        }
        
        
     }
