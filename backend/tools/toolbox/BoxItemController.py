@@ -85,6 +85,31 @@ def AddToolStockToBox(boxId):
         hasil = {"status" : "gagal"}
     return hasil
   
+def AddToolStockToWorkstation(toolstock):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.toolTypeCode FROM eqp_d_toolstock a WHERE a.id = '"+toolstock+"'"
+    
+    cursor.execute(query)
+    data = cursor.fetchone()
+    tooltype = data[0]
+
+    query2 = "SELECT a.stasiunKerja FROM cpl_kirimtool2 a WHERE a.toolTypeCode = '"+tooltype+"'"
+    cursor.execute(query2)
+    data = cursor.fetchone()
+    ws = data[0]
+
+    query3 = "INSERT INTO eqp_d_toolonws(toolStockId,stasiunKerja,login)VALUES(%s,%s,%s)"
+    try:
+        values = (toolstock,ws,datetime.datetime.now())
+        cursor.execute(query3,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        hasil = {"status" : "gagal"}
+        print("error",str(e))
+        
+    return hasil
 
 def ShowToolBoxById(idbox):
     conn = database.connector()

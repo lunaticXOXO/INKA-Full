@@ -22,9 +22,30 @@
                 <span>{{item.namaTool}}</span>
             </template>
 
+            <template v-slot:[`item.kelompok`]="{ item }">
+                <span>{{item.kelompok}}</span>
+            </template>
+
             <template v-slot:[`item.aksi`]="{ item }">
-            <div>
+            <div v-if="item.kelompok === 'box'">
                 <router-link :to="{name : 'Choose Tool Stock Pengemasan', params:{id : `${item.toolTypeCode}`}}">
+                    <v-tooltip top>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn 
+                            class="mx-1" 
+                            x-small
+                            color="green"
+                            v-bind="attrs"
+                            v-on="on">
+                            <v-icon small dark>mdi-check</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>Choose Tool Type</span>
+                    </v-tooltip>
+                </router-link>
+        </div>
+        <div v-else-if="item.kelompok === 'workstation'">
+            <router-link :to="{name : 'Choose Tool Stock Pengemasan Non Box', params:{id : `${item.toolTypeCode}`}}">
                     <v-tooltip top>
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn 
@@ -51,11 +72,8 @@
         <v-card
                 class="mx-auto text-center"
                 max-width="1250">
-   
 
         </v-card>
-
-    
 
         </v-card>
     
@@ -74,6 +92,7 @@ export default {
                 {text : 'Nama Tool', value : 'namaTool'},
                 {text : 'Jumlah Kebutuhan',value : 'butuh'},
                 {text : 'Kekurangan Pengemasan', value : 'kekuranganPendistribusian'},
+                {text : 'Kelompok', value : 'kelompok'},
                 {text : 'Action', value : 'aksi'}
             
 
