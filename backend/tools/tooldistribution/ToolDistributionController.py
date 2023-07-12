@@ -143,7 +143,7 @@ def GetRequestToolNeedByWorkstation(workstation):
         if index["kelompok"] == 1:
             temp = "box"
             index["kelompok"] = temp
-        elif index[6] == 2:
+        elif index["kelompok"] == 2:
             temp = "workstation"
             index["kelompok"] = temp
 
