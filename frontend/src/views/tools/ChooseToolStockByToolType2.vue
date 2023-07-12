@@ -4,7 +4,7 @@
             class="mx-auto text-center mt-15"
             max-width="1200">
             <br>
-            <h2> Pilih Tool Stock Untuk Pengemasan </h2>
+            <h2> Pilih Tool Stock Untuk Pengemasan By Workstation </h2>
             <br>
             <v-card
                 class="mx-auto text-center"

@@ -29,7 +29,7 @@ def AddToolPurchaseItemByToolPurchase(toolPurchase):
 
       
 
-        query_purchase = "SELECT purchaseId FROM eqp_d_toolpurchase WHERE purchaseId = '"+toolPurchase+"'"
+        query_purchase = "SELECT a.toolPurchaseId  FROM eqp_d_toolpurchase a WHERE a.toolPurchaseId = '"+toolPurchase+"'"
         cursor.execute(query_purchase)
         toolPurchase = ""
         records_purchase = cursor.fetchall()
@@ -37,7 +37,7 @@ def AddToolPurchaseItemByToolPurchase(toolPurchase):
             toolPurchase = index[0]
         
         print("Tool Purchase : ", toolPurchase)
-
+        tool_purchase_item = ""
 
         if count < 10 and length == 1 :
             tool_purchase_item = toolPurchase + "00" + str(count)
