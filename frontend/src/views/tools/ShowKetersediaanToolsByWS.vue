@@ -44,7 +44,7 @@
                     </v-tooltip>
                 </router-link>
         </div>
-        <div v-else-if="item.kelompok === 'workstation'">
+        <div v-else-if="item.kelompok === 'non box'">
             <router-link :to="{name : 'Choose Tool Stock Pengemasan Non Box', params:{id : `${item.toolTypeCode}`}}">
                     <v-tooltip top>
                         <template v-slot:activator="{ on, attrs }">
@@ -91,7 +91,7 @@ export default {
                 {text : 'Tool Type Code', value : 'toolTypeCode'},
                 {text : 'Nama Tool', value : 'namaTool'},
                 {text : 'Jumlah Kebutuhan',value : 'butuh'},
-                {text : 'Kekurangan Pengemasan', value : 'kekuranganPendistribusian'},
+                {text : 'Kekurangan Pengemasan', value : 'kurangPengemasan'},
                 {text : 'Kelompok', value : 'kelompok'},
                 {text : 'Action', value : 'aksi'}
             

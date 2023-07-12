@@ -27,12 +27,42 @@ def ShowBoxChoosedByToolStock(toolstock):
     
     return  make_response(jsonify(json_data),200)
 
+def ShowWorkstationByToolBox(idbox):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT b.id AS 'idWS', b.nama AS 'namaWS' FROM eqp_d_boxonws a JOIN gen_r_stasiunkerja b ON b.id = a.stasiunKerja WHERE a.boxId = '"+idbox+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return  make_response(jsonify(json_data),200)
+
+
+def ShowWorkstationToolsByToolBox(idbox):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT b.id,b.nama,c.toolStockId FROM eqp_d_boxonws a JOIN gen_r_stasiunkerja b on b.id = a.stasiunKerja JOIN eqp_d_toolonws c on c.stasiunKerja = b.id WHERE a.boxId = '"+idbox+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return  make_response(jsonify(json_data),200)
+
 
 def PengemasanToolStockToBox(toolstock,idbox):
     conn =  database.connector()
     cursor = conn.cursor()
     query = "INSERT INTO eqp_d_boxitem(toolStockId,boxId,startDate)VALUES(%s,%s,%s)"
-    try:
+    
+    try:    
         startdate = datetime.datetime.now()
         values = (toolstock,idbox,startdate)
         cursor.execute(query,values)

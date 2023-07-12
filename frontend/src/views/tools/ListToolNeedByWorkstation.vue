@@ -83,7 +83,7 @@ export default {
                 {text : 'Tool Type Code', value : 'toolTypeCode'},
                 {text : 'Nama Tool', value : 'namaTool'},
                 {text : 'Jumlah Kebutuhan',value : 'butuh'},
-                {text : 'Kekurangan Pendistribusian', value : 'kekuranganPendistribusian'}
+                {text : 'Kurang Pengemasan', value : 'kurangPengemasan'}
             
 
             ],

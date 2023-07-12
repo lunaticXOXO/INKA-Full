@@ -1242,7 +1242,8 @@ const routes = [
 
       title : "Pilih Pengemasan Box Item  - PT.INKA"
 
-  }
+  },
+  props : true
 
 },
 
