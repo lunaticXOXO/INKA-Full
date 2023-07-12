@@ -72,7 +72,7 @@ import ListProdukbyRProyekDSP from '../views/produk/ListProdukbyRProyekDSP.vue'
 import StatusOperasi from '../views/operasi/StatusOperasi.vue'
 import ListTanggalLibur from '../views/referensi/ListTanggalLibur.vue'
 import ListMaterialTypeBySupplier from '../views/pemasok/ListMaterialByPemasok.vue'
-import TambahMaterialTypeByPemasok from '../views/pemasok/TambahMaterialTypeByPemasok.vue'
+import TambahMaterialTypebyPemasok from '../views/pemasok/TambahMaterialTypebyPemasok.vue'
 import ListPurchaseMaterial from '../views/material/ListPurchaseMaterial.vue'
 import PurchaseMaterialItem from '../views/material/PurchaseMaterialItem.vue'
 import ListPurchaseMaterialItem from '../views/material/ListPurchaseMaterialItem.vue'
@@ -832,9 +832,9 @@ const routes = [
   },
 
   {
-    path : '/tambahMaterialTypeByPemasok/:id',
+    path : '/tambahMaterialTypebyPemasok/:id',
     name : 'Tambah Material Type By Pemasok',
-    component : TambahMaterialTypeByPemasok,
+    component : TambahMaterialTypebyPemasok,
     meta : {
       title : "Tambah Material Type By Pemasok - PT.INKA"
     }
