@@ -1181,7 +1181,12 @@ class main():
 
     @app.route('/tools/show_disttoolstock_bytype/<tooltype>',methods = ['GET'])
     def get_distribution_toolstock(tooltype):
-        return ShowDistributionToolStockByToolType(tooltype)
+        return ShowDistributionToolStockByToolTypeBox(tooltype)
+    
+    @app.route('/tools/show_disttoolstock_bytype_nobox/<tooltype>',methods = ['GET'])
+    def get_distribution_toolstock_nonbox(tooltype):
+        return ShowDistributionToolStockByToolTypeNoBox(tooltype)
+
 
     @app.route('/tools/get_request_kebutuhantool_byws/<workstation>',methods = ['GET'])
     def get_request_kebutuhantool_byws(workstation):
@@ -1214,6 +1219,10 @@ class main():
     def add_toolstock_by_box(boxId):
         hasil = AddToolStockToBox(boxId)
         return hasil
+
+    @app.route('/box/add_toolstock_nonbox/<toolstock>',methods = ['POST'])
+    def add_toolstock_by_workstation(toolstock):
+        return AddToolStockToWorkstation(toolstock)
 
     @app.route('/box/show_insertedtool_tobox/<idbox>',methods = ['GET'])
     def show_insertedtool_tobox(idbox):

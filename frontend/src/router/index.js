@@ -132,6 +132,7 @@ import AddPengadaanPerkakas from '../views/tools/AddPengadaanPerkakas.vue'
 import ShowKetersediaanToolsByWS from '../views/tools/ShowKetersediaanToolsByWS.vue'
 import HasilPengadaanTools from  '../views/tools/HasilPengadaanTools.vue'
 import ChooseToolStockByToolType from '../views/tools/ChooseToolStockByToolType.vue'
+import ChooseToolStockByToolType2 from '../views/tools/ChooseToolStockByToolType2.vue'
 import PengemasanToolStock from '../views/tools/PengemasanToolStock.vue'
 import ShowInsertedToolToBox from '../views/tools/ShowInsertedToolToBox.vue'
 
@@ -1216,6 +1217,19 @@ const routes = [
   meta : {
       title : "Pengemasan Tool Stock - PT.INKA"
   }
+
+},
+
+{
+   
+   path : '/chooseToolStockPengemasanNonBox/:id',
+   name : 'Choose Tool Stock Pengemasan Non Box',
+   component : ChooseToolStockByToolType2,
+   meta : {
+
+      title : "Pengemasan Tool Stock Non Box - PT.INKA"
+
+   }
 
 },
 

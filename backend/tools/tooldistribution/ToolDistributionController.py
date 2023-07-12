@@ -137,10 +137,20 @@ def GetRequestToolNeedByWorkstation(workstation):
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
     
+    temp = ""
+
+    for index in json_data:
+        if index["kelompok"] == 1:
+            temp = "box"
+            index["kelompok"] = temp
+        elif index[6] == 2:
+            temp = "workstation"
+            index["kelompok"] = temp
+
     return  make_response(jsonify(json_data),200)
 
 
-def ShowDistributionToolStockByToolType(tooltype):
+def ShowDistributionToolStockByToolTypeBox(tooltype):
     conn = database.connector()
     cursor = conn.cursor()
     query = "SELECT a.id AS 'idToolStock',b.nama,a.merk,a.quantity,a.unit FROM eqp_d_toolstock a JOIN eqp_r_tooltype b ON b.codes = a.toolTypeCode JOIN eqp_d_toolonws c ON c.toolStockId = a.id WHERE b.codes = '"+tooltype+"' AND c.stasiunKerja = 'WSGD';"
@@ -154,5 +164,19 @@ def ShowDistributionToolStockByToolType(tooltype):
     
     return  make_response(jsonify(json_data),200)
 
+
+def ShowDistributionToolStockByToolTypeNoBox(tooltype):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id AS 'idToolStock',b.nama,a.merk,a.quantity,a.unit FROM eqp_d_toolstock a JOIN eqp_r_tooltype b ON b.codes = a.toolTypeCode JOIN eqp_d_toolonws c ON c.toolStockId = a.id WHERE b.codes = '"+tooltype+"' AND c.stasiunKerja = 'WSGD';"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return  make_response(jsonify(json_data),200)
 
 
