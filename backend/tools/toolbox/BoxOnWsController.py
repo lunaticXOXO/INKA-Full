@@ -68,6 +68,27 @@ def PengemasanToolStockToBox(toolstock,idbox):
         cursor.execute(query,values)
         query = "DELETE FROM eqp_d_boxonws WHERE boxid = '"+idbox+"' AND stasiunKerja = 'WSGD'"
         cursor.execute(query)
+        query_select = "SELECT a.toolTypeCode, a.quantity, a.unit,b.multiplier  FROM eqp_d_toolstock a JOIN eqp_r_tooltype c on c.codes = a.toolTypeCode JOIN gen_r_materialunit b on b.id = a.unit WHERE a.id = '"+toolstock+"'"
+        cursor.execute(query_select)
+        records = cursor.fetchone()
+
+        tooltype = records[0]
+        qty = int(records[1])
+        multiplier = int(records[3])
+
+        qty_total = qty * multiplier
+
+        query_select2 = "SELECT kurangPengemasan FROM cpl_kirimtool02 WHERE toolTypeCode = '"+tooltype+"'"
+        cursor.execute(query_select2)
+        data2 = cursor.fetchone()
+        qty_pengemasan = int(data2[0])
+
+        qty_akhir = qty_pengemasan - qty_total
+
+        query_update = "UPDATE cpl_kirimtool02 SET kurangPengemasan = %s WHERE toolTypeCode = %s"
+        values2 = (qty_akhir,tooltype)
+        cursor.execute(query_update,values2)
+        
         conn.commit()
         hasil = {"status" : "berhasil"}
     except Exception as e:
