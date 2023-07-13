@@ -3,7 +3,7 @@
         class="mx-auto text-center mt-6"
         max-width="1000">
         <br>
-        <h1>List Tool Box</h1>
+        <h1>Daftar Kotak Perkakas</h1>
         <br>
         <v-card
             class="mx-auto text-center"

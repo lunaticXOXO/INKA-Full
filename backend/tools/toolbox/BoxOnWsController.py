@@ -42,6 +42,90 @@ def ShowWorkstationByToolBox(idbox):
     return  make_response(jsonify(json_data),200)
 
 
+def ShowBoxByWorkstationPeminjaman(workstation):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    tanggal = request.args.get("tanggal")
+    now = datetime.datetime.now()
+    now = str(now)
+    query =   "SELECT*FROM \
+    (SELECT DISTINCT  a.id, a.toolTypeCode, e.nama, b.boxId, c.stasiunKerja AS SKtool, \
+    d.stasiunKerja AS SKBox, a.quantity, \
+    case \
+	when d.stasiunKerja IS NOT NULL then d.stasiunKerja \
+	when c.stasiunKerja IS NOT NULL then c.stasiunKerja \
+    END onWs, f.tanggal FROM eqp_d_toolstock a \
+    LEFT JOIN eqp_d_boxitem b ON a.id = b.toolStockId \
+    LEFT JOIN eqp_d_toolonws c ON a.id = c.toolStockId \
+    LEFT JOIN eqp_d_boxonws d ON b.boxId = d.boxId \
+    LEFT JOIN eqp_r_tooltype e ON e.codes=a.toolTypeCode \
+    LEFT JOIN cpl_kirimtool02 f on e.codes=f.toolTypeCode \
+    WHERE c.logout IS NULL AND b.endDate IS NULL)CC1 WHERE CC1.onWs='"+workstation+"' AND CC1.tanggal = '"+tanggal+"'\
+    AND CC1.id NOT IN (SELECT toolId FROM eqp_d_toolpinjam) "
+
+    cursor.execute(query)
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return  make_response(jsonify(json_data),200)
+
+
+def PeminjamanPerkakasByWorkstation(workstation,tanggal):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query_insert = "INSERT INTO eqp_d_toolpinjam(boxId,toolId,operatorId,tanggalPinjam)VALUES(%s,%s,%s,%s)"
+    now = datetime.datetime.now()
+    try:
+        data = request.json
+        uuidoperator = data["uuid"]
+
+        query =   "SELECT * FROM \
+        (SELECT DISTINCT  a. id, a.toolTypeCode, e.nama, b.boxId, c.stasiunKerja AS SKtool, \
+        d.stasiunKerja AS SKBox, a.quantity, \
+        case \
+	    when d.stasiunKerja IS NOT NULL then d.stasiunKerja \
+	    when c.stasiunKerja IS NOT NULL then c.stasiunKerja \
+        END onWs, f.tanggal FROM eqp_d_toolstock a \
+        LEFT JOIN eqp_d_boxitem b ON a.id = b.toolStockId \
+        LEFT JOIN eqp_d_toolonws c ON a.id = c.toolStockId \
+        LEFT JOIN eqp_d_boxonws d ON b.boxId = d.boxId \
+        LEFT JOIN eqp_r_tooltype e ON e.codes=a.toolTypeCode \
+        LEFT JOIN cpl_kirimtool02 f on e.codes=f.toolTypeCode \
+        WHERE c.logout IS NULL AND b.endDate IS NULL)CC1 WHERE CC1.onWs='"+workstation+"' AND CC1.tanggal = '"+tanggal+"'"
+        cursor.execute(query)
+        records = cursor.fetchall()
+        
+      
+        query_operator = "SELECT a.operatorid FROM opr_d_dictoperator a WHERE a.uuid = '"+uuidoperator+"'"
+        cursor.execute(query_operator)
+        data = cursor.fetchone()
+
+        idoperator = data[0]
+        for index in records:
+            idbox = index[3]
+            idtool = index[0]
+            print("idtool : ",idtool)
+            values = (idbox,idtool,idoperator,now)
+            cursor.execute(query_insert,values)
+        
+        print("operator : ",idoperator)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+
+    except Exception as e:
+        hasil = {"status" : "gagal"}
+        print("error",str(e))
+    return hasil
+    
+
+
+
 def ShowWorkstationToolsByToolBox(idbox):
     conn = database.connector()
     cursor = conn.cursor()
@@ -84,6 +168,9 @@ def PengemasanToolStockToBox(toolstock,idbox):
         qty_pengemasan = int(data2[0])
 
         qty_akhir = qty_pengemasan - qty_total
+
+        if qty_akhir <= 0:
+            qty_akhir = 0
 
         query_update = "UPDATE cpl_kirimtool02 SET kurangPengemasan = %s WHERE toolTypeCode = %s"
         values2 = (qty_akhir,tooltype)

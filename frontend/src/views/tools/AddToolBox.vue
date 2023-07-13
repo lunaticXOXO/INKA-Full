@@ -4,7 +4,7 @@
       class="mx-auto text-center mt-10"
       width = "1150">
       <br>
-      <h1>Tambah Tool Box</h1>
+      <h1>Kotak Perkakas</h1>
       <v-form
         class="pa-6"
         ref="form"
@@ -45,7 +45,7 @@
     <br><br>
 
     <v-card max-width="1500" class="mx-auto text-center mt-10 pa-2 mb-10">
-      <h2>Box Yang Tersedia</h2>
+      <h2>Daftar Kotak Perkakas</h2>
       <v-data-table
           :headers = "column"
           :items = "box"

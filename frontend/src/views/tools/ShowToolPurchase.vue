@@ -4,7 +4,7 @@
           class="mx-auto text-center mt-10"
           max-width = "1300">
           <br>
-          <h2>List Purchase Tools</h2>
+          <h2>Daftar Pembelian Perkakas</h2>
           <br>
           <router-link to="/purchaseTools">
               <v-btn color="primary" class="d-flex ml-4 mb-6">

@@ -81,16 +81,26 @@ export default {
                 action: 'mdi-wrench',
                 active: false,
                 items: [
-                    { title: 'List Tool Box', icon: 'mdi-filter-variant', route: '/showToolBox'},
-                    { title: 'Tambah Tool Box', icon: 'mdi-plus', route: '/addToolBox'},
-                    { title: 'Tambah Tool Type Consumable', icon: 'mdi-plus', route: '/addToolTypeConsume'},
-                    { title: 'Tambah Tool Type Non Consumable', icon: 'mdi-plus', route: '/addToolTypeNonConsume'},
-                    { title: 'Purchase Tools', icon: 'mdi-plus', route: '/purchaseTools'},
-                    {title : 'List Purchase Tools', icon : 'mdi-filter-variant', route : '/listPurchaseTools'},
-                    {title : 'List Tool Stock', icon : 'mdi-wrench', route : '/listToolStock'}
+                    { title: 'Daftar Kotak Perkakas', icon: 'mdi-filter-variant', route: '/showToolBox'},
+                    { title: 'Kotak Perkakas', icon: 'mdi-plus', route: '/addToolBox'},
+                    { title: 'Jenis Perkakas Consumable', icon: 'mdi-plus', route: '/addToolTypeConsume'},
+                    { title: 'Jenis Perkakas Non Consumable', icon: 'mdi-plus', route: '/addToolTypeNonConsume'},
+                    { title: 'Pembelian Perkakas', icon: 'mdi-plus', route: '/purchaseTools'},
+                    {title : 'Daftar Pembelian Perkakas', icon : 'mdi-filter-variant', route : '/listPurchaseTools'},
+                    {title : 'Daftar Stok Perkakas', icon : 'mdi-wrench', route : '/listToolStock'}
                         //{title : 'List Purchase Tool Item',icon : 'mdi-gavel',route : '/listPurchaseToollItem/:id'}
                 ],
-                title: 'New Item',
+                title: 'Penambahan Item Perkakas',
+                },
+
+                {
+                    action: 'mdi-wrench',
+                    active: false,
+                    items: [
+                    { title: 'Kebutuhan Pengadaan Perkakas', icon: 'mdi-filter-variant', route: '/addPengadaanTools'},
+                  
+                ],
+                    title : "Pengadaan Perkakas"
                 },
                 
                 {
@@ -105,20 +115,12 @@ export default {
 
                 },
 
+               
                 {
                     action: 'mdi-wrench',
                     active: false,
                     items: [
-                    { title: 'Kebutuhan Pengadaan Perkakas', icon: 'mdi-filter-variant', route: '/addPengadaanTools'},
-                  
-                ],
-                    title : "Pengadaan Perkakas"
-                },
-                {
-                    action: 'mdi-wrench',
-                    active: false,
-                    items: [
-                    { title: 'Choose Peminjaman Tools', icon: 'mdi-filter-variant', route: '/choosePeminjamanTool'},
+                    { title: 'Peminjaman Tools', icon: 'mdi-filter-variant', route: '/addPeminjamanTools'},
                   
                 ],
                     title : "Peminjaman dan Pengembalian Perkakas"
