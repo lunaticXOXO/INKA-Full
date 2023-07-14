@@ -91,11 +91,7 @@ export default {
                 {text : 'Tool Type Code', value : 'toolTypeCode'},
                 {text : 'Nama Tool', value : 'namaTool'},
                 {text : 'Jumlah Kebutuhan',value : 'butuh'},
-<<<<<<< HEAD
-                {text : 'kurang Pengemasan', value : 'kurangPengemasan'},
-=======
                 {text : 'Kekurangan Pengemasan', value : 'kurangPengemasan'},
->>>>>>> 2abb2dabe3352b0523b6e3fe55ebcc8ff16180ff
                 {text : 'Kelompok', value : 'kelompok'},
                 {text : 'Action', value : 'aksi'}
             
