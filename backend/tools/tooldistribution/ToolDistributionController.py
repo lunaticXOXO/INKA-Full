@@ -146,11 +146,7 @@ def GetRequestToolNeedByWorkstation(workstation):
             temp = "box"
             index["kelompok"] = temp
         elif index["kelompok"] == 2:
-<<<<<<< HEAD
             temp = "non Box"
-=======
-            temp = "non box"
->>>>>>> 2abb2dabe3352b0523b6e3fe55ebcc8ff16180ff
             index["kelompok"] = temp
 
     return  make_response(jsonify(json_data),200)
