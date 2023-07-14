@@ -213,19 +213,36 @@ def InsertMatriksKriteria():
 def InsertMatriksKriteriaByAdmin(idPenghitung):
     conn = db.connector()
     cursor = conn.cursor()
+    
     query = "SELECT ID FROM gen_r_adminperhitungan WHERE ID = '"+idPenghitung+"'"
     cursor.execute(query)
     record = cursor.fetchone()
     idpenghitung = record[0]
-    query_insert = "INSERT INTO gen_r_matrikskriteria(IDKriteria,IDKriteria02,Nilai,idPenghitung)VALUES(%s,%s,%s,%s)"
+    query_insert = "INSERT INTO gen_r_matrikskriteria(id,IDKriteria,IDKriteria02,Nilai,idPenghitung)VALUES(%s,%s,%s,%s,%s)"
 
+    query_getunique = "SELECT COUNT(*) FROM gen_r_matrikskriteria"
+    cursor.execute(query_getunique)
+    data = cursor.fetchone()
+    id = data[0]
+    id_penghitung = ""
+    if id >= 10:
+        
+        id_penghitung = "00" + str(id)
+    elif id >= 100:
+        id = str(id)
+        id_penghitung = "0" + str(id)
+    elif id >= 1000:
+        id_penghitung = id
+    else:
+        id_penghitung = "000" + str(id)  
+    
     try:
         data = request.json
         IDKriteria = data["criteria01"]
         IDKriteria02 = data["criteria02"]
         nilai = data["Nilai"]
 
-        values = (IDKriteria,IDKriteria02,nilai,idpenghitung)
+        values = (id_penghitung,IDKriteria,IDKriteria02,nilai,idpenghitung)
         cursor.execute(query_insert,values)
         conn.commit()
 
@@ -287,7 +304,7 @@ def GetMatriksKriteriaInput():
 def GetMatriksKriteriaInputByAdmin(IdPenghitung):
     conn = db.connector()
     cursor = conn.cursor()
-    query = "SELECT b.IDKriteria AS 'IdKriteria01',c.namaKriteria AS 'namaKriteria01', "
+    query = "SELECT b.id,b.IDKriteria AS 'IdKriteria01',c.namaKriteria AS 'namaKriteria01', "
     query += "b.IDKriteria02 AS 'IdKriteria02', d.namaKriteria AS 'namaKriteria02',b.Nilai,b.idPenghitung " 
     query += "FROM gen_r_adminperhitungan a "
     query += "JOIN gen_r_matrikskriteria b ON b.idPenghitung = a.ID "

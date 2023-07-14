@@ -13,7 +13,7 @@
 
         <v-data-table   
             :headers = "column"
-            :items = "customers"
+            :items = "customers"  
             :items-per-page="5"
             >
             <template v-slot:[`item.id`]="{ item }">

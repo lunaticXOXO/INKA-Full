@@ -75,40 +75,31 @@
                     :items-per-page="5"
                 >
 
-            <template v-slot:[`item.idPenghitung`]="{ item }">
-              <div v-if="item.idPenghitung === editedItem.idPenghitung">
-                  <v-text-field disabled v-model="editedItem.idPenghitung" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
-                  <span v-else>{{item.idPenghitung}}</span>
+            <template v-slot:[`item.id`]="{ item }">
+              <div v-if="item.id === editedItem.id">
+                  <v-text-field disabled v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                  <span v-else>{{item.id}}</span>
               </div>
               <div v-else>
-                  <v-text-field v-model="editedItem.idPenghitung" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
-                  <span v-else>{{item.idPenghitung}}</span>
+                  <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                  <span v-else>{{item.id}}</span>
               </div>
             </template>
+
                 <template v-slot:[`item.IdKriteria01`]="{ item }">
-                    <v-text-field v-model="editedItem.IdKriteria01" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
+                    <v-text-field v-model="editedItem.IdKriteria01" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
                     <span v-else>{{item.IdKriteria01}}</span>
                 </template>
-    
-                <template v-slot:[`item.namaKriteria`]="{ item }">
-                    <v-text-field v-model="editedItem.namaKriteria" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
-                    <span v-else>{{item.namaKriteria}}</span>
-                </template>
+                  
 
-
-            
                 <template v-slot:[`item.IdKriteria02`]="{ item }">
-                    <v-text-field v-model="editedItem.IdKriteria02" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
+                    <v-text-field v-model="editedItem.IdKriteria02" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
                     <span v-else>{{item.IdKriteria02}}</span>
                 </template>
     
-                <template v-slot:[`item.namaKriteria02`]="{ item }">
-                    <v-text-field v-model="editedItem.namaKriteria02" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
-                    <span v-else>{{item.namaKriteria02}}</span>
-                </template>
     
                 <template v-slot:[`item.Nilai`]="{ item }">
-                    <v-text-field v-model="editedItem.Nilai" :hide-details="true" dense single-line :autofocus="true" v-if="item.idPenghitung == editedItem.idPenghitung"></v-text-field>
+                    <v-text-field v-model="editedItem.Nilai" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
                     <span v-else>{{item.Nilai}}</span>
                 </template>
 
@@ -116,7 +107,7 @@
 
 
                 <template v-slot:[`item.aksi`]="{ item }">
-              <div v-if="item.idPenghitung == editedItem.idPenghitung">
+              <div v-if="item.id == editedItem.id">
                   <v-icon color="red" class="mr-3" @click="close">
                   mdi-window-close
                   </v-icon>
@@ -166,6 +157,7 @@
         data(){
             return {
                 column : [
+                    //{text : 'ID', value : 'id'},
                     {text : 'ID Penghitung', value : 'idPenghitung'},
                     {text : 'ID Kriteria', value : 'IdKriteria01'},
                     {text : 'Nama Kriteria', value : 'namaKriteria01'},
@@ -189,19 +181,19 @@
                 Nilai : '',
                
                 editedItem : {
-                    idPenghitung : '',
+                   
                     IdKriteria01 : '',
-                    namaKriteria : '',
+                  
                     IdKriteria02 : '',
-                    namaKriteria02 : '', 
+                   
                     Nilai : ''
                 },
                 defaultItem : {
-                    idPenghitung : '',
+                   
                     IdKriteria01 : '',
-                    namaKriteria : '',
+                  
                     IdKriteria02 : '',
-                    namaKriteria02 : '',
+                  
                     Nilai : ''
                 },
             }
@@ -393,12 +385,10 @@
         this.close()
         try{
             const axios = require('axios')
-            const res = await axios.post('/ahp/update_matriks_kriteria/'+ this.editedItem.idPenghitung,
-            {  idPenghitung: this.editedItem. idPenghitung,
+            const res = await axios.post('/ahp/update_matriks_kriteria/'+ this.editedItem.id,
+            { 
                IdKriteria01: this.editedItem.IdKriteria01,
-               namaKriteria : this.editedItem.namaKriteria,
                IdKriteria02 : this.editedItem.IdKriteria02,
-               namaKriteria02 : this.editedItem.namaKriteria02,
                Nilai : this.editedItem.Nilai
             
           

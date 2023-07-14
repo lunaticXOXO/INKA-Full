@@ -520,10 +520,16 @@ def insertSupplier():
                 mulai) values('"+idKri00+"','"+idSup01+"', '"+str(bobot01)+"', current_timestamp)"
                 cur00.execute(q02)
                 con00.commit()
-            return True
+                cek = True
         else:
             print("Perbaiki Matriks")
-            return False
+            cek = False
+
+    if cek == True:
+        hasil = {"status" : "berhasil"}
+    elif cek == False:
+        hasil = {"status" : "perbaiki matriks"}
+    return hasil
         
 def bobotglobal():
      con00 = database.connector()
@@ -631,7 +637,7 @@ def MergeCountSupplier(idPenghitung):
         
         bobotglobal()
         supplierrangking()
-        if final == True:
+        if final == {"status" : "berhasil"}:
             query1 = "UPDATE gen_r_supplierbobot SET idPenghitung = '"+idPenghitung+"' WHERE idPenghitung IS NULL"
             cursor.execute(query1)
             
@@ -645,7 +651,10 @@ def MergeCountSupplier(idPenghitung):
             conn.commit()
             return {"status" : "berhasil"}
 
-        else:
+        elif final == {"status" : "perbaiki matriks"}:
+            query4= "DELETE FROM gen_r_perbandingan WHERE idPenghitung IS NULL AND konfirm IS NULL"
+            cursor.execute(query4)
+            conn.commit()
             return {"status" : "perbaiki matriks"}
     except Exception:
         return {"status" : "gagal"}
@@ -705,16 +714,18 @@ def HasilRankingSupplierByAdmin(idPenghitung):
     return make_response(jsonify(json_data),200)
 
 
-def PerbaikiInputKriteria(idPenghitung):
+def PerbaikiInputKriteria(id):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "UPDATE gen_r_matrikskriteria SET IDKriteria = %s, IDKriteria02 = %s, Nilai = %s WHERE idPenghitung = '"+idPenghitung+"'"    
+    idKriteria = None
+    idKriteria02 = None
+    query = "UPDATE gen_r_matrikskriteria SET IDKriteria = %s, IDKriteria02 = %s, Nilai = %s WHERE id = '"+id+"'"    
     try:
         data = request.json
-        IDKriteria = data["IdKriteria01"]
-        IDKriteria02 = data["IdKriteria02"]
+        idKriteria = data["IdKriteria01"]
+        idKriteria02 = data["IdKriteria02"]
         Nilai = data["Nilai"]
-        values = (IDKriteria,IDKriteria02,Nilai)
+        values = (idKriteria,idKriteria02,Nilai)
         cursor.execute(query,values)
         conn.commit()
         hasil = {"status" : "berhasil"}
@@ -727,7 +738,7 @@ def PerbaikiInputKriteria(idPenghitung):
 def PerbaikiInputSupplier(idPenghitung):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "UPDATE gen_r_perbandingan SET IDKriteria = %s, IDSupplier01 = %s, IDSupplier02 = %s, Nilai = %s WHERE idPenghitung = '"+idPenghitung+"'"
+    query = "UPDATE gen_r_perbandingan SET IDKriteria = %s, IDSupplier01 = %s, IDSupplier02 = %s, Nilai = %s WHERE idPenghitung = '"+idPenghitung+""
     try:
         data = request.json
         IDKriteria = data["IDKriteria"]
