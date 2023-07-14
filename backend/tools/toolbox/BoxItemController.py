@@ -92,9 +92,10 @@ def AddToolStockToWorkstation(toolstock):
     
     cursor.execute(query)
     data = cursor.fetchone()
+    print("data : ",data)
     tooltype = data[0]
 
-    query2 = "SELECT a.stasiunKerja FROM cpl_kirimtool2 a WHERE a.toolTypeCode = '"+tooltype+"'"
+    query2 = "SELECT a.stasiunKerja FROM cpl_kirimtool02 a WHERE a.toolTypeCode = '"+tooltype+"'"
     cursor.execute(query2)
     data = cursor.fetchone()
     ws = data[0]

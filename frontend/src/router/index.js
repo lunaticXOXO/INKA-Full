@@ -116,7 +116,7 @@ import ListToolNeedByProcess from '../views/tools/ListToolNeedByProcess.vue'
 import ListPenghitungKriteria from '../views/pemasok/ListPenghitungKriteria.vue'
 import PerhitunganSupplier from '../views/pemasok/PerhitunganSupplier.vue'
 import ListToolNeedByWorkstation from '../views/tools/ListToolNeedByWorkstation.vue'
-import ChoosePeminjamanTool from '../views/tools/ChoosePeminjamanTool.vue'
+import ChoosePeminjamanOrPengembalian from '../views/tools/ChoosePeminjamanOrPengembalian.vue'
 import ChooseWorkstation from '../views/tools/ChooseWorkstation.vue'
 import ShowToolsOnWorkstation from '../views/tools/ShowToolsOnWorkstation.vue'
 import ListHasilPerhitunganKriteria from '../views/pemasok/ListHasilPerhitunganKriteria.vue'
@@ -135,6 +135,9 @@ import ChooseToolStockByToolType from '../views/tools/ChooseToolStockByToolType.
 import ChooseToolStockByToolType2 from '../views/tools/ChooseToolStockByToolType2.vue'
 import PengemasanToolStock from '../views/tools/PengemasanToolStock.vue'
 import ShowInsertedToolToBox from '../views/tools/ShowInsertedToolToBox.vue'
+import AddPeminjamanTools from '../views/tools/AddPeminjamanTools.vue'
+import HasilRequestPeminjaman from '../views/tools/HasilRequestPeminjaman.vue'
+
 
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
@@ -1242,7 +1245,8 @@ const routes = [
 
       title : "Pilih Pengemasan Box Item  - PT.INKA"
 
-  }
+  },
+  props : true
 
 },
 
@@ -1338,11 +1342,33 @@ const routes = [
 {
 
   
-  path : '/choosePeminjamanTool',
+  path : '/choosePeminjamanOrPengembalian',
   name : 'Choose Peminjaman Tool',
-  component : ChoosePeminjamanTool,
+  component : ChoosePeminjamanOrPengembalian,
   meta : {
-      title : "Choose Peminjaman Tool - PT.INKA"
+      title : "Peminjaman &  Pengembalian Tool - PT.INKA"
+  }
+
+},
+
+{
+    path : '/addPeminjamanTools',
+    name : 'Add Peminjaman Tools',
+    component : AddPeminjamanTools,
+    meta : {
+
+        title : "Add Peminjaman Tools - PT.INKA"
+    }
+
+},
+
+{
+  path : '/hasilRequestPeminjaman/:id',
+  name : 'Hasil Request Peminjaman',
+  component : HasilRequestPeminjaman,
+  meta : {
+
+      title : "Hasil Request Peminjaman Tools - PT.INKA"
   }
 
 },

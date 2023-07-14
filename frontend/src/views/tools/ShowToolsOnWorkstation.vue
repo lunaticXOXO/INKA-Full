@@ -122,25 +122,6 @@
         ],
         toolonws : [],
      
-        editedIndex: -1,
-        editedItem: {
-          id: '',
-          nama: '',
-          email: '',
-          adress1: '',
-          city: '',
-          phone: '',
-          postalcode: '',
-        },
-        defaultItem: {
-          id: '',
-          nama: '',
-          email: '',
-          adress1: '',
-          city: '',
-          phone: '',
-          postalcode: '',
-        },
       }
     },
 
@@ -150,18 +131,7 @@
     },
 
     methods: {
-      close () {
-        setTimeout(() => {
-            this.editedItem = Object.assign({}, this.defaultItem);
-            this.editedIndex = -1;
-        }, 300)
-      },
-
-      selectToolStock(){
-          location.replace('')
-          //open(`/proyekListbyCustomer/${customers.id}`)
-      },
-
+     
       async fetchToolOnWorkstation(){
         try{
           const axios = require('axios');
@@ -179,49 +149,6 @@
         }
       },
 
-
-      deleteCustomer(customers){
-          console.log('ID : ' + customers.id)
-          try{
-              const axios = require('axios');
-              axios.delete(`/customer/deleteCustomer/${customers.id}`);
-              alert("Delete Customer Success!")
-              this.fetchCustomer()
-          }
-          catch(error){
-              console.log(error)
-          }
-      },
-
-      async updateData(){
-        if (this.editedIndex > -1) {
-            Object.assign(this.customers[this.editedIndex], this.editedItem)
-            console.log(this.editedItem)
-        }
-        this.close()
-        try{
-            const axios = require('axios')
-            const res = await axios.post('/customer/update_customer/'+ this.editedItem.id,
-            { id: this.editedItem.id,
-              nama: this.editedItem.nama,
-              email: this.editedItem.email,
-              adress1: this.editedItem.adress1,
-              city: this.editedItem.city,
-              phone: this.editedItem.phone,
-              postalcode: this.editedItem.postalcode,
-              
-              //Data yang tidak ditampilkan
-              adress2: this.editedItem.adress2,
-              fax: this.editedItem.fax,
-              pic: this.editedItem.pic,
-              situs: this.editedItem.situs,
-              remark: this.editedItem.remark,
-            })
-            console.log(res)
-        }catch(error){
-            console.log(error)
-        }
-      } 
     }
   }
 </script>

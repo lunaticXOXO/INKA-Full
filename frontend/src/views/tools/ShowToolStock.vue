@@ -104,7 +104,7 @@
             class="text-center mt-10 ml-3"
             max-width="1000">
             <br>
-            <h1>List Tool Stock </h1>
+            <h1>Daftar Stok Perkakas</h1>
             <br>
             <v-card
                 class="mx-auto text-center"

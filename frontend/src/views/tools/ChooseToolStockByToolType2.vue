@@ -4,7 +4,7 @@
             class="mx-auto text-center mt-15"
             max-width="1200">
             <br>
-            <h2> Pilih Tool Stock Untuk Pengemasan By Workstation </h2>
+            <h2> Pilih Tool Stock Untuk Pengemasan Non Box </h2>
             <br>
             <v-card
                 class="mx-auto text-center"
@@ -20,7 +20,7 @@
 
             <template v-slot:[`item.aksi`]="{ item }">
             <div>
-                <router-link :to="{name : 'Choose Box Item For Tool Stock', params:{id : `${item.idToolStock}`}}">
+                <router-link :to="{name : 'Choose Tool Stock Pengemasan Non Box', params:{id : `${item.idToolStock}`}}">
                     <v-tooltip top>
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn 
@@ -29,7 +29,7 @@
                             color="blue"
                             v-bind="attrs"
                             v-on="on"
-                            @click = addToolsNonBox()
+                            @click = addToolsNonBox(item)
                             >
                             <v-icon small dark>mdi-plus</v-icon>
                             </v-btn>
@@ -124,10 +124,10 @@ export default {
 
         },
 
-        async addToolsNonBox(){
+        async addToolsNonBox(toolneed){
             try{
                 const axios = require('axios')
-                const res = await axios.post('/box/add_toolstock_nonbox/' + this.$route.params.id)
+                const res = await axios.post('/box/add_toolstock_nonbox/' + toolneed.idToolStock)
                 if(res.data.status == 'berhasil'){
                     this.snackbar = {
                         message : "Insert toolstock to workstation berhasil",

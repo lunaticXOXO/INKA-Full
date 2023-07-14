@@ -1228,18 +1228,40 @@ class main():
     def show_insertedtool_tobox(idbox):
         return ShowInsertedToolStockInBox(idbox)
     
+    @app.route('/box/show_workstation_bybox/<idbox>',methods = ['GET'])
+    def show_workstation_bybox(idbox):
+        return ShowWorkstationByToolBox(idbox)
+
+    @app.route('/box/show_workstationtools_bybox/<idbox>',methods = ['GET'])
+    def show_workstationtools_bybox(idbox):
+        return ShowWorkstationToolsByToolBox(idbox)
+    
+    
     @app.route('/box/show_box_bytoolstock/<toolstock>',methods = ['GET'])
     def showbox_choose_bytoolstock(toolstock):
         return ShowBoxChoosedByToolStock(toolstock)
 
     @app.route('/box/addtoolstock_tobox/<toolstock>/<idbox>',methods = ['POST'])
-    def addtoolstock_tobox(toolstock = None,idbox = None):
+    def addtoolstock_tobox(toolstock = None, idbox = None):
         return PengemasanToolStockToBox(toolstock,idbox)
+    
+
 
     # Pengembalian Tools
     @app.route('/tools/show_tools_onws/<ws>',methods = ['GET'])
     def show_tools_onws(ws):
         return ShowToolOnWorkstation(ws)
+
+
+    #Peminjaman Tools
+    @app.route('/tools/show_requestbox_peminjaman/<workstation>',methods = ['GET'])
+    def show_box_peminjaman(workstation):
+        return ShowBoxByWorkstationPeminjaman(workstation)
+
+    
+    @app.route('/tools/peminjaman_tools/<workstation>/<tanggal>',methods = ['POST'])
+    def peminjaman_perkakas(workstation = None, tanggal = None):
+        return PeminjamanPerkakasByWorkstation(workstation,tanggal)
 
     #USERS 
     @app.route('/register',methods = ['POST'])

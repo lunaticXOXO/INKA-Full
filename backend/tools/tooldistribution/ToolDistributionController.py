@@ -126,8 +126,10 @@ def RequestDistribusiToolByWorkstation():
 def GetRequestToolNeedByWorkstation(workstation):
     conn = database.connector()
     cursor = conn.cursor()
+    
     tanggal = request.args.get("rencanaMulai")
-    query = "SELECT * FROM cpl_kirimtool02 WHERE stasiunKerja = '"+workstation+"' AND tanggal = '"+tanggal+"'"
+
+    query = "SELECT * FROM cpl_kirimtool02 WHERE stasiunKerja = '"+workstation+"' AND tanggal = '"+tanggal+"' AND kurangPengemasan > 0"
     cursor.execute(query)
 
     records = cursor.fetchall()
@@ -144,7 +146,11 @@ def GetRequestToolNeedByWorkstation(workstation):
             temp = "box"
             index["kelompok"] = temp
         elif index["kelompok"] == 2:
+<<<<<<< HEAD
             temp = "non Box"
+=======
+            temp = "non box"
+>>>>>>> 2abb2dabe3352b0523b6e3fe55ebcc8ff16180ff
             index["kelompok"] = temp
 
     return  make_response(jsonify(json_data),200)

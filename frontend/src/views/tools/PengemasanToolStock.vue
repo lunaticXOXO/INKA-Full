@@ -40,7 +40,7 @@
             <template v-slot:[`item.aksi`]="{ item }">
            
             <div>
-                <router-link :to="{name : 'List Inserted Tools In Box Item', params:{id : `${item.id}`}}">
+              
                     <v-tooltip top>
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn 
@@ -48,16 +48,32 @@
                             x-small
                             color="blue"
                             v-bind="attrs"
-                            @click="addToolStockToBox()"
+                            @click="addToolStockToBox(item)"
                             v-on="on">
                             <v-icon small dark>mdi-plus</v-icon>
                             </v-btn>
                         </template>
                         <span>Add To Box</span>
                     </v-tooltip>
+             
+                
+                <router-link :to="{name : 'List Inserted Tools In Box Item', params:{id : `${item.id}`}}">
+                    <v-tooltip top>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn 
+                            class="mx-1" 
+                            x-small
+                            color="green"
+                            v-bind="attrs"
+                          
+                            v-on="on">
+                            <v-icon small dark>mdi-check</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>Lihat Isi Tool Box</span>
+                    </v-tooltip>
                 </router-link>
 
-             
               
             </div>
             </template>
@@ -111,6 +127,9 @@ export default {
                 message: null,
                 color: null
             },
+
+            box : ''
+          
         }
     },
 
@@ -158,20 +177,19 @@ export default {
         },
 
 
-        async addToolStockToBox(){
+        async addToolStockToBox(toolbox){
             try{
                 const axios = require('axios')
-                const res_select = await axios.get('/tools/get_toolstock_byid/' + this.$route.params.id)
-                this.toolbox2 = res_select.data
+                
+                const res = await axios.post('/box/addtoolstock_tobox/' + this.$route.params.id + '/' + toolbox.id)
 
-                const res = await axios.post('/box/addtoolstock_tobox/' + this.toolbox2[0].id + '/'  + this.$route.params.id )
                 if(res.data.status == 'berhasil'){
                     this.snackbar = {
                         message : "Insert toolstock to box berhasil",
                         color : 'green',
                         show : true
                     }
-                    location.replace('/insertedToolInBox/' + this.$route.params.id)
+                    location.replace('/insertedToolInBox/' + toolbox.id)
                 }
                 else if(res.data.status == 'gagal'){
                     this.snackbar = {

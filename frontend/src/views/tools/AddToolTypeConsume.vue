@@ -5,7 +5,7 @@
       class="mx-auto text-center mt-10"
       width = "1150">
         <br>
-        <h1>Tambah Tool Type Consumable</h1>
+        <h1>Jenis Perkakas Consumable</h1>
         <v-form
           class="pa-6"
           ref="form"
@@ -46,7 +46,7 @@
     </v-card>
     <br><br>
     <v-card max-width="1500" class="mx-auto text-center mt-10 pa-2 mb-10">
-      <h1>Jenis Perkakas Consumable Yang Sudah Tersedia</h1>
+      <h2>Daftar Jenis Perkakas Consumable</h2>
       
       <v-data-table
           :headers = "column"
