@@ -329,7 +329,7 @@
                         criteria01 : this.criteria01,
                         supplier01 : this.supplier01,
                         supplier02 : this.supplier02,
-                        nilai : this.nilai
+                        Nilai : this.Nilai
 
                     })
 

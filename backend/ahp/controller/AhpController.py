@@ -344,6 +344,9 @@ def hitungSetengahMatrik01():
     where konfirm is null"
     cur00.execute(q00)
     tabel00=cur00.fetchall()
+
+    query_getunique = "SELECT COUNT(*) FROM gen_r_perbandingan"
+
     for row00 in tabel00:
         idkri00=row00[0]
         q01="select * from gen_r_perbandingan where IDKriteria = \
@@ -356,9 +359,30 @@ def hitungSetengahMatrik01():
             K3 = row01[2]
             nil01 = row01[3]
             if(K2!=K3):
+                cur00.execute(query_getunique)
+                data = cur00.fetchone()
+                id = data[0]
+                id_unique = ""
+
+                if id >= 10:
+                    id_unique = "0000" + str(id)
+                elif id >= 100:
+                    id_unique = "000" + str(id)
+
+                elif id >= 1000:
+                    id_unique =  "00" + str(id)
+            
+                elif id >= 10000:
+                    id_unique = "0" + str(id)
+            
+                elif id >= 100000:
+                    id_unique =  str(id)
+                else:
+                    id_unique = '00000' + str(id)
+   
                 q02 = "insert into gen_r_perbandingan (IDKriteria, IDSupplier01, \
-                IDSupplier02, nilai) values('"+K1+"','"+K3+"', '"+K2+"', \
-                '"+str(1/nil01)+"')"
+                IDSupplier02, nilai,id) values('"+K1+"','"+K3+"', '"+K2+"', \
+                '"+str(1/nil01)+"','"+id_unique+"')"
                 cur00.execute(q02)
                 con00.commit()
 
