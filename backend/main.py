@@ -1308,9 +1308,9 @@ class main():
     def update_matriks_kriteria(id):
         return PerbaikiInputKriteria(id)
 
-    @app.route('/ahp/update_matriks_supplier',methods = ['POST'])
-    def update_matriks_supplier(idPenghitung):  
-        return PerbaikiInputSupplier(idPenghitung)
+    @app.route('/ahp/update_matriks_supplier/<id>',methods = ['POST'])
+    def update_matriks_supplier(id):  
+        return PerbaikiInputSupplier(id)
 
 
     @app.route('/login',methods = ['POST'])

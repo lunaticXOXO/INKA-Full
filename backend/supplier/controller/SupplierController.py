@@ -224,25 +224,30 @@ def InsertMatriksKriteriaByAdmin(idPenghitung):
     cursor.execute(query_getunique)
     data = cursor.fetchone()
     id = data[0]
-    id_penghitung = ""
+    id_unique = ""
+
     if id >= 10:
-        
-        id_penghitung = "00" + str(id)
+        id_unique = "0000" + str(id)
     elif id >= 100:
-        id = str(id)
-        id_penghitung = "0" + str(id)
+        id_unique = "000" + str(id)
+
     elif id >= 1000:
-        id_penghitung = id
+        id_unique =  "00" + str(id)
+            
+    elif id >= 10000:
+        id_unique = "0" + str(id)
+            
+    elif id >= 100000:
+        id_unique =  str(id)
     else:
-        id_penghitung = "000" + str(id)  
-    
+        id_unique = '00000' + str(id)
     try:
         data = request.json
         IDKriteria = data["criteria01"]
         IDKriteria02 = data["criteria02"]
         nilai = data["Nilai"]
 
-        values = (id_penghitung,IDKriteria,IDKriteria02,nilai,idpenghitung)
+        values = (id_unique,IDKriteria,IDKriteria02,nilai,idpenghitung)
         cursor.execute(query_insert,values)
         conn.commit()
 
@@ -264,7 +269,31 @@ def InsertMatriksSupplierByAdmin(idPenghitung):
     record = cursor.fetchone()
     idpenghitung = record[0]
     print(idpenghitung)
-    query_insert = "INSERT INTO gen_r_perbandingan(IDKriteria,IDSupplier01,IDSupplier02,Nilai,idPenghitung)VALUES(%s,%s,%s,%s,%s)"
+
+    query_insert = "INSERT INTO gen_r_perbandingan(IDKriteria,IDSupplier01,IDSupplier02,Nilai,idPenghitung,id)VALUES(%s,%s,%s,%s,%s,%s)"
+    query_getunique = "SELECT COUNT(*) FROM gen_r_perbandingan"
+
+    cursor.execute(query_getunique)
+    data = cursor.fetchone()
+    id = data[0]
+    id_unique = ""
+   
+    if id >= 10:
+        id_unique = "0000" + str(id)
+    elif id >= 100:
+        id_unique = "000" + str(id)
+
+    elif id >= 1000:
+        id_unique =  "00" + str(id)
+            
+    elif id >= 10000:
+        id_unique = "0" + str(id)
+            
+    elif id >= 100000:
+        id_unique =  str(id)
+    else:
+        id_unique = '00000' + str(id)
+
     try:
         data = request.json
         IDKriteria = data["criteria01"]
@@ -272,7 +301,7 @@ def InsertMatriksSupplierByAdmin(idPenghitung):
         IDSupplier02 = data["supplier02"]
         nilai      = data["Nilai"]
 
-        values = (IDKriteria,IDSupplier,IDSupplier02,nilai,idpenghitung)
+        values = (IDKriteria,IDSupplier,IDSupplier02,nilai,idpenghitung,id_unique)
         cursor.execute(query_insert,values)
         conn.commit()
         hasil = {"status" : "berhasil"}
@@ -355,7 +384,7 @@ def HasilPerhitunganSupplier2():
 def GetPerbandinganSupplierByAdmin(idPenghitung):
     conn = db.connector()
     cursor = conn.cursor()
-    query = "SELECT b.IDKriteria,b.IDSupplier01,b.IDSupplier02,b.nilai,b.idPenghitung "
+    query = "SELECT b.id,b.IDKriteria,b.IDSupplier01,b.IDSupplier02,b.nilai,b.idPenghitung "
     query += "FROM gen_r_adminperhitungan a "
     query += "JOIN gen_r_perbandingan b ON b.idPenghitung = a.ID "
     query += "WHERE a.ID = '"+idPenghitung+"' AND b.konfirm IS NULL "

@@ -83,86 +83,68 @@
                     :items = "matrixSupplierByAdmin"
                     :items-per-page="5"
                 >
+
+                <template v-slot:[`item.id`]="{ item }">
+                <div v-if="item.id === editedItem.id">
+                  <v-text-field disabled v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                  <span v-else>{{item.id}}</span>
+                </div>
+                <div v-else>
+                  <v-text-field v-model="editedItem.id" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
+                  <span v-else>{{item.id}}</span>
+                </div>
+            </template>
+
                 <template v-slot:[`item.IDKriteria`]="{ item }">
-                    <v-text-field v-model="editedItem.IDKriteria" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDKriteria == editedItem.IDKriteria"></v-text-field>
+                    <v-text-field v-model="editedItem.IDKriteria" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
                     <span v-else>{{item.IDKriteria}}</span>
                 </template>
     
                 <template v-slot:[`item.IDSupplier01`]="{ item }">
-                    <v-text-field v-model="editedItem.IDSupplier01" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDSupplier01 == editedItem.IDSupplier01"></v-text-field>
+                    <v-text-field v-model="editedItem.IDSupplier01" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
                     <span v-else>{{item.IDSupplier01}}</span>
                 </template>
         
                 <template v-slot:[`item.IDSupplier02`]="{ item }">
-                    <v-text-field v-model="editedItem.IDSupplier02" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDSupplier02 == editedItem.IDSupplier02"></v-text-field>
+                    <v-text-field v-model="editedItem.IDSupplier02" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
                     <span v-else>{{item.IDSupplier02}}</span>
                 </template>
     
     
                 <template v-slot:[`item.nilai`]="{ item }">
-                    <v-text-field v-model="editedItem.nilai" :hide-details="true" dense single-line :autofocus="true" v-if="item.IDKriteria == editedItem.IDKriteria"></v-text-field>
+                    <v-text-field v-model="editedItem.nilai" :hide-details="true" dense single-line :autofocus="true" v-if="item.id == editedItem.id"></v-text-field>
                     <span v-else>{{item.nilai}}</span>
                 </template>
                 
     
-                <!-- <template v-slot:[`item.aksi`]="{ item }">
-                <div v-if="item.id==editedItem.id">
-                    <v-icon color="red" class="mr-3" @click="close()">
-                        mdi-window-close
-                    </v-icon>
-                    <v-icon color="green" @click="updateToolBox()">
-                        mdi-content-save
-                    </v-icon>
+              
+                <template v-slot:[`item.aksi`]="{ item }">
+              <div v-if="item.id == editedItem.id">
+                  <v-icon color="red" class="mr-3" @click="close">
+                  mdi-window-close
+                  </v-icon>
+                  <v-icon color="green"  @click="updateData()">
+                  mdi-content-save
+                  </v-icon>
+              </div>
+              <div v-else>
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                      class="mx-1" 
+                      x-small
+                      color="green"
+                      @click="editSupplier(item)"
+                      v-bind="attrs"
+                      v-on="on">
+                      <v-icon small dark>mdi-pencil</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Edit</span>
+                </v-tooltip>
                 </div>
-                <div v-else>
-                    <router-link :to="{name : 'List Detail Tool Stock By Tool Stock', params:{id : `${item.toolTypeCode}`}}">
-                        <v-tooltip top>
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn 
-                                class="mx-1" 
-                                x-small
-                                color="blue"
-                                v-bind="attrs"
-                                v-on="on">
-                                <v-icon small dark>mdi-check</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Detail Tool Stock</span>
-                        </v-tooltip>
-                    </router-link>
-    
-                    <v-tooltip top>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn 
-                          class="mx-1" 
-                          x-small
-                          color="green"
-                          @click="editToolBox(item)"
-                          v-bind="attrs"
-                          v-on="on">
-                          <v-icon small dark>mdi-pencil</v-icon>
-                        </v-btn>
-                      </template>
-                      <span>Edit</span>
-                    </v-tooltip>
-    
-                    <v-tooltip top>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn 
-                          class="mx-1" 
-                          x-small
-                          color="red"
-                          @click="deleteToolBox(item)"
-                          v-bind="attrs"
-                          v-on="on">
-                          <v-icon small dark>mdi-trash-can-outline</v-icon>
-                        </v-btn>
-                      </template>
-                      <span>Delete</span>
-                    </v-tooltip>
-                </div>
-                </template> -->
-                </v-data-table>
+            </template>
+                </v-data-table> 
                 <v-form
                     class="pa-6"
                     ref="form2"
@@ -209,13 +191,18 @@
                 supplier01 : '',
                 supplier02 : '',
                 Nilai : '',
+
                 editedItem : {
-                    id : '',
-                    nama  : '',
+                    IDKriteria : '',
+                    IDSupplier01 : '',
+                    IDSupplier02 : '',
+                    nilai : ''
                 },
                 defaultItem : {
-                    id : '',
-                    nama : '',
+                    IDKriteria : '',
+                    IDSupplier01 : '',
+                    IDSupplier02 : '',
+                    nilai : ''
                 },
             }
         },
@@ -260,6 +247,8 @@
                     this.countSupplier()
                 }
             },
+
+      
 
             refresh() {
             setTimeout(() => {
@@ -340,7 +329,7 @@
                         criteria01 : this.criteria01,
                         supplier01 : this.supplier01,
                         supplier02 : this.supplier02,
-                        Nilai : this.Nilai
+                        nilai : this.nilai
 
                     })
 
@@ -398,10 +387,10 @@
                 }, 2000)
             },
 
-            editToolBox(toolBox){
-                console.log('ID : ' + toolBox.id)
-                this.editedIndex = this.toolBox.indexOf(toolBox)
-                this.editedItem = Object.assign({},toolBox)
+            editSupplier(matrixSupplierByAdmin){
+                console.log('ID : ' + matrixSupplierByAdmin.id)
+                this.editedIndex = this.matrixSupplierByAdmin.indexOf(matrixSupplierByAdmin)
+                this.editedItem = Object.assign({},matrixSupplierByAdmin)
             },
             
             close(){
@@ -411,20 +400,26 @@
                 }, 300)
             },
     
-            async updateToolBox(){
+            async updateData(){
                 if (this.editedIndex > -1) {
-                    Object.assign(this.toolBox[this.editedIndex], this.toolBox)
+                    Object.assign(this.matrixSupplierByAdmin[this.editedIndex], this.editedItem)
                     console.log(this.editedItem)
                 }
-                this.close()
+                    this.close()
                 try{
                     const axios = require('axios')
-                    const res = await axios.post('/box/update_toolbox/' + this.editedItem.id,
-                    { id : this.editedItem.id,
-                      nama : this.editedItem.nama
-                    })
-                    console.log(res)
-                }catch(error){
+                    const res = await axios.post('/ahp/update_matriks_supplier/'+ this.editedItem.id,
+                { 
+                    IDKriteria : this.editedItem.IDKriteria,
+                    IDSupplier01: this.editedItem.IDSupplier01,
+                    IDSupplier02 : this.editedItem.IDSupplier02,
+                    nilai : this.editedItem.nilai
+            
+    
+                })
+                console.log(res)
+                }
+                catch(error){
                     console.log(error)
                 }
             }

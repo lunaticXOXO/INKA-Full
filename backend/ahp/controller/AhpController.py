@@ -9,15 +9,48 @@ def hitungSetengahMatrik():
     con00 = database.connector()
     cur00 = con00.cursor()
     q00="select * from gen_r_matrikskriteria WHERE konfirm IS NULL"
+    query_increment = "SELECT COUNT(*) FROM gen_r_matrikskriteria"
     cur00.execute(q00)
     tabel00=cur00.fetchall()
-    for row00 in tabel00:
-        K1=row00[0]
-        K2=row00[1]
-        nil=row00[2]
+    id_penghitung = ""
+
+    for row00 in tabel00: 
+        K1=row00[1]
+        K2=row00[2]
+        nil=row00[3]
         if(K1!=K2):
-            q01="insert into gen_r_matrikskriteria (IDKriteria, IDKriteria02, \
-            nilai) values('"+K2+"', '"+K1+"', '"+str(1/nil)+"')"
+           
+            cur00.execute(query_increment)
+            data = cur00.fetchone()
+            id = data[0]
+           
+            if id >= 10:
+                id_unique = "0000" + str(id)
+            elif id >= 100:
+                id_unique = "000" + str(id)
+
+            elif id >= 1000:
+                id_unique =  "00" + str(id)
+            
+            elif id >= 10000:
+                id_unique = "0" + str(id)
+            
+            elif id >= 100000:
+                id_unique =  str(id)
+            else:
+                id_unique = '00000' + str(id)
+           
+            print("test", type(id))
+            print("nil : ",nil)
+            setengah_matriks = str(1/nil)
+           
+            q01="insert into gen_r_matrikskriteria(id,IDKriteria, IDKriteria02, \
+            nilai) values('"+str(id_unique)+"','"+K2+"', '"+K1+"', '"+str(1/nil)+"')"
+            print("id unique : ", id_unique)
+            #q01="insert into gen_r_matrikskriteria(id,IDKriteria,IDKriteria02,Nilai)values(%s,%s,%s,%s)"
+
+            #values = (id_unique,K2,K1,setengah_matriks)
+           
             cur00.execute(q01)
             con00.commit()
             hasil = True
@@ -43,7 +76,7 @@ def totalkolom():
         tabel01=cur00.fetchall()
         jml=0
         for row01 in tabel01:
-            nil01=row01[2]
+            nil01=row01[3]
             jml =jml+nil01
         total.append(jml)  
     return total
@@ -65,9 +98,9 @@ def normalisasi():
             cur00.execute(q01)
             tabel01=cur00.fetchall()
             for row01 in tabel01:
-                K01 = row01[0]
-                K02 = row01[1]
-                nil01 = row01[2]
+                K01 = row01[1]
+                K02 = row01[2]
+                nil01 = row01[3]
                 jml01 = total[angka]
                 if (idkri00 == K02):
                     normalisasi = nil01/jml01
@@ -98,7 +131,7 @@ def totalbaris():
         tabel01=cur00.fetchall()
         jml01 = 0
         for row01 in tabel01:
-            nil02 = row01[3]
+            nil02 = row01[4]
             jml01 = jml01 + nil02
         total.append(jml01)
     return total
@@ -135,7 +168,7 @@ def buatmatriks():
         tabel01 = cur00.fetchall()
         n = []
         for row01 in tabel01:
-            nil01 = row01[2]
+            nil01 = row01[3]
             n.append(nil01)
         m.append(n)
         angka = angka +1
@@ -235,6 +268,7 @@ def MergeCalculateKriteria(idPenghitung):
     cur00 = con00.cursor()
     try:
         hitungSetengahMatrik()
+        print("test")
         totalkolom() 
         normalisasi()
         totalbaris()
@@ -735,16 +769,16 @@ def PerbaikiInputKriteria(id):
     return hasil
 
 
-def PerbaikiInputSupplier(idPenghitung):
+def PerbaikiInputSupplier(id):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "UPDATE gen_r_perbandingan SET IDKriteria = %s, IDSupplier01 = %s, IDSupplier02 = %s, Nilai = %s WHERE idPenghitung = '"+idPenghitung+""
+    query = "UPDATE gen_r_perbandingan SET IDKriteria = %s, IDSupplier01 = %s, IDSupplier02 = %s, Nilai = %s WHERE id = '"+id+"'"
     try:
         data = request.json
         IDKriteria = data["IDKriteria"]
         IDSupplier01 = data["IDSupplier01"]
         IDSupplier02 = data["IDSupplier02"]
-        Nilai = data["Nilai"]
+        Nilai = data["nilai"]
         values = (IDKriteria,IDSupplier01,IDSupplier02,Nilai)
         cursor.execute(query,values)
         conn.commit()

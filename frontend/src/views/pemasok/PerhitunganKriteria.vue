@@ -181,19 +181,14 @@
                 Nilai : '',
                
                 editedItem : {
-                   
                     IdKriteria01 : '',
-                  
                     IdKriteria02 : '',
-                   
                     Nilai : ''
                 },
                 defaultItem : {
                    
                     IdKriteria01 : '',
-                  
                     IdKriteria02 : '',
-                  
                     Nilai : ''
                 },
             }
@@ -342,7 +337,7 @@
                 }catch(error){
                     console.log(error)
                 }
-            },
+            },  
              countKriteria(){
                 this.loading = true
                 setTimeout(() => {
@@ -397,8 +392,10 @@
         }catch(error){
             console.log(error)
         }
-      } 
-        }
+      }
+      
+      
     }
+}
     </script>
     
