@@ -142,7 +142,7 @@ def GetPeringkatKriteria():
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.IDKriteria,b.namaKriteria,a.rangking,a.Bobot FROM gen_r_kriteriabobot a JOIN gen_r_kriteria b ON b.ID = a.IDKriteria ORDER BY a.Bobot DESC"
+    query = "SELECT a.IDKriteria,b.namaKriteria,a.rangking,a.Bobot FROM gen_r_kriteriabobot a JOIN gen_r_kriteria b ON b.ID = a.IDKriteria WHERE a.selesai IS NULL ORDER BY a.Bobot DESC"
     cursor.execute(query)
     records = cursor.fetchall()
     

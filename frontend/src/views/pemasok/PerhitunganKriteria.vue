@@ -133,19 +133,14 @@
                 </div>
             </template>
                 </v-data-table>
-                <v-form
-                    class="pa-6"
-                    ref="form2"
-                    v-model="valid2"
-                    @submit.prevent="submitHandler"
-                    lazy-validation>
+             
                         <v-btn 
                             color="primary" 
                             class="mx-auto text-center mb-7"
-                            @click = "validate2()">
+                            @click = "countKriteria()">
                             Calculate
                         </v-btn>
-                </v-form>
+              
             </v-card>
         </v-card>
     
@@ -220,19 +215,7 @@
                 }
             },
 
-            validate2(){
-
-                if(this.$refs.form2.validate()){
-                    if(this.snackbar.color == "red"){
-                        this.loading = false
-                        this.dialog = false
-                    }else{
-                        this.loading = true
-                        this.dialog = true
-                    }
-                    this.countKriteria()
-                }
-        },
+          
 
     close () {
         setTimeout(() => {
@@ -338,12 +321,11 @@
                     console.log(error)
                 }
             },  
-             countKriteria(){
-                this.loading = true
-                setTimeout(() => {
+             async countKriteria(){
+
                 try{
                     const axios = require('axios')
-                    const res = axios.post('/ahp/merge_count_kriteria/' + this.$route.params.id)
+                    const res = await axios.post('/ahp/merge_count_kriteria/' + this.$route.params.id)
                     if(res.data.status == 'berhasil'){
                         this.snackbar = {
                             message : "Perhitungan Kriteria Berhasil",
@@ -351,24 +333,37 @@
                             show : true
                         }
                         setTimeout(() => {
-                            location.replace('/hasilPerhitunganKriteriaAdmin/' + this.$route.params.id )
+                            location.replace('/hasilMatriksKriteriaAdmin/' + this.$route.params.id )
                         }, 2000)
 
                     }
-                    else if(res.data.status == 'gagal'){
-                        alert("perhitungan gagal")
+                    else if(res.data.status == 'perbaiki matriks'){
                         this.loading = false
                             this.snackbar = {
-                                message : "Perhitungan Kriteria Gagal",
+                                message : "Perbaiki Matriks",
                                 color : 'red',
                                 show : true
                         }
-                    }   
+                    }
+
+                     else if(res.data.status == 'gagal'){
+                     
+                        this.loading = false
+                            this.snackbar = {
+                                message : "Perhitungan Gagal",
+                                color : 'red',
+                                show : true
+                        }
+                    }      
                     }catch(error){
+                        this.snackbar = {
+                                message : "Perhitungan Error",
+                                color : 'red',
+                                show : true
+                        }
                         console.log(error)
                     }
-                this.refresh()       
-                }, 2000)
+              
             },
         
     

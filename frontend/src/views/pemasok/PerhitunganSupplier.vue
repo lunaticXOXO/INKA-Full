@@ -145,19 +145,14 @@
                 </div>
             </template>
                 </v-data-table> 
-                <v-form
-                    class="pa-6"
-                    ref="form2"
-                    v-model="valid2"
-                    @submit.prevent="submitHandler"
-                    lazy-validation>
+              
                         <v-btn 
                             color="primary" 
                             class="mx-auto text-center mb-7"
-                            @click = "validate2()">
+                            @click = "countSupplier()">
                             Calculate
                         </v-btn>
-                </v-form>
+              
             </v-card>
         </v-card>
     
@@ -356,12 +351,12 @@
                 }
             },
 
-            countSupplier(){
-                this.loading = true
-                setTimeout(() => {
+            async countSupplier(){
+                //this.loading = true
+                //setTimeout(() => {
                 try{
                     const axios = require('axios')
-                    const res = axios.post('/ahp/merge_count_supplier/' + this.$route.params.id)
+                    const res = await axios.post('/ahp/merge_count_supplier/' + this.$route.params.id)
                     if(res.data.status == 'berhasil'){
                         this.snackbar = {
                             message : "Perhitungan Kriteria Berhasil",
@@ -369,22 +364,32 @@
                             show : true
                         }
                         setTimeout(() => {
-                            location.replace('/hasilPerhitunganKriteriaAdmin/' + this.$route.params.id )
+                            location.replace('/hasilPerbandinganSupplierAdmin/' + this.$route.params.id )
                         }, 2000)
 
-                    }else if(res.data.status == 'gagal'){
+                    }
+                    else if(res.data.status == 'perbaiki matriks'){
                         this.loading = false
                             this.snackbar = {
-                                message : "Perhitungan Kriteria Gagal",
+                                message : "Perbaiki Matriks",
                                 color : 'red',
                                 show : true
                         }
-                    }   
+                    }
+                    else if(res.data.status == 'gagal'){
+                        this.loading = false
+                            this.snackbar = {
+                                message : "Perhitungan Gagal",
+                                color : 'red',
+                                show : true
+                        }
+                    }  
+
                     }catch(error){
                         console.log(error)
                     }
-                this.refresh()       
-                }, 2000)
+                //this.refresh()       
+                //}, 2000)
             },
 
             editSupplier(matrixSupplierByAdmin){

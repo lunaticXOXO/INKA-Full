@@ -287,7 +287,7 @@ def MergeCalculateKriteria(idPenghitung):
             cur00.execute(query2)
             cur00.execute(query3)
             con00.commit()
-            output = {"status" : "berhasill"}
+            output = {"status" : "berhasil"}
         elif hasil2 == {"status" : "perbaiki matriks"}:
            output = {"status" : "perbaiki matriks"}
            query4= "DELETE FROM gen_r_matrikskriteria WHERE idPenghitung IS NULL AND konfirm IS NULL"

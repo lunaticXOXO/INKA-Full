@@ -101,11 +101,11 @@ export default {
                     active: false,
                     items: [
                         { title: 'List Pemasok',icon : 'mdi-playlist-check',route : '/listPemasok'},
-                        { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'}
-                        // {title : 'Peringkat Supplier', icon : 'mdi-person',route : '/listPeringkatSupplier'},
-                        // {title : 'Kriteria Pemasok', icon : 'mdi-gavel',route : '/listKriteriaPemasok'},
-                        // {title : 'Perhitungan Kriteria', icon : 'mdi-sort-variant', route : '/listPenghitungMatriks'},
-                        // {title : 'Peringkat Kriteria', icon : 'mdi-sort-variant',route : '/listPeringkatKriteria'}
+                        { title: 'Tambah Pemasok', icon: 'mdi-account-plus', route: '/tambahPemasok'},
+                         {title : 'Peringkat Pemasok', icon : 'mdi-account',route : '/listPeringkatSupplier'}
+                        //  {title : 'Kriteria Pemasok', icon : 'mdi-gavel',route : '/listKriteriaPemasok'},
+                        //  {title : 'Perhitungan Kriteria', icon : 'mdi-sort-variant', route : '/listPenghitungMatriks'},
+                        //  {title : 'Peringkat Kriteria', icon : 'mdi-sort-variant',route : '/listPeringkatKriteria'}
                     ],
                     title: 'Pemasok',
                 },
@@ -118,12 +118,12 @@ export default {
                         
                         {title : 'Kriteria Pemasok', icon : 'mdi-gavel',route : '/listKriteriaPemasok'},
                         {title : 'Hitung Kriteria & Supplier', icon : 'mdi-sort-variant', route : '/listPenghitungMatriks'},
-                        {title : 'Hasil Perhitungan', icon : 'mdi-playlist-check',route : '/listAdminPenghitung'}
-                        // {title: 'Hasil Perhitungan Kriteria', icon : 'mdi-gavel',route : '/listHasilPerhitunganKriteria'},
-                        // {title: 'Hasil Perhitungan Supplier 1', icon : 'mdi-account-plus',route : '/listHasilPerhitunganSupplier1'},
-                        // {title : 'Hasil Perhitungan Supplier 2', icon : 'mdi-account-plus',route : '/listHasilPerhitunganSupplier2'},
-                        // {title : 'Hasil Perhitungan Supplier 3', icon : 'mdi-account-plus',route : '/listPeringkatSupplier'},
-                        // {title : 'Peringkat Kriteria', icon : 'mdi-sort-variant',route : '/listPeringkatKriteria'}
+                        {title : 'Hasil Perhitungan', icon : 'mdi-playlist-check',route : '/listAdminPenghitung'},
+                        //  {title: 'Hasil Perhitungan Kriteria', icon : 'mdi-gavel',route : '/listHasilPerhitunganKriteria'},
+                        //  {title: 'Hasil Perhitungan Supplier 1', icon : 'mdi-account-plus',route : '/listHasilPerhitunganSupplier1'},
+                        //  {title : 'Hasil Perhitungan Supplier 2', icon : 'mdi-account-plus',route : '/listHasilPerhitunganSupplier2'},
+                        //  {title : 'Hasil Perhitungan Supplier 3', icon : 'mdi-account-plus',route : '/listPeringkatSupplier'},
+                         {title : 'Peringkat Kriteria', icon : 'mdi-sort-variant',route : '/listPeringkatKriteria'}
                     ],
                     title: 'Perhitungan Kriteria & Pemasok',
                 },
