@@ -90,6 +90,30 @@ def GetSupplierById(idSupplier):
 
 
 
+def AddKriteria():
+    conn = db.connector()
+    cursor = conn.cursor()
+    query = "INSERT INTO gen_r_kriteria(ID,namaKriteria,mulai)VALUES(%s,%s,%s)"
+    try:
+        data = request.json
+
+        id = data["id"]
+        namaKriteria = data["namaKriteria"]
+        mulai = data["mulai"]
+
+        values = (id,namaKriteria,mulai)
+        cursor.execute(query,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+
+    except Exception as e:
+        hasil = {"status" : "gagal"}
+        print("error",str(e))
+
+    return hasil
+
+
+
 
 
 def RankingSupplier():

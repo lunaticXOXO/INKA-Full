@@ -179,6 +179,9 @@ class main():
     def get_matrikssupplier_byadmin(IdPenghitung):
         return GetPerbandinganSupplierByAdmin(IdPenghitung)
 
+    @app.route('/supplier/add_kriteria',methods = ['POST'])
+    def add_kriteria():
+        return AddKriteria()
 
     @app.route('/supplier/add_matriks_kriteria',methods = ['POST'])
     def add_matriks_kriteria():

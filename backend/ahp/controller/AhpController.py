@@ -42,8 +42,6 @@ def hitungSetengahMatrik():
            
             print("test", type(id))
             print("nil : ",nil)
-            setengah_matriks = str(1/nil)
-           
             q01="insert into gen_r_matrikskriteria(id,IDKriteria, IDKriteria02, \
             nilai) values('"+str(id_unique)+"','"+K2+"', '"+K1+"', '"+str(1/nil)+"')"
             print("id unique : ", id_unique)
@@ -714,7 +712,8 @@ def MergeCountSupplier(idPenghitung):
             cursor.execute(query4)
             conn.commit()
             return {"status" : "perbaiki matriks"}
-    except Exception:
+    except Exception as e:
+        print("error",str(e))
         return {"status" : "gagal"}
 
 

@@ -9,7 +9,7 @@
         class="mx-auto text-center"
         max-width="1000">
 
-        <router-link to="/tambahKriteria">
+        <router-link to="/addKriteriaPemasok">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
                 Add Kriteria
             </v-btn>

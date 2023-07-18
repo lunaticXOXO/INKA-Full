@@ -137,7 +137,7 @@ import PengemasanToolStock from '../views/tools/PengemasanToolStock.vue'
 import ShowInsertedToolToBox from '../views/tools/ShowInsertedToolToBox.vue'
 import AddPeminjamanTools from '../views/tools/AddPeminjamanTools.vue'
 import HasilRequestPeminjaman from '../views/tools/HasilRequestPeminjaman.vue'
-
+import AddKriteriaPemasok from '../views/pemasok/AddKriteriaPemasok.vue'
 
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
@@ -1188,6 +1188,17 @@ const routes = [
    meta : {
     title : "List Kriteria Pemasok - PT.INKA"
    }
+
+},
+
+{
+  path : '/addKriteriaPemasok',
+  name : 'Add Kriteria Pemasok',
+  component : AddKriteriaPemasok,
+  meta : {
+      title  : "Add Kriteria Pemasok - PT.INKA"
+  }
+
 
 },
 
