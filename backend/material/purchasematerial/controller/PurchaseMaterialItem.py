@@ -216,3 +216,44 @@ def OrderMaterialLoop(code):
         hasil = {"status" : "berhasil"}
         print("Error",str(e))
     return hasil
+
+
+
+def AddTimeOrderMaterial():
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "INSERT INTO cpl_haruspesan00(batas,waktu)VALUES(%s,%s)"
+        
+    try:
+        data = request.json
+        batas = data["fullDate"]
+        waktu = None
+        values = (batas,waktu)
+        cursor.execute(query,values)
+
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+
+    except Exception as e:
+        hasil = {"status" : "gagal"}
+        print("error",str(e))
+    return hasil
+
+
+def ShowMaterialHarusPesan():
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM cpl_haruspesan02 a"
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)

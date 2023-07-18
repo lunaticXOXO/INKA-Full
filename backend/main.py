@@ -1315,6 +1315,13 @@ class main():
     def update_matriks_supplier(id):  
         return PerbaikiInputSupplier(id)
 
+    @app.route('/material/add_time_purchase',methods = ['POST'])
+    def add_waktu_pemesanan():
+        return AddTimeOrderMaterial()
+
+    @app.route('/material/show_material_haruspesan',methods = ['GET'])
+    def show_material_haruspesan():
+        return ShowMaterialHarusPesan()
 
     @app.route('/login',methods = ['POST'])
     def login():

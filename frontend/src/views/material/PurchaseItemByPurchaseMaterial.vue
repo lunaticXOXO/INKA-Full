@@ -121,9 +121,9 @@
               @click:minute="$refs.menu.save(time)"
             ></v-time-picker>
           </v-menu>
-
-          
         </div>
+
+
         <br>
         <v-btn
           :loading="loading"
@@ -304,7 +304,7 @@
                 this.snackbar = {
                   show : true,
                   message : "Pencarian Kebutuhan Material Berhasil",
-                  color : "green"
+                  color : "green" 
                 }
                 const res2 = axios.get('/material/show_material_requirement')
                 if(res2.data == null){
