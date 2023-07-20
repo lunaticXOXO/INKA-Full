@@ -138,6 +138,7 @@ import ShowInsertedToolToBox from '../views/tools/ShowInsertedToolToBox.vue'
 import AddPeminjamanTools from '../views/tools/AddPeminjamanTools.vue'
 import HasilRequestPeminjaman from '../views/tools/HasilRequestPeminjaman.vue'
 import AddKriteriaPemasok from '../views/pemasok/AddKriteriaPemasok.vue'
+import HasilPesanMaterial from '../views/material/HasilPesanMaterial.vue'
 
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
@@ -916,8 +917,18 @@ const routes = [
     name : 'List Harus Pesan Material New',
     component : ListPesanMaterial,
     meta : {
-      title : "List Material Yang Harus Dipesan"
+      title : "List Material Yang Harus Dipesan - PT.INKA"
     }
+
+  },
+
+  {
+      path : '/listHasilPesanMaterial/:id',
+      name : 'List Hasil Pemesanan Material',
+      component : HasilPesanMaterial,
+      meta : {
+        title : "List Hasil Pemesanan Material - PT.INKA"
+      }
 
   },
 

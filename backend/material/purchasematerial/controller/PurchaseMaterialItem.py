@@ -245,7 +245,50 @@ def ShowMaterialHarusPesan():
     conn = database.connector()
     cursor = conn.cursor()
 
-    query = "SELECT * FROM cpl_haruspesan02 a"
+    query = "SELECT * FROM cpl_haruspesan02 a ORDER BY a.pemasok,a.peringkat ASC"
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
+
+
+def InsertMaterialHarusPesan():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "INSERT INTO cpl_haruspesan03(id,code,nama,jumlah,pemasok,peringkat,RencanaKedatangan,LeadTime,Harga,MinimalOrder)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    try:
+        data = request.json
+        id = data["id"]
+        code = data["code"]
+        nama = data["nama"]
+        jumlah = data["jumlah"]
+        pemasok = data["pemasok"]
+        peringkat = data["peringkat"]
+        rencanadatang = data["RencanaKedatangan"]
+        leadtime    = data["LeadTime"]
+        harga = data["Harga"]
+        minimalorder = data["MinimalOrder"]
+        values = (id,code,nama,jumlah,pemasok,peringkat,rencanadatang,leadtime,harga,minimalorder)
+        cursor.execute(query,values)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+
+    except Exception as e:
+        print("error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
+def ShowHasilPemesanan(id):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM cpl_haruspesan03 a WHERE a.pemasok = '"+id+"'"
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
     json_data = []

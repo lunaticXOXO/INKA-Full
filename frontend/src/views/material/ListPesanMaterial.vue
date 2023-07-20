@@ -77,24 +77,45 @@
 
         <v-data-table 
           id="mytable"
-          show-select
+          show-select = "true"
           v-model="selected"
           :headers="headers"
           :items="types"
           :items-per-page="5"
           class="elevation-1"
-          item-key="id"
-    ></v-data-table>
+          item-key="id">
+    
+        
+          <template v-slot:[`item.id`]="{ item }">
+            <div>
+                <span >{{item.id}}</span>
+            </div>
+          </template>
+
+          <template v-slot:[`item.code`]="{ item }">
+            <span>{{item.code}}</span>
+          </template>
+
+          <template v-slot:[`item.nama`]="{ item }">
+            <span>{{item.nama}}</span>
+          </template>
+
       
-  
-    <v-btn 
+        
+ 
+   
+
+      </v-data-table>
+      
+      <v-btn 
     color="primary" 
     class="mt-10 mb-5"
-  
-    >
-
+    v-bind="attrs"
+    v-on="on"
+    @click = "insertPesan()">
         Purchase
     </v-btn>
+
     <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
             {{snackbar.message}}
         </v-snackbar>
@@ -140,13 +161,28 @@
   
        types : [],
        requirmentMaterial : [],
+        index : 0,
       
+        mytable : false,
 
+        id : '',
+        code : '',
+        nama : '',
+        jumlah : '',
+        pemasok : '',
+        peringkat : '',
+        RencanaKedatangan : '',
+        LeadTime : '',
+        Harga : '',
+        MinimalOrder : ''
    }    
 },
 
 mounted(){
-  this.fetchMaterial()
+  window.setInterval(() => {
+    this.fetchMaterial()
+      }, 1500)
+  
 },
   
   methods : {
@@ -159,7 +195,13 @@ mounted(){
             alert('Material Kosong')
           }else{
             this.types = res.data
+            
             console.log(res,this.types)
+            if(this.mytable == true){
+              console.log("test")
+            }
+            console.log("pilih : ",this.selected)
+           
           }
         }
         catch(error){
@@ -208,7 +250,53 @@ mounted(){
           console.log(error)
         }
         
+      },
+
+      async insertPesan(){
+      try{
+        const axios = require('axios')
+        for(this.index in this.selected){
+          const res = await axios.post('/material/insert_material_haruspesan',{
+              id                : this.selected[this.index].id,
+              code              : this.selected[this.index].code,
+              nama              : this.selected[this.index].nama,
+              jumlah            : this.selected[this.index].jumlah,
+              pemasok           : this.selected[this.index].pemasok,
+              peringkat         : this.selected[this.index].peringkat,
+              RencanaKedatangan : this.selected[this.index].RencanaKedatangan,
+              LeadTime          : this.selected[this.index].LeadTime,
+              Harga             : this.selected[this.index].Harga,
+              MinimalOrder      : this.selected[this.index].MinimalOrder
+
+          })
+          if(res.data.status == 'berhasil'){
+              console.log("success")
+              this.snackbar = {
+                  show : true,
+                  message : "Pemesanan Kebutuhan Material Berhasil",
+                  color : "green" 
+                }
+                setTimeout(() => { 
+                  location.replace('/listHasilPesanMaterial/' +  this.selected[this.index].pemasok)
+
+                }, 1000)
+          }
+          else if(res.data.status == 'gagal'){
+            this.snackbar = {
+                  show : true,
+                  message : "Pemesanan Kebutuhan Material Gagal",
+                  color : "red" 
+                }
+          }
+          //console.log("ID : ", this.selected[this.index].id)
+        }
       }
+      catch(error){
+        console.log(error)
+      }
+       
+      }
+
   }
 
 

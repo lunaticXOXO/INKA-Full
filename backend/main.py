@@ -126,6 +126,11 @@ class main():
     def get_supplier_byid(idSupplier):
         return GetSupplierById(idSupplier)
 
+    
+    @app.route('/supplier/get_supplier_haruspesan/<idsupplier>',methods = ['GET'])
+    def get_supplier_byid_haruspesan(idsupplier):
+        return GetSuuplierByIDHarusPesan(idsupplier)
+
     @app.route('/supplier/add_supplier',methods = ['POST'])
     def add_supplier():
         hasil = AddSupplier()
@@ -1322,6 +1327,15 @@ class main():
     @app.route('/material/show_material_haruspesan',methods = ['GET'])
     def show_material_haruspesan():
         return ShowMaterialHarusPesan()
+    
+    @app.route('/material/insert_material_haruspesan',methods = ['POST'])
+    def insert_material_haruspesan():
+        return InsertMaterialHarusPesan()
+
+    @app.route('/material/hasil_pemesanan/<idsupplier>',methods = ['GET'])
+    def show_hasil_pemesanan(idsupplier):
+        return ShowHasilPemesanan(idsupplier)
+    
 
     @app.route('/login',methods = ['POST'])
     def login():

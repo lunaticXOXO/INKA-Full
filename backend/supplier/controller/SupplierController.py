@@ -88,6 +88,21 @@ def GetSupplierById(idSupplier):
     
     return make_response(jsonify(json_data),200)
 
+def GetSuuplierByIDHarusPesan(idsupplier):
+    conn = db.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM gen_r_supplier WHERE code = '"+idsupplier+"'"
+    cursor.execute(query)
+    records = cursor.fetchall()
+    
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return make_response(jsonify(json_data),200)
+
 
 
 def AddKriteria():
@@ -111,7 +126,6 @@ def AddKriteria():
         print("error",str(e))
 
     return hasil
-
 
 
 
