@@ -69,7 +69,7 @@
         <v-btn
           :loading="loading"
           color="primary"
-          class="d-flex mx-auto"
+          class="d-flex mx-auto mt-10"
           @click="RequestPurchaseTime()"
           >
           Search
@@ -82,7 +82,7 @@
           :headers="headers"
           :items="types"
           :items-per-page="5"
-          class="elevation-1"
+          class="elevation-1 mt-15"
           item-key="id">
     
         
@@ -171,17 +171,24 @@
         jumlah : '',
         pemasok : '',
         peringkat : '',
-        RencanaKedatangan : '',
+        RencanaKedatangan : undefined,
         LeadTime : '',
         Harga : '',
-        MinimalOrder : ''
+        MinimalOrder : '',
+        originalDate : '',
+
+        year : undefined,
+        month : undefined,
+        day : undefined,
+
+        convertedDate : ''
    }    
 },
 
 mounted(){
   window.setInterval(() => {
     this.fetchMaterial()
-      }, 1500)
+     }, 1500)
   
 },
   
@@ -210,7 +217,7 @@ mounted(){
         }
       },
 
-    
+      
       async RequestPurchaseTime(){
         this.loading = true
         try{
@@ -252,10 +259,31 @@ mounted(){
         
       },
 
+      async convertDate(){
+        for(this.index in this.selected){
+            this.originalDate = new Date(this.selected[this.index].RencanaKedatangan)
+            this.year = this.originalDate.getFullYear()
+            this.month  = String(this.originalDate.getMonth() + 1).padStart(2, '0');
+            this.day = String(this.originalDate.getDate()).padStart(2, '0');
+
+
+            this.convertDate = `${this.year}-${this.month}-${this.day}`
+            console.log("id : ",this.selected[this.index].id,"convert date : ",this.convertDate)
+        }
+      },
+
       async insertPesan(){
       try{
         const axios = require('axios')
         for(this.index in this.selected){
+         
+          this.originalDate = new Date(this.selected[this.index].RencanaKedatangan)
+          this.year = this.originalDate.getFullYear()
+          this.month  = String(this.originalDate.getMonth() + 1).padStart(2, '0');
+          this.day = String(this.originalDate.getDate()).padStart(2, '0');
+
+
+          this.convertDate = `${this.year}-${this.month}-${this.day}`
           const res = await axios.post('/material/insert_material_haruspesan',{
               id                : this.selected[this.index].id,
               code              : this.selected[this.index].code,
@@ -263,7 +291,8 @@ mounted(){
               jumlah            : this.selected[this.index].jumlah,
               pemasok           : this.selected[this.index].pemasok,
               peringkat         : this.selected[this.index].peringkat,
-              RencanaKedatangan : this.selected[this.index].RencanaKedatangan,
+              RencanaKedatangan : this.convertDate,
+              
               LeadTime          : this.selected[this.index].LeadTime,
               Harga             : this.selected[this.index].Harga,
               MinimalOrder      : this.selected[this.index].MinimalOrder

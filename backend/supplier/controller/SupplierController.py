@@ -377,7 +377,8 @@ def GetMatriksKriteriaInputByAdmin(IdPenghitung):
     query += "JOIN gen_r_matrikskriteria b ON b.idPenghitung = a.ID "
     query += "JOIN gen_r_kriteria c ON c.ID = b.IDKriteria "
     query += "JOIN gen_r_kriteria d ON d.ID = b.IDKriteria02 "
-    query += "WHERE a.ID = '"+IdPenghitung+"' AND b.konfirm IS NULL"
+    query += "WHERE a.ID = '"+IdPenghitung+"' AND b.konfirm IS NULL "
+    query += "ORDER BY b.IDKriteria, b.IDKriteria02 ASC"
 
     cursor.execute(query)
     records = cursor.fetchall()
@@ -426,6 +427,7 @@ def GetPerbandinganSupplierByAdmin(idPenghitung):
     query += "FROM gen_r_adminperhitungan a "
     query += "JOIN gen_r_perbandingan b ON b.idPenghitung = a.ID "
     query += "WHERE a.ID = '"+idPenghitung+"' AND b.konfirm IS NULL "
+    query += "ORDER BY b.IDKriteria,b.IDSupplier01,b.IDSupplier02 ASC"
     cursor.execute(query)
     records = cursor.fetchall()
     row_headers = [x[0] for x in cursor.description]

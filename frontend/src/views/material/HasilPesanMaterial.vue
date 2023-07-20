@@ -114,6 +114,15 @@
             </template>
 
           </v-data-table>
+
+          <v-btn 
+    color="primary" 
+    class="mt-5 mb-3"
+    v-bind="attrs"
+    v-on="on"
+   >    
+        Order
+    </v-btn> 
       </v-card>
 
     </v-app>
@@ -137,7 +146,7 @@
          column2 : [
             {text : 'Code Material',        value : 'code'},
             {text : 'Nama Material',        value : 'nama'},
-            {text : 'Perlu',                value : 'jumlah'},
+            {text : 'Pesan',                value : 'jumlah'},
             {text : 'Harga',                value : 'Harga'},
             {text : 'Lead Time',            value : 'LeadTime'},
             {text : 'Minimal',              value : 'MinimalOrder'},
