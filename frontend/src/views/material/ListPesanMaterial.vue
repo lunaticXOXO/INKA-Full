@@ -175,6 +175,7 @@
         LeadTime : '',
         Harga : '',
         MinimalOrder : '',
+        purchaseid : '',
         originalDate : '',
 
         year : undefined,
@@ -292,10 +293,10 @@ mounted(){
               pemasok           : this.selected[this.index].pemasok,
               peringkat         : this.selected[this.index].peringkat,
               RencanaKedatangan : this.convertDate,
-              
               LeadTime          : this.selected[this.index].LeadTime,
               Harga             : this.selected[this.index].Harga,
-              MinimalOrder      : this.selected[this.index].MinimalOrder
+              MinimalOrder      : this.selected[this.index].MinimalOrder,
+              purchaseid        : this.$route.params.id
 
           })
           if(res.data.status == 'berhasil'){
@@ -306,7 +307,7 @@ mounted(){
                   color : "green" 
                 }
                 setTimeout(() => { 
-                  location.replace('/listHasilPesanMaterial/' +  this.selected[this.index].pemasok)
+                  location.replace('/listHasilPesanMaterial/' + this.$route.params.id)
 
                 }, 1000)
           }

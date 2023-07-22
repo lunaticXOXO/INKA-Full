@@ -127,9 +127,9 @@ class main():
         return GetSupplierById(idSupplier)
 
     
-    @app.route('/supplier/get_supplier_haruspesan/<idsupplier>',methods = ['GET'])
-    def get_supplier_byid_haruspesan(idsupplier):
-        return GetSuuplierByIDHarusPesan(idsupplier)
+    @app.route('/supplier/get_supplier_inharuspesan',methods = ['GET'])
+    def get_supplier_in_haruspesan():
+        return GetSupplierInPemesanan()
 
     @app.route('/supplier/add_supplier',methods = ['POST'])
     def add_supplier():
@@ -1332,10 +1332,13 @@ class main():
     def insert_material_haruspesan():
         return InsertMaterialHarusPesan()
 
-    @app.route('/material/hasil_pemesanan/<idsupplier>',methods = ['GET'])
-    def show_hasil_pemesanan(idsupplier):
-        return ShowHasilPemesanan(idsupplier)
+    @app.route('/material/hasil_pemesanan/<purchaseid>',methods = ['GET'])
+    def show_hasil_pemesanan(purchaseid):
+        return ShowHasilPemesanan(purchaseid)
     
+    @app.route('/material/add_order_to_purchaseitem/<purchaseid>',methods =  ['POST'])
+    def add_order_to_purchaseitem(purchaseid):
+        return InsertHasilPesananToPurchaseItem(purchaseid)
 
     @app.route('/login',methods = ['POST'])
     def login():

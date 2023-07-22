@@ -913,7 +913,7 @@ const routes = [
 
   {
 
-    path : '/listHarusPesanMaterial',
+    path : '/listHarusPesanMaterial/:id',
     name : 'List Harus Pesan Material New',
     component : ListPesanMaterial,
     meta : {

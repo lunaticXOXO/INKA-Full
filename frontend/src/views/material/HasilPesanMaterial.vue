@@ -116,13 +116,18 @@
           </v-data-table>
 
           <v-btn 
-    color="primary" 
-    class="mt-5 mb-3"
-    v-bind="attrs"
-    v-on="on"
+          color="primary" 
+          class="mt-5 mb-3"
+          v-bind="attrs"
+          @click = "addOrdersToPurchaseItem()"
+          v-on="on"
    >    
         Order
     </v-btn> 
+
+    <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
+            {{snackbar.message}}
+    </v-snackbar>
       </v-card>
 
     </v-app>
@@ -150,8 +155,9 @@
             {text : 'Harga',                value : 'Harga'},
             {text : 'Lead Time',            value : 'LeadTime'},
             {text : 'Minimal',              value : 'MinimalOrder'},
-            {text : 'Rencana Kedatangan',  value : 'RencanaKedatangan'},
-            {text : 'Action', value : 'aksi'}
+            {text : 'Rencana Kedatangan',   value : 'RencanaKedatangan'},
+            {text : 'Unit',                 value : 'unit'},
+            {text : 'Action',               value : 'aksi'}
          ],
 
            supplier : [],
@@ -168,6 +174,12 @@
             nama: '',
             purchaseDate: '',
             purchaserName: '',
+          },
+
+          snackbar : {
+            show : false,
+            color : null,
+            message : null,
           },
          
         }
@@ -203,7 +215,7 @@
         async fetchData(){
           try{
             const axios = require('axios');
-            const res = await axios.get('/supplier/get_supplier_haruspesan/' + this.$route.params.id);
+            const res = await axios.get('/supplier/get_supplier_inharuspesan');
             if (res.data == null){
               alert('Material Kosong')
             }else{
@@ -235,6 +247,37 @@
           }
         },
         
+        async addOrdersToPurchaseItem(){
+          try{
+
+             const axios = require('axios')
+             const res = await axios.post('/material/add_order_to_purchaseitem/' + this.$route.params.id)
+             if(res.data.status == 'berhasil'){
+              console.log("success")
+              this.snackbar = {
+                  show : true,
+                  message : "Order Success",
+                  color : "green" 
+                }
+                setTimeout(() => { 
+                  location.replace('/listPurchaseItemByPurchaseMaterialNew/' + this.$route.params.id)
+
+                }, 1000)
+          }
+          else if(res.data.status == 'gagal'){
+            this.snackbar = {
+                  show : true,
+                  message : "Order Failed",
+                  color : "red" 
+                }
+          }
+
+          }catch(error){
+            console.log(error)
+          }
+
+           
+        }   
         
       }
     }

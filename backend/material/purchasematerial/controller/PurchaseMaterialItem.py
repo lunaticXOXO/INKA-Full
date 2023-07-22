@@ -262,7 +262,7 @@ def ShowMaterialHarusPesan():
 def InsertMaterialHarusPesan():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "INSERT INTO cpl_haruspesan03(id,code,nama,jumlah,pemasok,peringkat,RencanaKedatangan,LeadTime,Harga,MinimalOrder)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    query = "INSERT INTO cpl_haruspesan03(id,code,nama,jumlah,pemasok,peringkat,RencanaKedatangan,LeadTime,Harga,MinimalOrder,purchaseid,unit)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     try:
         data = request.json
         id = data["id"]
@@ -275,7 +275,9 @@ def InsertMaterialHarusPesan():
         leadtime    = data["LeadTime"]
         harga = data["Harga"]
         minimalorder = data["MinimalOrder"]
-        values = (id,code,nama,jumlah,pemasok,peringkat,rencanadatang,leadtime,harga,minimalorder)
+        purchaseid = data["purchaseid"]
+        unit =  "U01"
+        values = (id,code,nama,jumlah,pemasok,peringkat,rencanadatang,leadtime,harga,minimalorder,purchaseid,unit)
         cursor.execute(query,values)
         conn.commit()
         hasil = {"status" : "berhasil"}
@@ -285,10 +287,10 @@ def InsertMaterialHarusPesan():
         hasil = {"status" : "gagal"}
     return hasil
 
-def ShowHasilPemesanan(id):
+def ShowHasilPemesanan(purchaseid):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT * FROM cpl_haruspesan03 a WHERE a.pemasok = '"+id+"'"
+    query = "SELECT * FROM cpl_haruspesan03 WHERE purchaseid = '"+purchaseid+"' ORDER BY pemasok ASC"
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
     json_data = []
@@ -300,3 +302,43 @@ def ShowHasilPemesanan(id):
     cursor.close()
     conn.close()
     return make_response(jsonify(json_data),200)
+
+
+
+def InsertHasilPesananToPurchaseItem(purchaseid):
+    conn = database.connector()
+    cursor = conn.cursor()
+    try:
+        query_insert = "INSERT INTO mat_d_purchaseitem(id_item,supplierCode,materialTypeCode,quantity,unit,schedulledArrival,purchaseId,LeadTime,Harga,MinimalOrder)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+
+        query = "SELECT * FROM cpl_haruspesan03 WHERE purchaseid = '"+purchaseid+"' ORDER BY pemasok ASC"
+        cursor.execute(query)
+        records = cursor.fetchall()
+
+        query_count = "SELECT COUNT(*) FROM mat_d_purchaseitem WHERE purchaseId LIKE '"+purchaseid+"%'"
+
+        for index in records:
+            cursor.execute(query_count)
+            data = cursor.fetchone()
+            count = int(data[0])
+            id_item      = purchaseid + str(count).zfill(3)
+        
+            materialType = index[1]
+            quantity     = index[3]
+            supplierCode = index[4]
+            scheduller   = index[6]
+            LeadTime     = index[7]
+            Harga        = index[8]
+            MinOrder     = index[9]
+            unit         = index[11]
+            values = (id_item,supplierCode,materialType,quantity,unit,scheduller,purchaseid,LeadTime,Harga,MinOrder)
+            cursor.execute(query_insert,values)
+        
+        query_delete = "DELETE FROM cpl_haruspesan03"
+        cursor.execute(query_delete)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil

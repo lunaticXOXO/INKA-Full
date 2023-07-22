@@ -88,10 +88,12 @@ def GetSupplierById(idSupplier):
     
     return make_response(jsonify(json_data),200)
 
-def GetSuuplierByIDHarusPesan(idsupplier):
+
+
+def GetSupplierInPemesanan():
     conn = db.connector()
     cursor = conn.cursor()
-    query = "SELECT * FROM gen_r_supplier WHERE code = '"+idsupplier+"'"
+    query = "SELECT * FROM gen_r_supplier a WHERE a.code IN (SELECT pemasok FROM cpl_haruspesan03)"
     cursor.execute(query)
     records = cursor.fetchall()
     
