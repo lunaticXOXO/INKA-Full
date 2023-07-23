@@ -199,9 +199,13 @@ def UpdatePemesanan(id):
                 cursor.execute(query_update2,values2)
                 conn.commit()
 
+                
+            cursor.execute(query_update3)
+            conn.commit()
 
-        cursor.execute(query_update3)
-        conn.commit()
+
+        #cursor.execute(query_update3)
+        #conn.commit()
         
         
         hasil =  {"status" : "berhasil"}
