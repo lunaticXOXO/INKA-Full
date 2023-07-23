@@ -147,7 +147,6 @@ def UpdatePemesanan(id):
         leadtime_before = index[2]
         minimal_before  = index[3]
        
-
     kriteria = ""
     query_update1 = "UPDATE cpl_haruspesan03 SET jumlah = %s, Harga = %s,LeadTime = %s, MinimalOrder = %s, unit = %s WHERE id = '"+id+"'"
     try:

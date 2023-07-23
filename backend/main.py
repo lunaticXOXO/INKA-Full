@@ -1340,6 +1340,7 @@ class main():
     def add_order_to_purchaseitem(purchaseid):
         return InsertHasilPesananToPurchaseItem(purchaseid)
 
+    #test
     @app.route('/material/update_pemesanan_material/<id>',methods = ['POST'])
     def update_pemesanan(id):
         return UpdatePemesanan(id)
