@@ -1344,6 +1344,10 @@ class main():
     @app.route('/material/update_pemesanan_material/<id>',methods = ['POST'])
     def update_pemesanan(id):
         return UpdatePemesananMerge(id)
+    
+    @app.route('/material/delete_pemesanan_material/<id>',methods = ['DELETE'])
+    def delete_pemesanan(id):
+        return DeletePesananMaterial(id)
 
     @app.route('/login',methods = ['POST'])
     def login():

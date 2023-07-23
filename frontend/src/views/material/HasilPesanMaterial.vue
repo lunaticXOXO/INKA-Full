@@ -71,10 +71,10 @@
 
             <template v-slot:[`item.aksi`]="{ item }">
               <div v-if="item.id == editedItem.id">
-                  <v-icon color="red" class="mr-3" @click="close">
+                  <v-icon color="red" class="mr-3" @click="close" >
                   mdi-window-close
                   </v-icon>
-                  <v-icon color="green" @click="updateData()">
+                  <v-icon color="green" @click="updateData()" :loading="loading">
                   mdi-content-save
                   </v-icon>
               </div>
@@ -100,7 +100,7 @@
                       class="mx-1" 
                       x-small
                       color="red"
-                      @click="deleteMaterial(item)"
+                      @click="deletePesanan(item)"
                       v-bind="attrs"
                       v-on="on">
                       <v-icon small dark>mdi-trash-can-outline</v-icon>
@@ -123,9 +123,34 @@
         Order
     </v-btn> 
 
+    
+    <v-dialog
+          v-model="dialog"
+          width="500">
+          <v-card class="pa-6">
+            <v-card-title class="text-h5 grey lighten-2">
+              Updating...
+            </v-card-title>
+            <br>
+            <div class="mx-auto text-center">
+              <v-progress-circular
+                :size="70"
+                :width="7"
+                indeterminate
+                color="grey darken-2"
+              ></v-progress-circular>
+              <br>
+        
+            </div>
+          </v-card>
+        </v-dialog>
+
     <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
             {{snackbar.message}}
     </v-snackbar>
+
+   
+
       </v-card>
 
     </v-app>
@@ -162,6 +187,8 @@
            hasilpesan : [],
            units : [],
           editedIndex: -1,
+          dialog : false,
+          loading : false,
 
           editedItem: {
            
@@ -190,12 +217,25 @@
         }
       },
     
+
+      watch: {
+      dialog (val) {
+        if (!val) return
+
+        if(this.snackbar.color == "green"){
+          this.dialog = false
+        }else{
+          this.dialog = true
+        }
+      },
+    },
+
       mounted(){
           this.fetchData(),
 
-          // window.setInterval(() => {
+           window.setInterval(() => {
             this.fetchData2()
-          // }, 1500)
+           }, 8000)
          
           this.fetchUnit()
       },
@@ -223,6 +263,35 @@
             this.editedItem = Object.assign({},hasilpesan);
             console.log("id index : ", this.editedItem.id)
      
+        },
+
+        deletePesanan(hasilpesan){
+          try{
+
+            const axios = require('axios')
+            const res = axios.delete('/material/delete_pemesanan_material/' + hasilpesan.id)
+            if(res.data.status == 'berhasil'){
+              alert("Delete Success")
+              this.snackbar = {
+                  show : true,
+                  message : "Delete Success",
+                  color : "green" 
+                }
+            }else if(res.data.status == 'gagal'){
+              this.snackbar = {
+                  show : true,
+                  message : "Delete Failed",
+                  color : "green" 
+                }
+
+            }
+
+          }
+          catch(error){
+
+            console.log(error)
+          }
+
         },
   
         async fetchData(){
@@ -310,12 +379,10 @@
              Object.assign(this.hasilpesan[this.editedIndex], this.editedItem)
             console.log(this.editedItem)
           }
-          this.close()
-
-        
+          this.close()        
          
           try{
-
+           
               const axios = require('axios')
               const res =  await axios.post('/material/update_pemesanan_material/'+ this.editedItem.id,{
                   jumlah        : this.editedItem.jumlah,
@@ -324,10 +391,10 @@
                   MinimalOrder  : this.editedItem.MinimalOrder,
                   unit          : this.editedItem.unit
               })
-                
+              this.loading = true
+              this.dialog = true
               if(res.data.status == 'berhasil'){
-                  this.loading = true
-
+                  
                   console.log("berhasil")
                   // setTimeout(() => { 
                   this.snackbar = {
@@ -336,7 +403,7 @@
                     color : "green" 
                   }
                 // }, 1000)
-
+                  this.dialog = false
                   this.loading = false
               }
              
@@ -351,7 +418,6 @@
               }
       
         }
-
           catch(error){
             this.snackbar = {
                     show : true,
@@ -361,8 +427,9 @@
             console.log(error)
           }
       
+        },
 
-        }
+        
 
         
       }

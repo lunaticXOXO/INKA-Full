@@ -240,14 +240,6 @@ def UpdatePemesananMerge(id):
     return hasil
 
 
-        
-
-
-
-
-       
-   
-    
 
 def GetMaterialItemByPurchaseMaterial(idPurchase):
     conn = database.connector()
@@ -457,3 +449,18 @@ def InsertHasilPesananToPurchaseItem(purchaseid):
         print("error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
+
+
+def DeletePesananMaterial(id):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "DELETE FROM cpl_haruspesan03 WHERE id = '"+id+"'"
+    try:
+        cursor.execute(query)
+        conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        print("error",str(e))
+        hasil = {"status" : "gagal"}
+    return hasil
+
