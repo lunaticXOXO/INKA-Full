@@ -3,6 +3,7 @@ import db.db_handler as database
 from flask import request,make_response,jsonify
 import random
 import string
+import time
 
 def GetMaterialItem():
     conn = database.connector()
@@ -160,7 +161,7 @@ def UpdatePemesanan(id):
         cursor.execute(query_update1,values)
         conn.commit()
 
-        query_select_after = "SELECT jumlah, Harga, LeadTime, MinimalOrder,unit,pemasok,code FROM cpl_haruspesan03 WHERE id = '"+id+"'"
+        query_select_after = "SELECT jumlah, Harga, LeadTime, MinimalOrder,unit,pemasok,code,RencanaKedatangan FROM cpl_haruspesan03 WHERE id = '"+id+"'"
         cursor.execute(query_select_after)
         records2 =  cursor.fetchall()
         for index2 in records2:
@@ -169,19 +170,13 @@ def UpdatePemesanan(id):
             minimal_after = index2[3]
             pemasok = index2[5]
             materialtype = index2[6]
+            rencana_before = index2[7]
 
         query_update2 = "UPDATE mat_r_materialtypesupplier SET Nilai = %s WHERE materialTypeCode = %s AND supplierCode = %s AND IDKriteria = %s"
-        query_update3 = "update cpl_harusPesan03 Z1 SET \
-                                Z1.RencanaKedatangan=(select Z0.RencanaKedatangan from \
-                                cpl_harusPesan02 Z0 where Z1.code=Z0.code AND Z1.pemasok=Z0.pemasok), \
-                                Z1.LeadTime=(select Z0.LeadTime from \
-                                cpl_harusPesan02 Z0 where Z1.code=Z0.code AND Z1.pemasok=Z0.pemasok), \
-                                Z1.Harga=(select Z0.Harga from \
-                                cpl_harusPesan02 Z0 where Z1.code=Z0.code AND Z1.pemasok=Z0.pemasok), \
-                                Z1.MinimalOrder=(select Z0.MinimalOrder from \
-                                cpl_harusPesan02 Z0 where Z1.code=Z0.code AND Z1.pemasok=Z0.pemasok)"
        
+        cek = None
         for i in range(3):
+            cek = False
             if harga_before != harga_after:
                 kriteria = "K02"
                 values2 = (harga_after,materialtype,pemasok,kriteria)
@@ -198,22 +193,60 @@ def UpdatePemesanan(id):
                 values2 = (leadtime_after,materialtype,pemasok,kriteria)
                 cursor.execute(query_update2,values2)
                 conn.commit()
-
-                
-            cursor.execute(query_update3)
-            conn.commit()
-
-
-        #cursor.execute(query_update3)
-        #conn.commit()
-        
-        
-        hasil =  {"status" : "berhasil"}
-    except Exception as e:
-        hasil =  {"status" : "gagal"}
+               
+    
+    except Exception as e:     
         print("error",str(e))
+       
 
+    cursor.close()
+    conn.close()
+  
+   
+
+
+def UpdatePemesananMerge(id):
+    cek = UpdatePemesanan(id)
+    time.sleep(8)
+    conn = database.connector()
+    cursor = conn.cursor()
+
+
+    query_getharuspesan03 = "SELECT RencanaKedatangan FROM cpl_haruspesan03 WHERE id = '"+id+"'"
+    cursor.execute(query_getharuspesan03)
+    data = cursor.fetchone()
+    rencana_before = data[0]
+
+    query_getharuspesan02 = "SELECT RencanaKedatangan FROM cpl_haruspesan02 WHERE id = '"+id+"'"
+    cursor.execute(query_getharuspesan02)
+    data = cursor.fetchone()
+    rencana_after = data[0]
+
+   
+    try:
+        if  rencana_before != rencana_after:
+            print("test")
+            query_update3 = "UPDATE cpl_haruspesan03 SET RencanaKedatangan = %s WHERE id = %s"
+            values3 = (rencana_after,id)
+            cursor.execute(query_update3,values3)
+            conn.commit()
+        hasil = {"status" : "berhasil"}
+    except Exception as e:
+        hasil = {"status" : "gagal"}
+        print("error",str(e))
+    
+    cursor.close()
+    conn.close()
     return hasil
+
+
+        
+
+
+
+
+       
+   
     
 
 def GetMaterialItemByPurchaseMaterial(idPurchase):

@@ -99,12 +99,6 @@
           <template v-slot:[`item.nama`]="{ item }">
             <span>{{item.nama}}</span>
           </template>
-
-      
-        
- 
-   
-
       </v-data-table>
     
  

@@ -162,18 +162,23 @@
            hasilpesan : [],
            units : [],
           editedIndex: -1,
+
           editedItem: {
-            id: '',
-            nama: '',
-            purchaseDate: '',
-            purchaserName: '',
+           
+            jumlah: '',
+            Harga: '',
+            LeadTime : '',
+            MinimalOrder : '',
+            unit : ''
 
           },
           defaultItem: {
-            id: '',
-            nama: '',
-            purchaseDate: '',
-            purchaserName: '',
+           
+            jumlah: '',
+            Harga: '',
+            LeadTime : '',
+            MinimalOrder : '',
+            unit : ''
           },
 
           snackbar : {
@@ -187,7 +192,11 @@
     
       mounted(){
           this.fetchData(),
-          this.fetchData2(),
+
+          // window.setInterval(() => {
+            this.fetchData2()
+          // }, 1500)
+         
           this.fetchUnit()
       },
 
@@ -208,9 +217,12 @@
       },
 
         editPesanan(hasilpesan){
-          console.log('ID : ' + hasilpesan.id)
-          this.editedIndex = this.hasilpesan.indexOf(hasilpesan);
-          this.editedItem = Object.assign({},hasilpesan);
+     
+            console.log('ID : ' + hasilpesan.id)
+            this.editedIndex = this.hasilpesan.indexOf(hasilpesan);
+            this.editedItem = Object.assign({},hasilpesan);
+            console.log("id index : ", this.editedItem.id)
+     
         },
   
         async fetchData(){
@@ -288,13 +300,70 @@
                   color : "red" 
                 }
           }
-
           }catch(error){
             console.log(error)
           }
+        },
 
-           
-        }   
+      async  updateData(){
+          if(this.editedIndex > -1){
+             Object.assign(this.hasilpesan[this.editedIndex], this.editedItem)
+            console.log(this.editedItem)
+          }
+          this.close()
+
+        
+         
+          try{
+
+              const axios = require('axios')
+              const res =  await axios.post('/material/update_pemesanan_material/'+ this.editedItem.id,{
+                  jumlah        : this.editedItem.jumlah,
+                  Harga         : this.editedItem.Harga,
+                  LeadTime      : this.editedItem.LeadTime,
+                  MinimalOrder  : this.editedItem.MinimalOrder,
+                  unit          : this.editedItem.unit
+              })
+                
+              if(res.data.status == 'berhasil'){
+                  this.loading = true
+
+                  console.log("berhasil")
+                  // setTimeout(() => { 
+                  this.snackbar = {
+                    show : true,
+                    message : "Update Success",
+                    color : "green" 
+                  }
+                // }, 1000)
+
+                  this.loading = false
+              }
+             
+              else if(res.data.status == 'gagal'){
+                this.snackbar = {
+                    show : true,
+                    message : "Update Failed",
+                    color : "red" 
+                  }
+
+                  this.loading = false
+              }
+      
+        }
+
+          catch(error){
+            this.snackbar = {
+                    show : true,
+                    message : "Update Error",
+                    color : "red" 
+                  }
+            console.log(error)
+          }
+      
+
+        }
+
         
       }
     }

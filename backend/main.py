@@ -1343,7 +1343,7 @@ class main():
     #test
     @app.route('/material/update_pemesanan_material/<id>',methods = ['POST'])
     def update_pemesanan(id):
-        return UpdatePemesanan(id)
+        return UpdatePemesananMerge(id)
 
     @app.route('/login',methods = ['POST'])
     def login():
