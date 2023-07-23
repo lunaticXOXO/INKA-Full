@@ -132,6 +132,85 @@ def PurchaseMaterialItemByIDPurchase(idPurchase):
         print("Error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
+
+
+def UpdatePemesanan(id):
+    conn = database.connector()
+    cursor = conn.cursor()  
+
+    query_select_before = "SELECT jumlah, Harga, LeadTime, MinimalOrder,unit FROM cpl_haruspesan03 WHERE id = '"+id+"'"
+    cursor.execute(query_select_before)
+    records = cursor.fetchall()
+
+    for index in records:
+        harga_before    = index[1]
+        leadtime_before = index[2]
+        minimal_before  = index[3]
+       
+
+    kriteria = ""
+    query_update1 = "UPDATE cpl_haruspesan03 SET jumlah = %s, Harga = %s,LeadTime = %s, MinimalOrder = %s, unit = %s WHERE id = '"+id+"'"
+    try:
+        data = request.json
+        jumlah = data["jumlah"]
+        harga = data["Harga"] #kriteria K02
+        leadtime = data["LeadTime"] #Kriteria K03
+        minimalorder = data["MinimalOrder"] #kriteria K05
+        unit = data["unit"]
+        values  = (jumlah,harga,leadtime,minimalorder,unit)
+        cursor.execute(query_update1,values)
+        conn.commit()
+
+        query_select_after = "SELECT jumlah, Harga, LeadTime, MinimalOrder,unit,pemasok,code FROM cpl_haruspesan03 WHERE id = '"+id+"'"
+        cursor.execute(query_select_after)
+        records2 =  cursor.fetchall()
+        for index2 in records2:
+            harga_after = index2[1]
+            leadtime_after = index2[2]
+            minimal_after = index2[3]
+            pemasok = index2[5]
+            materialtype = index2[6]
+
+        query_update2 = "UPDATE mat_r_materialtypesupplier SET Nilai = %s WHERE materialTypeCode = %s AND supplierCode = %s AND IDKriteria = %s"
+        query_update3 = "update cpl_harusPesan03 Z1 SET \
+                                Z1.RencanaKedatangan=(select Z0.RencanaKedatangan from \
+                                cpl_harusPesan02 Z0 where Z1.code=Z0.code AND Z1.pemasok=Z0.pemasok), \
+                                Z1.LeadTime=(select Z0.LeadTime from \
+                                cpl_harusPesan02 Z0 where Z1.code=Z0.code AND Z1.pemasok=Z0.pemasok), \
+                                Z1.Harga=(select Z0.Harga from \
+                                cpl_harusPesan02 Z0 where Z1.code=Z0.code AND Z1.pemasok=Z0.pemasok), \
+                                Z1.MinimalOrder=(select Z0.MinimalOrder from \
+                                cpl_harusPesan02 Z0 where Z1.code=Z0.code AND Z1.pemasok=Z0.pemasok)"
+       
+        for i in range(3):
+            if harga_before != harga_after:
+                kriteria = "K02"
+                values2 = (harga_after,materialtype,pemasok,kriteria)
+                cursor.execute(query_update2,values2)
+                conn.commit()
+            if minimal_before != minimal_after:
+                kriteria = "K05"
+                values2 = (minimal_after,materialtype,pemasok,kriteria)
+                cursor.execute(query_update2,values2)
+                conn.commit()
+
+            if leadtime_before != leadtime_after:
+                kriteria = "K03"
+                values2 = (leadtime_after,materialtype,pemasok,kriteria)
+                cursor.execute(query_update2,values2)
+                conn.commit()
+
+
+        cursor.execute(query_update3)
+        conn.commit()
+        
+        
+        hasil =  {"status" : "berhasil"}
+    except Exception as e:
+        hasil =  {"status" : "gagal"}
+        print("error",str(e))
+
+    return hasil
     
 
 def GetMaterialItemByPurchaseMaterial(idPurchase):

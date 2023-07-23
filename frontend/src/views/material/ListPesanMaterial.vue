@@ -106,15 +106,31 @@
    
 
       </v-data-table>
-      
-      <v-btn 
-    color="primary" 
-    class="mt-10 mb-5"
-    v-bind="attrs"
-    v-on="on"
-    @click = "insertPesan()">
+    
+ 
+    <v-btn 
+      color="green" 
+      class="mt-10 mb-5"
+      v-bind="attrs"
+      v-on="on"
+      @click = "insertPesan()">
         Purchase
     </v-btn>
+
+
+    <v-btn 
+      color="primary" 
+      class="mt-10 mb-5 ml-7"
+      v-bind="attrs"
+      v-on="on"
+      :to="{name : 'List Hasil Pemesanan Material',params:{id : `${this.$route.params.id}`}}"
+    
+     >
+        Lihat Hasil Pemesanan
+  </v-btn>
+
+
+ 
 
     <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
             {{snackbar.message}}
@@ -218,7 +234,11 @@ mounted(){
         }
       },
 
-      
+      async SeeResult(){
+        location.replace('/listHasilPesanMaterial/' + this.$route.params.id)
+
+      },
+
       async RequestPurchaseTime(){
         this.loading = true
         try{

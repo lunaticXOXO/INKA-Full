@@ -41,14 +41,7 @@
                   <span v-else>{{item.id}}</span>
               </div>
             </template>
-            <template v-slot:[`item.code`]="{ item }">
-                <v-text-field v-model="editedItem.code" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
-                <span v-else>{{item.code}}</span>
-            </template>
-            <template v-slot:[`item.nama`]="{ item }">
-                <v-text-field v-model="editedItem.nama" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
-                <span v-else>{{item.nama}}</span>
-            </template>
+          
 
             <template v-slot:[`item.jumlah`]="{ item }">
                 <v-text-field v-model="editedItem.jumlah" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
@@ -65,11 +58,16 @@
                 <span v-else>{{item.LeadTime}}</span>
             </template>
 
-            <template v-slot:[`item.RencanaKedatangan`]="{ item }">
-                <v-text-field v-model="editedItem.RencanaKedatangan" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
-                <span v-else>{{item.RencanaKedatangan}}</span>
+            <template v-slot:[`item.MinimalOrder`]="{ item }">
+                <v-text-field v-model="editedItem.MinimalOrder" :hide-details="true" dense single-line v-if="item.id == editedItem.id" ></v-text-field>
+                <span v-else>{{item.MinimalOrder}}</span>
             </template>
 
+
+            <template v-slot:[`item.unit`]="{ item }">
+              <v-select v-model="editedItem.unit" item-text="nama" item-value="id" :items="units" v-if="item.id == editedItem.id"></v-select>
+              <span v-else>{{item.unit}}</span>
+            </template>
 
             <template v-slot:[`item.aksi`]="{ item }">
               <div v-if="item.id == editedItem.id">
@@ -87,7 +85,7 @@
                       class="mx-1" 
                       x-small
                       color="green"
-                      @click="editMaterial(item)"
+                      @click="editPesanan(item)"
                       v-bind="attrs"
                       v-on="on">
                       <v-icon small dark>mdi-pencil</v-icon>
@@ -162,12 +160,14 @@
 
            supplier : [],
            hasilpesan : [],
+           units : [],
           editedIndex: -1,
           editedItem: {
             id: '',
             nama: '',
             purchaseDate: '',
             purchaserName: '',
+
           },
           defaultItem: {
             id: '',
@@ -187,7 +187,8 @@
     
       mounted(){
           this.fetchData(),
-          this.fetchData2()
+          this.fetchData2(),
+          this.fetchUnit()
       },
 
 
@@ -206,10 +207,10 @@
 
       },
 
-        editMaterial(types){
-          console.log('ID : ' + types.id)
-          this.editedIndex = this.types.indexOf(types);
-          this.editedItem = Object.assign({},types);
+        editPesanan(hasilpesan){
+          console.log('ID : ' + hasilpesan.id)
+          this.editedIndex = this.hasilpesan.indexOf(hasilpesan);
+          this.editedItem = Object.assign({},hasilpesan);
         },
   
         async fetchData(){
@@ -246,6 +247,22 @@
             console.log(error)
           }
         },
+
+        async fetchUnit(){
+        try{
+            const axios = require('axios')
+            const res = await axios.get('/unit/get_unit')
+            if (res.data == null){
+                alert("Material Unit Kosong")
+            }else{
+                this.units = res.data
+                console.log(res,this.units)
+            }
+        }catch(error){
+            alert(error)
+            console.log(error)
+        } 
+      },
         
         async addOrdersToPurchaseItem(){
           try{
