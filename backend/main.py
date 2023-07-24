@@ -1340,7 +1340,7 @@ class main():
     def add_order_to_purchaseitem(purchaseid):
         return InsertHasilPesananToPurchaseItem(purchaseid)
 
-    #test
+
     @app.route('/material/update_pemesanan_material/<id>',methods = ['POST'])
     def update_pemesanan(id):
         return UpdatePemesananMerge(id)
@@ -1348,6 +1348,18 @@ class main():
     @app.route('/material/delete_pemesanan_material/<id>',methods = ['DELETE'])
     def delete_pemesanan(id):
         return DeletePesananMaterial(id)
+
+    @app.route('/material/get_information_purchaseitem/<idPurchase>',methods = ['GET'])
+    def get_information_purchaseitem(idPurchase):
+        return GetInformationPurchaseItemByPurchase(idPurchase)
+
+    @app.route('/material/get_information_purchaseitem_detail/<idPurchase>',methods = ['GET'])
+    def get_information_purchaseitem2(idPurchase):
+        return GetInformationPurchaseItemByPurchase2(idPurchase)
+    
+    @app.route('/material/get_sum_purchaseitem/<idPurchase>',methods = ['GET'])
+    def sum_information_purchaseitem(idPurchase):
+        return GetSumPurchaseItemByPurchase(idPurchase)
 
     @app.route('/login',methods = ['POST'])
     def login():

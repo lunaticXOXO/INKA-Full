@@ -207,7 +207,7 @@ def UpdatePemesanan(id):
 
 def UpdatePemesananMerge(id):
     cek = UpdatePemesanan(id)
-    time.sleep(8)
+    time.sleep(6)
     conn = database.connector()
     cursor = conn.cursor()
 
@@ -247,6 +247,60 @@ def GetMaterialItemByPurchaseMaterial(idPurchase):
     query = "SELECT a.id_item,a.supplierCode,a.materialTypeCode,a.quantity,c.nama AS 'namaUnit',a.schedulledArrival,a.purchaseId FROM mat_d_purchaseitem a "
     query += "JOIN mat_d_purchasematerial b ON b.id = a.purchaseId JOIN gen_r_materialunit c ON c.id = a.unit "
     query += "WHERE a.purchaseId = '"+idPurchase+"' AND a.quantity != 0 ORDER BY a.id_item DESC"
+
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
+
+
+def GetInformationPurchaseItemByPurchase(idPurchase):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT b.purchaserName AS 'namaPurchase',b.purchaseDate,a.schedulledArrival,a.supplierCode FROM mat_d_purchaseitem a JOIN mat_d_purchasematerial b ON b.id = a.purchaseId JOIN mat_r_materialtype c ON c.code = a.materialTypeCode WHERE a.purchaseId = '"+idPurchase+"' GROUP BY a.supplierCode"
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
+
+
+def GetInformationPurchaseItemByPurchase2(idPurchase):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.materialTypeCode,b.nama AS 'namaMaterial', a.quantity,a.Harga,a.LeadTime,a.MinimalOrder FROM mat_d_purchaseitem a JOIN mat_r_materialtype b ON b.code = a.materialTypeCode JOIN mat_d_purchasematerial c ON c.id = a.purchaseId WHERE a.purchaseId = '"+idPurchase+"'"
+
+    cursor.execute(query)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    records = cursor.fetchall()
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    cursor.close()
+    conn.close()
+    return make_response(jsonify(json_data),200)
+
+
+def GetSumPurchaseItemByPurchase(idPurchase):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT SUM(Harga) AS 'Total' FROM mat_d_purchaseitem WHERE purchaseId = '"+idPurchase+"'"
 
     cursor.execute(query)
     row_headers = [x[0] for x in cursor.description]
@@ -451,6 +505,8 @@ def InsertHasilPesananToPurchaseItem(purchaseid):
     return hasil
 
 
+
+
 def DeletePesananMaterial(id):
     conn = database.connector()
     cursor = conn.cursor()
@@ -463,4 +519,6 @@ def DeletePesananMaterial(id):
         print("error",str(e))
         hasil = {"status" : "gagal"}
     return hasil
+
+
 

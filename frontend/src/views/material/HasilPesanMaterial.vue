@@ -235,7 +235,7 @@
 
            window.setInterval(() => {
             this.fetchData2()
-           }, 8000)
+           }, 7000)
          
           this.fetchUnit()
       },
@@ -358,7 +358,7 @@
                   color : "green" 
                 }
                 setTimeout(() => { 
-                  location.replace('/listPurchaseItemByPurchaseMaterialNew/' + this.$route.params.id)
+                  location.replace('/informationPurchaseItem/' + this.$route.params.id)
 
                 }, 1000)
           }

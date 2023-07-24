@@ -139,6 +139,7 @@ import AddPeminjamanTools from '../views/tools/AddPeminjamanTools.vue'
 import HasilRequestPeminjaman from '../views/tools/HasilRequestPeminjaman.vue'
 import AddKriteriaPemasok from '../views/pemasok/AddKriteriaPemasok.vue'
 import HasilPesanMaterial from '../views/material/HasilPesanMaterial.vue'
+import ListInformationPurchaseItemByPurchase from '../views/material/ListInformationPurchaseItemByPurchase.vue'
 
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
@@ -1066,6 +1067,17 @@ const routes = [
     meta : {
         title : "List Purchase Item By Purchase Material - PT.INKA"
     }
+
+ },
+
+ {
+     path : '/informationPurchaseItem/:id',
+     name : 'Information Purchase Item By Purchase Material',
+     component : ListInformationPurchaseItemByPurchase,
+     meta : {
+
+          title : "Information Purchase Item - PT.INKA"
+     }
 
  },
 
