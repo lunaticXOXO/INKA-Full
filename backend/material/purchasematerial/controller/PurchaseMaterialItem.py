@@ -402,6 +402,43 @@ def AddTimeOrderMaterial():
     return hasil
 
 
+def AddTimeOrderMaterialTest():
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "INSERT INTO cpl_haruspesan00(batas,waktu)VALUES(%s,%s)"
+        
+    try:
+        data = request.json
+        batas = data["fullDate"]
+        waktu = None
+        values = (batas,waktu)
+        cursor.execute(query,values)
+
+        conn.commit()
+        hasil = True
+
+        if hasil == True:
+            query = "SELECT * FROM cpl_haruspesan02 a ORDER BY a.pemasok,a.peringkat ASC"
+            cursor.execute(query)
+            row_headers = [x[0] for x in cursor.description]
+            json_data = []
+            records = cursor.fetchall()
+
+            for data in records:
+                json_data.append(dict(zip(row_headers,data)))
+            return make_response(jsonify(json_data),200)
+
+
+    except Exception as e:
+        hasil = False
+        print("error",str(e))
+    
+
+
+
+
+
 def ShowMaterialHarusPesan():
     conn = database.connector()
     cursor = conn.cursor()
