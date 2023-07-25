@@ -136,7 +136,7 @@ def RankingSupplier():
     conn = db.connector()
     cursor = conn.cursor()
 
-    query = "SELECT a.IDSupplier,b.nama AS 'namaSupplier',a.Rangking,a.Bobot FROM gen_r_supplierrangking a JOIN gen_r_supplier b ON b.code = a.IDSupplier"
+    query = "SELECT a.IDSupplier,b.nama AS 'namaSupplier',a.Rangking,a.Bobot FROM gen_r_supplierrangking a JOIN gen_r_supplier b ON b.code = a.IDSupplier WHERE a.selesai IS NULL"
     cursor.execute(query)
     records = cursor.fetchall()
     

@@ -23,7 +23,7 @@ def hitungSetengahMatrik():
             cur00.execute(query_increment)
             data = cur00.fetchone()
             id = data[0]
-           
+            id = id + 1
             if id >= 10 and id <= 99:
                 id_unique = "0000" + str(id)
             elif id >= 100 and id < 1000:
@@ -360,6 +360,7 @@ def hitungSetengahMatrik01():
                 cur00.execute(query_getunique)
                 data = cur00.fetchone()
                 id = data[0]
+                id = id + 1
                 id_unique = ""
 
                 if id >= 10 and id <= 99:
