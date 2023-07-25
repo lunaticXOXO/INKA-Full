@@ -24,15 +24,15 @@ def hitungSetengahMatrik():
             data = cur00.fetchone()
             id = data[0]
            
-            if id >= 10:
+            if id >= 10 and id <= 99:
                 id_unique = "0000" + str(id)
-            elif id >= 100:
+            elif id >= 100 and id < 1000:
                 id_unique = "000" + str(id)
 
-            elif id >= 1000:
+            elif id >= 1000 and id < 10000:
                 id_unique =  "00" + str(id)
             
-            elif id >= 10000:
+            elif id >= 10000 and id < 100000:
                 id_unique = "0" + str(id)
             
             elif id >= 100000:
@@ -362,15 +362,15 @@ def hitungSetengahMatrik01():
                 id = data[0]
                 id_unique = ""
 
-                if id >= 10:
+                if id >= 10 and id <= 99:
                     id_unique = "0000" + str(id)
-                elif id >= 100:
+                elif id >= 100 and id < 1000:
                     id_unique = "000" + str(id)
 
-                elif id >= 1000:
+                elif id >= 1000 and id < 10000:
                     id_unique =  "00" + str(id)
             
-                elif id >= 10000:
+                elif id >= 10000 and id < 100000:
                     id_unique = "0" + str(id)
             
                 elif id >= 100000:
