@@ -158,10 +158,11 @@ def ShowOperationByWorkstation(ws):
 
 
 
-def ShowOperationByWorkstation(rencanaMulai):
+def ShowOperationByWorkstation(workstation):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.id, a.rencanaMulai, a.rencanaSelesai, a.mulai,a.selesai FROM prd_d_operasi a WHERE a.rencanaMulai = '"+rencanaMulai+"' GROUP BY a.rencanaMulai"
+    tanggal = request.args.get("tanggal")
+    query = "SELECT a.id, a.rencanaMulai, a.rencanaSelesai, a.mulai,a.selesai FROM prd_d_operasi a WHERE stasiunKerja = '"+workstation+"' AND a.rencanaMulai LIKE '"+tanggal+"%'  GROUP BY a.rencanaMulai"
     cursor.execute(query)
     records = cursor.fetchall()
 

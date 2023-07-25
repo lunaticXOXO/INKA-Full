@@ -129,7 +129,11 @@ export default {
         async fetchData(){
             try{
                 const axios = require('axios')
-                const res = await axios.get('/operasi/get_operasi_byws/' + this.$route.params.id)
+                const res = await axios.get('/operasi/get_operasi_byws/' + this.$route.params.id,{
+                    params : {
+                        tanggal : this.$route.query.tanggal
+                    }
+                })
                 if(res.data == null){
                     alert("Data Operasi")
                 }else{
@@ -146,7 +150,11 @@ export default {
         async fetchData2(){
             try{
                 const axios = require('axios')
-                const res = await axios.get('/tools/show_hasil_pengadaantools/' + this.$route.params.id)
+                const res = await axios.get('/tools/hasil_request_pengadaantools/' + this.$route.params.id,{
+                    params : {
+                        tanggal : this.$route.query.tanggal
+                    }
+                })
                 if(res.data == null){
                     alert("Data kosong")
                 }else{

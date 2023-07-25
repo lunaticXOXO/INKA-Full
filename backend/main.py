@@ -35,8 +35,11 @@ from tools.toolbox.BoxItemController import *
 from tools.toolbox.BoxOnWsController import *
 from tools.toolbutuhopr.controller.ToolButuhOpr import *
 from tools.tooldistribution.ToolDistributionController import *
+from tools.tooldistribution.ToolDistributionNewController import *
 from tools.toolneed.ToolNeedController import *
 from tools.pengembaliantool.PengembalianToolController import *
+from tools.pengadaantool.PengadaanToolController import *
+
 from ahp.controller.AhpController import *
 
 
@@ -1179,9 +1182,18 @@ class main():
     def ketersediaan_perkakas():
         return jumlahToolTypeKeseluruhanDiWorkshop()
 
+    # @app.route('/tools/request_distribusi_perkakas',methods = ['POST'])
+    # def distribusi_perkakas_byws():
+    #     return RequestDistribusiToolByWorkstation()
+    
     @app.route('/tools/request_distribusi_perkakas',methods = ['POST'])
-    def distribusi_perkakas_byws():
-        return RequestDistribusiToolByWorkstation()
+    def distribusi_perkakas_kirimtool():
+        return kirimTool_distribution()
+    
+    @app.route('/tools/request_peminjaman_tools',methods = ['POST'])
+    def request_peminjaman_tools():
+        return peminjaman_tools()
+
 
     @app.route('/tools/request_tool_stock',methods = ['POST'])
     def kebutuhan_perkakas_stock():
@@ -1207,6 +1219,14 @@ class main():
     @app.route('/tools/show_hasil_pengadaantools/<ws>',methods = ['GET'])
     def show_pengadaan_tool(ws):
         return ShowPengadaanTool(ws)
+
+    @app.route('/tools/request_pengadaan_tools',methods = ['POST'])
+    def request_pengadaan_tools():
+        return butuhToolStock_pengadaan()
+
+    @app.route('/tools/hasil_request_pengadaantools/<ws>',methods = ['GET'])
+    def hasil_request_pengadaantools(ws):
+        return ShowHasilRequestPengadaan(ws)
 
     # Box
     @app.route('/box/add_toolbox',methods = ['POST'])

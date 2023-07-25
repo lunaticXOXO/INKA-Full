@@ -102,7 +102,7 @@
             </div>
     
             <v-autocomplete 
-            v-model="workstation"
+            v-model="ws00"
             item-text="nama"
             item-value="id"
             :items ="items" 
@@ -162,8 +162,8 @@
         data(){
             return {
                 
-                rencanaMulaiA : undefined,
-                rencanaMulaiB : undefined,
+                tgl00 : undefined,
+                tgl01 : undefined,
                 dueDate : undefined,
                 datetime : undefined,
                 dueDate2 : undefined,
@@ -176,6 +176,7 @@
                 items : [],
                 items2 : [],
                 workstation : undefined, 
+                ws00 : undefined,
                 snackbar : {
                     show : false,
                     color : null,
@@ -221,20 +222,20 @@
             async RequestPengadaanTool(){
                 try{
                     const axios = require('axios')
-                    this.rencanaMulaiA = this.dueDate + ' ' +  this.datetime
-                    this.rencanaMulaiB = this.dueDate2 + ' ' + this.datetime2
-                    const res = await axios.post('/tools/request_tool_stock',{
-                        rencanaMulaiA : this.rencanaMulaiA,
-                        rencanaMulaiB : this.rencanaMulaiB,
-                        workstation : this.workstation
+                    this.tgl00 = this.dueDate + ' ' +  this.datetime
+                    this.tgl01 = this.dueDate2 + ' ' + this.datetime2
+                    const res = await axios.post('/tools/request_pengadaan_tools',{
+                        tgl00 : this.tgl00, 
+                        tgl01 : this.tgl01,
+                        ws00 : this.ws00
                     })
-                    console.log("id item : ", this.workstation)
+                    console.log("id item : ", this.ws00)
                     if (res.data.status == 'berhasil'){
                         alert("berhasil")
                         console.log("request berhasil")
 
                         setTimeout(() => {
-                            location.replace('/hasilPengadaanTools/' + this.workstation)
+                            location.replace('/hasilPengadaanTools/' + this.ws00 + '?tanggal=' + this.dueDate )
                         }, 1000)
                         
                         this.snackbar = {

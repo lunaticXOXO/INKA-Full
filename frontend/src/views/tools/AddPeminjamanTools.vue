@@ -9,7 +9,7 @@
               v-model="valid"
               lazy-validation
            >
-            <div>
+            <div class="d-flex">
                 <v-menu     
                   class="mt-6"
                   transition="scale-transition"
@@ -18,17 +18,30 @@
                   min-width="290px"
                 >
                 <template v-slot:activator="{ on, attrs }">
-                  <v-text-field class="mx-10" :value="dueDate" v-bind="attrs" v-on="on" label="Tanggal Pengerjaan" prepend-icon="mdi-calendar"></v-text-field>
+                  <v-text-field class="mx-10" :value="tgl00" v-bind="attrs" v-on="on" label="Tanggal Rencana Mulai" prepend-icon="mdi-calendar"></v-text-field>
                 </template>
-                <v-date-picker full-width v-model="dueDate"></v-date-picker>
+                <v-date-picker full-width v-model="tgl00"></v-date-picker>
               </v-menu>
+
+              <v-menu     
+              class="mt-6"
+              transition="scale-transition"
+              offset-y
+              max-width="290px"
+              min-width="290px"
+            >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field class="mx-10" :value="tgl01" v-bind="attrs" v-on="on" label="Tanggal Rencana Selesai" prepend-icon="mdi-calendar"></v-text-field>
+            </template>
+            <v-date-picker full-width v-model="tgl01"></v-date-picker>
+          </v-menu>
               
             
             </div>
         
           
             <v-autocomplete 
-            v-model="workstation"
+            v-model="ws00"
             item-text="nama"
             item-value="id"
             :items ="items" 
@@ -42,7 +55,7 @@
             color="success"
             class="mx-auto text-center"
             type="submit"
-            @click="validate()"
+            @click="RequestPeminjamanTools()"
             >
             Submit
             </v-btn>
@@ -68,17 +81,18 @@
             return {
                 
                
-                dueDate : undefined,     
+                tgl00 : undefined,     
                 menu : false,
                 valid : true,
                 items : [],
                 items2 : [],
-                workstation : undefined, 
+                ws00 : undefined, 
                 snackbar : {
                     show : false,
                     color : null,
                     message : null,
                 },
+
     
             }
     
@@ -115,7 +129,48 @@
             },
     
                  
-           
+           async RequestPeminjamanTools(){
+                try{
+
+                    const axios = require('axios')
+                    const res = await axios.post('/tools/request_peminjaman_tools',{
+                        tgl00 : this.tgl00,
+                        tgl01 : this.tgl01,
+                        ws00  : this.ws00
+                    })
+
+                    if(res.data.status == 'berhasil'){
+                        this.snackbar = {
+                        show : true,
+                        message : "Request Berhasil",
+                        color : "green"
+
+                    }
+                    setTimeout(() => {
+                    location.replace('/hasilRequestPeminjaman/' + this.ws00 + '?tanggal=' + this.tgl00)
+                    }, 1000)
+
+                }
+                    else if(res.data.status == 'gagal'){
+                        this.snackbar = {
+                            show : true,
+                            message : "Request Failed",
+                            color : "red"
+
+                        }
+                }   
+
+                }
+                catch(error){
+                    this.snackbar = {
+                            show : true,
+                            message : "Reques Error",
+                            color : "red"
+
+                        }  
+                    console.log(error)
+                }
+           }
     
     
         }

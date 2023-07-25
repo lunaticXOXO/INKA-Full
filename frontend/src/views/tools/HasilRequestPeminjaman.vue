@@ -10,7 +10,7 @@
         
         <v-data-table 
             :headers = "column2"
-            :items = "requestpeminjaman"
+            :items = "workstation_temp"
             :items-per-page="5"
             >
         
@@ -89,6 +89,8 @@
 
         ],
         requestpeminjaman : [],
+        workstation : [],
+        workstation_temp : [],
         tanggal : '',
         uuid : '',
         snackbar : {
@@ -102,7 +104,12 @@
     },
 
     mounted(){
-        this.fetchHasilRequestPeminjaman()
+      // window.setInterval(() => {
+        this.fetchHasilRequestPeminjaman(),
+        this.fetchWorkstationPeminjaman()
+    //  }, 1500)
+  
+      
        
     },
 
@@ -130,6 +137,30 @@
         }
       },
 
+      async fetchWorkstationPeminjaman(){
+        try{
+          const axios = require('axios');
+          const res = await axios.get('/tools/show_requestbox_peminjaman/' + this.$route.params.id,{
+                params : {
+                    tanggal : this.$route.query.tanggal
+                }
+          });
+          if (res.data == null){
+            alert('Customer Kosong')
+          }else{
+            this.workstation = res.data
+            this.workstation_temp = [this.workstation[0]]
+            console.log("test : ",this.workstation_temp)
+          }
+        }
+        catch(error){
+          alert("Error")
+            
+
+      }
+    },
+
+
       async peminjamanPerkakas(){
         try{
             const axios = require('axios')
@@ -145,9 +176,13 @@
                         message : "Peminjaman Berhasil",
                         color : "green"
             }
-            setTimeout(() => {
-                        location.replace('/hasilRequestPeminjaman/' + this.$route.params.id + '?tanggal=' + this.$route.query.tanggal) 
-                    }, 1000)
+            window.setInterval(() => {
+              this.fetchHasilRequestPeminjaman(),
+              this.fetchWorkstationPeminjaman()
+            }, 1500)
+            // setTimeout(() => {
+            //             location.replace('/hasilRequestPeminjaman/' + this.$route.params.id + '?tanggal=' + this.$route.query.tanggal) 
+            //         }, 1000)
         }
             else{
                 this.snackbar = {

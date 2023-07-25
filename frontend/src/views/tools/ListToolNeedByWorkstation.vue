@@ -67,7 +67,7 @@
 
  
 <script>
-export default {
+export default {    
     data(){
         return {
             column : [
@@ -120,7 +120,7 @@ export default {
 
         async fetchData(){
             try{
-                const axios = require('axios')
+                const axios = require('axios')  
                 // const res_complement = await axios.get('/operasi/get_operasi_byws/' + this.$route.params.id)
                 // this.operation_complement = res_complement.data
                 //this.rencanaMulai = this.operation_complement[0].rencanaMulai

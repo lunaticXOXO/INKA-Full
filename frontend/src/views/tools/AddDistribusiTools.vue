@@ -102,7 +102,7 @@
         </div>
 
         <v-autocomplete 
-        v-model="workstation"
+        v-model="ws00"
         item-text="nama"
         item-value="id"
         :items ="items" 
@@ -165,8 +165,8 @@
     data(){
         return {
             
-            rencanaMulaiA : undefined,
-            rencanaMulaiB : undefined,
+            tgl00 : undefined,
+            tgl01 : undefined,
             dueDate : undefined,
             datetime : undefined,
             dueDate2 : undefined,
@@ -178,7 +178,7 @@
             valid : true,
             items : [],
             items2 : [],
-            workstation : undefined, 
+            ws00 : undefined, 
             snackbar : {
                 show : false,
                 color : null,
@@ -224,18 +224,17 @@
         async RequestKebutuhanTool(){
             try{
                 const axios = require('axios')
-                this.rencanaMulaiA = this.dueDate + ' ' +  this.datetime
-                this.rencanaMulaiB = this.dueDate2 + ' ' + this.datetime2
+                this.tgl00 = this.dueDate + ' ' +  this.datetime
+                this.tgl01 = this.dueDate2 + ' ' + this.datetime2
                 const res = await axios.post('/tools/request_distribusi_perkakas',{
-                    rencanaMulaiA : this.rencanaMulaiA,
-                    rencanaMulaiB : this.rencanaMulaiB,
-                    workstation : this.workstation
+                    tgl00 : this.tgl00,
+                    tgl01 : this.tgl01,
+                    ws00 : this.ws00
                 })
-                console.log("id item : ", this.workstation)
+                console.log("id item : ", this.ws00)
                 if (res.data.status == 'berhasil'){
-                    alert("berhasil")
                     setTimeout(() => {
-                        location.replace('/listKebutuhanPerkakasByWorkstation/' + this.workstation + '?rencanaMulai=' + this.dueDate) 
+                        location.replace('/listKebutuhanPerkakasByWorkstation/' + this.ws00 + '?rencanaMulai=' + this.dueDate) 
                     }, 1000)
 
                     console.log("request berhasil")

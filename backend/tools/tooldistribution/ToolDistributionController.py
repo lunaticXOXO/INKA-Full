@@ -57,7 +57,7 @@ def jumlahKirimTool(tgl00, tgl01, ws00):
     q00 = q00 + " ORDER BY EE1.stasiunKerjaOperasi "
     return q00
 
-
+    
 
 def jumlahBarisKirimTool(tgl00, tgl01, ws00, cur00):
     con00 = database.connector()
@@ -123,13 +123,16 @@ def RequestDistribusiToolByWorkstation():
     return hasil
 
 
+
+
+
 def GetRequestToolNeedByWorkstation(workstation):
     conn = database.connector()
     cursor = conn.cursor()
     
     tanggal = request.args.get("rencanaMulai")
 
-    query = "SELECT * FROM cpl_kirimtool02 WHERE stasiunKerja = '"+workstation+"' AND tanggal = '"+tanggal+"' AND kurangPengemasan > 0"
+    query = "SELECT * FROM cpl_kirimtool01 WHERE stasiunKerja = '"+workstation+"' AND tanggal = '"+tanggal+"' AND kurangPengemasan > 0"
     cursor.execute(query)
 
     records = cursor.fetchall()
