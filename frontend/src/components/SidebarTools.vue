@@ -97,6 +97,16 @@ export default {
                     action: 'mdi-wrench',
                     active: false,
                     items: [
+                    { title: 'Pencarian Posisi Perkakas', icon: 'mdi-filter-variant', route: '/searchToolPosition'},
+                  
+                ],
+                    title : "Pencarian Perkakas"
+                },
+
+                {
+                    action: 'mdi-wrench',
+                    active: false,
+                    items: [
                     { title: 'Kebutuhan Pengadaan Perkakas', icon: 'mdi-filter-variant', route: '/addPengadaanTools'},
                   
                 ],

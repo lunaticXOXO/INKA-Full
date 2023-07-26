@@ -140,6 +140,7 @@ import HasilRequestPeminjaman from '../views/tools/HasilRequestPeminjaman.vue'
 import AddKriteriaPemasok from '../views/pemasok/AddKriteriaPemasok.vue'
 import HasilPesanMaterial from '../views/material/HasilPesanMaterial.vue'
 import ListInformationPurchaseItemByPurchase from '../views/material/ListInformationPurchaseItemByPurchase.vue'
+import SearchToolsPosition from '../views/tools/SearchToolsPosition.vue'
 
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
@@ -1324,6 +1325,16 @@ const routes = [
       title : "List Penghitung Kriteria - PT.INKA"
    }
 
+},
+
+{
+    path : '/searchToolPosition',
+    name : 'Search Tools Position',
+    component : SearchToolsPosition,
+    meta : {
+
+        title : "Search Tools Position - PT.INKA"
+    }
 },
 
 {

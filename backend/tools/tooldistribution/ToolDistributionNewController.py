@@ -16,6 +16,73 @@ def posisiTool():
     WHERE c.logout IS NULL"""
     return q00
 
+
+def ShowposisiTools():
+    con00 = database.connector()
+    cur00 = con00.cursor()
+
+    q00 = f"""SELECT DISTINCT  a. id AS idToolStock, a.toolTypeCode, 
+    e.nama, b.boxId, c.stasiunKerja AS SKtool, 
+    d.stasiunKerja AS SKBox, a.quantity,
+    case
+	    when d.stasiunKerja IS NOT NULL then d.stasiunKerja
+	    when c.stasiunKerja IS NOT NULL then c.stasiunKerja
+    END onWs FROM eqp_d_toolstock a
+    LEFT JOIN eqp_d_boxitem b ON a.id = b.toolStockId
+    LEFT JOIN eqp_d_toolonws c ON a.id = c.toolStockId
+    LEFT JOIN eqp_d_boxonws d ON b.boxId = d.boxId
+    LEFT JOIN eqp_r_tooltype e ON e.codes=a.toolTypeCode 
+    WHERE c.logout IS NULL"""
+
+    cur00.execute(q00)
+    records = cur00.fetchall()
+
+    row_headers = [x[0] for x in cur00.description]
+    json_data = []
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return  make_response(jsonify(json_data),200)
+   
+
+def ShowPosisiToolsByName(namatools):
+    con00 = database.connector()
+    cur00 = con00.cursor()
+
+    q00 = f"""SELECT DISTINCT  a. id AS idToolStock, a.toolTypeCode, 
+    e.nama, b.boxId, c.stasiunKerja AS SKtool, 
+    d.stasiunKerja AS SKBox, a.quantity,
+    case
+	    when d.stasiunKerja IS NOT NULL then d.stasiunKerja
+	    when c.stasiunKerja IS NOT NULL then c.stasiunKerja
+    END onWs FROM eqp_d_toolstock a
+    LEFT JOIN eqp_d_boxitem b ON a.id = b.toolStockId
+    LEFT JOIN eqp_d_toolonws c ON a.id = c.toolStockId
+    LEFT JOIN eqp_d_boxonws d ON b.boxId = d.boxId
+    LEFT JOIN eqp_r_tooltype e ON e.codes=a.toolTypeCode 
+    WHERE c.logout IS NULL """
+
+    cur00.execute(q00)
+    records = cur00.fetchall()
+    records_temp = []
+
+    for index in records:
+        #print("index : ", index[2])
+        print("workstation : ", index[4] )
+        if index[2] == namatools and index[4] != None:
+            records_temp.append(index)
+            
+
+    
+    row_headers = [x[0] for x in cur00.description]
+    json_data = []
+    
+    for data in records_temp:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return  make_response(jsonify(json_data),200)
+
 #SISA TOOL
 # MENGETAHUI JUMLAH TOOL YANG SUDAH TERPAKAI (eqp_d_operationtool)
 # Tabel C2

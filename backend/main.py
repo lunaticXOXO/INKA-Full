@@ -1291,6 +1291,17 @@ class main():
     def peminjaman_perkakas(workstation = None, tanggal = None):
         return PeminjamanPerkakasByWorkstation(workstation,tanggal)
 
+    # Posisi perkakas
+
+    @app.route('/tools/show_posisi_tools', methods = ['GET'])
+    def posisi_perkakas():
+        return ShowposisiTools()
+
+    @app.route('/tools/show_posisi_tools_byname/<namatools>',methods = ['GET'])
+    def posisi_perkakas_byid(namatools):
+        return ShowPosisiToolsByName(namatools)
+
+
     #USERS 
     @app.route('/register',methods = ['POST'])
     def register():
