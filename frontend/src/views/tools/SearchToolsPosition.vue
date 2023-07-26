@@ -100,7 +100,7 @@ mounted(){
             //setTimeout(() => {
             const axios = require('axios')
             const res = await axios.get('/tools/show_posisi_tools_byname/' + this.type)
-            if(res.data == null){
+            if(res.data.length == 0){
                 this.snackbar = {
                 show : true,
                 message : "Perkakas Tidak Ditemukan",

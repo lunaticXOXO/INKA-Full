@@ -68,8 +68,7 @@ def ShowPosisiToolsByName(namatools):
     records_temp = []
 
     for index in records:
-        #print("index : ", index[2])
-        print("workstation : ", index[4] )
+       
         if index[2] == namatools and index[4] != None:
             records_temp.append(index)
             
