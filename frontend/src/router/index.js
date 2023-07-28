@@ -141,6 +141,7 @@ import AddKriteriaPemasok from '../views/pemasok/AddKriteriaPemasok.vue'
 import HasilPesanMaterial from '../views/material/HasilPesanMaterial.vue'
 import ListInformationPurchaseItemByPurchase from '../views/material/ListInformationPurchaseItemByPurchase.vue'
 import SearchToolsPosition from '../views/tools/SearchToolsPosition.vue'
+import ShowToolPengembalian from '../views/tools/ShowToolPengembalian.vue'
 
 //import ListToolsByProcess from '../views/tools/ListToolsByProcess.vue'
 
@@ -1315,6 +1316,18 @@ const routes = [
   meta : {
      title : "List Tool Need By Process - PT.INKA"
   }
+},
+
+{
+
+    path : '/listPengembalian',
+    name : 'List Tool Pengembalian',
+    component : ShowToolPengembalian,
+    meta : {
+
+        title : "List Tool Pengembalian - PT.INKA"
+    }
+
 },
 
 {

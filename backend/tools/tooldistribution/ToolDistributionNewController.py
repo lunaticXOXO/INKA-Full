@@ -387,3 +387,55 @@ def kirimTool_distribution():
 
 def peminjaman_tools():
     return kirimTool_distribution()
+
+
+def ShowToolPengembalianByUUID():
+    con00 = database.connector()
+    cur00 = con00.cursor()
+    uuid = request.args.get('uuid')
+    
+    query_temp = "SELECT operatorid FROM opr_d_dictoperator WHERE uuid = '"+uuid+"'"
+    cur00.execute(query_temp)
+    listopr = cur00.fetchall()
+
+    operatorid = ""
+    for index in listopr:
+        operatorid = index[0]
+
+    query = "SELECT * FROM eqp_d_toolpinjam WHERE toolId LIKE 'TS%' AND operatorId = '"+operatorid+"'"
+    cur00.execute(query)
+
+    records = cur00.fetchall()
+    row_headers = [x[0] for x in cur00.description]
+    json_data = []
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return  make_response(jsonify(json_data),200)
+
+
+
+def ShowToolPengembalianAll():
+    con00 = database.connector()
+    cur00 = con00.cursor()
+   
+    query = "SELECT * FROM eqp_d_toolpinjam WHERE toolId LIKE 'TS%'"
+    cur00.execute(query)
+
+    records = cur00.fetchall()
+    row_headers = [x[0] for x in cur00.description]
+    json_data = []
+    
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    return  make_response(jsonify(json_data),200)
+
+
+
+def UpdatePengembalianPerkakas(idbox,idtoolstock):
+    con00 = database.connector()
+    cur00 = con00.cursor()
+
+

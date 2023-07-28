@@ -130,7 +130,8 @@ export default {
                     action: 'mdi-wrench',
                     active: false,
                     items: [
-                    { title: 'Peminjaman Tools', icon: 'mdi-filter-variant', route: '/addPeminjamanTools'},
+                    { title: 'Peminjaman Perkakas', icon: 'mdi-filter-variant', route: '/addPeminjamanTools'},
+                    {title : 'Pengembalian Perkakas', icon : 'mdi-filter-variant', route : '/listPengembalian'}
                   
                 ],
                     title : "Peminjaman dan Pengembalian Perkakas"

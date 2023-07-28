@@ -1302,6 +1302,15 @@ class main():
         return ShowPosisiToolsByName(namatools)
 
 
+    # Peminjaman Perkakas
+    @app.route('/tools/show_pengembalian_perkakas_byuuid',methods = ['GET'])
+    def show_pengembalian_perkakas_byuuid():
+        return ShowToolPengembalianByUUID()
+
+    @app.route('/tools/show_pengembalian_perkakas',methods = ['GET'])
+    def show_pengembalian_perkakas():
+        return ShowToolPengembalianAll()
+
     #USERS 
     @app.route('/register',methods = ['POST'])
     def register():
