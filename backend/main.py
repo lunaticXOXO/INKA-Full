@@ -856,9 +856,24 @@ class main():
         hasil = ConvertDateOperation()
         return hasil
 
+    @app.route('/operasi/generate_date_str2',methods = ['POST'])
+    def generate_date_str2():
+        hasil = ConvertDateStartEndOperation()
+        return hasil
+
+
     @app.route('/operasi/get_operasi_gantt/<stasiunKerja>',methods = ['GET'])
     def get_operasi_gantt(stasiunKerja):
         hasil = GetOperasiGanttChart(stasiunKerja)
+        return hasil
+
+    @app.route('/operasi/get_operasi_start_finish/<renmul>/<rensel>',methods = ['GET'])
+    def get_operasi_start_end(renmul = None,rensel = None):
+        return GetStartEndOperation(renmul,rensel)
+
+    @app.route('/operasi/get_operasi_gantt2/<stasiunKerja>',methods = ['GET'])
+    def get_operasi_gantt2(stasiunKerja):
+        hasil = GetOperasiGanttChart2(stasiunKerja)
         return hasil
 
     @app.route('/operasi/response_operasi_mulai/<nomorWS>',methods = ['POST'])

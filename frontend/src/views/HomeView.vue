@@ -3,47 +3,29 @@
     <v-card class="mx-auto text-center" max-width="1000" elevation="0">
       <p id="judul" class="font-weight-thin">SmartWorks 4.0</p>
     </v-card>
-    <v-carousel
-      cycle
-      height="100"
-      hide-delimiters
-      :show-arrows="false"
-      :interval="15000"
-    >
-      <v-carousel-item
-        v-for="(slide, i) in slides"
-        :key="i"
-      >
-        <v-sheet
-          :color="colors[i]"
-          height="100%"
-        >
-          <v-row
-            class="fill-height"
-            align="center"
-            justify="center"
-          >
-            <div class="text-h3">
-              {{ slide }}
-            </div>
-          </v-row>
-        </v-sheet>
-      </v-carousel-item>
-    </v-carousel>
+   
 
-    <v-carousel cycle :show-arrows="false" delimiter-icon="mdi-minus" height="700" :interval="15000">
+    <v-carousel cycle :show-arrows="false" delimiter-icon="mdi-minus" height="850" :interval="5000">
+      
       <v-carousel-item>
+        <div class="text-h3 mx-auto text-center">
+             Operator Hadir
+        </div>
+         
         <v-row
           class="fill-height"
           align="center"
           justify="center"
         >
+        
           <v-col
+          
           v-for=" index in listOperator"
           :key="index"
           cols="4"
           sm="auto"
           >
+         
             <v-img
                 height="200"
                 width="150" 
@@ -58,6 +40,10 @@
       </v-carousel-item>
       
       <v-carousel-item>
+        <div class="text-h3 mx-auto text-center">
+             Operator Hadir Pada WS01
+        </div>
+         
         <v-row
           class="fill-height"
           align="center"
@@ -83,6 +69,9 @@
       </v-carousel-item>
 
       <v-carousel-item>
+        <div class="text-h3 mx-auto text-center">
+             Operator Hadir Pada WS02
+        </div>
         <v-row
           class="fill-height"
           align="center"
@@ -108,6 +97,9 @@
       </v-carousel-item>
 
       <v-carousel-item>
+        <div class="text-h3 mx-auto text-center">
+             Operator Hadir Pada WS03
+        </div>
         <v-row
           class="fill-height"
           align="center"
@@ -133,6 +125,9 @@
       </v-carousel-item>
 
       <v-carousel-item>
+        <div class="text-h3 mx-auto text-center">
+             Operator Hadir Pada WS04
+        </div>
         <v-row
           class="fill-height"
           align="center"
@@ -158,6 +153,9 @@
       </v-carousel-item>
 
       <v-carousel-item>
+        <div class="text-h3 mx-auto text-center">
+             Operator Hadir Pada WS05
+        </div>
         <v-row
           class="fill-height"
           align="center"
@@ -183,6 +181,9 @@
       </v-carousel-item>
 
       <v-carousel-item>
+        <div class="text-h3 mx-auto text-center">
+             Operator Hadir Pada WS06
+        </div>
         <v-row
           class="fill-height"
           align="center"
@@ -208,6 +209,9 @@
       </v-carousel-item>
 
       <v-carousel-item>
+         <div class="text-h3 mx-auto text-center">
+             Operator Hadir Pada WS07
+        </div>
         <v-row
           class="fill-height"
           align="center"
@@ -233,6 +237,9 @@
       </v-carousel-item>
 
       <v-carousel-item>
+        <div class="text-h3 mx-auto text-center">
+             Operator Hadir Pada WS08
+        </div>
         <v-row
           class="fill-height"
           align="center"
@@ -258,6 +265,9 @@
       </v-carousel-item>
 
       <v-carousel-item>
+        <div class="text-h3 mx-auto text-center">
+             Operator Hadir Pada WS09
+        </div>
         <v-row
           class="fill-height"
           align="center"
@@ -283,6 +293,9 @@
       </v-carousel-item>
 
       <v-carousel-item>
+        <div class="text-h3 mx-auto text-center">
+            Jadwal Pengerjaan Operasi
+        </div>
         <v-card class="mt-10 mx-10">
           <g-gantt-chart
             :chart-start="myChartStartCustom"
@@ -293,7 +306,7 @@
             :theme="selectedTheme"
           >
             <g-gantt-row
-              label="WS00"
+              label="WS00 Plan"
               :bars="itemsWS00"
               bar-start="rencanaMulai"
               bar-end="rencanaSelesai"
@@ -301,7 +314,15 @@
             </g-gantt-row>
 
             <g-gantt-row
-              label="WS01"
+              label="WS00 Actual"
+              :bars="itemsWS00"
+              bar-start="rencanaMulai"
+              bar-end="rencanaSelesai"
+            >
+            </g-gantt-row>
+
+            <g-gantt-row
+              label="WS01 Plan"
               :bars="itemsWS01"
               bar-start="rencanaMulai"
               bar-end="rencanaSelesai"
@@ -309,7 +330,15 @@
             </g-gantt-row>
 
             <g-gantt-row
-              label="WS02"
+              label="WS01 Actual"
+              :bars="itemsWS01"
+              bar-start="rencanaMulai"
+              bar-end="rencanaSelesai"
+            >
+            </g-gantt-row>
+
+            <g-gantt-row
+              label="WS02 Plan"
               :bars="itemsWS02"
               bar-start="rencanaMulai"
               bar-end="rencanaSelesai"
@@ -317,7 +346,15 @@
             </g-gantt-row>
 
             <g-gantt-row
-              label="WS03"
+              label="WS02 Actual"
+              :bars="itemsWS02"
+              bar-start="rencanaMulai"
+              bar-end="rencanaSelesai"
+            >
+            </g-gantt-row>
+
+            <g-gantt-row
+              label="WS03 Plan"
               :bars="itemsWS03"
               bar-start="rencanaMulai"
               bar-end="rencanaSelesai"
@@ -325,7 +362,15 @@
             </g-gantt-row>
 
             <g-gantt-row
-              label="WS04"
+              label="WS03 Actual"
+              :bars="itemsWS03"
+              bar-start="rencanaMulai"
+              bar-end="rencanaSelesai"
+            >
+            </g-gantt-row>
+
+            <g-gantt-row
+              label="WS04 Plan"
               :bars="itemsWS04"
               bar-start="rencanaMulai"
               bar-end="rencanaSelesai"
@@ -333,7 +378,23 @@
             </g-gantt-row>
 
             <g-gantt-row
-              label="WS05"
+              label="WS04 Actual"
+              :bars="itemsWS04"
+              bar-start="rencanaMulai"
+              bar-end="rencanaSelesai"
+            >
+            </g-gantt-row>
+
+            <g-gantt-row
+              label="WS05 Plan"
+              :bars="itemsWS05"
+              bar-start="rencanaMulai"
+              bar-end="rencanaSelesai"
+            >
+            </g-gantt-row>
+
+              <g-gantt-row
+              label="WS05 Actual"
               :bars="itemsWS05"
               bar-start="rencanaMulai"
               bar-end="rencanaSelesai"
@@ -341,7 +402,7 @@
             </g-gantt-row>
 
             <g-gantt-row
-              label="WS06"
+              label="WS06 Plan"
               :bars="itemsWS06"
               bar-start="rencanaMulai"
               bar-end="rencanaSelesai"
@@ -349,7 +410,15 @@
             </g-gantt-row>
 
             <g-gantt-row
-              label="WS07"
+              label="WS06 Actual"
+              :bars="itemsWS06"
+              bar-start="rencanaMulai"
+              bar-end="rencanaSelesai"
+            >
+            </g-gantt-row>
+
+            <g-gantt-row
+              label="WS07 Plan"
               :bars="itemsWS07"
               bar-start="rencanaMulai"
               bar-end="rencanaSelesai"
@@ -357,7 +426,15 @@
             </g-gantt-row>
 
             <g-gantt-row
-              label="WS08"
+              label="WS07 Actual"
+              :bars="itemsWS07"
+              bar-start="rencanaMulai"
+              bar-end="rencanaSelesai"
+            >
+            </g-gantt-row>
+
+            <g-gantt-row
+              label="WS08 Plan"
               :bars="itemsWS08"
               bar-start="rencanaMulai"
               bar-end="rencanaSelesai"
@@ -365,7 +442,23 @@
             </g-gantt-row>
 
             <g-gantt-row
-              label="WS09"
+              label="WS08 Actual"
+              :bars="itemsWS08"
+              bar-start="rencanaMulai"
+              bar-end="rencanaSelesai"
+            >
+            </g-gantt-row>
+
+            <g-gantt-row
+              label="WS09 Plan"
+              :bars="itemsWS09"
+              bar-start="rencanaMulai"
+              bar-end="rencanaSelesai"
+            >
+            </g-gantt-row>
+
+              <g-gantt-row
+              label="WS09 Actual"
               :bars="itemsWS09"
               bar-start="rencanaMulai"
               bar-end="rencanaSelesai"
@@ -377,13 +470,18 @@
       </v-carousel-item>
 
       <v-carousel-item>
-        Material pada Gudang
+        <div class="text-h3 mx-auto text-center">
+             Ketersediaan Material Pada Gudang
+        </div>
         <v-data-table>
 
         </v-data-table>
       </v-carousel-item>
 
       <v-carousel-item>
+        <div class="text-h3 mx-auto text-center">
+             Persentase Proyek
+        </div>
         <v-row
           class="fill-height"
           :align="center"
@@ -489,8 +587,8 @@
         itemsWS07: undefined,
         itemsWS08: undefined,
         itemsWS09: undefined,
-        rowHeight: 50,
-        rowLabelWidth: 5,
+        rowHeight: 30,
+        rowLabelWidth: 15,
         grid: true,
         selectedTheme: "vue",
         dialogWS00: undefined,

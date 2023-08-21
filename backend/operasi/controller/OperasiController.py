@@ -1,9 +1,7 @@
 from numpy import record
 import db.db_handler as database
 from flask import request,make_response,jsonify
-import random
-import string
-from datetime import datetime
+from datetime import datetime,timedelta
 import time
 
 def ShowOperasiFromProduct(idProduct):
@@ -112,10 +110,48 @@ def ConvertDateOperation():
     conn.close()     
     return hasil  
 
+
+def ConvertDateStartEndOperation():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT mulai,selesai,mulai_str,selesai_str FROM prd_d_operasi WHERE mulai IS NOT NULL AND selesai IS NOT NULL"
+    cursor.execute(query)
+    records = []
+    records = cursor.fetchall()
+    date_tanggal_mulai = ""
+    date_tanggal_selesai = ""
+    date_tanggal_mulai_str = ""
+    date_tanggal_selesai_str = ""
+    print(records)
+    try:
+    #UPDATE `prd_d_operasi` SET `rencanaMulai_str`= NULL ,`rencanaSelesai_str`= NULL  WHERE produk = '221028000'
+        for data in records:
+            date_tanggal_mulai = data[0]
+            date_tanggal_selesai = data[1]
+            query_insert = "UPDATE prd_d_operasi SET mulai_str = %s, selesai_str = %s WHERE mulai = %s AND selesai = %s"
+            temp1 = ""
+            temp2 = ""
+            date_tanggal_mulai_str = date_tanggal_mulai.strftime("%Y-%m-%d %H:%M")
+            date_tanggal_selesai_str = date_tanggal_selesai.strftime("%Y-%m-%d %H:%M")
+            temp1 = date_tanggal_mulai_str
+            temp2 = date_tanggal_selesai_str
+            values = (temp1,temp2,date_tanggal_mulai,date_tanggal_selesai)
+            cursor.execute(query_insert,values)
+            conn.commit()
+        hasil = {"status" : "berhasil"} 
+    except Exception as e:
+        print("Error",str(e))
+        hasil = {"status" : "gagal"}
+
+    cursor.close()
+    conn.close()     
+    return hasil  
+
 def GetOperasiGanttChart(stasiunKerja):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT a.id AS 'idOperasi', b.nama AS 'namaProses', c.keterangan AS 'namaStasiunKerja' , a.rencanaMulai_str AS 'rencanaMulai',a.rencanaSelesai_str AS 'rencanaSelesai' FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN gen_r_stasiunkerja c ON c.id = a.stasiunKerja WHERE c.id = '"+stasiunKerja+"'"
+    
+    query = "SELECT a.id AS 'idOperasi', b.nama AS 'namaProses', c.keterangan AS 'namaStasiunKerja', a.rencanaMulai_str AS 'rencanaMulai',a.rencanaSelesai_str AS 'rencanaSelesai', a.mulai_str AS 'mulai', a.selesai_str AS 'selesai'  FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN gen_r_stasiunkerja c ON c.id = a.stasiunKerja WHERE c.id = '"+stasiunKerja+"'"
     cursor.execute(query)
     records = cursor.fetchall()
 
@@ -126,6 +162,72 @@ def GetOperasiGanttChart(stasiunKerja):
         json_data.append(dict(zip(row_headers,data)))
     return make_response(jsonify(json_data),200)
         
+
+def GetStartEndOperation(renmul,rensel):
+    conn = database.connector()
+    cursor = conn.cursor()
+
+    query = "SELECT MIN(a.mulai) AS 'mulai', MAX(a.selesai) AS 'selesai' "
+    query += "FROM ( "
+    query += "SELECT a.mulai_str AS 'mulai', a.selesai_str AS 'selesai' "
+    query += "FROM prd_d_operasi a "
+    query += "WHERE a.rencanaMulai_str >= '"+renmul+" 00:00' AND a.rencanaSelesai_str <= '"+rensel+" 23:59'"
+    query += "AND a.mulai_str IS NOT NULL AND a.selesai_str IS NOT NULL "
+    query += ") a;"
+    print("query : ", query)
+    #query = "SELECT a.mulai_str AS 'mulai', a.selesai_str AS 'selesai'  FROM prd_d_operasi a WHERE a.rencanaMulai_str LIKE '"+renmul+"%' OR a.rencanaSelesai_str LIKE '"+rensel+"%'"
+
+    cursor.execute(query)
+    records = cursor.fetchall()
+    records_temp = []
+    for index in records:
+        datetime_str = index[0]
+        datetime_obj = datetime.strptime(datetime_str, "%Y-%m-%d %H:%M")
+        date_only1 = datetime_obj.date()
+
+        datetime_str2 = index[1]
+        datetime_obj2 = datetime.strptime(datetime_str2,"%Y-%m-%d %H:%M")
+        date_only2 = datetime_obj2.date()
+        date_only2 = date_only2 + timedelta(days = 1)
+
+        date_only1 = str(date_only1)
+        date_only2 = str(date_only2)
+
+       
+        records_temp.append(date_only1)
+        records_temp.append(date_only2)
+
+    
+    print("date : ",date_only1)
+    print("records temp : ",records_temp)
+ 
+    new_array = []
+    new_array = [(records_temp[0], records_temp[1])]
+    print("records temp new : ", new_array)
+
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in new_array:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperasiGanttChart2(stasiunKerja):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT a.id AS 'idOperasi', b.nama AS 'namaProses', c.keterangan AS 'namaStasiunKerja',a.rencanaMulai_str AS 'rencanaMulai',a.rencanaSelesai_str AS 'rencanaSelesai', a.mulai_str AS 'mulai',a.selesai_str AS 'selesai' FROM prd_d_operasi a JOIN prd_r_proses b ON b.id = a.proses JOIN gen_r_stasiunkerja c ON c.id = a.stasiunKerja WHERE c.id = '"+stasiunKerja+"' AND a.mulai_str IS NOT NULL AND a.selesai_str IS NOT NULL ORDER BY a.mulai_str ASC"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
+
 
 def ShowProductInPantauOperasi():
     conn = database.connector()
