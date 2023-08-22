@@ -7,6 +7,7 @@ import VueAxios from 'vue-axios';
 import DatetimePicker from 'vuetify-datetime-picker';
 import VueApexCharts from 'vue-apexcharts'
 
+
 Vue.config.productionTip = false
 
 Vue.use(VueAxios, Axios, DatetimePicker,VueApexCharts);

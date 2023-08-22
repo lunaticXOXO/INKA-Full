@@ -1,14 +1,35 @@
 <template>
     <v-app>
         <div class="d-flex">
-            <v-card class="mx-auto text-center mt-6" width="500">
-                <h3>Rincian Proyek {{this.$route.params.id}}</h3>
+        <v-card class="mx-auto text-center mt-6" width="500">
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+              RINCIAN PROYEK {{this.$route.params.id}}
+            </v-card-title>
+          </v-card>
+
                 <v-data-table
                     :headers= "column2"
                     :items= "rproyek">
                 </v-data-table>
             </v-card>
             <v-card class="mx-auto text-center mt-6" width="350">
+
+                <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+              PROYEK {{this.idproyek}}
+            </v-card-title>
+          </v-card>
                 <v-data-table
                     :headers="column3"
                     :items = "proyek"
@@ -16,6 +37,17 @@
                 </v-data-table>
             </v-card>
             <v-card class="mx-auto text-center mt-6" width="350">
+                <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+              PELANGGAN {{this.idcustomer}}
+            </v-card-title>
+          </v-card>
+
                 <v-data-table
                     :headers="column4"
                     :items="customer"
@@ -23,10 +55,19 @@
                 </v-data-table>
             </v-card>
         </div>
-        <v-card class="mx-auto text-center mt-6" width="1000">
-            <br>
-            <h1>Product List By Rincian Proyek</h1><h1>{{this.$route.params.id}}</h1>
-            <br>
+        <v-card class="mx-auto text-center mt-6" width="1500">
+        
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="400"
+            >
+            <v-card-title class="text-h4">
+              DAFTAR PRODUK RINCIAN PROYEK {{this.$route.params.id}}
+            </v-card-title>
+            </v-card>
+            <br><br>
             <v-data-table 
                 :headers="column"
                 :items="produk"
@@ -103,6 +144,15 @@
                     </div>
                 </template>
             </v-data-table>
+            <br>
+            <v-card
+            color="#6f6f6f"
+            dark
+            class="px-5 py-3"
+            max-height ="50"
+        >
+      </v-card>
+
         </v-card>
     </v-app>
 </template>
@@ -145,6 +195,8 @@ export default {
                 id : '',
                 rincianProyek  : ''
             },
+            idproyek : '',
+            idcustomer : ''
         }
     },
 
@@ -198,6 +250,10 @@ export default {
                     this.proyek = res.data
                     this.customer = res.data
                     console.log(res)
+
+                    this.idcustomer = this.customer[0].IdCustomer
+                    this.idproyek = this.proyek[0].IdProyek
+                    
                 }
 
             }catch(error){

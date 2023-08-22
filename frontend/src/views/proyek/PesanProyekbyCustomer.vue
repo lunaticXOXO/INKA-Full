@@ -2,9 +2,20 @@
   <v-app>
     <v-card
       class="mx-auto text-center mt-6"
-      width="1000">
-      <br>
-      <h1>Pesan Proyek Baru</h1>
+      width="1200">
+
+      <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="400"
+        >
+        <v-card-title class="text-h4">
+              TAMBAH DATA PROYEK PELANGGAN {{this.$route.params.id}}
+            </v-card-title>
+        </v-card>
+        <br>
+
       <v-form
         class="pa-6"
         ref="form"
@@ -62,7 +73,18 @@
     
     <div class="d-flex">
       <v-card class="mt-10 text-center mx-10">
-        <h3>Customer {{this.$route.params.id}}</h3>   
+        
+        <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+              PELANGGAN {{this.$route.params.id}}
+            </v-card-title>
+        </v-card>
+        
         <v-data-table 
           :headers="column2"
           :items="customerinproject">

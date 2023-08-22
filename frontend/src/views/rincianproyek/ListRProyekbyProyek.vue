@@ -2,7 +2,16 @@
     <v-app>
         <div class="d-flex ml-14">
             <v-card class="ml-8 text-center mt-6" width="600">
-                <h3>Proyek {{this.$route.params.id}}</h3>
+                <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+                PROYEK {{this.$route.params.id}}
+            </v-card-title>
+          </v-card>
                 <v-data-table
                     :headers = "headers2"
                     :items = "proyekinrincian"
@@ -12,7 +21,18 @@
             </v-card>
       
             <v-card class="ml-15 text-center mt-6" width = "500">
-                  <h3>Customer Proyek {{this.$route.params.id}}</h3>
+                
+                <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+                PELANGGAN {{this.idcustomer}}
+            </v-card-title>
+          </v-card>
+
                 <v-data-table
                     :headers = "headers3"
                     :items = "customer"
@@ -21,16 +41,25 @@
                 </v-data-table>
             </v-card>
         </div>
-        <v-card class="mx-auto text-center mt-6" width="1000">
+        <v-card class="mx-auto text-center mt-6" width="1500">
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+              RINCIAN PROYEK {{this.$route.params.id}}
+            </v-card-title>
+          </v-card>
             <br>
-            <h1>List Rincian Proyek by Proyek</h1><h1>{{this.$route.params.id}}</h1>
             <br>
             <router-link :to="{name : 'Tambah Rincian Proyek by Proyek',params : {id : `${this.$route.params.id}`}}">
                 <v-btn color="primary" class="d-flex ml-4 mb-6">
                     Add Rincian Proyek
                 </v-btn>
             </router-link>
-            <v-card class="mx-auto text-center" max-width="1000">
+            <v-card class="mx-auto text-center" max-width="1500">
                 <v-data-table
                     :headers = "headers"
                     :items = "rincianbyproyek"
@@ -130,6 +159,14 @@
                         </div>
                     </template>
                 </v-data-table>
+                <br>
+            <v-card
+            color="#6f6f6f"
+            dark
+            class="px-5 py-3"
+            max-height ="50"
+        >
+      </v-card>
             </v-card>
         </v-card>
     </v-app>
@@ -173,7 +210,8 @@ export default {
                 dueDate : 'New Due Date',
                 proyek : 'New Proyek',
                 jenisProduk : 'New Jenis Produk'
-            }
+            },
+            idcustomer : ''
         }
     },
 
@@ -211,6 +249,7 @@ export default {
                 }else{
                     this.proyekinrincian = res.data
                     this.customer = res.data
+                    this.idcustomer = this.customer[0].IdCustomer
                     console.log(res,this.proyekinrincian)
                 }
 

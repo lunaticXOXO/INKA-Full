@@ -1,9 +1,20 @@
 <template>
-    <v-card class="mx-auto text-center mt-6" max-width="1000">
+    <v-card class="mx-auto text-center mt-6" max-width="1800">
         <br>
-        <h1>List Rincian Proyek</h1>
         <br>
-        <v-card class="mx-auto text-center" max-width="1000">
+        <v-card class="mx-auto text-center" max-width="1800">
+
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="300"
+                >
+        <v-card-title class="text-h4">
+              DAFTAR RINCIAN PROYEK
+            </v-card-title>
+        </v-card>
+            <br><br>
             <v-data-table
                 :headers = "column"
                 :items = "rincian">
@@ -102,7 +113,16 @@
                         </v-tooltip>
                     </div>
                 </template>
+
             </v-data-table>
+            <br>
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="50"
+                >
+        </v-card>
         </v-card>
     </v-card>
 </template>

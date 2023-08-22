@@ -3,7 +3,18 @@
     <br>
     <div class="d-flex">
         <v-card class="mt-10 text-center mx-10">
-            <h3>Customer {{this.$route.params.id}}</h3>   
+           
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+              PELANGGAN {{this.$route.params.id}}
+            </v-card-title>
+        </v-card>
+
             <v-data-table 
                 :headers="column2"
                 :items="customerinproject">
@@ -11,8 +22,20 @@
         </v-card>
     </div>
     <div class="tabelproyek">
-        <v-card class="mt-10 text-center mx-10" max-width="1450">
-            <h1>Proyek List Customer</h1> <h1>{{this.$route.params.id}}</h1>
+        <v-card class="mt-10 text-center mx-10" max-width="1800">
+
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="400"
+            >
+            <v-card-title class="text-h4">
+              PROYEK PELANGGAN {{this.$route.params.id}}
+            </v-card-title>
+        </v-card>
+        <br><br>
+
             <router-link :to="{name : 'Tambah Proyek by Customer', params : {id : `${this.$route.params.id}`}}">
                 <v-btn color="primary" class="d-flex ml-4 mb-6">
                     Add Proyek by Customer
@@ -106,6 +129,15 @@
                     </div>
                 </template>
             </v-data-table>
+            <br>
+            <v-card
+            color="#6f6f6f"
+            dark
+            class="px-5 py-3"
+            max-height ="50"
+        >
+      </v-card>
+
         </v-card>   
     </div> 
     </v-app>

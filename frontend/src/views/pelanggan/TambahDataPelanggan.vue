@@ -1,9 +1,20 @@
 <template>
     <v-card
       class="mx-auto text-center mt-6"
-      max-width="1000">
-      <br>
-      <h1>Tambah Pelanggan Baru</h1>
+      max-width="1200"
+      
+      >
+      <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="400"
+        >
+        <v-card-title class="text-h4">
+              TAMBAH DATA PELANGGAN
+            </v-card-title>
+        </v-card>
+        <br>
       <v-form
         class="pa-6"
         ref="form"

@@ -25,18 +25,22 @@
           cols="4"
           sm="auto"
           >
-         
+
+          <v-card width ="350" height ="300" class="mt-5">
             <v-img
                 height="200"
-                width="150" 
+                width="200" 
                 :src="require(`@/views/operator/foto/${index.link}`)" 
+                class="mx-auto text-center mt-7"
             >
             </v-img>
-              <span class="mx-auto"><b>{{index.uuid}}</b></span>
-            <br>
-            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+            <v-card-title class="text-black" v-text="index.nama"></v-card-title>
+            <v-card-text class="text-black" v-text="index.uuid"></v-card-text>
+            
+          </v-card>
           </v-col> 
         </v-row>
+
       </v-carousel-item>
       
       <v-carousel-item>
@@ -55,15 +59,18 @@
           cols="8"
           sm="auto"
           >
+          <v-card width ="350" height ="300" class="mt-5">
             <v-img
                 height="200"
-                width="150" 
+                width="200" 
                 :src="require(`@/views/operator/foto/${index.link}`)" 
+                class="mx-auto text-center mt-7"
             >
             </v-img>
-              <span class="mx-auto"><b>{{index.uuid}}</b></span>
-            <br>
-            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+            <v-card-title class="text-black" v-text="index.nama"></v-card-title>
+            <v-card-text class="text-black" v-text="index.uuid"></v-card-text>
+            
+          </v-card>
           </v-col> 
         </v-row>
       </v-carousel-item>
@@ -83,15 +90,18 @@
           cols="8"
           sm="auto"
           >
+          <v-card width ="350" height ="300" class="mt-5">
             <v-img
                 height="200"
-                width="150" 
+                width="200" 
                 :src="require(`@/views/operator/foto/${index.link}`)" 
+                class="mx-auto text-center mt-7"
             >
             </v-img>
-              <span class="mx-auto"><b>{{index.uuid}}</b></span>
-            <br>
-            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+            <v-card-title class="text-black" v-text="index.nama"></v-card-title>
+            <v-card-text class="text-black" v-text="index.uuid"></v-card-text>
+            
+          </v-card>
           </v-col> 
         </v-row>
       </v-carousel-item>
@@ -111,15 +121,18 @@
           cols="8"
           sm="auto"
           >
+          <v-card width ="350" height ="300" class="mt-5">
             <v-img
                 height="200"
-                width="150" 
+                width="200" 
                 :src="require(`@/views/operator/foto/${index.link}`)" 
+                class="mx-auto text-center mt-7"
             >
             </v-img>
-              <span class="mx-auto"><b>{{index.uuid}}</b></span>
-            <br>
-            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+            <v-card-title class="text-black" v-text="index.nama"></v-card-title>
+            <v-card-text class="text-black" v-text="index.uuid"></v-card-text>
+            
+          </v-card>
           </v-col> 
         </v-row>
       </v-carousel-item>
@@ -139,15 +152,18 @@
           cols="8"
           sm="auto"
           >
+          <v-card width ="350" height ="300" class="mt-5">
             <v-img
                 height="200"
-                width="150" 
+                width="200" 
                 :src="require(`@/views/operator/foto/${index.link}`)" 
+                class="mx-auto text-center mt-7"
             >
             </v-img>
-              <span class="mx-auto"><b>{{index.uuid}}</b></span>
-            <br>
-            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+            <v-card-title class="text-black" v-text="index.nama"></v-card-title>
+            <v-card-text class="text-black" v-text="index.uuid"></v-card-text>
+            
+          </v-card>
           </v-col> 
         </v-row>
       </v-carousel-item>
@@ -167,15 +183,18 @@
           cols="8"
           sm="auto"
           >
+          <v-card width ="350" height ="300" class="mt-5">
             <v-img
                 height="200"
-                width="150" 
+                width="200" 
                 :src="require(`@/views/operator/foto/${index.link}`)" 
+                class="mx-auto text-center mt-7"
             >
             </v-img>
-              <span class="mx-auto"><b>{{index.uuid}}</b></span>
-            <br>
-            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+            <v-card-title class="text-black" v-text="index.nama"></v-card-title>
+            <v-card-text class="text-black" v-text="index.uuid"></v-card-text>
+            
+          </v-card>
           </v-col> 
         </v-row>
       </v-carousel-item>
@@ -195,15 +214,18 @@
           cols="8"
           sm="auto"
           >
+          <v-card width ="350" height ="300" class="mt-5">
             <v-img
                 height="200"
-                width="150" 
+                width="200" 
                 :src="require(`@/views/operator/foto/${index.link}`)" 
+                class="mx-auto text-center mt-7"
             >
             </v-img>
-              <span class="mx-auto"><b>{{index.uuid}}</b></span>
-            <br>
-            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+            <v-card-title class="text-black" v-text="index.nama"></v-card-title>
+            <v-card-text class="text-black" v-text="index.uuid"></v-card-text>
+            
+          </v-card>
           </v-col> 
         </v-row>
       </v-carousel-item>
@@ -223,15 +245,18 @@
           cols="8"
           sm="auto"
           >
+          <v-card width ="350" height ="300" class="mt-5">
             <v-img
                 height="200"
-                width="150" 
+                width="200" 
                 :src="require(`@/views/operator/foto/${index.link}`)" 
+                class="mx-auto text-center mt-7"
             >
             </v-img>
-              <span class="mx-auto"><b>{{index.uuid}}</b></span>
-            <br>
-            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+            <v-card-title class="text-black" v-text="index.nama"></v-card-title>
+            <v-card-text class="text-black" v-text="index.uuid"></v-card-text>
+            
+          </v-card>
           </v-col> 
         </v-row>
       </v-carousel-item>
@@ -251,15 +276,18 @@
           cols="8"
           sm="auto"
           >
+          <v-card width ="350" height ="300" class="mt-5">
             <v-img
                 height="200"
-                width="150" 
+                width="200" 
                 :src="require(`@/views/operator/foto/${index.link}`)" 
+                class="mx-auto text-center mt-7"
             >
             </v-img>
-              <span class="mx-auto"><b>{{index.uuid}}</b></span>
-            <br>
-            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+            <v-card-title class="text-black" v-text="index.nama"></v-card-title>
+            <v-card-text class="text-black" v-text="index.uuid"></v-card-text>
+            
+          </v-card>
           </v-col> 
         </v-row>
       </v-carousel-item>
@@ -279,15 +307,18 @@
           cols="8"
           sm="auto"
           >
+          <v-card width ="350" height ="300" class="mt-5">
             <v-img
                 height="200"
-                width="150" 
+                width="200" 
                 :src="require(`@/views/operator/foto/${index.link}`)" 
+                class="mx-auto text-center mt-7"
             >
             </v-img>
-              <span class="mx-auto"><b>{{index.uuid}}</b></span>
-            <br>
-            <span class="mx-auto"><b>{{index.nama}}</b></span> 
+            <v-card-title class="text-black" v-text="index.nama"></v-card-title>
+            <v-card-text class="text-black" v-text="index.uuid"></v-card-text>
+            
+          </v-card>
           </v-col> 
         </v-row>
       </v-carousel-item>
@@ -509,12 +540,70 @@
           </v-card>
         </v-row>
       </v-carousel-item>
+
+      <v-carousel-item>
+        <div class="text-h3 mx-auto text-center">
+             Summary
+        </div>
+
+
+    <v-container
+    id="dashboard"
+    fluid
+    tag="section"
+  >
+    <v-row   class="fill-height"
+          :align="center"
+          justify="center">
+    
+      >
+      <v-col cols="12" lg="4">  
+      
+        
+      <v-card
+      class="mx-auto text-center mt-6"
+      color="gray"
+      dark
+      max-width="1000"
+    >
+    <v-card-text>
+      <v-sheet color="rgba(0, 0, 0, .12)">
+        <v-sparkline
+          :value="value2"
+          color="rgba(255, 255, 255, .7)"
+          height="100"
+          padding="24"
+          stroke-linecap="round"
+          smooth
+          type="bar"
+        >
+          <template v-slot:label="item">
+            {{ item.value }} Jam
+          </template>
+        </v-sparkline>
+      </v-sheet>
+    </v-card-text>
+
+    <v-card-text>
+      <div class="text-h4 font-weight-thin">
+        Jumlah Jam Kerja Operator di WS1
+      </div>
+    </v-card-text>
+    <v-divider></v-divider>
+    </v-card>
+       
+      </v-col>
+      </v-row>
+      </v-container>
+      </v-carousel-item>
+
     </v-carousel>
   </v-app>
 </template>
 
 <script>
   import {GGanttChart, GGanttRow} from 'vue-ganttastic'
+  //import VueApexCharts from 'vue-apexcharts'
 
   var today = new Date();
   var newDate = new Date(Date.now()+1*24*60*60*1000);
@@ -527,11 +616,46 @@
   export default {
     components:{
       GGanttChart,
-      GGanttRow
+      GGanttRow,
+     
     },
 
     data(){
       return {
+
+        emailsSubscriptionChart: {
+          data: {
+            labels: ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De'],
+            series: [
+              [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
+
+            ],
+          },
+          options: {
+            axisX: {
+              showGrid: false,
+            },
+            low: 0,
+            high: 1000,
+            chartPadding: {
+              top: 0,
+              right: 5,
+              bottom: 0,
+              left: 0,
+            },
+          },
+          responsiveOptions: [
+            ['screen and (max-width: 640px)', {
+              seriesBarDistance: 5,
+              axisX: {
+                labelInterpolationFnc: function (value) {
+                  return value[0]
+                },
+              },
+            }],
+          ],
+        },
+
         headers:[   
           {text : 'ID',               value : 'id'},
           {text : 'Nama',             value : 'nama'},
@@ -617,6 +741,27 @@
           { name: 'WORKSTATION08',   flex: 2 },
           { name: 'WORKSTATION09',   flex: 2 },
         ],
+
+        value: [
+          2,
+          6,
+          7,
+          9,
+          11,
+          12,
+          15,
+        ],
+        value2: [
+          4,
+          2,
+          3,
+          1,
+          7,
+          6,
+          5,
+        ],
+        monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+        wsLabels: ['WS1', 'WS2', 'WS3', 'WS4', 'WS5', 'WS6', 'WS7', 'WS8', 'WS9', 'WS10'],
       }
     },
 

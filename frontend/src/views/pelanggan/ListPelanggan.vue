@@ -1,16 +1,30 @@
 <template>
     <v-card 
         class="mx-auto text-center mt-6"
-        max-width = "1450">
+        max-width = "1800"
+        max-height = "1500"
+        >
         <br>
-        <h1>List Customer</h1>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="400"
+        >
+        <v-card-title class="text-h4">
+              DAFTAR PELANGGAN
+            </v-card-title>
+
+          
+        </v-card>
         <br>
         <router-link to="/tambahPelanggan">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
-                Add Pelanggan
+                Tambah Data Pelanggan
             </v-btn>
-        </router-link>
-
+        </router-link> 
+       
+          
         <v-data-table   
             :headers = "column"
             :items = "customers"  
@@ -110,7 +124,16 @@
                 </v-tooltip>
               </div>
             </template>
+         
         </v-data-table>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="50"
+        >
+      
+        </v-card>
     </v-card>
 </template>
 
@@ -259,3 +282,9 @@
     }
   }
 </script>
+
+
+
+
+
+

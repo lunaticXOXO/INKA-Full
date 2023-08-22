@@ -1,9 +1,19 @@
 <template>
   <v-card 
     class="mx-auto text-center mt-10"
-    max-width = "1450">
+    max-width = "1600">
+    <v-card
+        color="#6f6f6f"
+        dark
+        class="px-5 py-3"
+        max-height ="200"
+        >
+        <v-card-title class="text-h5">
+              TERIMA BATAL OPERASI  PRODUK {{this.$route.params.id}}
+          </v-card-title>
+      </v-card>
     <br>
-    <h1>List Operasi By Produk {{this.$route.params.id}}</h1>
+    
     <br>
     <v-data-table 
         :headers = "column"
@@ -63,6 +73,15 @@
       Batal Operasi
     </v-btn>
   </div>
+
+  <br>
+  <v-card
+      color="#6f6f6f"
+      dark
+      class="px-5 py-3"
+            max-height ="50"
+        >
+      </v-card>
 
   </v-card>
 </template>

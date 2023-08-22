@@ -91,7 +91,7 @@ export default {
                 active: false,
                 items: [
                     { title: 'List Proyek', icon: 'mdi-filter-variant', route: '/lihatProyek'},
-                    { title: 'Proses Terakhir', icon: 'mdi-state-machine', route: '/prosesTerakhir'},
+                    //{ title: 'Proses Terakhir', icon: 'mdi-state-machine', route: '/prosesTerakhir'},
                 ],
                 title: 'Proyek',
                 },
