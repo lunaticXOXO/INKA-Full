@@ -1,13 +1,23 @@
 <template>
     <v-card 
         class="mt-10 text-center mx-auto"
-        max-width = "1450">
-        <br>
-        <h1>List Operator</h1>
-        <br>
+        max-width = "1700">
+      
+        <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             DAFTAR OPERATOR
+            </v-card-title>
+        </v-card>
+        <br><br>
+
         <router-link to="/tambahOperator">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
-                Add Operator
+                Tambah Data Operator
             </v-btn>
         </router-link>
 
@@ -73,7 +83,7 @@
                         <v-icon small dark>mdi-check</v-icon>
                       </v-btn>
                     </template> 
-                    <span>Tambah Kemampuan Operator</span>
+                    <span>Tambah UUID Operator</span>
                   </v-tooltip>
                 </router-link>
                 <v-tooltip top>
@@ -107,7 +117,17 @@
                 </v-tooltip>
               </div>
             </template>
+
+     
         </v-data-table>
+         <v-card
+        color="#6f6f6f"
+        dark
+        class="px-5 py-3"
+        max-height ="50"
+        >
+        </v-card>
+        <br>
     </v-card>
 </template>
 

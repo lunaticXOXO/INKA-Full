@@ -2,9 +2,21 @@
   <v-app>
     <v-card
       class="mx-auto text-center mt-6"
-      max-width="1500">
-      <br>
-      <h1>Tambah Jenis Produk Internal</h1>
+      width="1000">
+      
+      <v-card
+          color="#6f6f6f"
+          dark
+         class="px-5 py-3"
+         max-height ="200"
+            >
+        <v-card-title class="text-h5">
+            TAMBAH JENIS PRODUK INTERNAL
+        </v-card-title>
+          
+    </v-card>
+      <br><br>
+
       <v-form
         class="pa-6"
         ref="form"
@@ -64,8 +76,19 @@
 
     <v-card
       class="mx-auto text-center mt-10"
-        max-width = "1000">
-      <h2>Kode Jenis Produk Internal Yang Sudah Tersedia</h2>
+        width = "1500">
+        <v-card
+          color="#6f6f6f"
+          dark
+         class="px-5 py-3"
+         max-height ="200"
+            >
+        <v-card-title class="text-h5">
+            DAFTAR JENIS PRODUK INTERNAL
+        </v-card-title>
+          
+    </v-card>
+      <br><br>
       <v-data-table 
           :headers="column2"
           :items="jenisProduk"

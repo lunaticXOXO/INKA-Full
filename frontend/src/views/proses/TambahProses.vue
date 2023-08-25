@@ -1,9 +1,8 @@
 <template>
     <v-card
         class="mx-auto text-center mt-6"
-        max-width="1000">
-        <br>
-        <h1>Tambah Proses Baru</h1>
+        max-width="1200">
+       
         <v-form
             class="pa-6"
             ref="form"

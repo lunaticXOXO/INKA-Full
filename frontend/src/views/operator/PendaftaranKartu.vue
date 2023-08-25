@@ -1,10 +1,19 @@
 <template>
     <v-card 
         class="mt-10 text-center mx-auto"
-        max-width = "1450">
-        <br>
-        <h1>List Operator</h1>
-        <br>
+        max-width = "1700">
+    
+        <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             DAFTAR UUID OPERATOR {{this.$route.params.id}}
+            </v-card-title>
+        </v-card>
+        <br><br>
 
         <v-data-table 
             :headers = "column"
@@ -70,6 +79,16 @@
               </div>
             </template>
         </v-data-table>
+        
+        <v-card
+        color="#6f6f6f"
+        dark
+        class="px-5 py-3"
+        max-height ="50"
+        >
+        </v-card>
+        <br>
+
     </v-card>
 </template>
 

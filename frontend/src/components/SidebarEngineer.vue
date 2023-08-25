@@ -105,7 +105,7 @@ export default {
                 active: false,
                 items: [
                     { title: 'Tambah Stasiun Kerja', icon: 'mdi-plus', route: '/tambahStasiunKerja'},
-                    { title: 'Lihat Stasiun Kerja', icon: 'mdi-eye', route: '/lihatStasiunKerja'},
+                    //{ title: 'Lihat Stasiun Kerja', icon: 'mdi-eye', route: '/lihatStasiunKerja'},
                     { title: 'List Stasiun Kerja', icon: 'mdi-filter-variant', route: '/listStasiun'},
                     { title: 'Tambah Lini Produksi', icon: 'mdi-plus', route: '/tambahLiniProduksi'},
                     { title: 'List Lini Produksi', icon: 'mdi-filter-variant', route: '/listLiniProduksi'},

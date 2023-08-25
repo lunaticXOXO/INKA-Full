@@ -1,8 +1,20 @@
 <template>
     <v-app>
         <div class="d-flex">
-            <v-card class="mx-auto text-center mt-10" width="1300">
-                <h3>Jenis Produk {{this.$route.params.id}}</h3>
+            <v-card class="mt-10 ml-12" width="1300">
+                
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             JENIS PRODUK {{ this.$route.params.id }}
+            </v-card-title>
+            
+            </v-card>   
+            <br><br>
                 <v-data-table
                     :headers = "column2"
                     :items = "jproduk"
@@ -12,20 +24,31 @@
             </v-card>
         </div>
         <br>
-        <v-card class="mx-auto text-center mt-6" width="1200">
-            <br>
-            <h2>List Struktur Jenis Produk by Jenis Produk</h2><h2>{{this.$route.params.id}}</h2>
-            <br>
-            <!--
-            <router-link :to="{name : 'Tambah Struktur Jenis Produk by Jenis Produk',params : {id : `${this.$route.params.id}`}}">
-                <v-btn color="primary" class="d-flex ml-4 mb-6">
-                    Add Sturktur Jenis Produk by Jenis Produk
-                </v-btn>
-            </router-link>
-            -->
+        <v-card class="mx-auto text-center mt-6" width="1700">
+          
+           
             <v-card
             class="mx-auto text-center"
-            max-width="1000">
+            max-width="1700">
+
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             DAFTAR STRUKTUR JENIS PRODUK {{ this.$route.params.id }}
+            </v-card-title>
+          
+            </v-card>
+          <br><br>
+             
+          <router-link :to="{name : 'Tambah Struktur Jenis Produk by Jenis Produk',params : {id : `${this.$route.params.id}`}}">
+                <v-btn color="primary" class="d-flex ml-4 mb-6">
+                   Tambah Struktur Produk
+                </v-btn>
+            </router-link>
                 <v-data-table
                     :headers = "column"
                     :items = "sjproduk"
@@ -137,6 +160,16 @@
                         </div>
                     </template>
                 </v-data-table>
+                
+            <br>
+            <v-card
+            color="#6f6f6f"
+            dark
+            class="px-5 py-3"
+            max-height ="50"
+        >
+        </v-card>
+
             </v-card>
         </v-card>
     </v-app>

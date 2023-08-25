@@ -108,7 +108,10 @@ export default {
                 action: 'mdi-calendar',
                 active: false,
                 items: [
-                { title: 'Jadwal Pengerjaan', icon: 'mdi-calendar', route: '/statusPengerjaanWS'},
+
+                //{ title: 'Jadwal Pengerjaan', icon: 'mdi-calendar', route: '/statusPengerjaanWS'},
+                { title: 'Timeline Pengerjaan Operasi', icon: 'mdi-calendar', route: '/gantChartOperation'}
+                
                 ],
                 title: 'Jadwal',
                 },

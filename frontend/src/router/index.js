@@ -20,6 +20,7 @@ import ProsesTerakhir from '../views/proyek/ProsesTerakhir.vue'
 import TambahStasiunKerja from '../views/stasiunKerja/TambahStasiunKerja.vue'
 import TambahLiniProduksi from '../views/stasiunKerja/TambahLiniProduksi.vue'
 import LihatStasiunKerja from '../views/stasiunKerja/LihatStasiunKerja.vue'
+import GantChartOperation from '../views/stasiunKerja/GantChartOperation.vue'
 import PantauOperasi from '../views/operasi/PantauOperasi.vue'
 import LihatProyek from '../views/proyek/ProyekList.vue'
 import ListPelanggan from '../views/pelanggan/ListPelanggan.vue'
@@ -738,6 +739,16 @@ const routes = [
     meta : {
       title : "Status Pengerjaan WS - PT.INKA"
     }
+  },
+
+  {
+     path : '/gantChartOperation',
+     name : 'GantChart Operation',
+     component : GantChartOperation,
+     meta : {
+      title : "Timeline Pengerjaan Operasi - PT.INKA"
+     }
+
   },
 
   {

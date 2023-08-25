@@ -1,13 +1,21 @@
 <template>
     <v-card
         class="mx-auto text-center mt-6"
-        max-width="1000">
-        <br>
-        <h1>List Proses</h1>
-        <br>
+        max-width="1700">
+        <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             DAFTAR PROSES
+            </v-card-title>
+        </v-card>
+        <br><br>
         <v-card
         class="mx-auto text-center"
-        max-width="1000">
+        max-width="1700">
             <v-data-table
                 :headers = "column"
                 :items = "proses">
@@ -117,6 +125,15 @@
                     </div>
                 </template>
             </v-data-table>
+
+        <br>
+        <v-card
+            color="#6f6f6f"
+            dark
+            class="px-5 py-3"
+            max-height ="50"
+        >
+        </v-card>
         </v-card>
     </v-card>
 </template>

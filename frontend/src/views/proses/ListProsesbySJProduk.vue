@@ -2,6 +2,19 @@
     <v-app>
         <div class="d-flex">
             <v-card class="ml-6 text-center mt-6" width="700">
+
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             STRUKTUR PRODUK {{ this.$route.params.id }}
+            </v-card-title>
+            
+            </v-card> 
+            <br><br>
                 <v-data-table
                     :headers="column2"
                     :items = "sjproduk"
@@ -9,7 +22,20 @@
                     >
                 </v-data-table>
             </v-card>
+
             <v-card class="ml-12 text-center mt-6" width="700">
+                 <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             STRUKTUR PRODUK {{ this.$route.params.id }}
+            </v-card-title>
+            
+            </v-card> 
+            <br><br>
                 <v-data-table
                     :headers="column3"
                     :items = "sjproduk"
@@ -18,16 +44,25 @@
                 </v-data-table>
             </v-card>
         </div>
-        <v-card class="mx-auto text-center mt-6" max-width="1000">
-            <br>
-            <h1>List Proses by Struktur Jenis Produk</h1><h1>{{this.$route.params.id}}</h1>
-            <br>
+        <v-card class="mt-6 ml-5" width="1500">
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             DAFTAR PROSES STRUKTUR PRODUK {{ this.$route.params.id }}
+            </v-card-title>
+            
+            </v-card> 
+            <br><br>
             <router-link :to="{name : 'Tambah Proses by Struktur Jenis Produk', params:{id : `${this.$route.params.id}`}}">
                 <v-btn color="primary" class="d-flex ml-4 mb-6">
-                    Add Process by Struktur Jenis Produk
+                    Tambah Proses Struktur Produk
                 </v-btn>
             </router-link>
-            <v-card class="mx-auto text-center" max-width="1000">
+            <v-card class="mx-auto text-center" width="1500">
                 <v-data-table
                     :headers = "column"
                     :items = "proses">
@@ -139,6 +174,16 @@
                         </div>
                     </template>
                 </v-data-table>
+
+                <br>
+            <v-card
+            color="#6f6f6f"
+            dark
+            class="px-5 py-3"
+            max-height ="50"
+        >
+        </v-card>
+
             </v-card>
         </v-card>
     </v-app>

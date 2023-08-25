@@ -1,10 +1,22 @@
 <template>
     <v-app>
         <v-card
-            class="mx-auto text-center mt-6"
-            width="1000">
-            <br>
-            <h1>Tambah Proses Baru Sesuai Strk.Jns.Prod</h1>
+            class="ml-11 mt-6"
+            width="1200">
+           
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             TAMBAH PROSES STRUKTUR PRODUK {{ this.$route.params.id }}
+            </v-card-title>
+            
+            </v-card> 
+            <br><br>
+
             <v-form
                 class="pa-6"
                 ref="form"
@@ -85,20 +97,58 @@
             <v-snackbar :color="snackBar.color" v-model="snackBar.show" top>
                 {{snackBar.message}}
             </v-snackbar>
+            <br>
+            <v-card
+            color="#6f6f6f"
+            dark
+            class="px-5 py-3"
+            max-height ="50"
+        >
+        </v-card>
+
         </v-card>
         <div class="d-flex">
         <v-card class="ml-6 text-center mt-6 mb-10" width="700">
+
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             STRUKTUR PRODUK {{ this.$route.params.id }}
+            </v-card-title>
+            
+            </v-card> 
+            <br><br>
+
                 <v-data-table
                     :headers="column2"
                     :items = "sjproduk">
                 </v-data-table>
             </v-card>
             <v-card class="ml-12 text-center mt-6 mb-10" width="700">
+                
+            <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             STRUKTUR PRODUK {{ this.$route.params.id }}
+            </v-card-title>
+            
+            </v-card> 
+            <br><br>
+
                 <v-data-table
                     :headers="column3"
                     :items = "sjproduk">
                 </v-data-table>
             </v-card>
+
         </div>
     </v-app>
 </template>

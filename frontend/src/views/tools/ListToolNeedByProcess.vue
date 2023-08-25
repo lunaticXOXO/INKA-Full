@@ -3,6 +3,18 @@
 
     <v-card class="text-center mt-4 ml-3" max-width="1350">
 
+      <v-card
+          color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+            >
+      <v-card-title class="text-h5">
+        TAMBAH KEBUTUHAN PERKAKAS PROSES {{ this.$route.params.id }}
+      </v-card-title>
+            
+      </v-card> 
+      <br><br>
 <v-form
   class="pa-6"
   ref="form"
@@ -54,15 +66,33 @@
 <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
         {{snackbar.message}}
   </v-snackbar>
+<br>
+  <v-card
+      color="#6f6f6f"
+      dark
+      class="px-5 py-3"
+      max-height ="50"
+    >
+  </v-card>
 
 </v-card>
     
       <v-card 
           class="text-center mt-10 ml-4"
           max-width = "1300">
-          <br>
-          <h2>List Kebutuhan Perkakas Berdasarkan Proses {{this.$route.params.id}}</h2>
-          <br>
+       
+          <v-card
+          color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+            >
+        <v-card-title class="text-h5">
+          DAFTAR KEBUTUHAN PERKAKAS PROSES {{ this.$route.params.id }}
+          </v-card-title>
+            
+        </v-card> 
+        <br><br>
          
           <v-data-table 
             :headers = "column"

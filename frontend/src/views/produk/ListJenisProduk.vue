@@ -1,13 +1,22 @@
 <template>
     <v-card
         class="mx-auto text-center mt-6"
-        max-width="1000">
+        max-width="1700">
+         <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             DAFTAR JENIS PRODUK
+            </v-card-title>
+        </v-card>
         <br>
-        <h1>List Jenis Produk</h1>
         <br>
         <v-card
             class="mx-auto text-center"
-            max-width="1000">
+            max-width="1700">
             <v-data-table
                 :headers = "column"
                 :items = "jenisproduk"
@@ -82,7 +91,7 @@
             </div>
             </template>
             </v-data-table>
-        
+            
         <!--
         <div class="d-flex">
             <router-link to="/tambahJenisProduk">
@@ -98,8 +107,18 @@
             </router-link>
         </div>
         -->
+        <br>
 
+        <v-card
+        color="#6f6f6f"
+        dark
+        class="px-5 py-3"
+        max-height ="50"
+        >
         </v-card>
+        </v-card>
+     
+
     </v-card>
 </template>
 

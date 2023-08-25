@@ -876,6 +876,15 @@ class main():
         hasil = GetOperasiGanttChart2(stasiunKerja)
         return hasil
 
+    @app.route('/operasi/get_gantchart_plan/<stasiunKerja>',methods = ['GET'])
+    def get_operasi_gantt_plan(stasiunKerja):
+        return GetOperasiGantChartNewPlan(stasiunKerja)
+
+    @app.route('/operasi/get_gantchart_actual/<stasiunKerja>',methods = ['GET'])
+    def get_operasi_gantt_actual(stasiunKerja):
+        return GetOperasiGantChartNewActual(stasiunKerja)
+
+
     @app.route('/operasi/response_operasi_mulai/<nomorWS>',methods = ['POST'])
     def response_operasi_mulai(nomorWS):
         hasil = StartResponseOperasi(nomorWS)
@@ -1383,9 +1392,9 @@ class main():
     def add_waktu_pemesanan_test():
         return AddTimeOrderMaterialTest()
 
-    @app.route('/material/show_material_haruspesan',methods = ['GET'])
-    def show_material_haruspesan():
-        return ShowMaterialHarusPesan()
+    # @app.route('/material/show_material_haruspesan',methods = ['GET'])
+    # def show_material_haruspesan():
+    #     return ShowMaterialHarusPesan()
     
     @app.route('/material/insert_material_haruspesan',methods = ['POST'])
     def insert_material_haruspesan():

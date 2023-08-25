@@ -1,10 +1,20 @@
 <template>
 <v-app>
     <v-card
-      class="mx-auto text-center mt-6"
-      width="1000">
-      <br>
-      <h1>Tambah Struktur Produk By Parent {{this.$route.params.id}}</h1>
+      class="ml-11 mt-6"
+      width="1200">
+      <v-card
+        color="#6f6f6f"
+        dark
+        class="px-5 py-3"
+        max-height ="200"
+            >
+      <v-card-title class="text-h5">
+          TAMBAH NODE STRUKTUR PRODUK {{ this.$route.params.id }}
+        </v-card-title>
+            
+      </v-card> 
+      <br><br>
       <v-form
           class="pa-6"
           ref="form"
@@ -78,10 +88,32 @@
       <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>
         {{snackbar.message}}
       </v-snackbar>
+      <br>
+      <v-card
+            color="#6f6f6f"
+            dark
+            class="px-5 py-3"
+            max-height ="50"
+        >
+        </v-card>
+
     </v-card>
     <div class="d-flex">
-      <v-card class="mx-auto text-center mt-10" width="1300">
-        <h3>Node Parent {{this.$route.params.id}}</h3>
+      <v-card class="ml-11 mt-10" width="1300">
+        
+        <v-card
+        color="#6f6f6f"
+        dark
+        class="px-5 py-3"
+        max-height ="200"
+            >
+      <v-card-title class="text-h5">
+          PARENT STRUKTUR PRODUK {{ this.$route.params.id }}
+        </v-card-title>
+            
+      </v-card> 
+      <br><br>
+
         <v-data-table
           :headers = "column2"
           :items = "jenisProduk">

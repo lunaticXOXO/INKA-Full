@@ -34,7 +34,18 @@
     <br>
     
     <v-card class="mt-5 mx-10">
-      <h2 class="mx-auto text-center">Timeline Rencana Pengerjaan Operasi</h2>
+      <v-card
+          color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+            >
+      <v-card-title class="text-h5">
+        TIMELINE RENCANA PENGERJAAN OPERASI
+      </v-card-title>
+            
+      </v-card> 
+      <br><br>
 
       <g-gantt-chart
       :chart-start="myChartStartCustom"
@@ -104,7 +115,7 @@
           </template>
         </g-gantt-row>
 
-         
+        
 
         <g-gantt-row
           label="WS01 Plan"
@@ -667,7 +678,20 @@
     </v-card>
 
     <v-card  class="mb-5 mx-10">
-      <h2 class="mx-auto text-center">Timeline Actual Pengerjaan Operasi</h2>
+    
+      <v-card
+          color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+            >
+        <v-card-title class="text-h5">
+          TIMELINE ACTUAL PENGERJAAN OPERASI
+        </v-card-title>
+            
+      </v-card> 
+      <br><br>
+
        <g-gantt-chart
       :chart-start="myChartStartCustom2"
       :chart-end="myChartEndCustom2"
@@ -1080,7 +1104,7 @@
                   <v-btn
                     color="primary"
                     text
-                    @click="dialogWS06 = false"
+                    @click="dialogWS06Actual = false"
                   >
                     Back
                   </v-btn>

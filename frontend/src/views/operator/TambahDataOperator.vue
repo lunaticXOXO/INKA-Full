@@ -2,8 +2,19 @@
   <v-card
     class="mx-auto text-center mt-6"
     max-width="1000">
-    <br>
-    <h1>Tambah Operator Baru</h1>
+  
+    <v-card
+          color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+    >
+      <v-card-title class="text-h5">
+             TAMBAH DATA OPERATOR
+      </v-card-title>
+      </v-card>
+      <br><br>
+
     <v-form
       class="pa-6"
       ref="form"

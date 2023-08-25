@@ -228,6 +228,35 @@ def GetOperasiGanttChart2(stasiunKerja):
     return make_response(jsonify(json_data),200)
 
 
+def GetOperasiGantChartNewPlan(stasiunKerja):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM cpl_ganchart01 WHERE keterangan = 'plan' AND stasiunKerja = '"+stasiunKerja+"' ORDER BY id ASC"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperasiGantChartNewActual(stasiunKerja):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM cpl_ganchart01 WHERE keterangan = 'actual' AND stasiunKerja = '"+stasiunKerja+"' ORDER BY id ASC"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
 
 def ShowProductInPantauOperasi():
     conn = database.connector()
@@ -567,3 +596,6 @@ def ShowOperasiByProduct(idProduct):
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
     return make_response(jsonify(json_data),200)
+
+
+
