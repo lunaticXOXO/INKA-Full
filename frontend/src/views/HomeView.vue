@@ -1593,27 +1593,24 @@
           <v-card
             class="mx-auto my-auto text-center"
             width="1000">
-            <v-data-table
+            <div class="app">
+          <apexchart ref="realtimeChart" type="line" height="550" :options="chartOptions" :series="chartSeries"></apexchart>
+        </div>
+        <v-card-text>
+          <div class="text-h4">
+            Kurva S
+          </div>
+        </v-card-text>
+            <!-- <v-data-table
               :headers = "headers"
               :items = "proyek"> 
-              <!-- <template v-slot:[`item.id`]="{ item }">
-                  <span>{{item.id}}</span>
-              </template>
-              <template v-slot:[`item.nama`]="{ item }">
-                  <span>{{item.nama}}</span>
-              </template>
-              <template v-slot:[`item.customerid`]="{ item }">
-                  <span>{{item.customerid}}</span>
-              </template>
-              <template v-slot:[`item.percentage`]="{ item }">
-                  <span>{{item.percentage}}%</span>
-              </template> -->
-            </v-data-table>
+
+            </v-data-table> -->
           </v-card>
         </v-row>
       </v-carousel-item>
 
-      <v-carousel-item>
+      <!-- <v-carousel-item>
         <div class="text-h3 mx-auto text-center">
              Summary
         </div>
@@ -1667,7 +1664,7 @@
       </v-col>
       </v-row>
       </v-container>
-      </v-carousel-item>
+      </v-carousel-item> -->
 
     </v-carousel>
   </v-app>
@@ -1675,7 +1672,7 @@
 
 <script>
   import {GGanttChart, GGanttRow} from 'vue-ganttastic'
-  //import VueApexCharts from 'vue-apexcharts'
+  import VueApexCharts from 'vue-apexcharts'
 
   var today = new Date();
   var newDate = new Date(Date.now()+1*24*60*60*1000);
@@ -1689,45 +1686,14 @@
     components:{
       GGanttChart,
       GGanttRow,
+      apexchart: VueApexCharts,
      
     },
 
     data(){
       return {
 
-        emailsSubscriptionChart: {
-          data: {
-            labels: ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De'],
-            series: [
-              [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-
-            ],
-          },
-          options: {
-            axisX: {
-              showGrid: false,
-            },
-            low: 0,
-            high: 1000,
-            chartPadding: {
-              top: 0,
-              right: 5,
-              bottom: 0,
-              left: 0,
-            },
-          },
-          responsiveOptions: [
-            ['screen and (max-width: 640px)', {
-              seriesBarDistance: 5,
-              axisX: {
-                labelInterpolationFnc: function (value) {
-                  return value[0]
-                },
-              },
-            }],
-          ],
-        },
-
+       
         headers:[   
           {text : 'ID',               value : 'id'},
           {text : 'Nama',             value : 'nama'},
@@ -1887,7 +1853,30 @@
         ],
         monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
         wsLabels: ['WS1', 'WS2', 'WS3', 'WS4', 'WS5', 'WS6', 'WS7', 'WS8', 'WS9', 'WS10'],
+
+        chartSeries : [],
+
+        chartOptions: {
+        
+          dataLabels: {
+            enabled: true,
+            group : true
+          },
+
+          stroke: {
+            curve: 'smooth'
+          },
+
+          grid: {
+            row: {
+              colors: ['#f3f3f3', 'transparent'],
+              opacity: 0.5
+            },
+          },
+        },
+
       }
+
     },
 
     mounted(){
@@ -1929,7 +1918,9 @@
       this.fetchOperatorOnWS06(),
       this.fetchOperatorOnWS07(),
       this.fetchOperatorOnWS08(),
-      this.fetchOperatorOnWS09()
+      this.fetchOperatorOnWS09(),
+
+      this.fetchProgressProyek()
     },
 
     methods : {
@@ -2435,9 +2426,31 @@
         }
       },
 
+      async fetchProgressProyek(){
+        const axios = require('axios')
+        const res = await axios.get('/proyek/show_progress_percentage_proyek')
+        if(res.data == null){
+            console.log("Data kosong")
+        }else{
+            const data = res.data
+            this.chartSeries = this.processChartData(data)
 
+        } 
+      },
 
+      processChartData(rawData){
+        const groupedData = {}
+        rawData.forEach(item => {
+           const label = item.z;
+           if (!groupedData[label]){
+              groupedData[label] = {name : label, data : []};
 
+           }
+           groupedData[label].data.push(item.y)
+
+        })
+        return Object.values(groupedData);
+      }
       
 
     },

@@ -273,9 +273,9 @@ class main():
         hasil = showPercentageAllProyek()
         return hasil
 
-    @app.route('/proyek/show_progress_percentage_proyek/<proyek>',methods = ['GET'])
-    def show_progress_proyek(proyek):
-        hasil = showpercentageProgressProyek(proyek)
+    @app.route('/proyek/show_progress_percentage_proyek',methods = ['GET'])
+    def show_progress_proyek():
+        hasil = showpercentageProgressProyek()
         return hasil
 
     @app.route('/proyek/show_progress_date_proyek',methods = ['GET'])

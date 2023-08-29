@@ -51,6 +51,10 @@
                             <p>{{ item.rencanaMulai }}</p>
                             <h3>Rencana Selesai</h3>
                             <p>{{ item.rencanaSelesai }}</p>
+                            <h3>Mulai</h3>
+                            <p>{{item.mulai}}</p>
+                            <h3>Selesai</h3>
+                            <p>{{item.selesai }}</p>
                             <br>
                         </div>
                         <v-snackbar :color="snackbar.color" v-model="snackbar.show" top>

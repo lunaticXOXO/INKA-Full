@@ -163,7 +163,7 @@ const routes = [
     name: 'GraphPage',
     component: GraphView,
     meta: {
-      title: "Graph - PT.INKA"
+      title: "Progress Pengerjaan Proyek - PT.INKA"
     }
   },
 

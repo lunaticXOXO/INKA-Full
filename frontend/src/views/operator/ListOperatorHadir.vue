@@ -17,6 +17,7 @@
                             sm="auto"
                             >
                             <span class="mx-auto"><b>{{index.nama}}</b></span>
+                            
                                 <v-img
                                     height="200"
                                     width="150" 

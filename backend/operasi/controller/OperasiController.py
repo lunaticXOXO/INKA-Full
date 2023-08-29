@@ -240,7 +240,22 @@ def GetOperasiGantChartNewPlan(stasiunKerja):
 
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
-    return make_response(jsonify(json_data),200)
+
+   
+    output_data = {}
+
+    for item in json_data:
+        z_value = item['z']
+        y_value = item['y']
+        if z_value not in output_data:
+            output_data[z_value] = {'name': z_value, 'data': []}
+    
+        output_data[z_value]['data'].append(y_value)
+
+    transformed_data = list(output_data.values())
+    print("json_data : ")
+
+    return make_response(jsonify(transformed_data),200)
 
 
 def GetOperasiGantChartNewActual(stasiunKerja):

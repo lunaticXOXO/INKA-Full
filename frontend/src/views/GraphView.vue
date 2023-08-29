@@ -1,28 +1,29 @@
 <template>
   <v-app>
+     
       <v-card
         class="mx-auto text-center mt-6"
-        width="1000">
+        width="1500" 
+        
+        >
+
+      <v-card
+          color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+            >
+      <v-card-title class="text-h5">
+        PROGRESS PERSENTASE PROYEK
+      </v-card-title>
+            
+      </v-card> 
+      <br> 
+
       <v-card>
-        <!-- Sparkline Biasa
-        <v-sheet color="rgba(0, 0, 0, .12)">
-          <v-sparkline
-            :value="value"
-            color="rgba(255, 255, 255, .7)"
-            height="100"
-            padding="24"
-            stroke-linecap="round"
-            curve
-            type="trend"
-          >
-            <template v-slot:label="item">
-              {{ item.value }} Proyek
-            </template>
-          </v-sparkline>
-        </v-sheet>
-        -->
+     
         <div class="app">
-          <apexchart ref="realtimeChart" type="line" height="350" :options="chartOptions" :series="chartOptions.series"></apexchart>
+          <apexchart ref="realtimeChart" type="line" height="550" :options="chartOptions" :series="chartSeries"></apexchart>
         </div>
         <v-card-text>
           <div class="text-h4">
@@ -33,11 +34,11 @@
       <v-divider></v-divider>
     </v-card>
 
-    <v-card
+    <!-- <v-card
       class="mx-auto text-center mt-6"
       color="gray"
       dark
-      max-width="1000"
+      max-width="500"
     >
     <v-card-text>
       <v-sheet color="rgba(0, 0, 0, .12)">
@@ -63,7 +64,9 @@
       </div>
     </v-card-text>
     <v-divider></v-divider>
-    </v-card>
+    </v-card> -->
+ 
+
     <br><br>
   <!-- BAR GRAPH
   <div class="d-flex mx-auto mt-8">
@@ -156,15 +159,23 @@
         monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
         wsLabels: ['WS1', 'WS2', 'WS3', 'WS4', 'WS5', 'WS6', 'WS7', 'WS8', 'WS9', 'WS10'],
 
+    
+        index : undefined,
+        proyekname : '',
+        
+        chartSeries : [],
+
         chartOptions: {
-          series: [{}],
+         
           dataLabels: {
-            enabled: false,
-            group : ''
+            enabled: true,
+            group : true
           },
+
           stroke: {
-            curve: 'straight'
+            curve: 'smooth'
           },
+
           grid: {
             row: {
               colors: ['#f3f3f3', 'transparent'],
@@ -178,6 +189,7 @@
     mounted(){
       this.fetchProgressProyek()
     },
+
     methods: {
       async fetchProgressProyek(){
         const axios = require('axios')
@@ -185,13 +197,28 @@
         if(res.data == null){
             console.log("Data kosong")
         }else{
-            console.log(res.data)
-        }       
-        this.$refs.realtimeChart.updateSeries([{
-            name: 'Persentase',
-            data: res.data
-        }], false, true);
+            const data = res.data
+            this.chartSeries = this.processChartData(data)
+
+        } 
+      },
+
+      processChartData(rawData){
+
+        const groupedData = {}
+        rawData.forEach(item => {
+           const label = item.z;
+           if (!groupedData[label]){
+              groupedData[label] = {name : label, data : []};
+
+           }
+           groupedData[label].data.push(item.y)
+
+        })
+        return Object.values(groupedData);
       }
+
+
     }
   }
 </script>
