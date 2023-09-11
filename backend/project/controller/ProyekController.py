@@ -214,8 +214,9 @@ def NewAccumulatePercentageProyek(idProyek):
 def showpercentageProgressProyek():
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT selesai_str as 'x',percentage as 'y',proyek as 'z' FROM cpl_progress"
-   
+    #query = "SELECT selesai_str as 'x',percentage as 'y',proyek as 'z' FROM cpl_progress"
+    #query = "SELECT waktu as 'x', riil as 'y',proyek as 'z' FROM cpl_progres02"
+    query = "SELECT waktu as 'x', progres as 'y', gabungan1 as 'z' FROM cpl_progres05"
     cursor.execute(query)
 
     records = cursor.fetchall()
@@ -227,6 +228,25 @@ def showpercentageProgressProyek():
     
     print("json data : ",json_data)
     return make_response(jsonify(json_data),200)
+
+
+def showpercentageProgressProyekIdeal():
+    conn = database.connector()
+    cursor = conn.cursor()
+   
+    query = "SELECT waktu as 'x', ideal as 'y', proyek as 'z' FROM cpl_progres02"
+    cursor.execute(query)
+
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    print("json data : ",json_data)
+    return make_response(jsonify(json_data),200)
+
 
 
 def showDateProgressProyek():

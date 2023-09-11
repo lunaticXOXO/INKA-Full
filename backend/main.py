@@ -277,6 +277,10 @@ class main():
     def show_progress_proyek():
         hasil = showpercentageProgressProyek()
         return hasil
+    
+    @app.route('/proyek/show_progressproyek_ideal',methods = ['GET'])
+    def show_progress_proyek_ideal():
+        return showpercentageProgressProyekIdeal()
 
     @app.route('/proyek/show_progress_date_proyek',methods = ['GET'])
     def show_progress_date_proyek():

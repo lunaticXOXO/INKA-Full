@@ -3,9 +3,7 @@
      
       <v-card
         class="mx-auto text-center mt-6"
-        width="1500" 
-        
-        >
+        width="1500" >
 
       <v-card
           color="#6f6f6f"
@@ -15,25 +13,37 @@
             >
       <v-card-title class="text-h5">
         PROGRESS PERSENTASE PROYEK
-      </v-card-title>
-            
+      </v-card-title>           
       </v-card> 
       <br> 
 
+      
       <v-card>
-     
         <div class="app">
           <apexchart ref="realtimeChart" type="line" height="550" :options="chartOptions" :series="chartSeries"></apexchart>
         </div>
         <v-card-text>
           <div class="text-h4">
-            Kurva S
+            PROGRESS REAL PROYEK
           </div>
         </v-card-text>
       </v-card>
       <v-divider></v-divider>
-    </v-card>
 
+      <!-- <v-card>
+        <div class="app">
+          <apexchart ref="realtimeChart" type="line" height="550" :options="chartOptions" :series="chartSeries2"></apexchart>
+        </div>
+        <v-card-text>
+          <div class="text-h4">
+            PROGRESS IDEAL PROYEK
+          </div>
+        </v-card-text>
+      </v-card>
+      <v-divider></v-divider> -->
+    
+    </v-card>
+    
     <!-- <v-card
       class="mx-auto text-center mt-6"
       color="gray"
@@ -163,7 +173,11 @@
         index : undefined,
         proyekname : '',
         
-        chartSeries : [],
+        chartSeries : [
+
+        
+
+        ],
 
         chartOptions: {
          
@@ -181,44 +195,64 @@
               colors: ['#f3f3f3', 'transparent'],
               opacity: 0.5
             },
+
           },
+
+          // xaxis : {
+          //   categories : []
+          // }
+
         },
       }
     },
 
     mounted(){
       this.fetchProgressProyek()
+      //this.fetchProgressProyekIdeal()
     },
 
     methods: {
       async fetchProgressProyek(){
         const axios = require('axios')
         const res = await axios.get('/proyek/show_progress_percentage_proyek')
+       
+
         if(res.data == null){
             console.log("Data kosong")
         }else{
+            console.log(res)
             const data = res.data
+           
             this.chartSeries = this.processChartData(data)
-
+            
         } 
       },
+
+
+   
 
       processChartData(rawData){
 
         const groupedData = {}
+        //const groupedData2 = {}
         rawData.forEach(item => {
            const label = item.z;
-           if (!groupedData[label]){
-              groupedData[label] = {name : label, data : []};
-
+           if (!groupedData[label] ){
+              groupedData[label] = {name : label, data : [] };
+             
            }
            groupedData[label].data.push(item.y)
-
+          
         })
+
+    
+
         return Object.values(groupedData);
+      },
+
+      
       }
 
-
     }
-  }
+  
 </script>
