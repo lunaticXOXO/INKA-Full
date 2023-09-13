@@ -231,7 +231,7 @@ def GetOperasiGanttChart2(stasiunKerja):
 def GetOperasiGantChartNewPlan(stasiunKerja):
     conn = database.connector()
     cursor = conn.cursor()
-    query = "SELECT * FROM cpl_ganchart01 WHERE keterangan = 'plan' AND stasiunKerja = '"+stasiunKerja+"' ORDER BY id ASC"
+    query = "SELECT * FROM cpl_ganchart04 WHERE keterangan = 'plan' AND stasiunKerja = '"+stasiunKerja+"' ORDER BY id ASC"
     cursor.execute(query)
     records = cursor.fetchall()
 
@@ -248,6 +248,38 @@ def GetOperasiGantChartNewPlan(stasiunKerja):
 def GetOperasiGantChartNewActual(stasiunKerja):
     conn = database.connector()
     cursor = conn.cursor()
+    query = "SELECT * FROM cpl_ganchart04 WHERE keterangan = 'actual' AND stasiunKerja = '"+stasiunKerja+"' ORDER BY id ASC"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperasiGantChartNewPlanToday(stasiunKerja):
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT * FROM cpl_ganchart01 WHERE keterangan = 'plan' AND stasiunKerja = '"+stasiunKerja+"' ORDER BY id ASC"
+    cursor.execute(query)
+    records = cursor.fetchall()
+
+    json_data = []
+    row_headers = [x[0] for x in cursor.description]
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+
+   
+    return make_response(jsonify(json_data),200)
+
+
+def GetOperasiGantChartNewActualToday(stasiunKerja):
+    conn = database.connector()
+    cursor = conn.cursor()
     query = "SELECT * FROM cpl_ganchart01 WHERE keterangan = 'actual' AND stasiunKerja = '"+stasiunKerja+"' ORDER BY id ASC"
     cursor.execute(query)
     records = cursor.fetchall()
@@ -258,6 +290,7 @@ def GetOperasiGantChartNewActual(stasiunKerja):
     for data in records:
         json_data.append(dict(zip(row_headers,data)))
     return make_response(jsonify(json_data),200)
+
 
 
 def ShowProductInPantauOperasi():

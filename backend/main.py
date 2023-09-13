@@ -880,6 +880,7 @@ class main():
         hasil = GetOperasiGanttChart2(stasiunKerja)
         return hasil
 
+
     @app.route('/operasi/get_gantchart_plan/<stasiunKerja>',methods = ['GET'])
     def get_operasi_gantt_plan(stasiunKerja):
         return GetOperasiGantChartNewPlan(stasiunKerja)
@@ -888,6 +889,14 @@ class main():
     def get_operasi_gantt_actual(stasiunKerja):
         return GetOperasiGantChartNewActual(stasiunKerja)
 
+
+    @app.route('/operasi/get_gantchart_plantoday/<stasiunKerja>',methods = ['GET'])
+    def get_operasi_gantt_plantoday(stasiunKerja):
+        return GetOperasiGantChartNewPlanToday(stasiunKerja)
+
+    @app.route('/operasi/get_gantchart_actualtoday/<stasiunKerja>',methods = ['GET'])
+    def get_operasi_gantt_actualtoday(stasiunKerja):
+        return GetOperasiGantChartNewActualToday(stasiunKerja)
 
     @app.route('/operasi/response_operasi_mulai/<nomorWS>',methods = ['POST'])
     def response_operasi_mulai(nomorWS):

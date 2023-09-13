@@ -201,13 +201,12 @@ def AccumulatePercentageProyek(idOperasi):
 
 
 
-def NewAccumulatePercentageProyek(idProyek):
-    conn = database.connector()
-    cursor = conn.cursor()
-    query = "SELECT a.id,a.rencanaMulai,a.rencanaSelesai,a.mulai,a.selesai,a.produk,d.id AS 'idProyek' FROM prd_d_operasi a JOIN prd_d_produk b ON b.id = a.produk JOIN prd_d_rincianproyek c ON c.id = b.rincianproyek JOIN prd_d_proyek d ON d.id = c.proyek WHERE d.id = '"+idProyek+"' ORDER BY a.rencanaMulai ASC"
+# def NewAccumulatePercentageProyek(idProyek):
+#     conn = database.connector()
+#     cursor = conn.cursor()
+#     query = "SELECT a.id,a.rencanaMulai,a.rencanaSelesai,a.mulai,a.selesai,a.produk,d.id AS 'idProyek' FROM prd_d_operasi a JOIN prd_d_produk b ON b.id = a.produk JOIN prd_d_rincianproyek c ON c.id = b.rincianproyek JOIN prd_d_proyek d ON d.id = c.proyek WHERE d.id = '"+idProyek+"' ORDER BY a.rencanaMulai ASC"
     
-    cursor.execute(query)
-    
+#     cursor.execute(query)
     
     
 
@@ -246,6 +245,7 @@ def showpercentageProgressProyekIdeal():
     
     print("json data : ",json_data)
     return make_response(jsonify(json_data),200)
+
 
 
 

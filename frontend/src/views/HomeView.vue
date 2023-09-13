@@ -2093,7 +2093,7 @@
 
       async fetchDataStatusWS00(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_plan/ws00')
+        const res = await axios.get('/operasi/get_gantchart_plantoday/ws00')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2104,7 +2104,7 @@
 
       async fetchDataStatusWS00Actual(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_actual/ws00')
+        const res = await axios.get('/operasi/get_gantchart_actualtoday/ws00')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2115,7 +2115,7 @@
 
       async fetchDataStatusWS01(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_plan/ws01')
+        const res = await axios.get('/operasi/get_gantchart_plantoday/ws01')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2126,7 +2126,7 @@
 
       async fetchDataStatusWS01Actual(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_actual/ws01')
+        const res = await axios.get('/operasi/get_gantchart_actualtoday/ws01')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2138,7 +2138,7 @@
 
       async fetchDataStatusWS02(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_plan/ws02')
+        const res = await axios.get('/operasi/get_gantchart_plantoday/ws02')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2149,7 +2149,7 @@
 
       async fetchDataStatusWS02Actual(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_actual/ws02')
+        const res = await axios.get('/operasi/get_gantchart_actualtoday/ws02')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2161,7 +2161,7 @@
 
       async fetchDataStatusWS03(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_plan/ws03')
+        const res = await axios.get('/operasi/get_gantchart_plantoday/ws03')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2172,7 +2172,7 @@
 
       async fetchDataStatusWS03Actual(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_actual/ws03')
+        const res = await axios.get('/operasi/get_gantchart_actualtoday/ws03')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2183,7 +2183,7 @@
 
       async fetchDataStatusWS04(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_plan/ws04')
+        const res = await axios.get('/operasi/get_gantchart_plantoday/ws04')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2194,7 +2194,7 @@
 
       async fetchDataStatusWS04Actual(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_actual/ws04')
+        const res = await axios.get('/operasi/get_gantchart_actualtoday/ws04')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2206,7 +2206,8 @@
 
       async fetchDataStatusWS05(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_plan/ws05')
+        const res = await axios.get('/operasi/get_gantchart_plantoday/ws05')
+      
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2217,7 +2218,7 @@
 
       async fetchDataStatusWS05Actual(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_actual/ws05')
+        const res = await axios.get('/operasi/get_gantchart_actualtoday/ws05')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2229,7 +2230,7 @@
 
       async fetchDataStatusWS06(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_plan/ws06')
+        const res = await axios.get('/operasi/get_gantchart_plantoday/ws06')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2240,7 +2241,7 @@
 
       async fetchDataStatusWS06Actual(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_actual/ws06')
+        const res = await axios.get('/operasi/get_gantchart_actualtoday/ws06')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2252,7 +2253,7 @@
 
       async fetchDataStatusWS07(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_plan/ws07')
+        const res = await axios.get('/operasi/get_gantchart_plantoday/ws07')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2263,7 +2264,7 @@
 
        async fetchDataStatusWS07Actual(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_actual/ws07')
+        const res = await axios.get('/operasi/get_gantchart_actualtoday/ws07')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2275,7 +2276,7 @@
 
       async fetchDataStatusWS08(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_plan/ws08')
+        const res = await axios.get('/operasi/get_gantchart_plantoday/ws08')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2286,7 +2287,7 @@
 
       async fetchDataStatusWS08Actual(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_actual/ws08')
+        const res = await axios.get('/operasi/get_gantchart_actualtoday/ws08')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2298,7 +2299,7 @@
 
       async fetchDataStatusWS09(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_plan/ws09')
+        const res = await axios.get('/operasi/get_gantchart_plantoday/ws09')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
@@ -2309,7 +2310,7 @@
 
       async fetchDataStatusWS09Actual(){
         const axios = require('axios')
-        const res = await axios.get('/operasi/get_gantchart_actual/ws09')
+        const res = await axios.get('/operasi/get_gantchart_actualtoday/ws09')
         if(res.data == null){
           console.log("Data Pengerjaan Kosong")
         }else{
