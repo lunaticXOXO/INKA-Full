@@ -1678,9 +1678,9 @@
   var newDate = new Date(Date.now()+1*24*60*60*1000);
   var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
   var date2 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+ newDate.getDate();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date+' '+time;
-  var dateTime2 = date2+' '+time;
+  //var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date;
+  var dateTime2 = date2;
 
   export default {
     components:{
@@ -2443,11 +2443,13 @@
         const groupedData = {}
         rawData.forEach(item => {
            const label = item.z;
+           const x = item.x
+           const y = item.y
            if (!groupedData[label]){
               groupedData[label] = {name : label, data : []};
 
            }
-           groupedData[label].data.push(item.y)
+           groupedData[label].data.push({x,y})
 
         })
         return Object.values(groupedData);

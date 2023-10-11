@@ -199,7 +199,13 @@
           },
 
           // xaxis : {
-          //   categories : []
+          //  type : 'datetime'
+          // },
+
+          // yaxis : {
+          //   title : {
+          //     text : 'Persentase'
+          //   }
           // }
 
         },
@@ -207,7 +213,8 @@
     },
 
     mounted(){
-      this.fetchProgressProyek()
+      this.fetchProgressProyek(),
+      this.fetchProgressProyekDate()
       //this.fetchProgressProyekIdeal()
     },
 
@@ -215,7 +222,6 @@
       async fetchProgressProyek(){
         const axios = require('axios')
         const res = await axios.get('/proyek/show_progress_percentage_proyek')
-       
 
         if(res.data == null){
             console.log("Data kosong")
@@ -224,32 +230,46 @@
             const data = res.data
            
             this.chartSeries = this.processChartData(data)
+            console.log("series : ",this.chartSeries)
             
         } 
       },
 
 
-   
+      async fetchProgressProyekDate(){
+        const axios = require('axios')
+        const res = await axios.get('/proyek/show_progress_date')
+       
+        if(res.data == null){
+          console.log("data kosong")
+
+        }
+        else{
+          this.chartOptions.xaxis.categories = res.data
+         
+        }
+      },
 
       processChartData(rawData){
-
         const groupedData = {}
-        //const groupedData2 = {}
         rawData.forEach(item => {
            const label = item.z;
+          
+           const x = item.x
+           const y = item.y
+         
            if (!groupedData[label] ){
               groupedData[label] = {name : label, data : [] };
              
            }
-           groupedData[label].data.push(item.y)
-          
-        })
+           groupedData[label].data.push({x,y})
 
-    
+        })
 
         return Object.values(groupedData);
       },
 
+     
       
       }
 

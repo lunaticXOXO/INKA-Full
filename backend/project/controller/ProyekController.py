@@ -3,6 +3,7 @@ from project.controller.RincianProyekController import *
 from datetime import datetime
 import db.db_handler as database
 from flask import request,make_response,jsonify
+from memory_profiler import profile
 
 def GetAllProyek():
   conn = database.connector()
@@ -21,6 +22,7 @@ def GetAllProyek():
   conn.commit()
   return make_response(jsonify(json_data),200)
 
+@profile
 def GetProyekByCustomer(id):
     conn = database.connector()
     cursor = conn.cursor()
@@ -60,6 +62,7 @@ def AddProyek():
   return hasil
 ###################
 
+@profile
 def GetCustomerInProyek(idCustomer):
     conn = database.connector()
     cursor = conn.cursor()
@@ -216,6 +219,23 @@ def showpercentageProgressProyek():
     #query = "SELECT selesai_str as 'x',percentage as 'y',proyek as 'z' FROM cpl_progress"
     #query = "SELECT waktu as 'x', riil as 'y',proyek as 'z' FROM cpl_progres02"
     query = "SELECT waktu as 'x', progres as 'y', gabungan1 as 'z' FROM cpl_progres05"
+    cursor.execute(query)
+
+    records = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+
+    for data in records:
+        json_data.append(dict(zip(row_headers,data)))
+    
+    print("json data : ",json_data)
+    return make_response(jsonify(json_data),200)
+
+
+def showpercentageProyekDateTime():
+    conn = database.connector()
+    cursor = conn.cursor()
+    query = "SELECT waktu as 'x' FROM cpl_progres05 GROUP BY waktu ORDER BY ASC"
     cursor.execute(query)
 
     records = cursor.fetchall()

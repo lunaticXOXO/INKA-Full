@@ -39,7 +39,7 @@ from tools.tooldistribution.ToolDistributionNewController import *
 from tools.toolneed.ToolNeedController import *
 from tools.pengembaliantool.PengembalianToolController import *
 from tools.pengadaantool.PengadaanToolController import *
-
+from time import time
 from ahp.controller.AhpController import *
 
 
@@ -257,6 +257,21 @@ class main():
     def get_customer_inproyek(idCustomer):
         hasil = GetCustomerInProyek(idCustomer)
         return hasil
+    
+    
+
+    
+    @app.route('/proyek/get_proyek_test/<idCustomer>',methods = ['GET'])
+    def get_customer_inproyek_test(idCustomer):
+        start_time = time()
+        GetCustomerInProyek(idCustomer)
+        GetProyekByCustomer(idCustomer)
+
+        finish_time = time()
+
+        result = finish_time - start_time
+
+        return {"Time Execution " : result}
 
     @app.route('/proyek/update_proyek/<id>',methods = ['POST'])
     def update_proyek(id):
@@ -277,6 +292,10 @@ class main():
     def show_progress_proyek():
         hasil = showpercentageProgressProyek()
         return hasil
+    
+    @app.route('/proyek/show_progress_date',methods = ['GET'])
+    def show_progress_proyekdate():
+        return showpercentageProyekDateTime()
     
     @app.route('/proyek/show_progressproyek_ideal',methods = ['GET'])
     def show_progress_proyek_ideal():
