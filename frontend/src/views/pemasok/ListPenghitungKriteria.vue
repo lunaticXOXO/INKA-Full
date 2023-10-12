@@ -1,7 +1,22 @@
 <template>
     <v-app>
 
-        <v-card class="text-center mt-4 ml-3" max-width="1200">
+    <v-card class="text-center mt-4 ml-3" max-width="1200">
+
+        <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+             TAMBAH ADMIN PENGHITUNG KRITERIA
+        </v-card-title>
+
+        </v-card>
+        <br>
+
     
     <v-form
       class="pa-6"
@@ -66,9 +81,21 @@
       <v-card 
           class="text-center mt-10 ml-3"
           max-width = "1200">
+        
           <br>
-          <h1> List Penghitung Matriks Kriteria</h1>
-          <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+             DAFTAR ADMIN PENGHITUNG MATRIKS KRITERIA
+        </v-card-title>
+
+        </v-card>
+        <br>
+
          
           <v-data-table 
             :headers = "column"

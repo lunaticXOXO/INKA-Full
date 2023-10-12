@@ -4,10 +4,21 @@
 
       <v-card 
           class="text-center mt-10 ml-3"
-          max-width = "1200">
+          width = "1500">
+        
           <br>
-          <h1> Pilih admin penghitung</h1>
-          <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+              PILIH ADMIN PENGHITUNG
+        </v-card-title>
+
+        </v-card>
+        <br>
          
           <v-data-table 
             :headers = "column"

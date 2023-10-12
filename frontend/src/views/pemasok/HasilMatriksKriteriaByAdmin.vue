@@ -5,10 +5,21 @@
       <v-card 
           class="text-center mt-10 ml-3"
           max-width = "1200">
-          <br>
-          <h1> Hasil Kriteria Bobot </h1>
-          <br>
-         
+
+        <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+              HASIL KRITERIA BOBOT
+        </v-card-title>
+
+        </v-card>
+        <br>
+
           <v-data-table 
             :headers = "column"
             :items = "kriteriabobot"
@@ -21,9 +32,21 @@
       <v-card 
           class="text-center mt-10 ml-3"
           max-width = "1200">
+        
           <br>
-          <h1> Hasil Matriks Kriteria</h1>
-          <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+              HASIL MATRIKS KRITERIA
+        </v-card-title>
+
+        </v-card>
+        <br>
+
          
           <v-data-table 
             :headers = "column2"

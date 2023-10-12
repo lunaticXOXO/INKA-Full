@@ -1,8 +1,21 @@
 <template>
     <v-card  class="mx-auto text-center mt-6"
       max-width="1000">
+        
+      <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+              TAMBAH JENIS MATERIAL PEMASOK {{ this.$route.params.id }}
+        </v-card-title>
+
+        </v-card>
         <br>
-        <h1>Tambah Material Type By Pemasok</h1>
+
         <v-form
          class="pa-6"
           ref="form"

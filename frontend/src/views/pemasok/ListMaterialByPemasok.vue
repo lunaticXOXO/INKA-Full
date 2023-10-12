@@ -1,10 +1,22 @@
 <template>
     <v-card 
-        class="mt-10 text-center mx-10"
+        class="mx-auto text-center mx-10"
         max-width = "1450">
+
         <br>
-        <h1>List Material Type by {{this.$route.params.id}}</h1>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+               DAFTAR JENIS MATERIAL PEMASOK {{ this.$route.params.id }}
+        </v-card-title>
+
+        </v-card>
         <br>
+
         <router-link :to="{name : 'Tambah Material Type By Pemasok', params : {id : `${this.$route.params.id}`}}">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
                 Add Material Type 
@@ -14,6 +26,16 @@
             :headers = "column"
             :items = "materialbysupplier">
         </v-data-table>
+
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="50"
+        >
+      
+        </v-card>
+
     </v-card>
 </template>
 

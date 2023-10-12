@@ -1424,9 +1424,9 @@ class main():
     def add_waktu_pemesanan_test():
         return AddTimeOrderMaterialTest()
 
-    # @app.route('/material/show_material_haruspesan',methods = ['GET'])
-    # def show_material_haruspesan():
-    #     return ShowMaterialHarusPesan()
+    @app.route('/material/show_material_haruspesan',methods = ['GET'])
+    def show_material_haruspesan():
+        return ShowMaterialHarusPesan()
     
     @app.route('/material/insert_material_haruspesan',methods = ['POST'])
     def insert_material_haruspesan():

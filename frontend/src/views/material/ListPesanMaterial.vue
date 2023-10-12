@@ -2,9 +2,21 @@
     <v-card 
         class="mx-auto text-center mt-10"
         max-width = "1200">
+
         <br>
-        <h1>Material Perlu Pesan</h1>
-        <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+               DAFTAR MATERIAL HARUS PESAN
+        </v-card-title>
+
+        </v-card>
+        <br><br>
+
         <!-- <router-link to="/jenisMaterial">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
                 Add Material Type
@@ -88,6 +100,7 @@
         
           <template v-slot:[`item.id`]="{ item }">
             <div>
+              <v-checkbox v-model="selected2" @input="updateSelected(item)" />
                 <span >{{item.id}}</span>
             </div>
           </template>
@@ -141,6 +154,7 @@
         menu2: false,
         valid: true,
         selected: [],
+        selected2 : [],
         dueDate : '',
       datetime : '',
       fullDate : '',
@@ -204,6 +218,15 @@ mounted(){
 },
   
   methods : {
+
+    updateSelected(item) {
+      const index = this.selected.indexOf(item);
+      if (index === -1) {
+        this.selected.push(item);
+      } else {
+        this.selected.splice(index, 1);
+      }
+    },
 
     async fetchMaterial(){
         try{

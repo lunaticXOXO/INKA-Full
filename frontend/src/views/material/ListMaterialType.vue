@@ -1,17 +1,30 @@
 <template>
     <v-card 
         class="mx-auto text-center mt-10"
-        max-width = "1200">
+        width = "1600">
+       
         <br>
-        <h1>List Material Type</h1>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+              DAFTAR JENIS MATERIAL
+            </v-card-title>
+
+          
+        </v-card>
         <br>
+
         <router-link to="/jenisMaterial">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
                 Add Material Type
             </v-btn>
         </router-link>
         <v-data-table 
-            :headers = "column"
+            :headers = "column" 
             :items = "types">
             <template v-slot:[`item.code`]="{ item }">
               <div v-if="item.id === editedItem.id">
@@ -104,7 +117,18 @@
                 </v-tooltip>
               </div>
             </template>
+
         </v-data-table>
+
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="50"
+        >
+      
+        </v-card>
+
     </v-card>
 </template>
 

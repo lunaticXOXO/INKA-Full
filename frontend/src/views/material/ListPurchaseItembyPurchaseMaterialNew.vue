@@ -2,10 +2,22 @@
     <v-app>
       <v-card 
           class="mx-auto text-center mt-10"
-          max-width = "1200">
+          width = "1500">
+        
           <br>
-          <h1>List Purchase Item by Purchase Material {{this.$route.params.id}}</h1>
-          <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+              DAFTAR RINCIAN PEMESAN MATERIAL {{ this.$route.params.id }}
+        </v-card-title>
+
+        </v-card>
+        <br>
+
           <router-link :to="{name : 'List Harus Pesan Material New'}">
               <v-btn color="primary" class="d-flex ml-4 mb-6">
                   Add Purchase Item 
@@ -59,9 +71,22 @@
       <v-card
         class="mx-auto text-center mt-10"
         max-width = "1000">
+     
+         
         <br>
-        <h2>Detail Purchase Material</h2>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+              DAFTAR PEMESAN MATERIAL {{ this.$route.params.id }}
+        </v-card-title>
+
+        </v-card>
         <br>
+
         <v-data-table 
             :headers="column2"
             :items="purchasematerial">

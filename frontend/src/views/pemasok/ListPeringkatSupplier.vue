@@ -1,10 +1,21 @@
 <template>
   <v-card 
       class="mx-auto text-center mt-10"
-      max-width = "1200">
+      width = "1500">
+   
       <br>
-      <h1>Peringkat Supplier</h1>
-      <br> 
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+              DAFTAR PERINGKAT PEMASOK
+        </v-card-title>
+
+        </v-card>
+        <br>
       <v-data-table 
           :headers = "headers"
           :items = "supplierRank">

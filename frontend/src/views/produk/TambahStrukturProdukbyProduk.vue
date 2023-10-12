@@ -3,8 +3,18 @@
     <v-card
       class="mx-auto text-center mt-6"
       width="1000">
-      <br>
-      <h1>Tambah Struktur Produk Baru</h1>
+    
+      <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             TAMBAH STRUKTUR JENIS PRODUK  {{ this.$route.params.id }}
+            </v-card-title>
+            
+            </v-card>   
       <v-form
           class="pa-6"
           ref="form"
@@ -87,9 +97,22 @@
         {{snackbar.message}}
       </v-snackbar>
     </v-card>
+
     <div class="d-flex">
       <v-card class="mx-auto text-center mt-10" width="1300">
-        <h3>Jenis Produk {{this.$route.params.id}}</h3>
+        
+        <v-card
+                color="#6f6f6f"
+                dark
+                class="px-5 py-3"
+                max-height ="200"
+            >
+            <v-card-title class="text-h5">
+             JENIS PRODUK {{ this.$route.params.id }}
+            </v-card-title>
+            
+            </v-card>   
+            <br>
         <v-data-table
           :headers = "column2"
           :items = "jproduk">

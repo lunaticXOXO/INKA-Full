@@ -2,8 +2,21 @@
     <v-app>
     
     
-        <v-card class="text-center mt-4 ml-3" max-width="900">
-    
+        <v-card class="text-center mt-4 ml-3" max-width="1200">
+            <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+             MASUKAN NILAI KRITERIA
+        </v-card-title>
+
+        </v-card>
+        <br>
+
             <v-form
               class="pa-6"
               ref="form"
@@ -62,13 +75,24 @@
     
         <v-card
             class="text-center mt-10 ml-3"
-            max-width="1000">
-            <br>
-            <h1>Matriks Kriteria Input </h1>
+            max-width="1200">
+
+              <br>
+        <v-card
+            color="#6f6f6f"
+            dark
+            class="px-5 py-3"
+            max-height ="200"
+            >
+            <v-card-title class="text-h4">
+                DAFTAR NILAI MASUKAN MATRIKS KRITERIA
+            </v-card-title>
+
+        </v-card>
             <br>
             <v-card
                 class="mx-auto text-center"
-                max-width="900">
+                max-width="1200">
                 <v-data-table
                     :headers = "column"
                     :items = "matrixCriteriaByAdmin"

@@ -167,25 +167,25 @@ export default {
                     active: false,
                     items: [
 
-                        { title: 'List Stock Material Purchase Material', icon : 'mdi-filter-variant', route : '/listPurchaseMaterialStock'},
-                        {title : 'List Stock Material',icon : 'mdi-filter-variant',route : '/listStockMaterial'},
-                        { title: 'Add Stock Material', icon : 'mdi-plus',route : '/addStockMaterial'},
-                        { title: 'Tambah Material Consumable', icon : 'mdi-plus', route : '/tambahMaterialConsumable'},
-                        {title : 'Status Barcode Material', icon : 'mdi-gavel',route : '/statusBarcode'}
+                        { title: 'List Stock Material Purchase Material', icon : 'mdi-filter-variant', route : '/listPurchaseMaterialStock'}
+                        // {title : 'List Stock Material',icon : 'mdi-filter-variant',route : '/listStockMaterial'},
+                        // { title: 'Add Stock Material', icon : 'mdi-plus',route : '/addStockMaterial'},
+                        // { title: 'Tambah Material Consumable', icon : 'mdi-plus', route : '/tambahMaterialConsumable'},
+                        // {title : 'Status Barcode Material', icon : 'mdi-gavel',route : '/statusBarcode'}
                     ],
                     title: 'Stock Material',
-                },
+                }
 
-                {
-                    action: 'mdi-account',
-                    active: false,
-                    items: [
+                // {
+                //     action: 'mdi-account',
+                //     active: false,
+                //     items: [
 
-                        { title: 'List Material Login', icon : 'mdi-filter-variant', route : '/listMatLogin'},
+                //         { title: 'List Material Login', icon : 'mdi-filter-variant', route : '/listMatLogin'},
                       
-                    ],
-                    title: 'Material Login',
-                },
+                //     ],
+                //     title: 'Material Login',
+                // },
                 // {
                 // action: 'mdi-wrench',
                 // active: false,

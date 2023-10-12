@@ -2,8 +2,22 @@
     <v-app>
     
     
-        <v-card class="text-center mt-4 ml-3" max-width="900">
-    
+        <v-card class="text-center mt-4 ml-3" max-width="1300">
+            
+            <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+             MASUKAN KRITERIA DAN PEMASOK
+        </v-card-title>
+
+        </v-card>
+        <br>
+
             <v-form
               class="pa-6"  
               ref="form"
@@ -71,13 +85,26 @@
     
         <v-card
             class="text-center mt-10 ml-3"
-            max-width="1000">
-            <br>
-            <h1>Matriks Supplier Input </h1>
+            max-width="1300">
+
             <br>
             <v-card
+            color="#6f6f6f"
+            dark
+            class="px-5 py-3"
+            max-height ="200"
+            >
+            <v-card-title class="text-h4">
+              DAFTAR MASUKAN KRITERIA PEMASOK 
+            </v-card-title>
+
+            </v-card>
+            <br>
+
+
+            <v-card
                 class="mx-auto text-center"
-                max-width="900">
+                max-width="1300">
                 <v-data-table
                     :headers = "column"
                     :items = "matrixSupplierByAdmin"

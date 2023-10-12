@@ -59,7 +59,7 @@
       <v-autocomplete
         item-text="id"
         item-value="id"
-        v-model="purchaseId"
+        v-model="purchaseId"  
         :items="list_purchaseId"
         label="Purchase Material ID">
       </v-autocomplete>

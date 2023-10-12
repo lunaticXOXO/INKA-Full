@@ -1,13 +1,25 @@
 <template>
     <v-card
       class="mx-auto text-center mt-6"
-      max-width="1000">
+      width="1500">
+     
       <br>
-      <h1>Kriteria Pemasok</h1>
-      <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+              DAFTAR KRITERIA PEMASOK
+        </v-card-title>
+
+        </v-card>
+        <br>
+
       <v-card
         class="mx-auto text-center"
-        max-width="1000">
+        width="1500">
 
         <router-link to="/addKriteriaPemasok">
             <v-btn color="primary" class="d-flex ml-4 mb-6">

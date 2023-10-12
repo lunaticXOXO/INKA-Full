@@ -3,8 +3,20 @@
     <v-card
       class="mx-auto text-center mt-6"
       width="1000">
+   
       <br>
-      <h1>Tambah Rincian Proyek Baru</h1>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+           TAMBAH RINCIAN PROYEK BARU
+        </v-card-title>
+
+        </v-card>
+        <br>
 
       <v-form
         class="pa-6"

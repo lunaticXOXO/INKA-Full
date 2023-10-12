@@ -1,10 +1,22 @@
 <template>
     <v-card 
         class="mx-auto text-center mt-10"
-        max-width = "1200">
+        width = "1500">
+
         <br>
-        <h1>List Purchase Material Item</h1>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+              DAFTAR RINCIAN PEMBELIAN MATERIAL
+        </v-card-title>
+
+        </v-card>
         <br>
+
         <router-link to="/purchaseMaterialItem">
             <v-btn color="primary" class="d-flex ml-4 mb-6">
                 Purchase Material Item

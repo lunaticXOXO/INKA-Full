@@ -5,9 +5,21 @@
       <v-card 
           class="text-center mt-10 ml-3"
           max-width = "1200">
+       
           <br>
-          <h1> Hasil Peringkat Supplier </h1>
-          <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+              HASIL PERINGKAT PEMASOK
+        </v-card-title>
+
+        </v-card>
+        <br>
+
          
           <v-data-table 
             :headers = "column"
@@ -21,10 +33,22 @@
       <v-card 
           class="text-center mt-10 ml-3"
           max-width = "1200">
-          <br>
-          <h1> Hasil Bobot Supplier</h1>
-          <br>
-         
+
+            <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+              HASIL BOBOT PEMASOK
+        </v-card-title>
+
+        </v-card>
+        <br>
+
+
           <v-data-table 
             :headers = "column2"
             :items = "hasilbobot"

@@ -2,7 +2,7 @@
   <v-app>
     <v-card
       class="mx-auto text-center mt-6"
-      width="1200">
+      width="1300">
 
       <v-card
         color="#6f6f6f"
@@ -72,7 +72,7 @@
     </v-card>
     
     <div class="d-flex">
-      <v-card class="mt-10 text-center mx-10">
+      <v-card class="mx-auto text-center mt-10">
         
         <v-card
                 color="#6f6f6f"

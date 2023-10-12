@@ -1,13 +1,26 @@
 <template>
     <v-card
       class="mx-auto text-center mt-6"
-      max-width="1000">
+      max-width="1300">
+
       <br>
-      <h1>Peringkat Kriteria</h1>
-      <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+             DAFTAR PERINGKAT KRITERIA
+        </v-card-title>
+
+        </v-card>
+        <br>
+
+
       <v-card
         class="mx-auto text-center"
-        max-width="1000">
+        max-width="1300">
           <v-data-table
             :headers = "headers"
             :items = "kriteriaRank"> 

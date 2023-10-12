@@ -3,8 +3,19 @@
     <v-card
       class="mx-auto text-center mt-10"
       width = "1450">
+      <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+               TAMBAH RINCIAN PEMESANAN MATERIAL {{ this.$route.params.id }}
+        </v-card-title>
+
+        </v-card>
         <br>
-        <h1>Purchase Material Item for {{this.$route.params.id}}</h1>
         <v-form
           class="pa-6"
           ref="form"
@@ -75,8 +86,22 @@
       
     <v-card 
         class="mx-auto text-center mt-10 pa-2 mb-10"
-        max-width = "1450">
+        width = "1100">
+       
         <br>
+        <v-card
+        color="#6f6f6f"
+          dark
+          class="px-5 py-3"
+          max-height ="200"
+        >
+        <v-card-title class="text-h4">
+              DAFTAR MATERIAL HARUS PESAN
+        </v-card-title>
+
+        </v-card>
+        <br>
+
         <div class="d-flex">
             <v-menu 
               class="mt-6"
