@@ -42,7 +42,7 @@
           max-height ="200"
             >
       <v-card-title class="text-h5">
-        TIMELINE RENCANA PENGERJAAN OPERASI
+        TIMELINE RENCANA DAN AKTUAL PENGERJAAN OPERASI
       </v-card-title>
             
       </v-card> 

@@ -95,15 +95,17 @@ def AddMaterialStockbyOrders(orders):
     day = today.day
     print(type(month))
     
+    today_str = ""
     if month < 10:
         today_str = str(year) + '0' + str(month) + str(day)
 
-    if month < 10 and day < 10:
+    if month >= 10 and day < 10:
         today_str = str(year) + '0' + str(month) + '0' + str(day)
 
-    if month > 10 and day > 10:
-        today_str = str(year) +  str(month) +  str(day)    
-    print(today_str)
+    if month >= 10 and day >= 10:
+        today_str = str(year) +  str(month) +  str(day)   
+
+    print("today date : ",today_str)
 
     query_insert =  "INSERT INTO mat_d_materialstock(id,purchaseItem,merk,quantity,unit,arrivalDate)VALUES(%s,%s,%s,%s,%s,%s)"
     query_insert2 = "INSERT INTO mat_d_materialonws01(workstationCode,materialStock,login)VALUES(%s,%s,%s)"
@@ -120,7 +122,7 @@ def AddMaterialStockbyOrders(orders):
         arrivalDate = data["arrivalDate"]
         workstationCode = "WSGD"
         login = datetime.datetime.now()
-        print("angka unit : ",unit)
+        #print("angka unit : ",unit)
 
         #Query untuk mendapatkan multiplier dari unit yang dipilih
         query_getunit = "SELECT a.multiplier,a.id FROM gen_r_materialunit a WHERE a.id = '"+unit+"'"
@@ -131,9 +133,9 @@ def AddMaterialStockbyOrders(orders):
             angka_multiplier_str = index[0]
             unit = index[1]
 
-        print("Angka STR : ",angka_multiplier_str)
+        #print("Angka STR : ",angka_multiplier_str)
         multiplier = int(angka_multiplier_str)
-        print("multiplier : ",multiplier)
+        #print("multiplier : ",multiplier)
         #Untuk mengecek apakah records kosong atau tidak
        
         x = 0
@@ -146,7 +148,7 @@ def AddMaterialStockbyOrders(orders):
                 temp = index2[0]
                 jumlah = int(temp)
                 
-            print("jumlah data : ",jumlah)
+            #print("jumlah data : ",jumlah)
             quantity_unit = ""
             if jumlah == 0:
                 id_stock = today_str + "000"
@@ -158,7 +160,7 @@ def AddMaterialStockbyOrders(orders):
                 cursor.execute(query_insert3,values3)
                 conn.commit()
             else:
-                print("jumlah data : ", jumlah)
+                #print("jumlah data : ", jumlah)
                 if jumlah >= 10 and jumlah <= 99:
                     angka_awal = '0'
                     #angka_akhir = angka_akhir + 1
@@ -171,7 +173,7 @@ def AddMaterialStockbyOrders(orders):
                     cursor.execute(query_insert,values)
                     cursor.execute(query_insert2,values2)
                     cursor.execute(query_insert3,values3)
-                    #conn.commit()
+                    conn.commit()
 
                 elif jumlah >= 100:
                     #angka_akhir = angka_akhir + 1
@@ -184,10 +186,10 @@ def AddMaterialStockbyOrders(orders):
                     cursor.execute(query_insert,values)
                     cursor.execute(query_insert2,values2)
                     cursor.execute(query_insert3,values3)
-                    #conn.commit()
+                    conn.commit()
                 else:
                     #angka_akhir = angka_akhir + 1
-                    print("jumlah data : ",jumlah)
+                    #print("jumlah data : ",jumlah)
                     angka_akhir =  jumlah 
                     angka_akhir_str = str(angka_akhir)
                     id_stock = today_str + angka_awal + angka_akhir_str
@@ -197,7 +199,7 @@ def AddMaterialStockbyOrders(orders):
                     cursor.execute(query_insert,values)
                     cursor.execute(query_insert2,values2)
                     cursor.execute(query_insert3,values3)
-                    #conn.commit()
+                    conn.commit()
             
             #Query untuk mendapatkan multiplier , multiplier sebagai output quantity nya
             query_get_unit_by_stock = "SELECT b.multiplier FROM mat_d_materialstock a JOIN gen_r_materialunit b ON b.id = a.unit WHERE a.id = '"+id_stock+"'"
@@ -211,10 +213,10 @@ def AddMaterialStockbyOrders(orders):
             query_update_unit_stock = "UPDATE mat_d_materialstock SET unit = %s, quantity = %s WHERE id = %s"
             values_update_unit_stock = (unit_stock,quantity_unit,id_stock)
             cursor.execute(query_update_unit_stock,values_update_unit_stock)
-
-            print("ID Stock : ",id_stock)
-            print("index : ", x)
-            print("multiplier : ",multiplier)
+            conn.commit()
+            # print("ID Stock : ",id_stock)
+            # print("index : ", x)
+            # print("multiplier : ",multiplier)
             print("Quantity : ",quantity_unit)
     
         
@@ -244,22 +246,21 @@ def AddMaterialStockbyOrders(orders):
         
         jumlah_int2 =   int(jumlah_str2)
         jumlah_purchase = jumlah_int2 
-
+        
+        print("jumlah purchase item : ", jumlah_purchase)
        
-        print("jumlah_purchase_akhir : ",jumlah_purchase)
+        #print("jumlah_purchase_akhir : ",jumlah_purchase)
         
         #pengurangan jumlah purchase dari jumlah stock yang sudah dimiliki.
         jumlah_now = jumlah_purchase - jumlah_stock
         if jumlah_now < 0:
             jumlah_now = 0
-
            
         #Query untuk mengupdate jumlah dan unit yang baru berdasarkan jumlah nya.
         query_update_jumlah = "UPDATE mat_d_purchaseitem SET quantity = %s WHERE id_item = %s"
         values4 = (jumlah_now,orders)
         cursor.execute(query_update_jumlah,values4)
 
-        print("Jumlah Sekarang : ",jumlah_now)
         conn.commit()
         cursor.close()
         conn.close()

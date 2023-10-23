@@ -85,7 +85,7 @@
                         </v-sheet>
                         </v-carousel-item>
                 </v-carousel>
-                <v-carousel cycle :show-arrows="true"  height="250" :interval="15000">
+                <v-carousel cycle :show-arrows="true"  height="350" :interval="15000">
                 <v-carousel-item>
                     <v-row
                         class="fill-height"
@@ -111,7 +111,7 @@
 
                     
                 </v-carousel-item>
-                <v-carousel-item>
+                <!-- <v-carousel-item>
                     <v-row
                         class="fill-height"
                         :align="center"
@@ -133,7 +133,7 @@
               
                     </v-row>
                    
-                </v-carousel-item>
+                </v-carousel-item> -->
             </v-carousel>
             </div>
             
