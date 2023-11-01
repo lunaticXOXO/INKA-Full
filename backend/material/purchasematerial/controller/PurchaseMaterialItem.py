@@ -81,7 +81,7 @@ def PurchaseMaterialItemByIDPurchase(idPurchase):
     else:
         angka_akhir_str = ""
         for index in records_matitem:
-            if angka_akhir >= 10:
+            if angka_akhir > 9:
                 angka_awal = '0'
                 angka_akhir = angka_akhir + 1
                 angka_akhir_str = str(angka_akhir)
@@ -121,9 +121,21 @@ def PurchaseMaterialItemByIDPurchase(idPurchase):
         
         #total kan qty int dengan multiplier
         total = qty_int * mul_int
-        unit = "U01"
+       
+        unit_input = unit
+        query_get_namaunit = "SELECT keterangan FROM gen_r_materialunit WHERE id = '"+unit_input+"'"
+        cursor.execute(query_get_namaunit)
+        records_keterangan = cursor.fetchone()
+        nama_keterangan = records_keterangan[0]
+
+        query_get_unit = "SELECT id FROM gen_r_materialunit WHERE nama LIKE '%1 "+nama_keterangan+"' AND multiplier = 1"
+        cursor.execute(query_get_unit)
+        records_unit = cursor.fetchone()
+        new_unit = records_unit[0]
+
+
         query_update = "UPDATE mat_d_purchaseitem SET quantity = %s, unit = %s WHERE id_item = %s"
-        values = (total,unit,id_item_new)
+        values = (total,new_unit,id_item_new)
         cursor.execute(query_update,values)
         conn.commit()
         cursor.close()

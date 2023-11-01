@@ -24,7 +24,7 @@
 
           <v-text-field
           v-model="idNode"
-          :counter="7"
+          :counter="3"
           :rules="idNodeRules"
           label="ID Nodal"
           required
@@ -138,7 +138,7 @@
       materialTypeCode : '',
       idNodeRules: [
         v => !!v || 'ID Nodal is required',
-        v => (v && v.length <= 5 && v.length >= 5) || 'ID Nodal must be 7 characters',
+        v => (v && v.length <= 3 && v.length >= 3) || 'ID Nodal must be 7 characters',
       ],
       nodeParent: null,
       unit: undefined,

@@ -209,9 +209,19 @@ def AddMaterialStockbyOrders(orders):
                 quantity_unit = index[0]
             
 
-            unit_stock = "U01"
+            unit_input = unit
+            query_get_namaunit = "SELECT keterangan FROM gen_r_materialunit WHERE id = '"+unit_input+"'"
+            cursor.execute(query_get_namaunit)
+            records_keterangan = cursor.fetchone()
+            nama_keterangan = records_keterangan[0]
+
+            query_get_unit = "SELECT id FROM gen_r_materialunit WHERE nama LIKE '%1 "+nama_keterangan+"' AND multiplier = 1"
+            cursor.execute(query_get_unit)
+            records_unit = cursor.fetchone()
+            new_unit = records_unit[0]
+            
             query_update_unit_stock = "UPDATE mat_d_materialstock SET unit = %s, quantity = %s WHERE id = %s"
-            values_update_unit_stock = (unit_stock,quantity_unit,id_stock)
+            values_update_unit_stock = (new_unit,quantity_unit,id_stock)
             cursor.execute(query_update_unit_stock,values_update_unit_stock)
             conn.commit()
             # print("ID Stock : ",id_stock)
